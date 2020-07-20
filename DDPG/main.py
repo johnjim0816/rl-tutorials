@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-@LastEditTime: 2020-06-13 21:22:39
+@LastEditTime: 2020-07-20 23:01:02
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -42,6 +42,7 @@ if __name__ == "__main__":
 
     cfg = get_args()
     env = NormalizedActions(gym.make("Pendulum-v0"))
+    
     # 增加action噪声
     ou_noise = OUNoise(env.action_space)
     
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     agent=DDPG(n_states,n_actions,device="cpu", critic_lr=1e-3,
                  actor_lr=1e-4, gamma=0.99, soft_tau=1e-2, memory_capacity=100000, batch_size=128)
 
-    rewards     = []
+    rewards  = []
     moving_average_rewards = []
     for i_episode in range(1,cfg.max_episodes+1):
         state=env.reset()

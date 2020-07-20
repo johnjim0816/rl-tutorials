@@ -5,11 +5,9 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-@LastEditTime: 2020-06-14 13:58:20
+@LastEditTime: 2020-07-20 23:20:03
 @Discription: 
 @Environment: python 3.7.7
-'''
-'''未完成
 '''
 import gym
 import torch
@@ -20,7 +18,6 @@ def get_args():
     '''模型建立好之后只需要在这里调参
     '''
     parser = argparse.ArgumentParser()
-
     parser.add_argument("--gamma", default=0.99,
                         type=float)  # q-learning中的gamma
     parser.add_argument("--epsilon_start", default=0.95,
@@ -52,7 +49,7 @@ if __name__ == "__main__":
     n_states = env.observation_space.shape[0]
     n_actions = env.action_space.n
     agent = DQN(n_states=n_states, n_actions=n_actions, device=device, gamma=cfg.gamma, epsilon_start=cfg.epsilon_start,
-                epsilon_end=cfg.epsilon_end, epsilon_decay=cfg.epsilon_decay,policy_lr=cfg.policy_lr, memory_capacity=cfg.memory_capacity, batch_size=cfg.batch_size)
+                epsilon_end=cfg.epsilon_end, epsilon_decay=cfg.epsilon_decay, policy_lr=cfg.policy_lr, memory_capacity=cfg.memory_capacity, batch_size=cfg.batch_size)
     rewards = []
     moving_average_rewards = []
     for i_episode in range(1, cfg.max_episodes+1):
@@ -65,7 +62,7 @@ if __name__ == "__main__":
             next_state, reward, done, _ = env.step(action)
             ep_reward += reward
             # Store the transition in memory
-            agent.memory.push(state,action,reward,next_state,done)
+            agent.memory.push(state, action, reward, next_state, done)
             # Move to the next state
             state = next_state
             # Perform one step of the optimization (on the target network)
@@ -79,6 +76,7 @@ if __name__ == "__main__":
         print('Episode:', i_episode, ' Reward: %i' %
               int(ep_reward), 'Explore: %.2f' % agent.epsilon)
         rewards.append(ep_reward)
+        # 计算滑动窗口的reward
         if i_episode == 1:
             moving_average_rewards.append(ep_reward)
         else:
