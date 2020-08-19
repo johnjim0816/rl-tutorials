@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 10:01:09
 @LastEditor: John
-@LastEditTime: 2020-06-13 00:24:31
+LastEditTime: 2020-08-19 15:58:43
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -44,6 +44,7 @@ def get_args():
 if __name__ == "__main__":
 
     cfg = get_args()
+    
     # if gpu is to be used
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
