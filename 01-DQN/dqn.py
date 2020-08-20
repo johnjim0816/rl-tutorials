@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-08-19 16:53:46
+LastEditTime: 2020-08-20 11:59:15
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -58,12 +58,16 @@ class DQN:
         self.actions_count += 1
         if random.random() > self.epsilon:
             with torch.no_grad():
-                # 先转为张量便于丢给神经网络,state元素数据原本为float64；注意state=torch.tensor(state).unsqueeze(0)跟state=torch.tensor([state])等价
+                # 先转为张量便于丢给神经网络,state元素数据原本为float64
+                # 注意state=torch.tensor(state).unsqueeze(0)跟state=torch.tensor([state])等价
                 state = torch.tensor(
                     [state], device=self.device, dtype=torch.float32)
                 # 如tensor([[-0.0798, -0.0079]], grad_fn=<AddmmBackward>)
                 q_value = self.policy_net(state)
-                action = q_value.max(1)[1].item()  # 选择q值最大的对应action
+                # tensor.max(1)返回每行的最大值以及对应的下标，
+                # 如torch.return_types.max(values=tensor([10.3587]),indices=tensor([0]))
+                # 所以tensor.max(1)[1]返回最大值对应的下标，即action
+                action = q_value.max(1)[1].item()  
         else:
             action = random.randrange(self.n_actions)
         return action

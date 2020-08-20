@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 16:30:09
 @LastEditor: John
-LastEditTime: 2020-08-19 16:11:19
+LastEditTime: 2020-08-20 16:34:34
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -20,7 +20,7 @@ def plot(item,ylabel='rewards'):
     plt.figure()
     plt.plot(np.arange(len(item)), item)
     plt.title(ylabel+' of DQN') 
-    plt.ylabel('rewards')
+    plt.ylabel(ylabel)
     plt.xlabel('episodes')
     plt.savefig(os.path.dirname(__file__)+"/result/"+ylabel+".png")
     plt.show()

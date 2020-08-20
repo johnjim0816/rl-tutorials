@@ -9,10 +9,11 @@ from model import CNN
 
 class DQN:
     def __init__(self, screen_height=0, screen_width=0, n_actions=0, gamma=0.999, epsilon_start=0.9, epsilon_end=0.05, epsilon_decay=200, memory_capacity=10000, batch_size=128, device="cpu"):
-        self.actions_count = 0
-        self.n_actions = n_actions
-        self.device = device
+        self.actions_count = 0 
+        self.n_actions = n_actions  # 总的动作个数
+        self.device = device  # 设备，cpu或gpu等
         self.gamma = gamma
+        # e-greedy策略相关参数
         self.epsilon = 0
         self.epsilon_start = epsilon_start
         self.epsilon_end = epsilon_end
@@ -22,32 +23,30 @@ class DQN:
                               n_actions).to(self.device)
         self.target_net = CNN(screen_height, screen_width,
                               n_actions).to(self.device)
-        self.target_net.load_state_dict(self.policy_net.state_dict())
+        self.target_net.load_state_dict(self.policy_net.state_dict()) # target_net的初始模型参数完全复制policy_net
         self.target_net.eval()  # 不启用 BatchNormalization 和 Dropout
-        self.optimizer = optim.RMSprop(self.policy_net.parameters())
+        self.optimizer = optim.RMSprop(self.policy_net.parameters()) # 可查parameters()与state_dict()的区别，前者require_grad=True
         self.loss = 0
         self.memory = ReplayBuffer(memory_capacity)
         
 
     def select_action(self, state):
-        '''choose_action [summary]
+        '''选择动作
         Args:
-            state [torch tensor]: [description]
+            state [array]: [description]
         Returns:
-            actions [torch tensor]: [description]
+            action [array]: [description]
         '''
-        sample = random.random()
         self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
             math.exp(-1. * self.actions_count / self.epsilon_decay)
         self.actions_count += 1
-        if sample > self.epsilon:
+        if random.random() > self.epsilon:   
             with torch.no_grad():
-                # t.max(1) will return largest column value of each row.
-                # second column on max result is index of where max element was
-                # found, so we pick action with the larger expected reward.
-                
                 q_value = self.policy_net(state) # q_value比如tensor([[-0.2522,  0.3887]])
-                action = q_value.max(1)[1].view(1, 1)  # q_value最大对应的下标，注意该action是个张量，如tensor([1])
+                # tensor.max(1)返回每行的最大值以及对应的下标，
+                # 如torch.return_types.max(values=tensor([10.3587]),indices=tensor([0]))
+                # 所以tensor.max(1)[1]返回最大值对应的下标，即action
+                action = q_value.max(1)[1].view(1, 1)  # 注意这里action是个张量，如tensor([1])
                 return action
         else:
             return torch.tensor([[random.randrange(self.n_actions)]], device=self.device, dtype=torch.long)

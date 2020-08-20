@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2020-08-19 16:18:54
+LastEditTime: 2020-08-20 17:35:33
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -23,8 +23,8 @@ def get_args():
                         type=float)  # q-learning中的gamma
     parser.add_argument("--epsilon_start", default=0.95,
                         type=float)  # 基于贪心选择action对应的参数epsilon
-    parser.add_argument("--epsilon_end", default=0.01, type=float)
-    parser.add_argument("--epsilon_decay", default=200, type=float)
+    parser.add_argument("--epsilon_end", default=0.05, type=float)
+    parser.add_argument("--epsilon_decay", default=500, type=float)
     parser.add_argument("--policy_lr", default=0.01, type=float)
     parser.add_argument("--memory_capacity", default=1000,
                         type=int, help="capacity of Replay Memory") 
@@ -53,10 +53,11 @@ if __name__ == "__main__":
                 epsilon_end=cfg.epsilon_end, epsilon_decay=cfg.epsilon_decay, policy_lr=cfg.policy_lr, memory_capacity=cfg.memory_capacity, batch_size=cfg.batch_size)
     rewards = []
     moving_average_rewards = []
+    ep_steps = []
     for i_episode in range(1, cfg.max_episodes+1):
         state = env.reset() # reset环境状态
         ep_reward = 0
-        for t in range(1, cfg.max_steps+1):
+        for i_step in range(1, cfg.max_steps+1):
             action = agent.select_action(state) # 根据当前环境state选择action
             next_state, reward, done, _ = env.step(action) # 更新环境参数
             ep_reward += reward
@@ -65,12 +66,12 @@ if __name__ == "__main__":
             agent.update() # 每步更新网络
             if done:
                 break
-
         # 更新target network，复制DQN中的所有weights and biases
         if i_episode % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         print('Episode:', i_episode, ' Reward: %i' %
-              int(ep_reward), 'Explore: %.2f' % agent.epsilon)
+              int(ep_reward), 'n_steps:', i_step, 'done: ', done,' Explore: %.2f' % agent.epsilon)
+        ep_steps.append(i_step)
         rewards.append(ep_reward)
         # 计算滑动窗口的reward
         if i_episode == 1:
@@ -82,10 +83,13 @@ if __name__ == "__main__":
     import os
     import numpy as np
     output_path = os.path.dirname(__file__)+"/result/"
+    # 检测是否存在文件夹
     if not os.path.exists(output_path):
         os.mkdir(output_path)
     np.save(output_path+"rewards.npy", rewards)
     np.save(output_path+"moving_average_rewards.npy", moving_average_rewards)
+    np.save(output_path+"steps.npy", ep_steps)
     print('Complete！')
     plot(rewards)
     plot(moving_average_rewards, ylabel="moving_average_rewards")
+    plot(ep_steps, ylabel="steps_of_each_episode")

@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-@LastEditTime: 2020-07-20 23:01:02
+LastEditTime: 2020-08-20 12:02:17
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -68,9 +68,8 @@ if __name__ == "__main__":
             state = next_state
             if done:
                 break
-        print('Episode:', i_episode, ' Reward: %i' % int(ep_reward),)
+        print('Episode:', i_episode, ' Reward: %i' % int(ep_reward),'n_steps:', i_step)
         rewards.append(ep_reward)
-        #
         if i_episode == 1:
             moving_average_rewards.append(ep_reward)
         else:
