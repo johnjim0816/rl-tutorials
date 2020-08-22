@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-08-20 18:04:44
+LastEditTime: 2020-08-22 15:44:31
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -92,14 +92,16 @@ class DQN:
         done_batch = torch.tensor(np.float32(
             done_batch), device=self.device).unsqueeze(1)  # 将bool转为float然后转为张量
 
-        # 计算 Q(s_t, a)
+        # 计算当前(s_t,a)对应的Q(s_t, a)
+        # 关于torch.gather,对于a=torch.Tensor([[1,2],[3,4]])
+        # 那么a.gather(1,torch.Tensor([[0],[1]]))=torch.Tensor([[1],[3]])
         q_values = self.policy_net(state_batch).gather(
-            1, action_batch)  # 等价于self.forward
-
+            dim=1, index=action_batch)  # 等价于self.forward
         # 计算所有next states的V(s_{t+1})，即通过target_net中选取reward最大的对应states
         next_state_values = self.target_net(
-            next_state_batch).max(1)[0].detach()  # tensor([ 0.0060, -0.0171,...,])
+            next_state_batch).max(1)[0].detach()  # 比如tensor([ 0.0060, -0.0171,...,])
         # 计算 expected_q_value
+        # 对于终止状态，此时done_batch[0]=1, 对应的expected_q_value等于reward
         expected_q_values = reward_batch + self.gamma * \
             next_state_values * (1-done_batch[0])
         # self.loss = F.smooth_l1_loss(q_values,expected_q_values.unsqueeze(1)) # 计算 Huber loss
