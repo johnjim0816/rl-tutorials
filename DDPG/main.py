@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-08-20 12:02:17
+LastEditTime: 2020-08-20 17:54:46
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -35,7 +35,6 @@ def get_args():
     parser.add_argument("--max_steps", default=200, type=int)
     parser.add_argument("--target_update", default=4, type=int,help="when(every default 10 eisodes) to update target net ")
     config = parser.parse_args()
-
     return config
 
 if __name__ == "__main__":
@@ -54,6 +53,7 @@ if __name__ == "__main__":
 
     rewards  = []
     moving_average_rewards = []
+    ep_steps = []
     for i_episode in range(1,cfg.max_episodes+1):
         state=env.reset()
         ou_noise.reset()
@@ -69,6 +69,7 @@ if __name__ == "__main__":
             if done:
                 break
         print('Episode:', i_episode, ' Reward: %i' % int(ep_reward),'n_steps:', i_step)
+        ep_steps.append(i_step)
         rewards.append(ep_reward)
         if i_episode == 1:
             moving_average_rewards.append(ep_reward)
@@ -76,13 +77,17 @@ if __name__ == "__main__":
             moving_average_rewards.append(
                 0.9*moving_average_rewards[-1]+0.1*ep_reward)
     print('Complete！')
+
+    # 存储reward等相关结果
     import os
     import numpy as np
     output_path = os.path.dirname(__file__)+"/result/"
+    # 检测是否存在文件夹
     if not os.path.exists(output_path):
         os.mkdir(output_path)
     np.save(output_path+"rewards.npy", rewards)
     np.save(output_path+"moving_average_rewards.npy", moving_average_rewards)
-  
+    np.save(output_path+"steps.npy", ep_steps)
     plot(rewards)
     plot(moving_average_rewards,ylabel="moving_average_rewards")
+    plot(ep_steps, ylabel="steps_of_each_episode")

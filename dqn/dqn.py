@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-08-20 11:59:15
+LastEditTime: 2020-08-20 18:04:44
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -111,3 +111,8 @@ class DQN:
         for param in self.policy_net.parameters():  # clip防止梯度爆炸
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step()  # 更新模型
+        
+    def save_model():
+        pass
+    def load_model():
+        pass
