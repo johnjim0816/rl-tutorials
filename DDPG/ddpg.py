@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-09 20:25:52
 @LastEditor: John
-@LastEditTime: 2020-06-14 11:43:17
+LastEditTime: 2020-08-22 15:55:11
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -42,7 +42,11 @@ class DDPG:
         self.gamma = gamma
 
     def select_action(self, state):
-        return self.actor.select_action(state)
+        
+        state  = torch.FloatTensor(state).unsqueeze(0).to(self.device)
+        action = self.actor(state)
+        return action.detach().cpu().numpy()[0, 0]
+        # return self.actor.select_action(state)
 
     def update(self):
         if len(self.memory) < self.batch_size:

@@ -61,6 +61,10 @@ pytorch 1.5.0
 
 能够输出连续动作
 
+## TD3
+
+[Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477)
+
 ## Refs
 
 

@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2020-08-22 18:02:56
+LastEditTime: 2020-08-20 17:35:33
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -23,7 +23,7 @@ def get_args():
                         type=float)  # q-learning中的gamma
     parser.add_argument("--epsilon_start", default=0.95,
                         type=float)  # 基于贪心选择action对应的参数epsilon
-    parser.add_argument("--epsilon_end", default=0.01, type=float)
+    parser.add_argument("--epsilon_end", default=0.05, type=float)
     parser.add_argument("--epsilon_decay", default=500, type=float)
     parser.add_argument("--policy_lr", default=0.01, type=float)
     parser.add_argument("--memory_capacity", default=1000,
@@ -33,8 +33,7 @@ def get_args():
                         help="batch size of memory sampling")
     parser.add_argument("--max_episodes", default=200, type=int) # 训练的最大episode数目
     parser.add_argument("--max_steps", default=200, type=int)
-    # 将目标网络的更新频率改为1就是普通的dqn，大于1就是double dqn
-    parser.add_argument("--target_update", default=1, type=int,
+    parser.add_argument("--target_update", default=2, type=int,
                         help="when(every default 10 eisodes) to update target net ")
     config = parser.parse_args()
 

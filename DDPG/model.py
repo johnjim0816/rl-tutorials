@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-10 15:03:59
 @LastEditor: John
-@LastEditTime: 2020-06-14 11:42:45
+LastEditTime: 2020-08-22 15:53:32
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -51,6 +51,5 @@ class Actor(nn.Module):
         
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         state  = torch.FloatTensor(state).unsqueeze(0).to(device)
-        # print(state)
         action = self.forward(state)
         return action.detach().cpu().numpy()[0, 0]
