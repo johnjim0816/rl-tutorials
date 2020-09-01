@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-09 20:25:52
 @LastEditor: John
-LastEditTime: 2020-08-22 18:17:55
+LastEditTime: 2020-09-02 01:19:13
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -87,3 +87,8 @@ class DDPG:
                 target_param.data * (1.0 - self.soft_tau) +
                 param.data * self.soft_tau
             )
+    def save_model(self,path):
+        torch.save(self.target_actor.state_dict(), path)
+
+    def load_model(self,path):
+        self.actor.load_state_dict(torch.load(path))

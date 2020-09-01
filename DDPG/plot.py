@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 16:30:09
 @LastEditor: John
-LastEditTime: 2020-08-19 16:09:31
+LastEditTime: 2020-09-02 01:20:03
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -15,7 +15,7 @@ import seaborn as sns;
 import numpy as np
 import os 
 
-def plot(item,ylabel='rewards'):
+def plot(item,ylabel='rewards',save_fig = True):
     '''plot using searborn to plot 
     '''
     sns.set()
