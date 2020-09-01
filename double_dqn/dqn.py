@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-08-22 15:44:31
+LastEditTime: 2020-09-01 22:54:02
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -114,7 +114,8 @@ class DQN:
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step()  # 更新模型
         
-    def save_model():
-        pass
-    def load_model():
-        pass
+    def save_model(self,path):
+        torch.save(self.target_net.state_dict(), path)
+
+    def load_model(self,path):
+        self.policy_net.load_state_dict(torch.load(path))

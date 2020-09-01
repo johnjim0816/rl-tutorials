@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-08-20 17:54:46
+LastEditTime: 2020-09-01 10:47:27
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -46,7 +46,9 @@ if __name__ == "__main__":
     ou_noise = OUNoise(env.action_space)
     
     n_states  = env.observation_space.shape[0] 
+    
     n_actions = env.action_space.shape[0] 
+    print("n_act", n_actions)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     agent=DDPG(n_states,n_actions,device="cpu", critic_lr=1e-3,
                  actor_lr=1e-4, gamma=0.99, soft_tau=1e-2, memory_capacity=100000, batch_size=128)
