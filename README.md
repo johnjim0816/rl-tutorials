@@ -20,9 +20,15 @@
 
 ## 运行环境
 
-python 3.7.7
+python 3.7.9
 
-pytorch 1.5.0
+pytorch 1.6.0
+
+tensorboard 2.3.0 
+
+torchvision 0.7.0 
+
+gym 0.17.3
 
 ## gym环境说明
 
