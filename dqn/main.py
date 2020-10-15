@@ -5,20 +5,30 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2020-08-22 18:02:56
+LastEditTime: 2020-10-15 21:18:41
 @Discription: 
 @Environment: python 3.7.7
 '''
 import gym
 import torch
-from dqn import DQN
-from plot import plot
+from agent import DQN
 import argparse
+from torch.utils.tensorboard import SummaryWriter
+import datetime
+import os
 
+SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
+if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
+        os.mkdir(SAVED_MODEL_PATH)
+RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
+if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
+        os.mkdir(RESULT_PATH)
 def get_args():
     '''模型参数
     '''
     parser = argparse.ArgumentParser()
+    parser.add_argument("--train", default=1, type=int)  # 1 表示训练，0表示只进行eval
     parser.add_argument("--gamma", default=0.99,
                         type=float)  # q-learning中的gamma
     parser.add_argument("--epsilon_start", default=0.95,
@@ -39,12 +49,8 @@ def get_args():
     config = parser.parse_args()
 
     return config
-
-
-if __name__ == "__main__":
-
-    cfg = get_args()
-    # if gpu is to be used
+def train(cfg):
+    print('Start to train ! \n')
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
     env = gym.make('CartPole-v0').unwrapped # 可google为什么unwrapped gym，此处一般不需要
     env.seed(1) # 设置env随机种子
@@ -55,6 +61,8 @@ if __name__ == "__main__":
     rewards = []
     moving_average_rewards = []
     ep_steps = []
+    log_dir=os.path.split(os.path.abspath(__file__))[0]+"/logs/train/" + SEQUENCE
+    writer = SummaryWriter(log_dir)
     for i_episode in range(1, cfg.max_episodes+1):
         state = env.reset() # reset环境状态
         ep_reward = 0
@@ -80,17 +88,20 @@ if __name__ == "__main__":
         else:
             moving_average_rewards.append(
                 0.9*moving_average_rewards[-1]+0.1*ep_reward)
+        writer.add_scalars('rewards',{'raw':rewards[-1], 'moving_average': moving_average_rewards[-1]}, i_episode)
+        writer.add_scalar('steps_of_each_episode',
+                          ep_steps[-1], i_episode)
+    writer.close()
+    print('Complete training！')
     # 存储reward等相关结果
-    import os
-    import numpy as np
-    output_path = os.path.dirname(__file__)+"/result/"
-    # 检测是否存在文件夹
-    if not os.path.exists(output_path):
-        os.mkdir(output_path)
-    np.save(output_path+"rewards.npy", rewards)
-    np.save(output_path+"moving_average_rewards.npy", moving_average_rewards)
-    np.save(output_path+"steps.npy", ep_steps)
-    print('Complete！')
-    plot(rewards)
-    plot(moving_average_rewards, ylabel="moving_average_rewards")
-    plot(ep_steps, ylabel="steps_of_each_episode")
+    np.save(RESULT_PATH+"rewards.npy", rewards)
+    np.save(RESULT_PATH+"moving_average_rewards.npy", moving_average_rewards)
+    np.save(RESULT_PATH+"steps.npy", ep_steps)
+    print('Complete training！')
+
+if __name__ == "__main__":
+
+    cfg = get_args()
+    # if gpu is to be used
+    
+  

@@ -5,14 +5,12 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-08-22 15:44:31
+LastEditTime: 2020-10-15 19:53:28
 @Discription: 
 @Environment: python 3.7.7
 '''
 '''off-policy
 '''
-
-
 
 
 import torch
@@ -114,7 +112,8 @@ class DQN:
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step()  # 更新模型
         
-    def save_model():
-        pass
-    def load_model():
-        pass
+    def save_model(self,path):
+        torch.save(self.target_actor.state_dict(), path)
+
+    def load_model(self,path):
+        self.actor.load_state_dict(torch.load(path))  

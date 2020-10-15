@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-10-15 19:50:48
+LastEditTime: 2020-10-15 21:23:39
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -24,11 +24,7 @@ import datetime
 
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
-if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
-        os.mkdir(SAVED_MODEL_PATH)
 RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
-if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
-        os.mkdir(RESULT_PATH)
 
 def get_args():
     '''模型建立好之后只需要在这里调参
@@ -101,20 +97,24 @@ def train(cfg):
     writer.close()
     print('Complete training！')
     ''' 保存模型 '''
-    agent.save_model(+'checkpoint.pth')
+    if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
+        os.mkdir(SAVED_MODEL_PATH)
+    agent.save_model(SAVED_MODEL_PATH+'checkpoint.pth')
     '''存储reward等相关结果'''
+    if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
+        os.mkdir(RESULT_PATH)
     np.save(RESULT_PATH+'rewards_train.npy', rewards)
     np.save(RESULT_PATH+'moving_average_rewards_train.npy', moving_average_rewards)
     np.save(RESULT_PATH+'steps_train.npy', ep_steps)
 
-def eval(cfg):
+def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
     print('start to eval ! \n')
     env = NormalizedActions(gym.make("Pendulum-v0"))
     n_states = env.observation_space.shape[0]
     n_actions = env.action_space.shape[0]
     agent = DDPG(n_states, n_actions, critic_lr=1e-3,
                  actor_lr=1e-4, gamma=0.99, soft_tau=1e-2, memory_capacity=100000, batch_size=128)
-    agent.load_model(SAVED_MODEL_PATH+'checkpoint.pth')
+    agent.load_model(saved_model_path+'checkpoint.pth')
     rewards = []
     moving_average_rewards = []
     ep_steps = []
@@ -145,6 +145,8 @@ def eval(cfg):
                           ep_steps[-1], i_episode)
     writer.close()
     '''存储reward等相关结果'''
+    if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
+        os.mkdir(RESULT_PATH)
     np.save(RESULT_PATH+'rewards_eval.npy', rewards)
     np.save(RESULT_PATH+'moving_average_rewards_eval.npy', moving_average_rewards)
     np.save(RESULT_PATH+'steps_eval.npy', ep_steps)
@@ -155,4 +157,5 @@ if __name__ == "__main__":
         train(cfg)
         eval(cfg)
     else:
-        eval(cfg)
+        model_path = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"
+        eval(cfg,saved_model_path=model_path)
