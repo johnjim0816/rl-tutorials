@@ -5,14 +5,14 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-09-02 01:24:50
+LastEditTime: 2020-10-14 16:40:35
 @Discription: 
 @Environment: python 3.7.7
 '''
 import torch
 import gym
 
-from ddpg import DDPG
+from agent import DDPG
 from env import NormalizedActions
 from noise import OUNoise
 from plot import plot

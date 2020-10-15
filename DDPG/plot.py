@@ -5,13 +5,13 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 16:30:09
 @LastEditor: John
-LastEditTime: 2020-09-02 01:20:03
+LastEditTime: 2020-09-21 10:16:28
 @Discription: 
 @Environment: python 3.7.7
 '''
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns; 
+import seaborn as sns
 import numpy as np
 import os 
 
