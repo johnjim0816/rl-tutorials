@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 16:30:09
 @LastEditor: John
-LastEditTime: 2020-10-15 19:55:15
+LastEditTime: 2020-10-15 22:01:50
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -20,7 +20,7 @@ def plot(item,ylabel='rewards_train', save_fig = True):
     sns.set()
     plt.figure()
     plt.plot(np.arange(len(item)), item)
-    plt.title(ylabel+' of DDPG') 
+    plt.title(ylabel+' of DQN') 
     plt.ylabel(ylabel)
     plt.xlabel('episodes')
     if save_fig:
