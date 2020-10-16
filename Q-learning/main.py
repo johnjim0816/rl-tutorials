@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2020-10-14 16:46:16
+LastEditTime: 2020-10-16 09:19:44
 Discription: 
 Environment: 
 '''
@@ -26,7 +26,7 @@ Environment:
 # -*- coding: utf-8 -*-
 
 import gym
-from gridworld import CliffWalkingWapper, FrozenLakeWapper
+from gridworld_env import CliffWalkingWapper, FrozenLakeWapper
 from agent import QLearning
 import os
 import numpy as np
