@@ -22,3 +22,4 @@ python main.py --train 0
 ```python
 tensorboard --logdir logs 
 ```
+
