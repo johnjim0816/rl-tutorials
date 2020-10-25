@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2020-10-14 16:43:51
+LastEditTime: 2020-10-25 16:01:07
 Discription: 
 Environment: 
 '''
@@ -90,8 +90,8 @@ class QLearning(object):
         np.save(npy_file, self.Q_table)
         print(npy_file + ' saved.')
 
-    def load(self, npy_file='./Q_table.npy'):
+    def load(self, path):
         '''从文件中读取数据到 Q表格
         '''
-        self.Q_table = np.load(npy_file)
-        print(npy_file + 'loaded.')
+        self.Q_table = np.load(path)
+        print(path + 'loaded.')

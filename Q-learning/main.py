@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2020-10-16 09:19:44
+LastEditTime: 2020-10-25 16:06:13
 Discription: 
 Environment: 
 '''
@@ -33,12 +33,17 @@ import numpy as np
 import argparse
 import time
 import matplotlib.pyplot as plt
+import datetime
 
+SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
+RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
 
 def get_args():
     '''训练的模型参数
     '''
     parser = argparse.ArgumentParser()
+    parser.add_argument("--train", default=0, type=int)  # 1 表示训练，0表示只进行eval
     parser.add_argument("--gamma", default=0.9,
                         type=float, help="reward 的衰减率")
     parser.add_argument("--epsilon_start", default=0.9,
@@ -114,7 +119,7 @@ def train(cfg):
     np.save(output_path+"steps_train.npy", steps)
 
 
-def eval(cfg):
+def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
 
     env = gym.make("CliffWalking-v0")  # 0 up, 1 right, 2 down, 3 left
     env = CliffWalkingWapper(env)
@@ -124,7 +129,7 @@ def eval(cfg):
         learning_rate=cfg.policy_lr,
         gamma=cfg.gamma,
         epsilon_start=cfg.epsilon_start, epsilon_end=cfg.epsilon_end, epsilon_decay=cfg.epsilon_decay)
-    agent.load()  # 导入保存的模型
+    agent.load(saved_model_path+'Q_table.npy')  # 导入保存的模型
     rewards = []  # 记录所有episode的reward
     MA_rewards = []  # 记录滑动平均的reward
     steps = []  # 记录所有episode的steps
@@ -132,6 +137,7 @@ def eval(cfg):
         ep_reward = 0  # 记录每个episode的reward
         ep_steps = 0  # 记录每个episode走了多少step
         obs = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
+        print(obs)
         while True:
             action = agent.choose_action(obs, train=False)  # 根据算法选择一个动作
             next_obs, reward, done, _ = env.step(action)  # 与环境进行一个交互
@@ -154,21 +160,22 @@ def eval(cfg):
               (i_episode, ep_steps, ep_reward))
     plt.plot(MA_rewards)
     plt.show()
-    
     output_path = os.path.dirname(__file__)+"/result/"
     # 检测是否存在文件夹
     if not os.path.exists(output_path):
         os.mkdir(output_path)
-    np.save(output_path+"rewards_test.npy", rewards)
-    np.save(output_path+"MA_rewards_test.npy", MA_rewards)
-    np.save(output_path+"steps_test.npy", steps)
+    np.save(output_path+"rewards_eval.npy", rewards)
+    np.save(output_path+"MA_rewards_eval.npy", MA_rewards)
+    np.save(output_path+"steps_eval.npy", steps)
 
 
-def main():
-    cfg = get_args()
-    # train(cfg)
-    eval(cfg)
 
 
 if __name__ == "__main__":
-    main()
+    cfg = get_args()
+    if cfg.train:
+        train(cfg)
+        eval(cfg)
+    else:
+        model_path = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"
+        eval(cfg,saved_model_path=model_path)
