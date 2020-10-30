@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-10-15 21:31:19
 LastEditor: John
-LastEditTime: 2020-10-15 21:31:25
+LastEditTime: 2020-10-31 00:03:53
 Discription: 
 Environment: 
 '''
@@ -19,3 +19,9 @@ def save_results(rewards,moving_average_rewards,ep_steps,path=RESULT_PATH):
     np.save(RESULT_PATH+'rewards_train.npy', rewards)
     np.save(RESULT_PATH+'moving_average_rewards_train.npy', moving_average_rewards)
     np.save(RESULT_PATH+'steps_train.npy',ep_steps )
+    
+def save_model(agent,model_path='./saved_model'):
+    if not os.path.exists(model_path): # 检测是否存在文件夹
+        os.mkdir(model_path)
+    agent.save_model(model_path+'checkpoint.pth')
+    print('model saved！')

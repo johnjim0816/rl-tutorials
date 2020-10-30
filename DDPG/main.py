@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-10-15 21:23:39
+LastEditTime: 2020-10-31 00:04:59
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -21,6 +21,7 @@ import numpy as np
 import argparse
 from torch.utils.tensorboard import SummaryWriter
 import datetime
+from utils import save_model,save_results
 
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
@@ -97,15 +98,9 @@ def train(cfg):
     writer.close()
     print('Complete training！')
     ''' 保存模型 '''
-    if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
-        os.mkdir(SAVED_MODEL_PATH)
-    agent.save_model(SAVED_MODEL_PATH+'checkpoint.pth')
+    save_model(agent,model_path=SAVED_MODEL_PATH)
     '''存储reward等相关结果'''
-    if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
-        os.mkdir(RESULT_PATH)
-    np.save(RESULT_PATH+'rewards_train.npy', rewards)
-    np.save(RESULT_PATH+'moving_average_rewards_train.npy', moving_average_rewards)
-    np.save(RESULT_PATH+'steps_train.npy', ep_steps)
+    save_results(rewards,moving_average_rewards,ep_steps,tag='train',result_path=RESULT_PATH)
 
 def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
     print('start to eval ! \n')
