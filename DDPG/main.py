@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-11-03 17:06:03
+LastEditTime: 2020-11-03 17:09:11
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -36,7 +36,7 @@ def get_args():
                         type=int, help="capacity of Replay Memory")
     parser.add_argument("--batch_size", default=128, type=int,
                         help="batch size of memory sampling")
-    parser.add_argument("--train_eps", default=200, type=int)
+    parser.add_argument("--train_eps", default=400, type=int)
     parser.add_argument("--train_steps", default=200, type=int)
     parser.add_argument("--eval_eps", default=200, type=int)  # 训练的最大episode数目
     parser.add_argument("--eval_steps", default=200,
