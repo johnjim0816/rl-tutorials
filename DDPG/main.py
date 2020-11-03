@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-10-31 00:04:59
+LastEditTime: 2020-11-03 17:06:03
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -20,12 +20,8 @@ import os
 import numpy as np
 import argparse
 from torch.utils.tensorboard import SummaryWriter
-import datetime
+from utils import SEQUENCE, SAVED_MODEL_PATH, RESULT_PATH
 from utils import save_model,save_results
-
-SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
-RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
 
 def get_args():
     '''模型建立好之后只需要在这里调参

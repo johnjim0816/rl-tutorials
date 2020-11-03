@@ -5,13 +5,18 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-10-15 21:31:19
 LastEditor: John
-LastEditTime: 2020-10-31 00:03:53
+LastEditTime: 2020-11-03 17:05:48
 Discription: 
 Environment: 
 '''
 import os
 import numpy as np
+import datetime
+
+SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
 RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
+
 
 def save_results(rewards,moving_average_rewards,ep_steps,path=RESULT_PATH):
     if not os.path.exists(path): # 检测是否存在文件夹
