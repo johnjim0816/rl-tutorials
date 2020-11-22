@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2020-10-30 16:56:38
+LastEditTime: 2020-11-10 16:14:17
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -107,7 +107,7 @@ def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
     env.seed(1) # 设置env随机种子
     n_states = env.observation_space.shape[0]
     n_actions = env.action_space.n
-    agent = DQN(n_states=n_states, n_actions=n_actions, device=device, gamma=cfg.gamma, epsilon_start=cfg.epsilon_start,
+    agent = DQN(n_states=n_states, n_actions=n_actions, device="cpu", gamma=cfg.gamma, epsilon_start=cfg.epsilon_start,
                 epsilon_end=cfg.epsilon_end, epsilon_decay=cfg.epsilon_decay, policy_lr=cfg.policy_lr, memory_capacity=cfg.memory_capacity, batch_size=cfg.batch_size)
     agent.load_model(saved_model_path+'checkpoint.pth')
     rewards = []
