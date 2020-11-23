@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 10:01:09
 @LastEditor: John
-LastEditTime: 2020-08-23 11:28:29
+LastEditTime: 2020-11-23 11:59:40
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # Get screen size so that we can initialize layers correctly based on shape
     # returned from AI gym. Typical dimensions at this point are close to 3x40x90
     # which is the result of a clamped and down-scaled render buffer in get_screen(env,device)
-    env = gym.make('CartPole-v0').unwrapped
+    env = gym.make('CartPole-v0').unwrapped # 因为这里环境的state需要从默认的向量改为图像，所以要unwrapped更改state
     env.reset()
     init_screen = get_screen(env, device)
     _, _, screen_height, screen_width = init_screen.shape
