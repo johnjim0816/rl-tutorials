@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-11-22 23:21:53
 LastEditor: John
-LastEditTime: 2020-11-23 17:06:03
+LastEditTime: 2020-11-24 19:52:40
 Discription: 
 Environment: 
 '''
@@ -21,9 +21,9 @@ from params import SEQUENCE, SAVED_MODEL_PATH, RESULT_PATH
 from utils import save_results,save_model
 from plot import plot
 def train(cfg):
-    env,n_states,n_actions = env_init()
+    env,state_dim,n_actions = env_init()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
-    agent  = PolicyGradient(n_states,device = device,lr = cfg.policy_lr)
+    agent  = PolicyGradient(state_dim,device = device,lr = cfg.policy_lr)
     '''下面带pool都是存放的transition序列用于gradient'''
     state_pool = [] # 存放每batch_size个episode的state序列
     action_pool = []
@@ -63,7 +63,6 @@ def train(cfg):
         writer.add_scalars('rewards',{'raw':rewards[-1], 'moving_average': moving_average_rewards[-1]}, i_episode+1)
     writer.close()
     print('Complete training！')
-
     save_model(agent,model_path=SAVED_MODEL_PATH)
     '''存储reward等相关结果'''
     save_results(rewards,moving_average_rewards,tag='train',result_path=RESULT_PATH)
@@ -71,9 +70,9 @@ def train(cfg):
     plot(moving_average_rewards,ylabel='moving_average_rewards_train')
         
 def eval(cfg,saved_model_path = SAVED_MODEL_PATH):
-    env,n_states,n_actions = env_init()
+    env,state_dim,n_actions = env_init()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
-    agent  = PolicyGradient(n_states,device = device,lr = cfg.policy_lr)
+    agent  = PolicyGradient(state_dim,device = device,lr = cfg.policy_lr)
     agent.load_model(saved_model_path+'checkpoint.pth')
     rewards = []
     moving_average_rewards = []

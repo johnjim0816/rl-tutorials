@@ -18,9 +18,9 @@ from model import FCN
 
 class PolicyGradient:
     
-    def __init__(self, n_states,device='cpu',gamma = 0.99,lr = 0.01,batch_size=5):
+    def __init__(self, state_dim,device='cpu',gamma = 0.99,lr = 0.01,batch_size=5):
         self.gamma = gamma
-        self.policy_net = FCN(n_states)
+        self.policy_net = FCN(state_dim)
         self.optimizer = torch.optim.RMSprop(self.policy_net.parameters(), lr=lr)
         self.batch_size = batch_size
 
