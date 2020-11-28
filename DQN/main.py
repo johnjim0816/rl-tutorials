@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2020-11-10 16:14:17
+LastEditTime: 2020-11-23 11:58:17
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -53,7 +53,7 @@ def get_args():
 def train(cfg):
     print('Start to train ! \n')
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
-    env = gym.make('CartPole-v0').unwrapped # 可google为什么unwrapped gym，此处一般不需要
+    env = gym.make('CartPole-v0')
     env.seed(1) # 设置env随机种子
     n_states = env.observation_space.shape[0]
     n_actions = env.action_space.n
