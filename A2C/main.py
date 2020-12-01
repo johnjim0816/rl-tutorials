@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-11-08 22:19:56
+LastEditTime: 2020-12-01 19:59:40
 @Discription: 
 @Environment: python 3.7.9
 '''
@@ -63,10 +63,10 @@ def test_env(agent,device='cpu'):
 def train(cfg):
     print('Start to train ! \n')
     envs = make_envs(num_envs=16,env_name="CartPole-v0")
-    n_states = envs.observation_space.shape[0]
-    n_actions = envs.action_space.n
+    state_dim = envs.observation_space.shape[0]
+    action_dim = envs.action_space.n
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    agent = A2C(n_states, n_actions, hidden_dim=256)
+    agent = A2C(state_dim, action_dim, hidden_dim=256)
     # moving_average_rewards = []
     # ep_steps = []
     log_dir=os.path.split(os.path.abspath(__file__))[0]+"/logs/train/" + SEQUENCE
@@ -132,9 +132,9 @@ def train(cfg):
 # def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
 #     print('start to eval ! \n')
 #     env = NormalizedActions(gym.make("Pendulum-v0"))
-#     n_states = env.observation_space.shape[0]
-#     n_actions = env.action_space.shape[0]
-#     agent = DDPG(n_states, n_actions, critic_lr=1e-3,
+#     state_dim = env.observation_space.shape[0]
+#     action_dim = env.action_space.shape[0]
+#     agent = DDPG(state_dim, action_dim, critic_lr=1e-3,
 #                  actor_lr=1e-4, gamma=0.99, soft_tau=1e-2, memory_capacity=100000, batch_size=128)
 #     agent.load_model(saved_model_path+'checkpoint.pth')
 #     rewards = []
