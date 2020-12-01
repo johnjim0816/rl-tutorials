@@ -59,6 +59,8 @@ gym 0.17.3
 
 跟DQN一样，只不过采取图像作为state，因此使用CNN网络而不是普通的全连接网络(FCN)
 
+[Hierarchical DQN](https://arxiv.org/abs/1604.06057)
+
 ## Policy-based
 
 ### DDPG
@@ -76,4 +78,4 @@ gym 0.17.3
 
 [RL-Adventure-2](https://github.com/higgsfield/RL-Adventure-2)
 
-[RL-Adventure](https://github.com/higgsfield/RL-Adventure1`2qsz9)
+[RL-Adventure](https://github.com/higgsfield/RL-Adventure)
