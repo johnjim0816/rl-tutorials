@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-10-16 09:42:54
+LastEditTime: 2020-12-22 14:44:46
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -100,17 +100,25 @@ class DQN:
             done_batch), device=self.device).unsqueeze(1)  # 将bool转为float然后转为张量
 
         # 计算当前(s_t,a)对应的Q(s_t, a)
-        # 关于torch.gather,对于a=torch.Tensor([[1,2],[3,4]])
-        # 那么a.gather(1,torch.Tensor([[0],[1]]))=torch.Tensor([[1],[3]])
-        q_predict = self.policy_net(state_batch).gather(
-            dim=1, index=action_batch)  # 等价于self.forward
+        q_values = self.policy_net(state_batch) 
+        next_q_values = self.policy_net(state_batch)
+        # 代入当前选择的action，得到Q(s_t|a=a_t)
+        q_value = q_values.gather(dim=1, index=action_batch)
+        '''以下是Nature DQN的q_target计算方式
         # 计算所有next states的Q'(s_{t+1})的最大值，Q'为目标网络的q函数
-        next_state_values = self.target_net(
+        next_q_state_value = self.target_net(
             next_state_batch).max(1)[0].detach()  # 比如tensor([ 0.0060, -0.0171,...,])
         # 计算 q_target
         # 对于终止状态，此时done_batch[0]=1, 对应的expected_q_value等于reward
-        q_target = reward_batch + self.gamma * next_state_values * (1-done_batch[0])
-        self.loss = nn.MSELoss()(q_predict, q_target.unsqueeze(1))  # 计算 均方误差loss
+        q_target = reward_batch + self.gamma * next_q_state_value * (1-done_batch[0])
+        '''
+        '''以下是Double DQNq_target计算方式，与NatureDQN稍有不同'''
+        next_target_values = self.target_net(
+            next_state_batch)
+        # 选出Q(s_t‘, a)对应的action，代入到next_target_values获得target net对应的next_q_value，即Q’(s_t|a=argmax Q(s_t‘, a))
+        next_target_q_value = next_target_values.gather(1, torch.max(next_q_values, 1)[1].unsqueeze(1)).squeeze(1)
+        q_target = reward_batch + self.gamma * next_target_q_value * (1-done_batch[0])
+        self.loss = nn.MSELoss()(q_value, q_target.unsqueeze(1))  # 计算 均方误差loss
         # 优化模型
         self.optimizer.zero_grad()  # zero_grad清除上一步所有旧的gradients from the last step
         # loss.backward()使用backpropagation计算loss相对于所有parameters(需要gradients)的微分
