@@ -2,8 +2,6 @@
 
 ## 写在前面
 
-【待完善】
-
 本项目用于学习RL基础算法，尽量做到：
 
 * 注释详细
@@ -16,6 +14,7 @@
   * ```memory.py``` 保存Replay Buffer，用于off-policy
   * ```agent.py``` RL核心算法，比如dqn等，主要包含update和select_action两个方法，
   * ```main.py``` 运行主函数
+  * ```params.py``` 保存各种参数
   * ```plot.py``` 利用matplotlib或seaborn绘制rewards图，包括滑动平均的reward，结果保存在result文件夹中
 
 ## 运行环境
