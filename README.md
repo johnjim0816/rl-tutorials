@@ -56,7 +56,7 @@ gym 0.17.3
 
 [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)
 
-跟DQN一样，只不过采取图像作为state，因此使用CNN网络而不是普通的全连接网络(FCN)
+跟DQN一样，只不过采取图像作为state，因此使用CNN网络而不是普通的全连接网络(MLP)
 
 [Hierarchical DQN](https://arxiv.org/abs/1604.06057)
 

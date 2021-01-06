@@ -11,10 +11,10 @@ Environment:
 '''
 import torch.nn as nn
 import torch.nn.functional as F
-class FCN(nn.Module):
+class MLP(nn.Module):
     ''' 全连接网络'''
     def __init__(self,state_dim):
-        super(FCN, self).__init__()
+        super(MLP, self).__init__()
         # 24和36为hidden layer的层数，可根据state_dim, n_actions的情况来改变
         self.fc1 = nn.Linear(state_dim, 36)
         self.fc2 = nn.Linear(36, 36)

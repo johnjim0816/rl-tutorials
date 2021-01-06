@@ -21,7 +21,7 @@ import random
 import math
 import numpy as np
 from memory import ReplayBuffer
-from model import FCN
+from model import MLP
 class DQN:
     def __init__(self, n_states, n_actions, gamma=0.99, epsilon_start=0.9, epsilon_end=0.05, epsilon_decay=200, memory_capacity=10000, policy_lr=0.01, batch_size=128, device="cpu"):
         self.actions_count = 0
@@ -34,8 +34,8 @@ class DQN:
         self.epsilon_end = epsilon_end
         self.epsilon_decay = epsilon_decay
         self.batch_size = batch_size
-        self.policy_net = FCN(n_states, n_actions).to(self.device)
-        self.target_net = FCN(n_states, n_actions).to(self.device)
+        self.policy_net = MLP(n_states, n_actions).to(self.device)
+        self.target_net = MLP(n_states, n_actions).to(self.device)
         # target_net的初始模型参数完全复制policy_net
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()  # 不启用 BatchNormalization 和 Dropout
