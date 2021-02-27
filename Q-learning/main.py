@@ -169,8 +169,6 @@ def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
     np.save(output_path+"steps_eval.npy", steps)
 
 
-
-
 if __name__ == "__main__":
     cfg = get_args()
     if cfg.train:
