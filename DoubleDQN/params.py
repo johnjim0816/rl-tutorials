@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-12-22 15:22:17
 LastEditor: John
-LastEditTime: 2020-12-22 15:26:09
+LastEditTime: 2021-01-21 14:30:38
 Discription: 
 Environment: 
 '''
@@ -17,6 +17,9 @@ ALGO_NAME = 'Double DQN'
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
 RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
+
+TRAIN_LOG_DIR=os.path.split(os.path.abspath(__file__))[0]+"/logs/train/" + SEQUENCE
+EVAL_LOG_DIR=os.path.split(os.path.abspath(__file__))[0]+"/logs/eval/" + SEQUENCE
 
 def get_args():
     '''模型参数

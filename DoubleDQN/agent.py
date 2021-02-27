@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-12-22 16:20:35
+LastEditTime: 2021-01-21 14:33:04
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -86,8 +86,8 @@ class DQN:
         # 从memory中随机采样transition
         state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.memory.sample(
             self.batch_size)
-        # 转为张量
-        # 例如tensor([[-4.5543e-02, -2.3910e-01,  1.8344e-02,  2.3158e-01],...,[-1.8615e-02, -2.3921e-01, -1.1791e-02,  2.3400e-01]])
+        ### 转为张量 ###
+        print(state_batch)
         state_batch = torch.tensor(
             state_batch, device=self.device, dtype=torch.float)
         action_batch = torch.tensor(action_batch, device=self.device).unsqueeze(
@@ -96,6 +96,7 @@ class DQN:
             reward_batch, device=self.device, dtype=torch.float)  # tensor([1., 1.,...,1])
         next_state_batch = torch.tensor(
             next_state_batch, device=self.device, dtype=torch.float)
+        
         done_batch = torch.tensor(np.float32(
             done_batch), device=self.device).unsqueeze(1)  # 将bool转为float然后转为张量
 

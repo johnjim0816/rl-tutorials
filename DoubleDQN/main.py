@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2020-12-22 15:39:46
+LastEditTime: 2021-01-21 14:32:35
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -15,6 +15,7 @@ from torch.utils.tensorboard import SummaryWriter
 import os
 from agent import DQN
 from params import SEQUENCE,SAVED_MODEL_PATH,RESULT_PATH
+from params import TRAIN_LOG_DIR,EVAL_LOG_DIR
 from params import get_args
 from utils import save_results
 
@@ -30,8 +31,7 @@ def train(cfg):
     rewards = []
     moving_average_rewards = []
     ep_steps = []
-    log_dir=os.path.split(os.path.abspath(__file__))[0]+"/logs/train/" + SEQUENCE
-    writer = SummaryWriter(log_dir)
+    writer = SummaryWriter(TRAIN_LOG_DIR)
     for i_episode in range(1, cfg.train_eps+1):
         state = env.reset() # reset环境状态
         ep_reward = 0
@@ -48,7 +48,7 @@ def train(cfg):
         if i_episode % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         print('Episode:', i_episode, ' Reward: %i' %
-              int(ep_reward), 'n_steps:', i_step, 'done: ', done,' Explore: %.2f' % agent.epsilon)
+              int(ep_reward), 'n_steps:', i_step, ' Explore: %.2f' % agent.epsilon)
         ep_steps.append(i_step)
         rewards.append(ep_reward)
         # 计算滑动窗口的reward
@@ -84,8 +84,7 @@ def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
     rewards = []
     moving_average_rewards = []
     ep_steps = []
-    log_dir=os.path.split(os.path.abspath(__file__))[0]+"/logs/eval/" + SEQUENCE
-    writer = SummaryWriter(log_dir)
+    writer = SummaryWriter(EVAL_LOG_DIR)
     for i_episode in range(1, cfg.eval_eps+1):
         state = env.reset()  # reset环境状态
         ep_reward = 0
