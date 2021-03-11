@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-03-11 19:19:27
+LastEditTime: 2021-03-11 19:20:17
 Discription: 
 Environment: 
 '''
@@ -29,7 +29,6 @@ def get_args():
     '''
     parser = argparse.ArgumentParser()
     '''训练相关参数'''
-    parser.add_argument("--train", default=0, type=int)  # 1 表示训练，0表示只进行eval
     parser.add_argument("--n_episodes", default=500,
                         type=int, help="训练的最大episode数目")       
     '''算法相关参数'''
