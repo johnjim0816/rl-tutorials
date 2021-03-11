@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-03-11 19:20:17
+LastEditTime: 2021-03-11 19:22:50
 Discription: 
 Environment: 
 '''
@@ -48,7 +48,7 @@ def train(cfg,env,agent):
     # env = FrozenLakeWapper(env)
     rewards = []  # 记录所有episode的reward,
     steps = []  # 记录所有episode的steps
-    for i_episode in range(1, cfg.n_episodes+1):
+    for i_episode in range(cfg.n_episodes):
         ep_reward = 0  # 记录每个episode的reward
         ep_steps = 0  # 记录每个episode走了多少step
         obs = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
@@ -76,6 +76,33 @@ def train(cfg,env,agent):
     '''存储reward等相关结果'''
     save_results(rewards,tag='train',result_path=RESULT_PATH)
 
+def eval(cfg,env,agent):
+    # env = gym.make("FrozenLake-v0", is_slippery=False)  # 0 left, 1 down, 2 right, 3 up
+    # env = FrozenLakeWapper(env)
+    rewards = []  # 记录所有episode的reward,
+    steps = []  # 记录所有episode的steps
+    for i_episode in range(20):
+        ep_reward = 0  # 记录每个episode的reward
+        ep_steps = 0  # 记录每个episode走了多少step
+        obs = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
+        while True:
+            action = agent.choose_action(obs)  # 根据算法选择一个动作
+            next_obs, reward, done, _ = env.step(action)  # 与环境进行一个交互
+            obs = next_obs  # 存储上一个观察值
+            ep_reward += reward
+            ep_steps += 1  # 计算step数
+            if done:
+                break
+        steps.append(ep_steps)
+        # 计算滑动平均的reward
+        if rewards:
+            rewards.append(rewards[-1]*0.9+ep_reward*0.1)
+        else:
+            rewards.append(ep_reward)
+        print("Episode:{}/{}: reward:{:.1f}".format(i_episode+1, cfg.n_episodes,ep_reward))
+    plot(rewards)
+    '''存储reward等相关结果'''
+    save_results(rewards,tag='eval',result_path=RESULT_PATH)
     
 if __name__ == "__main__":
     cfg = get_args()
@@ -84,4 +111,5 @@ if __name__ == "__main__":
     n_actions = env.action_space.n
     agent = QLearning(n_actions,cfg)
     train(cfg,env,agent)
+    eval(cfg,env,agent)
     
