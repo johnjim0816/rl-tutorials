@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-10-07 20:57:11
 LastEditor: John
-LastEditTime: 2021-03-12 16:13:46
+LastEditTime: 2021-03-12 16:52:03
 Discription: 
 Environment: 
 '''
@@ -22,3 +22,4 @@ def plot_rewards(rewards,ma_rewards,tag="train",algo = "On-Policy First-Visit MC
     plt.savefig(path+"rewards_curve_{}".format(tag))
     plt.legend()
     plt.show()
+    
