@@ -32,34 +32,24 @@ gym 0.17.3
 
 本仓库使用到的环境信息请跳转[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md), 在各算法目录下也有相应说明(比如如何运行程序等)
 
-## Value-based
+## 算法进度
+
+|         算法名称         |                        相关论文材料                         |                备注                | 进度 |
+| :----------------------: | :---------------------------------------------------------: | :--------------------------------: | :--: |
+| On-Policy First-Visit MC |                                                             |                                    |  OK  |
+|        Q-Learning        |                                                             |                                    |  OK  |
+|          SARSA           |                                                             |                                    |  OK  |
+|           DQN            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                                    |  OK  |
+|         DQN-cnn          | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | 与DQN相比使用了CNN而不是全链接网络 |  OK  |
+|        DoubleDQN         |                                                             |                                    |  OK  |
+|     Hierarchical DQN     |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                    |      |
+|      PolicyGradient      |                                                             |                                    |  OK  |
+|           A2C            |                                                             |                                    |  OK  |
+|           DDPG           |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                                    |  OK  |
+|           TD3            | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                    |      |
+|                          |                                                             |                                    |      |
 
 
-
-### DQN
-
-[DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)
-
-
-### DQN-cnn
-
-[DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)
-
-跟DQN一样，只不过采取图像作为state，因此使用CNN网络而不是普通的全连接网络(MLP)
-
-[Hierarchical DQN](https://arxiv.org/abs/1604.06057)
-
-## Policy-based
-
-### DDPG
-
-[DDPG Paper](https://arxiv.org/abs/1509.02971)
-
-能够输出连续动作
-
-## TD3
-
-[Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477)
 
 ## Refs
 
