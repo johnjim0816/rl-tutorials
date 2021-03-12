@@ -19,18 +19,10 @@
 
 ## 运行环境
 
-python 3.7.9
-
-pytorch 1.6.0
-
-tensorboard 2.3.0 
-
-torchvision 0.7.0 
-
-gym 0.17.3
+python 3.7.9、pytorch 1.6.0、gym 0.18.0
 ## 使用说明
 
-本仓库使用到的环境信息请跳转[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md), 在各算法目录下也有相应说明(比如如何运行程序等)
+本repo使用到的[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)，在各算法目录下也有README说明
 
 ## 算法进度
 
