@@ -6,7 +6,7 @@
 
 ## 环境说明
 
-
+见[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)中的The Racetrack
 
 ## 算法伪代码
 
