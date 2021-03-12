@@ -1,5 +1,13 @@
 # Sarsa
 
+## 使用说明
+
+运行```main.py```即可
+
+## 环境说明
+
+
+
 ## 算法伪代码
 
 ![sarsa_algo](assets/sarsa_algo.png)
