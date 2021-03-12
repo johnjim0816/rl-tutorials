@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-03-11 19:16:27
+LastEditTime: 2021-03-12 16:07:29
 Discription: 
 Environment: 
 '''
@@ -60,4 +60,5 @@ class QLearning(object):
     def load(self, path):
         '''从文件中读取数据到 Q表格
         '''
+        import dill
         self.Q_table =torch.load(f='prod_dls.pkl',pickle_module=dill)

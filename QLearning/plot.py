@@ -21,12 +21,12 @@ def plot(item,ylabel='rewards'):
     plt.title(ylabel+' of Q-learning') 
     plt.ylabel(ylabel)
     plt.xlabel('episodes')
-    plt.savefig(os.path.dirname(__file__)+"/result/"+ylabel+".png")
+    plt.savefig(os.path.dirname(__file__)+"/results/"+ylabel+".png")
     plt.show()
 
 if __name__ == "__main__":
 
-    output_path = os.path.dirname(__file__)+"/result/"
+    output_path = os.path.dirname(__file__)+"/results/"
     rewards=np.load(output_path+"rewards_train.npy", )
     MA_rewards=np.load(output_path+"MA_rewards_train.npy")
     steps = np.load(output_path+"steps_train.npy")

@@ -13,7 +13,7 @@ import os
 import numpy as np
 
 
-def save_results(rewards,moving_average_rewards,tag='train',result_path='./result'):
+def save_results(rewards,moving_average_rewards,tag='train',result_path='./results'):
     '''保存reward等结果
     '''
     if not os.path.exists(result_path): # 检测是否存在文件夹

@@ -20,7 +20,7 @@ from utils import save_results,save_model
 
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/'
-RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/result/"+SEQUENCE+'/'
+RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/results/"+SEQUENCE+'/'
 
 def get_args():
     '''模型参数
