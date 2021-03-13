@@ -5,19 +5,19 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2021-03-13 11:48:13
+LastEditTime: 2021-03-13 13:37:46
 Discription: 
 Environment: 
 '''
 import torch.nn as nn
 import torch.nn.functional as F
-class MLP(nn.Module):
+class MLP1(nn.Module):
     ''' 多层感知机
         输入：state维度
         输出：概率
     '''
     def __init__(self,n_states,hidden_dim = 36):
-        super(MLP, self).__init__()
+        super(MLP1, self).__init__()
         # 24和36为hidden layer的层数，可根据state_dim, n_actions的情况来改变
         self.fc1 = nn.Linear(n_states, hidden_dim)
         self.fc2 = nn.Linear(hidden_dim,hidden_dim)

@@ -14,13 +14,13 @@ from torch.distributions import Bernoulli
 from torch.autograd import Variable
 import numpy as np
 
-from common.model import MLP
+from common.model import MLP1
 
 class PolicyGradient:
     
     def __init__(self, n_states,cfg):
         self.gamma = cfg.gamma
-        self.policy_net = MLP(n_states,hidden_dim=cfg.hidden_dim)
+        self.policy_net = MLP1(n_states,hidden_dim=cfg.hidden_dim)
         self.optimizer = torch.optim.RMSprop(self.policy_net.parameters(), lr=cfg.lr)
         self.batch_size = cfg.batch_size
 
