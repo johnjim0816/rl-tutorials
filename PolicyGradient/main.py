@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-11-22 23:21:53
 LastEditor: John
-LastEditTime: 2021-03-12 21:29:38
+LastEditTime: 2021-03-13 11:50:32
 Discription: 
 Environment: 
 '''
@@ -34,8 +34,10 @@ if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
 class PGConfig:
     def __init__(self):
         self.train_eps = 300 # 训练的episode数目
-        self.batch_size = 4
-        self.policy_lr = 0.01 # 学习率
+        self.batch_size = 8
+        self.lr = 0.01 # 学习率
+        self.gamma = 0.99
+        self.hidden_dim = 36 # 隐藏层维度
         
 def train(cfg,env,agent):
     '''下面带pool都是存放的transition序列用于gradient'''
@@ -81,8 +83,7 @@ if __name__ == "__main__":
     env.seed(1) # 设置env随机种子
     n_states = env.observation_space.shape[0]
     n_actions = env.action_space.n
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
-    agent  = PolicyGradient(n_states,device = device,lr = cfg.policy_lr)
+    agent  = PolicyGradient(n_states,cfg)
     rewards, ma_rewards = train(cfg,env,agent)
     agent.save_model(SAVED_MODEL_PATH)
     save_results(rewards,ma_rewards,tag='train',path=RESULT_PATH)

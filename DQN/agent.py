@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2020-11-22 11:12:30
+LastEditTime: 2021-03-13 11:37:43
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -20,7 +20,7 @@ import torch.nn.functional as F
 import random
 import math
 import numpy as np
-from memory import ReplayBuffer
+from common.memory import ReplayBuffer
 from model import MLP
 class DQN:
     def __init__(self, n_states, n_actions, gamma=0.99, epsilon_start=0.9, epsilon_end=0.05, epsilon_decay=200, memory_capacity=10000, policy_lr=0.01, batch_size=128, device="cpu"):
