@@ -12,7 +12,6 @@ Environment:
 import sys,os
 sys.path.append(os.getcwd()) # 添加当前终端路径
 from itertools import count
-import torch
 import datetime
 import gym
 from PolicyGradient.agent import PolicyGradient

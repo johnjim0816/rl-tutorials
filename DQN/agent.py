@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2021-03-13 11:37:43
+LastEditTime: 2021-03-13 13:59:03
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -16,42 +16,41 @@ LastEditTime: 2021-03-13 11:37:43
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 import random
 import math
 import numpy as np
 from common.memory import ReplayBuffer
-from model import MLP
+from common.model import MLP2
 class DQN:
-    def __init__(self, n_states, n_actions, gamma=0.99, epsilon_start=0.9, epsilon_end=0.05, epsilon_decay=200, memory_capacity=10000, policy_lr=0.01, batch_size=128, device="cpu"):
+    def __init__(self, n_states, n_actions, cfg):
         
         self.n_actions = n_actions  # 总的动作个数
-        self.device = device  # 设备，cpu或gpu等
-        self.gamma = gamma # 奖励的折扣因子
+        self.device = cfg.device  # 设备，cpu或gpu等
+        self.gamma = cfg.gamma # 奖励的折扣因子
         # e-greedy策略相关参数
-        self.actions_count = 0 # 用于epsilon的衰减计数
+        self.sample_count = 0 # 用于epsilon的衰减计数
         self.epsilon = 0
-        self.epsilon_start = epsilon_start
-        self.epsilon_end = epsilon_end
-        self.epsilon_decay = epsilon_decay
-        self.batch_size = batch_size
-        self.policy_net = MLP(n_states, n_actions).to(self.device)
-        self.target_net = MLP(n_states, n_actions).to(self.device)
+        self.epsilon_start = cfg.epsilon_start
+        self.epsilon_end = cfg.epsilon_end
+        self.epsilon_decay = cfg.epsilon_decay
+        self.batch_size = cfg.batch_size
+        self.policy_net = MLP2(n_states, n_actions,hidden_dim=128).to(self.device)
+        self.target_net = MLP2(n_states, n_actions,hidden_dim=128).to(self.device)
         # target_net的初始模型参数完全复制policy_net
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()  # 不启用 BatchNormalization 和 Dropout
         # 可查parameters()与state_dict()的区别，前者require_grad=True
-        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=policy_lr)
+        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr)
         self.loss = 0
-        self.memory = ReplayBuffer(memory_capacity)
+        self.memory = ReplayBuffer(cfg.memory_capacity)
 
     def choose_action(self, state, train=True):
         '''选择动作
         '''
         if train:
             self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
-                math.exp(-1. * self.actions_count / self.epsilon_decay)
-            self.actions_count += 1
+                math.exp(-1. * self.sample_count / self.epsilon_decay)
+            self.sample_count += 1
             if random.random() > self.epsilon:
                 with torch.no_grad():
                     # 先转为张量便于丢给神经网络,state元素数据原本为float64
@@ -121,8 +120,8 @@ class DQN:
             
         self.optimizer.step()  # 更新模型
 
-    def save_model(self,path):
-        torch.save(self.target_net.state_dict(), path)
+    def save(self,path):
+        torch.save(self.target_net.state_dict(), path+'dqn_checkpoint.pth')
 
-    def load_model(self,path):
-        self.target_net.load_state_dict(torch.load(path))  
+    def load(self,path):
+        self.target_net.load_state_dict(torch.load(path+'dqn_checkpoint.pth'))  
