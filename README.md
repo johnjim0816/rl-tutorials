@@ -33,7 +33,7 @@ python 3.7.9、pytorch 1.6.0、gym 0.18.0
 |          SARSA           |                                                             |                                    |  OK  |
 |           DQN            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                                    |  OK  |
 |         DQN-cnn          | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | 与DQN相比使用了CNN而不是全链接网络 |  OK  |
-|        DoubleDQN         |                                                             |                                    |  OK  |
+|        DoubleDQN         |                                                             |          效果不好，待改进          |  OK  |
 |     Hierarchical DQN     |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                    |      |
 |      PolicyGradient      |                                                             |                                    |  OK  |
 |           A2C            |                                                             |                                    |  OK  |
