@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2021-03-13 13:59:03
+LastEditTime: 2021-03-13 14:56:23
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -34,8 +34,8 @@ class DQN:
         self.epsilon_end = cfg.epsilon_end
         self.epsilon_decay = cfg.epsilon_decay
         self.batch_size = cfg.batch_size
-        self.policy_net = MLP2(n_states, n_actions,hidden_dim=128).to(self.device)
-        self.target_net = MLP2(n_states, n_actions,hidden_dim=128).to(self.device)
+        self.policy_net = MLP2(n_states, n_actions,hidden_dim=cfg.hidden_dim).to(self.device)
+        self.target_net = MLP2(n_states, n_actions,hidden_dim=cfg.hidden_dim).to(self.device)
         # target_net的初始模型参数完全复制policy_net
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.target_net.eval()  # 不启用 BatchNormalization 和 Dropout

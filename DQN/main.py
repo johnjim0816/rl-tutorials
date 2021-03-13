@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-13 14:09:22
+LastEditTime: 2021-03-13 14:56:50
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -46,6 +46,7 @@ class DQNConfig:
         self.eval_eps = 20 # 测试的episode数目
         self.eval_steps = 200 # 测试每个episode的最大长度
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
+        self.hidden_dim = 128 # 神经网络隐藏层维度
  
 def train(cfg,env,agent):
     print('Start to train !')
