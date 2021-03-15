@@ -2,20 +2,18 @@
 
 ## 写在前面
 
-本项目用于学习RL基础算法，尽量做到：
+本项目用于学习RL基础算法，尽量做到: **注释详细**，**结构清晰**。
 
-* 注释详细
-* 结构清晰
-  
-  代码结构清晰，主要分为以下几个脚本：
+代码结构主要分为以下几个脚本：
 
-  * ```env.py``` 用于构建强化学习环境，也可以重新normalize环境，比如给action加noise
-  * ```model.py``` 强化学习算法的基本模型，比如神经网络，actor，critic等
-  * ```memory.py``` 保存Replay Buffer，用于off-policy
-  * ```agent.py``` RL核心算法，比如dqn等，主要包含update和select_action两个方法，
-  * ```main.py``` 运行主函数
-  * ```params.py``` 保存各种参数
-  * ```plot.py``` 利用matplotlib或seaborn绘制rewards图，包括滑动平均的reward，结果保存在result文件夹中
+* ```model.py``` 强化学习算法的基本模型，比如神经网络，actor，critic等
+* ```memory.py``` 保存Replay Buffer，用于off-policy
+* ```plot.py``` 利用matplotlib或seaborn绘制rewards图，包括滑动平均的reward，结果保存在result文件夹中
+* ```env.py``` 用于构建强化学习环境，也可以重新自定义环境，比如给action加noise
+* ```agent.py``` RL核心算法，比如dqn等，主要包含update和choose_action两个方法，
+* ```main.py``` 运行主函数
+
+其中```model.py```,```memory.py```,```plot.py``` 由于不同算法都会用到，所以放入```common```文件夹中。
 
 ## 运行环境
 
@@ -39,7 +37,6 @@ python 3.7.9、pytorch 1.6.0、gym 0.18.0
 |           A2C            |                                                             |                                    |  OK  |
 |           DDPG           |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                                    |  OK  |
 |           TD3            | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                    |      |
-|                          |                                                             |                                    |      |
 
 
 ## Refs
@@ -48,3 +45,5 @@ python 3.7.9、pytorch 1.6.0、gym 0.18.0
 [RL-Adventure-2](https://github.com/higgsfield/RL-Adventure-2)
 
 [RL-Adventure](https://github.com/higgsfield/RL-Adventure)
+
+https://www.cnblogs.com/lucifer1997/p/13458563.html
