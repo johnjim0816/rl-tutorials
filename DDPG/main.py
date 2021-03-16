@@ -5,24 +5,38 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-11-03 17:09:11
+LastEditTime: 2021-03-17 01:08:43
 @Discription: 
 @Environment: python 3.7.7
 '''
-from token import NUMBER
-from typing import Sequence
+import sys,os
+sys.path.append(os.getcwd()) # 添加当前终端路径
 import torch
 import gym
-from agent import DDPG
-from env import NormalizedActions
-from noise import OUNoise
-import os
+from DDPG.agent import DDPG
+from DDPG.env import NormalizedActions,OUNoise
 import numpy as np
-import argparse
+import datetime
 from torch.utils.tensorboard import SummaryWriter
-from utils import SEQUENCE, SAVED_MODEL_PATH, RESULT_PATH
-from utils import save_model,save_results
+from common.plot import plot_rewards
+from common.utils import save_results
 
+SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
+SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/' # 生成保存的模型路径
+if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"): # 检测是否存在文件夹
+    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/")
+if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
+    os.mkdir(SAVED_MODEL_PATH)
+RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/results/"+SEQUENCE+'/' # 存储reward的路径
+if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/results/"): # 检测是否存在文件夹
+    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/results/")
+if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
+    os.mkdir(RESULT_PATH)
+
+class DDPGConfig:
+    def __init__(self):
+        self.gamma = 0.99
+        self.critic_lr = 1e-3   
 def get_args():
     '''模型建立好之后只需要在这里调参
     '''
