@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-13 14:59:45
+LastEditTime: 2021-03-17 01:05:16
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -20,14 +20,14 @@ from common.utils import save_results
 
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
 SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/' # 生成保存的模型路径
-if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"): # 检测是否存在文件夹
+if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"): 
     os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/")
-if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
+if not os.path.exists(SAVED_MODEL_PATH): 
     os.mkdir(SAVED_MODEL_PATH)
 RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/results/"+SEQUENCE+'/' # 存储reward的路径
-if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/results/"): # 检测是否存在文件夹
+if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/results/"): 
     os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/results/")
-if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
+if not os.path.exists(RESULT_PATH): 
     os.mkdir(RESULT_PATH)
 
 class DoubleDQNConfig:
