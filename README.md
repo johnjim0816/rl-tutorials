@@ -1,42 +1,46 @@
 
 
-## 写在前面
+[Eng](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README.md)|[中文]()
 
-本项目用于学习RL基础算法，尽量做到: **注释详细**，**结构清晰**。
+## Introduction
 
-代码结构主要分为以下几个脚本：
+This repo is used to learn basic RL algorithms, we will make it **detailed comment** and **clear structure** as much as possible:
 
-* ```model.py``` 强化学习算法的基本模型，比如神经网络，actor，critic等
-* ```memory.py``` 保存Replay Buffer，用于off-policy
-* ```plot.py``` 利用matplotlib或seaborn绘制rewards图，包括滑动平均的reward，结果保存在result文件夹中
-* ```env.py``` 用于构建强化学习环境，也可以重新自定义环境，比如给action加noise
-* ```agent.py``` RL核心算法，比如dqn等，主要包含update和choose_action两个方法，
-* ```main.py``` 运行主函数
+The code structure mainly contains several scripts as following：
 
-其中```model.py```,```memory.py```,```plot.py``` 由于不同算法都会用到，所以放入```common```文件夹中。
+* ```model.py``` basic network model of RL, like MLP, CNN
+* ```memory.py``` Replay Buffer
+* ```plot.py``` use seaborn to plot rewards curve，saved in folder ``` result```.
+* ```env.py``` to custom or normalize environments
+* ```agent.py``` core algorithms, include a python Class with functions(choose action, update)
+* ```main.py``` main function
 
-## 运行环境
+
+
+Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in different algorithms，thus they are put into ```common folder。
+
+## Runnig Environment
 
 python 3.7.9、pytorch 1.6.0、gym 0.18.0
-## 使用说明
+## Usage
 
-本repo使用到的[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)，在各算法目录下也有README说明
+Environment infomations see [环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)
 
-## 算法进度
+## Schedule
 
-|         算法名称         |                        相关论文材料                         |                备注                | 进度 |
-| :----------------------: | :---------------------------------------------------------: | :--------------------------------: | :--: |
-| On-Policy First-Visit MC |                                                             |                                    |  OK  |
-|        Q-Learning        |                                                             |                                    |  OK  |
-|          SARSA           |                                                             |                                    |  OK  |
-|           DQN            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                                    |  OK  |
-|         DQN-cnn          | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | 与DQN相比使用了CNN而不是全链接网络 |  OK  |
-|        DoubleDQN         |                                                             |          效果不好，待改进          |  OK  |
-|     Hierarchical DQN     |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                    |      |
-|      PolicyGradient      |                                                             |                                    |  OK  |
-|           A2C            |                                                             |                                    |  OK  |
-|           DDPG           |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                                    |  OK  |
-|           TD3            | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                    |      |
+|           Name           |                    Related materials(CN)                    |             Note              | Schedule |
+| :----------------------: | :---------------------------------------------------------: | :---------------------------: | :------: |
+| On-Policy First-Visit MC |                                                             |                               |    OK    |
+|        Q-Learning        |                                                             |                               |    OK    |
+|          SARSA           |                                                             |                               |    OK    |
+|           DQN            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                               |    OK    |
+|         DQN-cnn          | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | use CNN compare to normal DQN |    OK    |
+|        DoubleDQN         |                                                             |        Need to improve        |    OK    |
+|     Hierarchical DQN     |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                               |          |
+|      PolicyGradient      |                                                             |                               |    OK    |
+|           A2C            |                                                             |                               |    OK    |
+|           DDPG           |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                               |    OK    |
+|           TD3            | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                               |          |
 
 
 ## Refs
