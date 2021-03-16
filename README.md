@@ -28,7 +28,7 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 
 ## Schedule
 
-|           Name           |                    Related materials(CN)                    |             Note              | Schedule |
+|           Name           |                      Related materials                      |             Note              | Schedule |
 | :----------------------: | :---------------------------------------------------------: | :---------------------------: | :------: |
 | On-Policy First-Visit MC |                                                             |                               |    OK    |
 |        Q-Learning        |                                                             |                               |    OK    |
@@ -39,6 +39,8 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 |     Hierarchical DQN     |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                               |          |
 |      PolicyGradient      |                                                             |                               |    OK    |
 |           A2C            |                                                             |                               |    OK    |
+|           A3C            |                                                             |                               |          |
+|           PPO            |                                                             |                               |          |
 |           DDPG           |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                               |    OK    |
 |           TD3            | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                               |          |
 
