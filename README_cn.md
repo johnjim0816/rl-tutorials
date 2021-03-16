@@ -1,5 +1,5 @@
 
-[Eng]()|[中文]()
+[Eng](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README.md)|[中文](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README_cn.md)
 
 ## 写在前面
 
