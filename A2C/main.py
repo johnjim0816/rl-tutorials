@@ -5,44 +5,48 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2020-12-01 19:59:40
+LastEditTime: 2021-03-17 20:20:26
 @Discription: 
 @Environment: python 3.7.9
 '''
+import sys,os
+sys.path.append(os.getcwd()) # add current terminal path
 import torch
 import gym
-import os
-import numpy as np
-import argparse
-from torch.utils.tensorboard import SummaryWriter
+import datetime
 
-from agent import A2C
-from env import make_envs
-from utils import SEQUENCE, SAVED_MODEL_PATH, RESULT_PATH
-from utils import save_model,save_results
+from A2C.agent import A2C
+from A2C.env import make_envs
+from common.plot import plot_rewards
+from common.utils import save_results
 
-def get_args():
-    '''模型建立好之后只需要在这里调参
-    '''
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--train", default=1, type=int)  # 1 表示训练，0表示只进行eval
-    parser.add_argument("--gamma", default=0.99,
-                        type=float)  # reward 折扣因子
-    parser.add_argument("--lr", default=3e-4, type=float)  # critic学习率
-    parser.add_argument("--actor_lr", default=1e-4, type=float)
-    parser.add_argument("--memory_capacity", default=10000,
-                        type=int, help="capacity of Replay Memory")
-    parser.add_argument("--batch_size", default=128, type=int,
-                        help="batch size of memory sampling")
-    parser.add_argument("--train_eps", default=4000, type=int)
-    parser.add_argument("--train_steps", default=5, type=int)
-    parser.add_argument("--eval_eps", default=200, type=int)  # 训练的最大episode数目
-    parser.add_argument("--eval_steps", default=200,
-                        type=int)  # 训练每个episode的长度
-    parser.add_argument("--target_update", default=4, type=int,
-                        help="when(every default 10 eisodes) to update target net ")
-    config = parser.parse_args()
-    return config
+
+
+SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
+SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/' # 生成保存的模型路径
+if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"): 
+    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/")
+if not os.path.exists(SAVED_MODEL_PATH): 
+    os.mkdir(SAVED_MODEL_PATH)
+RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/results/"+SEQUENCE+'/' # 存储reward的路径
+if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/results/"): 
+    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/results/")
+if not os.path.exists(RESULT_PATH): 
+    os.mkdir(RESULT_PATH)
+
+class A2CConfig:
+    def __init__(self):
+        self.gamma = 0.99
+        self.lr = 3e-4 # learnning rate
+        self.actor_lr = 1e-4 # learnning rate of actor network
+        self.memory_capacity = 10000 # capacity of replay memory
+        self.batch_size = 128
+        self.train_eps = 4000
+        self.train_steps = 5
+        self.eval_eps = 200
+        self.eval_steps = 200
+        self.target_update = 4
+    
 
 def test_env(agent,device='cpu'):
     env = gym.make("CartPole-v0")
@@ -69,16 +73,14 @@ def train(cfg):
     agent = A2C(state_dim, action_dim, hidden_dim=256)
     # moving_average_rewards = []
     # ep_steps = []
-    log_dir=os.path.split(os.path.abspath(__file__))[0]+"/logs/train/" + SEQUENCE
-    writer = SummaryWriter(log_dir)
     state = envs.reset()
-    for i_episode in range(1, cfg.train_eps+1):
+    for i_episode in range(cfg.train_eps):
         log_probs = []
         values    = []
         rewards = []
         masks     = []
         entropy = 0
-        for i_step in range(1, cfg.train_steps+1):
+        for i_step in range(cfg.train_steps):
             state = torch.FloatTensor(state).to(device)
             dist, value = agent.model(state)
             action = dist.sample()
@@ -107,8 +109,7 @@ def train(cfg):
         agent.optimizer.zero_grad()
         loss.backward()
         agent.optimizer.step()
-    for _ in range(100):
-        print("test_reward",test_env(agent,device='cpu'))
+ 
         
         # print('Episode:', i_episode, ' Reward: %i' %
         #       int(ep_reward[0]), 'n_steps:', i_step)
@@ -122,65 +123,14 @@ def train(cfg):
         # writer.add_scalars('rewards',{'raw':rewards[-1], 'moving_average': moving_average_rewards[-1]}, i_episode)
         # writer.add_scalar('steps_of_each_episode',
         #                   ep_steps[-1], i_episode)
-    writer.close()
     print('Complete training！')
     ''' 保存模型 '''
     # save_model(agent,model_path=SAVED_MODEL_PATH)
     # '''存储reward等相关结果'''
     # save_results(rewards,moving_average_rewards,ep_steps,tag='train',result_path=RESULT_PATH)
 
-# def eval(cfg, saved_model_path = SAVED_MODEL_PATH):
-#     print('start to eval ! \n')
-#     env = NormalizedActions(gym.make("Pendulum-v0"))
-#     state_dim = env.observation_space.shape[0]
-#     action_dim = env.action_space.shape[0]
-#     agent = DDPG(state_dim, action_dim, critic_lr=1e-3,
-#                  actor_lr=1e-4, gamma=0.99, soft_tau=1e-2, memory_capacity=100000, batch_size=128)
-#     agent.load_model(saved_model_path+'checkpoint.pth')
-#     rewards = []
-#     moving_average_rewards = []
-#     ep_steps = []
-#     log_dir=os.path.split(os.path.abspath(__file__))[0]+"/logs/eval/" + SEQUENCE
-#     writer = SummaryWriter(log_dir)
-#     for i_episode in range(1, cfg.eval_eps+1):
-#         state = env.reset()  # reset环境状态
-#         ep_reward = 0
-#         for i_step in range(1, cfg.eval_steps+1):
-#             action = agent.choose_action(state)  # 根据当前环境state选择action
-#             next_state, reward, done, _ = env.step(action)  # 更新环境参数
-#             ep_reward += reward
-#             state = next_state  # 跳转到下一个状态
-#             if done:
-#                 break
-#         print('Episode:', i_episode, ' Reward: %i' %
-#               int(ep_reward), 'n_steps:', i_step, 'done: ', done)
-#         ep_steps.append(i_step)
-#         rewards.append(ep_reward)
-#         # 计算滑动窗口的reward
-#         if i_episode == 1:
-#             moving_average_rewards.append(ep_reward)
-#         else:
-#             moving_average_rewards.append(
-#                 0.9*moving_average_rewards[-1]+0.1*ep_reward)
-#         writer.add_scalars('rewards',{'raw':rewards[-1], 'moving_average': moving_average_rewards[-1]}, i_episode)
-#         writer.add_scalar('steps_of_each_episode',
-#                           ep_steps[-1], i_episode)
-#     writer.close()
-#     '''存储reward等相关结果'''
-#     if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
-#         os.mkdir(RESULT_PATH)
-#     np.save(RESULT_PATH+'rewards_eval.npy', rewards)
-#     np.save(RESULT_PATH+'moving_average_rewards_eval.npy', moving_average_rewards)
-#     np.save(RESULT_PATH+'steps_eval.npy', ep_steps)
 
 if __name__ == "__main__":
-    cfg = get_args()
+    cfg = A2CConfig()
     train(cfg)
-    
-    # cfg = get_args()
-    # if cfg.train:
-    #     train(cfg)
-    #     eval(cfg)
-    # else:
-    #     model_path = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"
-    #     eval(cfg,saved_model_path=model_path)
+

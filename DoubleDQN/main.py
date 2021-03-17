@@ -5,12 +5,12 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-17 01:05:16
+LastEditTime: 2021-03-17 20:11:19
 @Discription: 
 @Environment: python 3.7.7
 '''
 import sys,os
-sys.path.append(os.getcwd()) # 添加当前终端路径
+sys.path.append(os.getcwd()) # add current terminal path
 import gym
 import torch
 import datetime
