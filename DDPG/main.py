@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2021-03-17 20:41:46
+LastEditTime: 2021-03-19 19:57:00
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -17,7 +17,6 @@ import numpy as np
 import datetime
 from DDPG.agent import DDPG
 from DDPG.env import NormalizedActions,OUNoise
-from torch.utils.tensorboard import SummaryWriter
 from common.plot import plot_rewards
 from common.utils import save_results
 

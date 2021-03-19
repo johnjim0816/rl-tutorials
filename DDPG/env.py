@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-10 15:28:30
 @LastEditor: John
-LastEditTime: 2021-03-17 01:07:14
+LastEditTime: 2021-03-19 19:56:46
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -32,6 +32,8 @@ class NormalizedActions(gym.ActionWrapper):
         return action
 
 class OUNoise(object):
+    '''Ornstein–Uhlenbeck
+    '''
     def __init__(self, action_space, mu=0.0, theta=0.15, max_sigma=0.3, min_sigma=0.3, decay_period=100000):
         self.mu           = mu
         self.theta        = theta
