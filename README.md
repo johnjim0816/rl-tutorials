@@ -28,21 +28,23 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 
 ## Schedule
 
-|                             Name                             |                      Related materials                      |             Note              | Schedule |
-| :----------------------------------------------------------: | :---------------------------------------------------------: | :---------------------------: | :------: |
-|                   On-Policy First-Visit MC                   |                                                             |                               |    OK    |
-|                          Q-Learning                          |                                                             |                               |    OK    |
-|                            SARSA                             |                                                             |                               |    OK    |
-|                             DQN                              | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                               |    OK    |
-|                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | use CNN compare to normal DQN |    OK    |
-|                          DoubleDQN                           |                                                             |        Need to improve        |    OK    |
-|                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                               |          |
-|                        [PolicyGradient](https://github.com/JohnJim0816/rl-tutorials/tree/master/PolicyGradient)                        |                                                             |                               |    OK    |
-|                             A2C                              |       [A3C paper](https://arxiv.org/abs/1602.01783v2)       |                               |    OK    |
-|                             A3C                              |                                                             |                               |          |
-| [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        |                               |    OK    |
-|                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                               |    OK    |
-|                             TD3                              | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                               |          |
+|                             Name                             |                      Related materials                      | Used Envs                                                    |                            Notes                             |
+| :----------------------------------------------------------: | :---------------------------------------------------------: | ------------------------------------------------------------ | :----------------------------------------------------------: |
+| [On-Policy First-Visit MC](https://github.com/JohnJim0816/rl-tutorials/tree/master/MonteCarlo) |                                                             | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |                                                              |
+| [Q-Learning](http://wanggithub.com/JohnJim0816/rl-tutorials/tree/master/QLearning) |                                                             | [CliffWalking-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
+| [Sarsa](https://github.com/JohnJim0816/rl-tutorials/tree/master/Sarsa) |                                                             | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |                                                              |
+| [DQN](https://github.com/JohnJim0816/rl-tutorials/tree/master/DQN) | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) | [DQN算法实战](https://blog.csdn.net/JohnJim0/article/details/109557173) |
+|                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |              与DQN相比使用了CNN而不是全链接网络              |
+| [DoubleDQN](https://github.com/JohnJim0816/rl-tutorials/tree/master/DoubleDQN) |                                                             | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                       效果不好，待改进                       |
+|                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                                              |                                                              |
+| [PolicyGradient](https://github.com/JohnJim0816/rl-tutorials/tree/master/PolicyGradient) |                                                             | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
+|                             A2C                              |                                                             | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
+|                             A3C                              |                                                             |                                                              |                                                              |
+|                             SAC                              |                                                             |                                                              |                                                              |
+| [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) | [PPO算法实战](https://blog.csdn.net/JohnJim0/article/details/115126363) |
+|                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
+|                             TD3                              | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                                              |                                                              |
+|                             GAIL                             |                                                             |                                                              |                                                              |
 
 
 ## Refs
