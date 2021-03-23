@@ -37,7 +37,7 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 |                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | use CNN compare to normal DQN |    OK    |
 |                          DoubleDQN                           |                                                             |        Need to improve        |    OK    |
 |                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                               |          |
-|                        PolicyGradient                        |                                                             |                               |    OK    |
+|                        [PolicyGradient](https://github.com/JohnJim0816/rl-tutorials/tree/master/PolicyGradient)                        |                                                             |                               |    OK    |
 |                             A2C                              |       [A3C paper](https://arxiv.org/abs/1602.01783v2)       |                               |    OK    |
 |                             A3C                              |                                                             |                               |          |
 | [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        |                               |    OK    |
