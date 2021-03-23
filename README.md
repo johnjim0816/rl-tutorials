@@ -17,7 +17,7 @@ The code structure mainly contains several scripts as following：
 
 
 
-Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in different algorithms，thus they are put into ```common folder。
+Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in different algorithms，thus they are put into ```common``` folder。
 
 ## Runnig Environment
 
