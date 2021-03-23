@@ -1,34 +1,31 @@
 
-
 [Eng](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README.md)|[中文](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README_cn.md)
 
-## Introduction
+## 写在前面
 
-This repo is used to learn basic RL algorithms, we will make it **detailed comment** and **clear structure** as much as possible:
+本项目用于学习RL基础算法，尽量做到: **注释详细**，**结构清晰**。
 
-The code structure mainly contains several scripts as following：
+代码结构主要分为以下几个脚本：
 
-* ```model.py``` basic network model of RL, like MLP, CNN
-* ```memory.py``` Replay Buffer
-* ```plot.py``` use seaborn to plot rewards curve，saved in folder ``` result```.
-* ```env.py``` to custom or normalize environments
-* ```agent.py``` core algorithms, include a python Class with functions(choose action, update)
-* ```main.py``` main function
+* ```model.py``` 强化学习算法的基本模型，比如神经网络，actor，critic等
+* ```memory.py``` 保存Replay Buffer，用于off-policy
+* ```plot.py``` 利用matplotlib或seaborn绘制rewards图，包括滑动平均的reward，结果保存在result文件夹中
+* ```env.py``` 用于构建强化学习环境，也可以重新自定义环境，比如给action加noise
+* ```agent.py``` RL核心算法，比如dqn等，主要包含update和choose_action两个方法，
+* ```main.py``` 运行主函数
 
+其中```model.py```,```memory.py```,```plot.py``` 由于不同算法都会用到，所以放入```common```文件夹中。
 
-
-Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in different algorithms，thus they are put into ```common``` folder。
-
-## Runnig Environment
+## 运行环境
 
 python 3.7.9、pytorch 1.6.0、gym 0.18.0
-## Usage
+## 使用说明
 
-Environment infomations see [环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)
+本repo使用到的[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)，在各算法目录下也有README说明
 
-## Schedule
+## 算法进度
 
-|                             Name                             |                      Related materials                      | Used Envs                                                    |                            Notes                             |
+|                           算法名称                           |                        相关论文材料                         | 环境                                                         |                             备注                             |
 | :----------------------------------------------------------: | :---------------------------------------------------------: | ------------------------------------------------------------ | :----------------------------------------------------------: |
 | [On-Policy First-Visit MC](https://github.com/JohnJim0816/rl-tutorials/tree/master/MonteCarlo) |                                                             | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |                                                              |
 | [Q-Learning](http://wanggithub.com/JohnJim0816/rl-tutorials/tree/master/QLearning) |                                                             | [CliffWalking-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
@@ -45,6 +42,8 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 |                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
 |                             TD3                              | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                                              |                                                              |
 |                             GAIL                             |                                                             |                                                              |                                                              |
+
+
 
 
 ## Refs
