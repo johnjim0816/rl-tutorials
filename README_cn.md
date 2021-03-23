@@ -25,20 +25,20 @@ python 3.7.9、pytorch 1.6.0、gym 0.18.0
 
 ## 算法进度
 
-|                           算法名称                           |                        相关论文材料                         |                             备注                             | 环境 |
-| :----------------------------------------------------------: | :---------------------------------------------------------: | :----------------------------------------------------------: | :--: |
-| [On-Policy First-Visit MC](https://github.com/JohnJim0816/rl-tutorials/tree/master/MonteCarlo) |                                                             |                                                              |  OK  |
-|                          Q-Learning                          |                                                             |                                                              |  OK  |
-|                            SARSA                             |                                                             |                                                              |  OK  |
-|                             DQN                              | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [DQN算法实战](https://blog.csdn.net/JohnJim0/article/details/109557173) |  OK  |
-|                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |              与DQN相比使用了CNN而不是全链接网络              |  OK  |
-|                          DoubleDQN                           |                                                             |                       效果不好，待改进                       |  OK  |
-|                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                                              |      |
-| [PolicyGradient](https://github.com/JohnJim0816/rl-tutorials/tree/master/PolicyGradient) |                                                             |                                                              |  OK  |
-|                             A2C                              |                                                             |                                                              |  OK  |
-| [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [PPO算法实战](https://blog.csdn.net/JohnJim0/article/details/115126363) |  OK  |
-|                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                                                              |  OK  |
-|                             TD3                              | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                                              |      |
+|                           算法名称                           |                        相关论文材料                         |                             备注                             |                             环境                             |
+| :----------------------------------------------------------: | :---------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [On-Policy First-Visit MC](https://github.com/JohnJim0816/rl-tutorials/tree/master/MonteCarlo) |                                                             |                                                              | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |
+|                          Q-Learning                          |                                                             |                                                              | [CliffWalking-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                            SARSA                             |                                                             |                                                              | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |
+|                             DQN                              | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [DQN算法实战](https://blog.csdn.net/JohnJim0/article/details/109557173) | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |              与DQN相比使用了CNN而不是全链接网络              | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                          DoubleDQN                           |                                                             |                       效果不好，待改进                       | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                                              |                                                              |
+| [PolicyGradient](https://github.com/JohnJim0816/rl-tutorials/tree/master/PolicyGradient) |                                                             |                                                              | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                             A2C                              |                                                             |                                                              | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+| [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [PPO算法实战](https://blog.csdn.net/JohnJim0/article/details/115126363) | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                                                              | [Pendulum-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |
+|                             TD3                              | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                                              |                                                              |
 
 
 
