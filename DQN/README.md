@@ -17,8 +17,6 @@ https://blog.csdn.net/JohnJim0/article/details/109557173)
 
 ## 代码实战
 
-使用python3.7和torch1.7完成，运行```main.py``即可，思路如下。
-
 ### RL接口
 
 首先是强化学习训练的基本接口，即通用的训练模式：

@@ -1,5 +1,5 @@
 
-[Eng](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README.md)|[中文](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README_cn.md)
+[Eng](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README_en.md)|[中文](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/README.md)
 
 ## 写在前面
 
@@ -18,11 +18,10 @@
 
 ## 运行环境
 
-python 3.7.9、pytorch 1.6.0、gym 0.18.0
+python 3.7、pytorch 1.6.0~1.7.1、gym 0.17.0~0.18.0
 ## 使用说明
 
-本repo使用到的[环境说明](https://github.com/JohnJim0816/reinforcement-learning-tutorials/blob/master/env_info.md)，在各算法目录下也有README说明
-
+对应算法文件夹下运行```main.py```即可
 ## 算法进度
 
 |                           算法名称                           |                        相关论文材料                         | 环境                                                         |                             备注                             |
