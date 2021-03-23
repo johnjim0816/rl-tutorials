@@ -18,7 +18,7 @@
 
 ## 运行环境
 
-python 3.7、pytorch 1.6.0~1.7.1、gym 0.17.0~0.18.0
+python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 ## 使用说明
 
 对应算法文件夹下运行```main.py```即可
@@ -26,7 +26,7 @@ python 3.7、pytorch 1.6.0~1.7.1、gym 0.17.0~0.18.0
 
 |                           算法名称                           |                        相关论文材料                         | 环境                                                         |                             备注                             |
 | :----------------------------------------------------------: | :---------------------------------------------------------: | ------------------------------------------------------------ | :----------------------------------------------------------: |
-| [On-Policy First-Visit MC](https://github.com/JohnJim0816/rl-tutorials/tree/master/MonteCarlo) |                                                             | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |                                                              |
+| [On-Policy First-Visit MC](./MonteCarlo) |                                                             | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |                                                              |
 | [Q-Learning](http://wanggithub.com/JohnJim0816/rl-tutorials/tree/master/QLearning) |                                                             | [CliffWalking-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) |                                                              |
 | [Sarsa](https://github.com/JohnJim0816/rl-tutorials/tree/master/Sarsa) |                                                             | [Racetrack](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/racetrack_env.md) |                                                              |
 | [DQN](https://github.com/JohnJim0816/rl-tutorials/tree/master/DQN) | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [CartPole-v0](https://github.com/JohnJim0816/rl-tutorials/blob/master/envs/gym_info.md) | [DQN算法实战](https://blog.csdn.net/JohnJim0/article/details/109557173) |
