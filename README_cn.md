@@ -34,7 +34,7 @@ python 3.7.9、pytorch 1.6.0、gym 0.18.0
 |                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |              与DQN相比使用了CNN而不是全链接网络              |  OK  |
 |                          DoubleDQN                           |                                                             |                       效果不好，待改进                       |  OK  |
 |                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                                              |      |
-|                        PolicyGradient                        |                                                             |                                                              |  OK  |
+|                        [PolicyGradient](https://github.com/JohnJim0816/rl-tutorials/tree/master/PolicyGradient)                        |                                                             |                                                              |  OK  |
 |                             A2C                              |                                                             |                                                              |  OK  |
 | [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [PPO算法实战](https://blog.csdn.net/JohnJim0/article/details/115126363) |  OK  |
 |                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                                                              |  OK  |
