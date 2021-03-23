@@ -28,21 +28,21 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 
 ## Schedule
 
-|           Name           |                      Related materials                      |             Note              | Schedule |
-| :----------------------: | :---------------------------------------------------------: | :---------------------------: | :------: |
-| On-Policy First-Visit MC |                                                             |                               |    OK    |
-|        Q-Learning        |                                                             |                               |    OK    |
-|          SARSA           |                                                             |                               |    OK    |
-|           DQN            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                               |    OK    |
-|         DQN-cnn          | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | use CNN compare to normal DQN |    OK    |
-|        DoubleDQN         |                                                             |        Need to improve        |    OK    |
-|     Hierarchical DQN     |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                               |          |
-|      PolicyGradient      |                                                             |                               |    OK    |
-|           A2C            |       [A3C paper](https://arxiv.org/abs/1602.01783v2)       |                               |    OK    |
-|           A3C            |                                                             |                               |          |
-|           PPO            |                                                             |                               |          |
-|           DDPG           |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                               |    OK    |
-|           TD3            | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                               |          |
+|                             Name                             |                      Related materials                      |             Note              | Schedule |
+| :----------------------------------------------------------: | :---------------------------------------------------------: | :---------------------------: | :------: |
+|                   On-Policy First-Visit MC                   |                                                             |                               |    OK    |
+|                          Q-Learning                          |                                                             |                               |    OK    |
+|                            SARSA                             |                                                             |                               |    OK    |
+|                             DQN                              | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) |                               |    OK    |
+|                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | use CNN compare to normal DQN |    OK    |
+|                          DoubleDQN                           |                                                             |        Need to improve        |    OK    |
+|                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                               |          |
+|                        PolicyGradient                        |                                                             |                               |    OK    |
+|                             A2C                              |       [A3C paper](https://arxiv.org/abs/1602.01783v2)       |                               |    OK    |
+|                             A3C                              |                                                             |                               |          |
+| [PPO](https://github.com/JohnJim0816/rl-tutorials/tree/master/PPO) |        [PPO paper](https://arxiv.org/abs/1707.06347)        |                               |    OK    |
+|                             DDPG                             |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        |                               |    OK    |
+|                             TD3                              | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                               |          |
 
 
 ## Refs
