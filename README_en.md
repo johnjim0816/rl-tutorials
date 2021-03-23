@@ -34,7 +34,7 @@ Environment infomations see [环境说明](https://github.com/JohnJim0816/reinfo
 | [Q-Learning](./QLearning) |                                                             | [CliffWalking-v0](./envs/gym_info.md) |                                                              |
 | [Sarsa](./Sarsa) |                                                             | [Racetrack](./envs/racetrack_env.md) |                                                              |
 | [DQN](./DQN) | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [CartPole-v0](./envs/gym_info.md) |  |
-|                           DQN-cnn                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [CartPole-v0](./envs/gym_info.md) |                            |
+|                           [DQN-cnn](./DQN_cnn)                            | [DQN-paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [CartPole-v0](./envs/gym_info.md) |                            |
 | [DoubleDQN](./DoubleDQN) |                                                             | [CartPole-v0](./envs/gym_info.md) |                       not well                       |
 |                       Hierarchical DQN                       |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     |                                                              |                                                              |
 | [PolicyGradient](./PolicyGradient) |                                                             | [CartPole-v0](./envs/gym_info.md) |                                                              |
