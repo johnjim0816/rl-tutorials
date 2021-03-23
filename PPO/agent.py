@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-23 15:17:42
 LastEditor: John
-LastEditTime: 2021-03-23 15:31:14
+LastEditTime: 2021-03-23 15:52:34
 Discription: 
 Environment: 
 '''
@@ -38,7 +38,7 @@ class PPO:
         value = torch.squeeze(value).item()
         return action, probs, value
 
-    def learn(self):
+    def update(self):
         for _ in range(self.n_epochs):
             state_arr, action_arr, old_prob_arr, vals_arr,\
             reward_arr, dones_arr, batches = \

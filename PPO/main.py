@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-03-23 15:24:07
+LastEditTime: 2021-03-23 15:52:52
 Discription: 
 Environment: 
 '''
@@ -61,7 +61,7 @@ def train(cfg,env,agent):
             ep_reward += reward
             agent.memory.push(state, action, prob, val, reward, done)
             if running_steps % cfg.update_fre == 0:
-                agent.learn()
+                agent.update()
             state = state_
         rewards.append(ep_reward)
         if ma_rewards:
