@@ -5,13 +5,14 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2021-03-17 20:26:20
+LastEditTime: 2021-03-20 16:44:00
 Discription: 
 Environment: 
 '''
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.distributions import Categorical
 class MLP1(nn.Module):
     ''' 多层感知机
         输入：state维度
@@ -82,3 +83,25 @@ class Actor(nn.Module):
         x = F.relu(self.linear2(x))
         x = F.tanh(self.linear3(x))
         return x
+
+class ActorCritic(nn.Module):
+    def __init__(self, n_states, n_actions, hidden_dim=256):
+        super(ActorCritic, self).__init__()
+        self.critic = nn.Sequential(
+            nn.Linear(n_states, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 1)
+        )
+        
+        self.actor = nn.Sequential(
+            nn.Linear(n_states, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, n_actions),
+            nn.Softmax(dim=1),
+        )
+        
+    def forward(self, x):
+        value = self.critic(x)
+        probs = self.actor(x)
+        dist  = Categorical(probs)
+        return dist, value
