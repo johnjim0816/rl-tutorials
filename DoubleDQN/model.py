@@ -13,15 +13,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class MLP(nn.Module):
-    def __init__(self, n_states=4, n_actions=18):
+    def __init__(self, state_dim=4, action_dim=18):
         """ 初始化q网络，为全连接网络
-            n_states: 输入的feature即环境的state数目
-            n_actions: 输出的action总个数
+            state_dim: 输入的feature即环境的state数目
+            action_dim: 输出的action总个数
         """
         super(MLP, self).__init__()
-        self.fc1 = nn.Linear(n_states, 128) # 输入层
+        self.fc1 = nn.Linear(state_dim, 128) # 输入层
         self.fc2 = nn.Linear(128, 128) # 隐藏层
-        self.fc3 = nn.Linear(128, n_actions) # 输出层
+        self.fc3 = nn.Linear(128, action_dim) # 输出层
         
     def forward(self, x):
         # 各层对应的激活函数

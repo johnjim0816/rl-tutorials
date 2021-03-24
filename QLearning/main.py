@@ -103,8 +103,8 @@ if __name__ == "__main__":
     cfg = QlearningConfig()
     env = gym.make("CliffWalking-v0")  # 0 up, 1 right, 2 down, 3 left
     env = CliffWalkingWapper(env)
-    n_actions = env.action_space.n
-    agent = QLearning(n_actions,cfg)
+    action_dim = env.action_space.n
+    agent = QLearning(action_dim,cfg)
     rewards,ma_rewards = train(cfg,env,agent)
     agent.save(path=SAVED_MODEL_PATH)
     save_results(rewards,ma_rewards,tag='train',path=RESULT_PATH)

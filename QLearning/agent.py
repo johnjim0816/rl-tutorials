@@ -16,8 +16,8 @@ from collections import defaultdict
 
 class QLearning(object):
     def __init__(self,
-                 n_actions,cfg):
-        self.n_actions = n_actions  # number of actions
+                 action_dim,cfg):
+        self.action_dim = action_dim  # number of actions
         self.lr = cfg.lr  # learning rate
         self.gamma = cfg.gamma  
         self.epsilon = 0 
@@ -25,8 +25,8 @@ class QLearning(object):
         self.epsilon_start = cfg.epsilon_start
         self.epsilon_end = cfg.epsilon_end
         self.epsilon_decay = cfg.epsilon_decay
-        self.Q_table  = defaultdict(lambda: np.zeros(n_actions)) # 使用字典存储Q表，个人比较喜欢这种，也可以用下面一行的二维数组表示，但是需要额外更改代码
-        # self.Q_table = np.zeros((n_states, n_actions))  # Q表
+        self.Q_table  = defaultdict(lambda: np.zeros(action_dim)) # 使用字典存储Q表，个人比较喜欢这种，也可以用下面一行的二维数组表示，但是需要额外更改代码
+        # self.Q_table = np.zeros((state_dim, action_dim))  # Q表
     def choose_action(self, state):
         self.sample_count += 1
         self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
@@ -35,7 +35,7 @@ class QLearning(object):
         if np.random.uniform(0, 1) > self.epsilon:
             action = np.argmax(self.Q_table[state])
         else:
-            action = np.random.choice(self.n_actions)  # 有一定概率随机探索选取一个动作
+            action = np.random.choice(self.action_dim)  # 有一定概率随机探索选取一个动作
         return action
             
     def update(self, state, action, reward, next_state, done):
