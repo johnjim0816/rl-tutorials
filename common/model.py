@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2021-03-23 16:35:46
+LastEditTime: 2021-03-24 22:15:00
 Discription: 
 Environment: 
 '''
@@ -14,13 +14,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Categorical
 
-class MLP2(nn.Module):
+class MLP(nn.Module):
     def __init__(self, n_states,n_actions,hidden_dim=128):
         """ 初始化q网络，为全连接网络
             n_states: 输入的feature即环境的state数目
             n_actions: 输出的action总个数
         """
-        super(MLP2, self).__init__()
+        super(MLP, self).__init__()
         self.fc1 = nn.Linear(n_states, hidden_dim) # 输入层
         self.fc2 = nn.Linear(hidden_dim,hidden_dim) # 隐藏层
         self.fc3 = nn.Linear(hidden_dim, n_actions) # 输出层
