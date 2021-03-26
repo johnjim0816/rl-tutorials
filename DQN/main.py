@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-17 20:35:37
+LastEditTime: 2021-03-26 17:17:17
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -40,7 +40,7 @@ class DQNConfig:
         self.lr = 0.01 # 学习率
         self.memory_capacity = 800 # Replay Memory容量
         self.batch_size = 64
-        self.train_eps = 250 # 训练的episode数目
+        self.train_eps = 300 # 训练的episode数目
         self.train_steps = 200 # 训练每个episode的最大长度
         self.target_update = 2 # target net的更新频率
         self.eval_eps = 20 # 测试的episode数目

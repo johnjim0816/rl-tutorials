@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-24 22:12:19
 LastEditor: John
-LastEditTime: 2021-03-24 22:13:45
+LastEditTime: 2021-03-26 17:12:43
 Discription: 
 Environment: 
 '''
@@ -38,9 +38,8 @@ class StochasticMDP:
 
             if action == 0:
                 self.curr_state -= 1
-
-            if self.curr_state == self.state_dim:
-                self.end = True
+        if self.curr_state == self.state_dim:
+            self.end = True
 
         state = np.zeros(self.state_dim)
         state[self.curr_state - 1] = 1.
