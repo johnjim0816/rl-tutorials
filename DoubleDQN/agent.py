@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2021-03-13 15:01:27
+LastEditTime: 2021-03-28 11:07:35
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -16,7 +16,6 @@ LastEditTime: 2021-03-13 15:01:27
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 import random
 import math
 import numpy as np

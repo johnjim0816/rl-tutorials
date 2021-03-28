@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-17 20:11:19
+LastEditTime: 2021-03-28 11:05:14
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -32,7 +32,7 @@ if not os.path.exists(RESULT_PATH):
 
 class DoubleDQNConfig:
     def __init__(self):
-        self.algo = "Double DQN" # 算法名称
+        self.algo = "Double DQN" # name of algo
         self.gamma = 0.99
         self.epsilon_start = 0.9 # e-greedy策略的初始epsilon
         self.epsilon_end = 0.01
@@ -40,7 +40,7 @@ class DoubleDQNConfig:
         self.lr = 0.01 # 学习率
         self.memory_capacity = 10000 # Replay Memory容量
         self.batch_size = 128
-        self.train_eps = 250 # 训练的episode数目
+        self.train_eps = 300 # 训练的episode数目
         self.train_steps = 200 # 训练每个episode的最大长度
         self.target_update = 2 # target net的更新频率
         self.eval_eps = 20 # 测试的episode数目
