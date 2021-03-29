@@ -10,7 +10,10 @@ LastEditTime: 2021-03-23 20:43:28
 @Environment: python 3.7.7
 '''
 import sys,os
-sys.path.append(os.getcwd()) # add current terminal path to sys.path
+from pathlib import Path
+curr_path = str(Path().absolute())
+parent_path = str(Path().absolute().parent)
+sys.path.append(parent_path) # add current terminal path to sys.path
 import gym
 import torch
 import datetime
@@ -18,8 +21,6 @@ from DQN_cnn.env import get_screen
 from DQN_cnn.agent import DQNcnn
 from common.plot import plot_rewards
 from common.utils import save_results
-
-sys.path.append(os.getcwd())  # add current terminal path to sys.path
 
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current time
 SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/' # path to save model
