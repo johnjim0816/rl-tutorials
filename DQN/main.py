@@ -5,12 +5,17 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-26 17:17:17
+LastEditTime: 2021-03-29 20:23:32
 @Discription: 
 @Environment: python 3.7.7
 '''
 import sys,os
-sys.path.append(os.getcwd()) # 添加当前终端路径
+from pathlib import Path
+import sys,os
+curr_path = os.path.dirname(__file__)
+parent_path=os.path.dirname(curr_path) 
+sys.path.append(parent_path) # add current terminal path to sys.path
+
 import gym
 import torch
 import datetime
@@ -18,21 +23,21 @@ from DQN.agent import DQN
 from common.plot import plot_rewards
 from common.utils import save_results
 
-SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
-SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/' # 生成保存的模型路径
-if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"): # 检测是否存在文件夹
-    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/")
-if not os.path.exists(SAVED_MODEL_PATH): # 检测是否存在文件夹
+SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current time
+SAVED_MODEL_PATH = curr_path+"/saved_model/"+SEQUENCE+'/' # path to save model
+if not os.path.exists(curr_path+"/saved_model/"): 
+    os.mkdir(curr_path+"/saved_model/")
+if not os.path.exists(SAVED_MODEL_PATH): 
     os.mkdir(SAVED_MODEL_PATH)
-RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/results/"+SEQUENCE+'/' # 存储reward的路径
-if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/results/"): # 检测是否存在文件夹
-    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/results/")
-if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
+RESULT_PATH = curr_path+"/results/"+SEQUENCE+'/' # path to save rewards
+if not os.path.exists(curr_path+"/results/"): 
+    os.mkdir(curr_path+"/results/")
+if not os.path.exists(RESULT_PATH): 
     os.mkdir(RESULT_PATH)
 
 class DQNConfig:
     def __init__(self):
-        self.algo = "DQN" # 算法名称
+        self.algo = "DQN"  # name of algo
         self.gamma = 0.99
         self.epsilon_start = 0.95 # e-greedy策略的初始epsilon
         self.epsilon_end = 0.01
