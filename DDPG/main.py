@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2021-03-31 01:00:44
+LastEditTime: 2021-03-31 01:04:48
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -42,7 +42,6 @@ class DDPGConfig:
         self.memory_capacity = 10000
         self.batch_size = 128
         self.train_eps =300
-        self.train_steps = 200
         self.eval_eps = 200
         self.eval_steps = 200
         self.target_update = 4
@@ -62,7 +61,6 @@ def train(cfg,env,agent):
         ep_reward = 0
         i_step = 0
         while not done:
-        # for i_step in range(cfg.train_steps):
             i_step += 1
             action = agent.choose_action(state)
             action = ou_noise.get_action(action, i_step)  # 即paper中的random process
@@ -71,8 +69,6 @@ def train(cfg,env,agent):
             agent.memory.push(state, action, reward, next_state, done)
             agent.update()
             state = next_state
-            # if done:
-            #     break
         print('Episode:{}/{}, Reward:{}'.format(i_episode+1,cfg.train_eps,ep_reward))
         ep_steps.append(i_step)
         rewards.append(ep_reward)
