@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-29 20:23:32
+LastEditTime: 2021-03-30 10:56:54
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -56,25 +56,22 @@ class DQNConfig:
 def train(cfg,env,agent):
     print('Start to train !')
     rewards = []
-    ma_rewards = [] # 滑动平均的reward
-    ep_steps = []
+    ma_rewards = [] # moveing average reward
     for i_episode in range(cfg.train_eps):
-        state = env.reset() # reset环境状态
+        state = env.reset() 
         ep_reward = 0
-        for i_step in range(cfg.train_steps):
-            action = agent.choose_action(state) # 根据当前环境state选择action
-            next_state, reward, done, _ = env.step(action) # 更新环境参数
+        while True:
+            action = agent.choose_action(state) 
+            next_state, reward, done, _ = env.step(action) 
             ep_reward += reward
-            agent.memory.push(state, action, reward, next_state, done) # 将state等这些transition存入memory
-            state = next_state # 跳转到下一个状态
-            agent.update() # 每步更新网络
+            agent.memory.push(state, action, reward, next_state, done) 
+            state = next_state 
+            agent.update() 
             if done:
                 break
-        # 更新target network，复制DQN中的所有weights and biases
         if i_episode % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
-        print('Episode:{}/{}, Reward:{}, Steps:{}, Done:{}'.format(i_episode+1,cfg.train_eps,ep_reward,i_step+1,done))
-        ep_steps.append(i_step)
+        print('Episode:{}/{}, Reward:{}'.format(i_episode+1,cfg.train_eps,ep_reward))
         rewards.append(ep_reward)
         # 计算滑动窗口的reward
         if ma_rewards:
