@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-30 10:56:54
+LastEditTime: 2021-03-30 15:02:30
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -42,16 +42,14 @@ class DQNConfig:
         self.epsilon_start = 0.95 # e-greedy策略的初始epsilon
         self.epsilon_end = 0.01
         self.epsilon_decay = 200
-        self.lr = 0.01 # 学习率
-        self.memory_capacity = 800 # Replay Memory容量
+        self.lr = 0.01 # learning rate
+        self.memory_capacity = 8000 # Replay Memory容量
         self.batch_size = 64
         self.train_eps = 300 # 训练的episode数目
-        self.train_steps = 200 # 训练每个episode的最大长度
         self.target_update = 2 # target net的更新频率
         self.eval_eps = 20 # 测试的episode数目
-        self.eval_steps = 200 # 测试每个episode的最大长度
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
-        self.hidden_dim = 128 # 神经网络隐藏层维度
+        self.hidden_dim = 256 # 神经网络隐藏层维度
  
 def train(cfg,env,agent):
     print('Start to train !')
@@ -59,16 +57,15 @@ def train(cfg,env,agent):
     ma_rewards = [] # moveing average reward
     for i_episode in range(cfg.train_eps):
         state = env.reset() 
+        done = False
         ep_reward = 0
-        while True:
+        while not done:
             action = agent.choose_action(state) 
             next_state, reward, done, _ = env.step(action) 
             ep_reward += reward
             agent.memory.push(state, action, reward, next_state, done) 
             state = next_state 
             agent.update() 
-            if done:
-                break
         if i_episode % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         print('Episode:{}/{}, Reward:{}'.format(i_episode+1,cfg.train_eps,ep_reward))
