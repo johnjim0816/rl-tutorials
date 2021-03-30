@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-30 15:02:30
+LastEditTime: 2021-03-30 16:59:19
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -38,13 +38,13 @@ if not os.path.exists(RESULT_PATH):
 class DQNConfig:
     def __init__(self):
         self.algo = "DQN"  # name of algo
-        self.gamma = 0.99
-        self.epsilon_start = 0.95 # e-greedy策略的初始epsilon
+        self.gamma = 0.95
+        self.epsilon_start = 1 # e-greedy策略的初始epsilon
         self.epsilon_end = 0.01
-        self.epsilon_decay = 200
-        self.lr = 0.01 # learning rate
-        self.memory_capacity = 8000 # Replay Memory容量
-        self.batch_size = 64
+        self.epsilon_decay = 500
+        self.lr = 0.0001 # learning rate
+        self.memory_capacity = 10000 # Replay Memory容量
+        self.batch_size = 32
         self.train_eps = 300 # 训练的episode数目
         self.target_update = 2 # target net的更新频率
         self.eval_eps = 20 # 测试的episode数目
