@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-04-03 21:37:20
+LastEditTime: 2021-04-04 00:26:47
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -64,8 +64,7 @@ def train(cfg,env,agent):
         rewards.append(ep_reward)
         # 计算滑动窗口的reward
         if ma_rewards:
-            ma_rewards.append(
-                0.9*ma_rewards[-1]+0.1*ep_reward)
+            ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)
         else:
             ma_rewards.append(ep_reward)   
     print('Complete training！')
