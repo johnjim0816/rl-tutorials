@@ -39,7 +39,7 @@ python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 |                   A3C                    |                                                             |                                       |                                    |
 |                   SAC                    |                                                             |                                       |                                    |
 |               [PPO](./PPO)               |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [CartPole-v0](./envs/gym_info.md)     |                                    |
-|                   DDPG                   |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](./envs/gym_info.md)     |                                    |
+|              [DDPG](./DDPG)              |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](./envs/gym_info.md)     |                                    |
 |                   TD3                    |        [TD3 Paper](https://arxiv.org/abs/1802.09477)        |                                       |                                    |
 |                   GAIL                   |                                                             |                                       |                                    |
 
