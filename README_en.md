@@ -15,8 +15,6 @@ The code structure mainly contains several scripts as following：
 * ```agent.py``` core algorithms, include a python Class with functions(choose action, update)
 * ```main.py``` main function
 
-
-
 Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in different algorithms，thus they are put into ```common``` folder。
 
 ## Runnig Environment
@@ -42,7 +40,7 @@ run ```main.py``` or ```main.ipynb```
 |                   A3C                    |                                                             |                                       |          |
 |                   SAC                    |                                                             |                                       |          |
 |               [PPO](./PPO)               |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [CartPole-v0](./envs/gym_info.md)     |          |
-|                   DDPG                   |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](./envs/gym_info.md)     |          |
+|              [DDPG](./DDPG)              |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](./envs/gym_info.md)     |          |
 |                   TD3                    | [Twin Dueling DDPG Paper](https://arxiv.org/abs/1802.09477) |                                       |          |
 |                   GAIL                   |                                                             |                                       |          |
 
