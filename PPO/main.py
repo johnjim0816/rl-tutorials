@@ -5,12 +5,14 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-03-23 15:52:52
+LastEditTime: 2021-04-05 11:06:31
 Discription: 
 Environment: 
 '''
 import sys,os
-sys.path.append(os.getcwd()) # add current terminal path to sys.path
+curr_path = os.path.dirname(__file__)
+parent_path=os.path.dirname(curr_path) 
+sys.path.append(parent_path) # add current terminal path to sys.path
 import gym
 import numpy as np
 import torch
