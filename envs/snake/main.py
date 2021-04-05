@@ -10,7 +10,7 @@ import time
 def get_args():
     parser = argparse.ArgumentParser(description='CS440 MP4 Snake')
 
-    parser.add_argument('--human', default = True, action="store_true",
+    parser.add_argument('--human', default = False, action="store_true",
                         help='making the game human playable - default False')
 
     parser.add_argument('--model_name', dest="model_name", type=str, default="checkpoint3.npy",
@@ -74,10 +74,12 @@ class Application:
 
         for game in range(1, self.args.train_eps + 1):
             state = self.env.get_state()
+            
             dead = False
             action = self.agent.choose_action(state, 0, dead)
             while not dead:
                 state, points, dead = self.env.step(action)
+                print(state)
 
                 # For debug convenience, you can check if your Q-table mathches ours for given setting of parameters
                 # (see Debug Convenience part on homework 4 web page)
