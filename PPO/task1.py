@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-08 21:53:45
+LastEditTime: 2021-04-08 21:58:48
 Discription: 
 Environment: 
 '''
@@ -35,7 +35,7 @@ if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
 
 class PPOConfig:
     def __init__(self) -> None:
-        self.env_name = 'CartPole-v0'
+        self.env_name = 'LunarLander-v2'
         self.algo = 'PPO'
         self.batch_size = 5
         self.gamma=0.99
