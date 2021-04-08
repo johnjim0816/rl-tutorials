@@ -74,12 +74,10 @@ class Application:
 
         for game in range(1, self.args.train_eps + 1):
             state = self.env.get_state()
-            
             dead = False
             action = self.agent.choose_action(state, 0, dead)
             while not dead:
                 state, points, dead = self.env.step(action)
-                print(state)
 
                 # For debug convenience, you can check if your Q-table mathches ours for given setting of parameters
                 # (see Debug Convenience part on homework 4 web page)

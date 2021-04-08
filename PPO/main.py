@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-05 11:06:31
+LastEditTime: 2021-04-08 21:44:06
 Discription: 
 Environment: 
 '''
@@ -35,7 +35,8 @@ if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
 
 class PPOConfig:
     def __init__(self) -> None:
-        self.algo = 'PPO'
+        self.env_name = ''
+        self.algo = 'CartPole-v0'
         self.batch_size = 5
         self.gamma=0.99
         self.n_epochs = 4
@@ -80,7 +81,7 @@ def train(cfg,env,agent):
 
 if __name__ == '__main__':
     cfg = PPOConfig()
-    env = gym.make('CartPole-v0')
+    env = gym.make(cfg.env_name)
     env.seed(1)
     state_dim=env.observation_space.shape[0]
     action_dim=env.action_space.n

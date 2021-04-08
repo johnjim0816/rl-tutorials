@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-23 15:17:42
 LastEditor: John
-LastEditTime: 2021-03-23 15:52:34
+LastEditTime: 2021-04-08 21:43:02
 Discription: 
 Environment: 
 '''
@@ -81,8 +81,8 @@ class PPO:
                 self.critic_optimizer.step()
         self.memory.clear()  
     def save(self,path):
-        actor_checkpoint = os.path.join(path, 'actor_torch_ppo.pt')
-        critic_checkpoint= os.path.join(path, 'critic_torch_ppo.pt')
+        actor_checkpoint = os.path.join(path, 'actor_ppo.pt')
+        critic_checkpoint= os.path.join(path, 'critic_ppo.pt')
         torch.save(self.actor.state_dict(), actor_checkpoint)
         torch.save(self.critic.state_dict(), critic_checkpoint)
     def load(self,path):
