@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-08 21:53:45
+LastEditTime: 2021-04-08 23:11:09
 Discription: 
 Environment: 
 '''
@@ -43,6 +43,7 @@ class PPOConfig:
         self.lr = 0.0003
         self.gae_lambda=0.95
         self.policy_clip=0.2
+        self.hidden_dim = 256
         self.update_fre = 20 # frequency of agent update
         self.train_eps = 300 # max training episodes
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # check gpu

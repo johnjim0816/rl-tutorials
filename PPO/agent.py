@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-23 15:17:42
 LastEditor: John
-LastEditTime: 2021-04-08 21:53:24
+LastEditTime: 2021-04-08 22:36:34
 Discription: 
 Environment: 
 '''
@@ -23,8 +23,8 @@ class PPO:
         self.n_epochs = cfg.n_epochs
         self.gae_lambda = cfg.gae_lambda
         self.device = cfg.device
-        self.actor = Actor(state_dim, action_dim).to(self.device)
-        self.critic = Critic(state_dim).to(self.device)
+        self.actor = Actor(state_dim, action_dim,cfg.hidden_dim).to(self.device)
+        self.critic = Critic(state_dim,cfg.hidden_dim).to(self.device)
         self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.lr)
         self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg.lr)
         self.memory = PPOMemory(cfg.batch_size)

@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-08 21:58:48
+LastEditTime: 2021-04-08 23:32:43
 Discription: 
 Environment: 
 '''
@@ -38,13 +38,15 @@ class PPOConfig:
         self.env_name = 'LunarLander-v2'
         self.algo = 'PPO'
         self.batch_size = 5
-        self.gamma=0.99
+        self.gamma=0.95
         self.n_epochs = 4
-        self.lr = 0.0003
+        self.lr = 0.0001
         self.gae_lambda=0.95
         self.policy_clip=0.2
+        self.hidden_dim = 256
         self.update_fre = 20 # frequency of agent update
         self.train_eps = 300 # max training episodes
+        self.train_steps = 1000
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # check gpu
         
 def train(cfg,env,agent):
@@ -57,6 +59,7 @@ def train(cfg,env,agent):
         state = env.reset()
         done = False
         ep_reward = 0
+        # for i_step in range(cfg.train_steps):
         while not done:
             action, prob, val = agent.choose_action(state)
             state_, reward, done, _ = env.step(action)
@@ -66,6 +69,8 @@ def train(cfg,env,agent):
             if running_steps % cfg.update_fre == 0:
                 agent.update()
             state = state_
+            # if done:
+            #     break
         rewards.append(ep_reward)
         if ma_rewards:
             ma_rewards.append(
