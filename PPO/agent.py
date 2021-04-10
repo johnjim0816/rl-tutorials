@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-23 15:17:42
 LastEditor: John
-LastEditTime: 2021-04-08 22:36:34
+LastEditTime: 2021-04-10 22:12:13
 Discription: 
 Environment: 
 '''
@@ -28,6 +28,7 @@ class PPO:
         self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.lr)
         self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg.lr)
         self.memory = PPOMemory(cfg.batch_size)
+        self.loss = 0
 
     def choose_action(self, observation):
         state = torch.tensor([observation], dtype=torch.float).to(self.device)
@@ -75,6 +76,7 @@ class PPO:
                 critic_loss = (returns-critic_value)**2
                 critic_loss = critic_loss.mean()
                 total_loss = actor_loss + 0.5*critic_loss
+                self.loss  = total_loss
                 self.actor_optimizer.zero_grad()
                 self.critic_optimizer.zero_grad()
                 total_loss.backward()

@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-08 23:32:43
+LastEditTime: 2021-04-10 22:12:36
 Discription: 
 Environment: 
 '''
@@ -81,7 +81,7 @@ def train(cfg,env,agent):
         if avg_reward > best_reward:
             best_reward = avg_reward
             agent.save(path=SAVED_MODEL_PATH)
-        print('Episode:{}/{}, Reward:{:.1f}, avg reward:{:.1f}, Done:{}'.format(i_episode+1,cfg.train_eps,ep_reward,avg_reward,done))
+        print('Episode:{}/{}, Reward:{:.1f}, avg reward:{:.1f}, Loss:{}'.format(i_episode+1,cfg.train_eps,ep_reward,avg_reward,agent.loss))
     return rewards,ma_rewards
 
 if __name__ == '__main__':
