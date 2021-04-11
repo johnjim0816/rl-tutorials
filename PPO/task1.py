@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-10 22:12:36
+LastEditTime: 2021-04-11 01:25:43
 Discription: 
 Environment: 
 '''
@@ -37,10 +37,11 @@ class PPOConfig:
     def __init__(self) -> None:
         self.env_name = 'LunarLander-v2'
         self.algo = 'PPO'
-        self.batch_size = 5
+        self.batch_size = 128
         self.gamma=0.95
         self.n_epochs = 4
-        self.lr = 0.0001
+        self.actor_lr = 0.002
+        self.critic_lr = 0.005
         self.gae_lambda=0.95
         self.policy_clip=0.2
         self.hidden_dim = 256

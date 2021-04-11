@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-22 16:18:10
 LastEditor: John
-LastEditTime: 2021-04-08 23:11:09
+LastEditTime: 2021-04-11 01:24:41
 Discription: 
 Environment: 
 '''
@@ -40,7 +40,8 @@ class PPOConfig:
         self.batch_size = 5
         self.gamma=0.99
         self.n_epochs = 4
-        self.lr = 0.0003
+        self.actor_lr = 0.0003
+        self.critic_lr = 0.0003
         self.gae_lambda=0.95
         self.policy_clip=0.2
         self.hidden_dim = 256
@@ -74,7 +75,8 @@ def train(cfg,env,agent):
         else:
             ma_rewards.append(ep_reward)
         avg_reward = np.mean(rewards[-100:])
-        if avg_reward > best_reward:
+        if avg_rewardself.actor_lr = 0.002
+        self.critic_lr = 0.005 > best_reward:
             best_reward = avg_reward
             agent.save(path=SAVED_MODEL_PATH)
         print('Episode:{}/{}, Reward:{:.1f}, avg reward:{:.1f}, Done:{}'.format(i_episode+1,cfg.train_eps,ep_reward,avg_reward,done))

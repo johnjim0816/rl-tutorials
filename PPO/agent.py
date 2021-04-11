@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-23 15:17:42
 LastEditor: John
-LastEditTime: 2021-04-10 22:12:13
+LastEditTime: 2021-04-11 01:24:24
 Discription: 
 Environment: 
 '''
@@ -25,8 +25,8 @@ class PPO:
         self.device = cfg.device
         self.actor = Actor(state_dim, action_dim,cfg.hidden_dim).to(self.device)
         self.critic = Critic(state_dim,cfg.hidden_dim).to(self.device)
-        self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.lr)
-        self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg.lr)
+        self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
+        self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg.critic_lr)
         self.memory = PPOMemory(cfg.batch_size)
         self.loss = 0
 
