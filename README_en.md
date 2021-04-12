@@ -22,7 +22,7 @@ Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in diff
 python 3.7.9、pytorch 1.6.0、gym 0.18.0
 ## Usage
 
-run ```main.py``` or ```main.ipynb```
+run ```main.py``` or ```main.ipynb```, or run files with ```task```(like ```task1.py```)
 
 ## Schedule
 
@@ -52,4 +52,4 @@ run ```main.py``` or ```main.ipynb```
 
 [RL-Adventure](https://github.com/higgsfield/RL-Adventure)
 
-https://www.cnblogs.com/lucifer1997/p/13458563.html
+

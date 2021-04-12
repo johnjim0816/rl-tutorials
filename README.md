@@ -22,7 +22,7 @@ python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 
 ## 使用说明
 
-运行```main.py```或者```main.ipynb```，或者包含```task```名的文件
+运行```main.py```或者```main.ipynb```，或者包含```task```名的文件(比如```task1.py```)
 ## 算法进度
 
 |                 算法名称                 |                        相关论文材料                         | 环境                                  |                备注                |
@@ -53,4 +53,3 @@ python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 
 [RL-Adventure](https://github.com/higgsfield/RL-Adventure)
 
-https://www.cnblogs.com/lucifer1997/p/13458563.html
