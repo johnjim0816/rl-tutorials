@@ -21,8 +21,8 @@ class TD3Config:
         self.seed = 0
 # Runs policy for X episodes and returns average reward
 # A fixed seed is used for the eval environment
-def eval_policy(policy, env_name, seed, eval_episodes=10):
-	eval_env = gym.make(env_name)
+def eval_policy(policy, env, seed, eval_episodes=10):
+	eval_env = gym.make(env)
 	eval_env.seed(seed + 100)
 
 	avg_reward = 0.

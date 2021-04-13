@@ -35,7 +35,7 @@ if not os.path.exists(RESULT_PATH): os.mkdir(RESULT_PATH)
 
 class DDPGConfig:
     def __init__(self):
-        self.env_name = 'Pendulum-v0'
+        self.env = 'Pendulum-v0'
         self.algo = 'DDPG'
         self.gamma = 0.99
         self.critic_lr = 1e-3  

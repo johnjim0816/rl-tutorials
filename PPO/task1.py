@@ -35,7 +35,7 @@ if not os.path.exists(RESULT_PATH): # 检测是否存在文件夹
 
 class PPOConfig:
     def __init__(self) -> None:
-        self.env_name = 'LunarLander-v2'
+        self.env = 'LunarLander-v2'
         self.algo = 'PPO'
         self.batch_size = 128
         self.gamma=0.95
@@ -87,7 +87,7 @@ def train(cfg,env,agent):
 
 if __name__ == '__main__':
     cfg = PPOConfig()
-    env = gym.make(cfg.env_name)
+    env = gym.make(cfg.env)
     env.seed(1)
     state_dim=env.observation_space.shape[0]
     action_dim=env.action_space.n

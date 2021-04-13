@@ -17,7 +17,7 @@ from PPO.model import Actor,Critic
 from PPO.memory import PPOMemory
 class PPO:
     def __init__(self, state_dim, action_dim,cfg):
-        self.env_name = cfg.env_name
+        self.env = cfg.env
         self.gamma = cfg.gamma
         self.policy_clip = cfg.policy_clip
         self.n_epochs = cfg.n_epochs
@@ -84,13 +84,13 @@ class PPO:
                 self.critic_optimizer.step()
         self.memory.clear()  
     def save(self,path):
-        actor_checkpoint = os.path.join(path, self.env_name+'_actor.pt')
-        critic_checkpoint= os.path.join(path, self.env_name+'_critic.pt')
+        actor_checkpoint = os.path.join(path, self.env+'_actor.pt')
+        critic_checkpoint= os.path.join(path, self.env+'_critic.pt')
         torch.save(self.actor.state_dict(), actor_checkpoint)
         torch.save(self.critic.state_dict(), critic_checkpoint)
     def load(self,path):
-        actor_checkpoint = os.path.join(path, self.env_name+'_actor.pt')
-        critic_checkpoint= os.path.join(path, self.env_name+'_critic.pt')
+        actor_checkpoint = os.path.join(path, self.env+'_actor.pt')
+        critic_checkpoint= os.path.join(path, self.env+'_critic.pt')
         self.actor.load_state_dict(torch.load(actor_checkpoint)) 
         self.critic.load_state_dict(torch.load(critic_checkpoint))  
 

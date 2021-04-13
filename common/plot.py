@@ -11,9 +11,9 @@ Environment:
 '''
 import matplotlib.pyplot as plt
 import seaborn as sns
-def plot_rewards(rewards,ma_rewards,tag="train",env_name='CartPole-v0',algo = "DQN",save=True,path='./'):
+def plot_rewards(rewards,ma_rewards,tag="train",env='CartPole-v0',algo = "DQN",save=True,path='./'):
     sns.set()
-    plt.title("average learning curve of {} for {}".format(algo,env_name))
+    plt.title("average learning curve of {} for {}".format(algo,env))
     plt.xlabel('epsiodes')
     plt.plot(rewards,label='rewards')
     plt.plot(ma_rewards,label='moving average rewards')

@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-04-04 00:26:47
+LastEditTime: 2021-04-13 18:46:09
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -22,14 +22,14 @@ from common.plot import plot_rewards
 from common.utils import save_results,make_dir,del_empty_dir
 
 SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current time
-SAVED_MODEL_PATH = curr_path+"/saved_model/"+SEQUENCE+'/' # path to save model
-RESULT_PATH = curr_path+"/results/"+SEQUENCE+'/' # path to save rewards
-make_dir(curr_path+"/saved_model/",curr_path+"/results/")
-del_empty_dir(curr_path+"/saved_model/",curr_path+"/results/")
+
 
 class DQNConfig:
     def __init__(self):
         self.algo = "DQN"  # name of algo
+        self.env = 'CartPole-v0'
+        self.saved_model_path = curr_path+"/saved_model/"+ self.env+'/'+SEQUENCE+'/'  # path to save model
+        self.result_path = curr_path+"/results/" +self.env+'/'+SEQUENCE+'/'  # path to save rewards
         self.gamma = 0.95
         self.epsilon_start = 1 # e-greedy策略的初始epsilon
         self.epsilon_end = 0.01
@@ -72,14 +72,13 @@ def train(cfg,env,agent):
 
 if __name__ == "__main__":
     cfg = DQNConfig()
-    env = gym.make('CartPole-v0')
+    env = gym.make(cfg.env)
     env.seed(1)
     state_dim = env.observation_space.shape[0]
     action_dim = env.action_space.n
     agent = DQN(state_dim,action_dim,cfg)
     rewards,ma_rewards = train(cfg,env,agent)
-    make_dir(SAVED_MODEL_PATH,RESULT_PATH)
-    agent.save(path=SAVED_MODEL_PATH)
-    save_results(rewards,ma_rewards,tag='train',path=RESULT_PATH)
-    plot_rewards(rewards,ma_rewards,tag="train",algo = cfg.algo,path=RESULT_PATH)
-    del_empty_dir(SAVED_MODEL_PATH,RESULT_PATH)
+    make_dir(cfg.saved_model_path,cfg.result_path)
+    agent.save(path=cfg.saved_model_path)
+    save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,tag="train",algo = cfg.algo,path=cfg.result_path)

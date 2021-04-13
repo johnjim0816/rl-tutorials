@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-04-08 22:52:59
+LastEditTime: 2021-04-13 18:49:44
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -29,7 +29,7 @@ del_empty_dir(curr_path+"/saved_model/",curr_path+"/results/")
 
 class DQNConfig:
     def __init__(self):
-        self.env_name = 'LunarLander-v2'
+        self.env = 'LunarLander-v2'
         self.algo = "DQN"  # name of algo
         self.gamma = 0.95
         self.epsilon_start = 1 # e-greedy策略的初始epsilon
@@ -75,7 +75,7 @@ def train(cfg,env,agent):
 
 if __name__ == "__main__":
     cfg = DQNConfig()
-    env = gym.make(cfg.env_name)
+    env = gym.make(cfg.env)
     env.seed(1)
     state_dim = env.observation_space.shape[0]
     action_dim = env.action_space.n
