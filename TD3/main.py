@@ -19,13 +19,13 @@ curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current t
 class TD3Config:
 	def __init__(self) -> None:
 		self.algo = 'TD3'
-		self.env = 'Reacher-v2'
+		self.env = 'HalfCheetah-v2'
 		self.seed = 0
 		self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/'  # path to save results
 		self.start_timestep = 25e3 # Time steps initial random policy is used
-		self.eval_freq = 100 # How often (time steps) we evaluate
-		self.train_eps = 800
-		self.max_timestep = 1e6 # Max time steps to run environment
+		self.eval_freq = 5e3 # How often (time steps) we evaluate
+		# self.train_eps = 800
+		self.max_timestep = 1600000 # Max time steps to run environment
 		self.expl_noise = 0.1 # Std of Gaussian exploration noise
 		self.batch_size = 256 # Batch size for both actor and critic
 		self.gamma = 0.99 # gamma factor
@@ -44,7 +44,7 @@ def eval(env,agent, seed, eval_episodes=10):
 	for _ in range(eval_episodes):
 		state, done = eval_env.reset(), False
 		while not done:
-			eval_env.render()
+			# eval_env.render()
 			action = agent.choose_action(np.array(state))
 			state, reward, done, _ = eval_env.step(action)
 			avg_reward += reward
@@ -55,52 +55,99 @@ def eval(env,agent, seed, eval_episodes=10):
 	return avg_reward
 
 def train(cfg,env,agent):
-	evaluations = [eval(cfg.env,agent,cfg.seed)]
+	# Evaluate untrained policy
+	evaluations = [eval(cfg.env,agent, cfg.seed)]
+	state, done = env.reset(), False
 	ep_reward = 0
-	tot_timestep = 0
+	ep_timesteps = 0
+	episode_num = 0
 	rewards = []
 	ma_rewards = [] # moveing average reward
-	for i_ep in range(int(cfg.train_eps)):
-		state, done = env.reset(), False
-		ep_reward = 0
-		ep_timestep = 0
-		while not done:
-			ep_timestep += 1
-			tot_timestep +=1
-			# Select action randomly or according to policy
-			if tot_timestep < cfg.start_timestep:
-				action = env.action_space.sample()
-			else:
-				action = (
-					agent.choose_action(np.array(state))
-					+ np.random.normal(0, max_action * cfg.expl_noise, size=action_dim)
-				).clip(-max_action, max_action)
-			# action = (
-			# 		agent.choose_action(np.array(state))
-			# 		+ np.random.normal(0, max_action * cfg.expl_noise, size=action_dim)
-			# 	).clip(-max_action, max_action)
-			# Perform action
-			next_state, reward, done, _ = env.step(action) 
-			done_bool = float(done) if ep_timestep < env._max_episode_steps else 0
-
-			# Store data in replay buffer
-			agent.memory.push(state, action, next_state, reward, done_bool)
-			state = next_state
-			ep_reward += reward
-			# Train agent after collecting sufficient data
-			if tot_timestep >= cfg.start_timestep:
-				agent.update()
-		print(f"Episode:{i_ep}/{cfg.train_eps}, Episode Timestep:{ep_timestep}, Reward:{ep_reward:.3f}")
-		rewards.append(ep_reward)
-		# 计算滑动窗口的reward
-		if ma_rewards:
-			ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)
+	for t in range(int(cfg.max_timestep)):
+		ep_timesteps += 1
+		# Select action randomly or according to policy
+		if t < cfg.start_timestep:
+			action = env.action_space.sample()
 		else:
-			ma_rewards.append(ep_reward) 
+			action = (
+				agent.choose_action(np.array(state))
+				+ np.random.normal(0, max_action * cfg.expl_noise, size=action_dim)
+			).clip(-max_action, max_action)
+		# Perform action
+		next_state, reward, done, _ = env.step(action) 
+		done_bool = float(done) if ep_timesteps < env._max_episode_steps else 0
+		# Store data in replay buffer
+		agent.memory.push(state, action, next_state, reward, done_bool)
+		state = next_state
+		ep_reward += reward
+		# Train agent after collecting sufficient data
+		if t >= cfg.start_timestep:
+			agent.update()
+		if done: 
+			# +1 to account for 0 indexing. +0 on ep_timesteps since it will increment +1 even if done=True
+			print(f"Episode:{episode_num+1}, Episode T:{ep_timesteps}, Reward:{ep_reward:.3f}")
+			# Reset environment
+			state, done = env.reset(), False
+			rewards.append(ep_reward)
+			# 计算滑动窗口的reward
+			if ma_rewards:
+				ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)
+			else:
+				ma_rewards.append(ep_reward) 
+			ep_reward = 0
+			ep_timesteps = 0
+			episode_num += 1 
 		# Evaluate episode
-		if (i_ep+1) % cfg.eval_freq == 0:
+		if (t + 1) % cfg.eval_freq == 0:
 			evaluations.append(eval(cfg.env,agent, cfg.seed))
-	return rewards,ma_rewards
+	return rewards, ma_rewards
+# def train(cfg,env,agent):
+# 	evaluations = [eval(cfg.env,agent,cfg.seed)]
+# 	ep_reward = 0
+# 	tot_timestep = 0
+# 	rewards = []
+# 	ma_rewards = [] # moveing average reward
+# 	for i_ep in range(int(cfg.train_eps)):
+# 		state, done = env.reset(), False
+# 		ep_reward = 0
+# 		ep_timestep = 0
+# 		while not done:
+# 			ep_timestep += 1
+# 			tot_timestep +=1
+# 			# Select action randomly or according to policy
+# 			if tot_timestep < cfg.start_timestep:
+# 				action = env.action_space.sample()
+# 			else:
+# 				action = (
+# 					agent.choose_action(np.array(state))
+# 					+ np.random.normal(0, max_action * cfg.expl_noise, size=action_dim)
+# 				).clip(-max_action, max_action)
+# 			# action = (
+# 			# 		agent.choose_action(np.array(state))
+# 			# 		+ np.random.normal(0, max_action * cfg.expl_noise, size=action_dim)
+# 			# 	).clip(-max_action, max_action)
+# 			# Perform action
+# 			next_state, reward, done, _ = env.step(action) 
+# 			done_bool = float(done) if ep_timestep < env._max_episode_steps else 0
+
+# 			# Store data in replay buffer
+# 			agent.memory.push(state, action, next_state, reward, done_bool)
+# 			state = next_state
+# 			ep_reward += reward
+# 			# Train agent after collecting sufficient data
+# 			if tot_timestep >= cfg.start_timestep:
+# 				agent.update()
+# 		print(f"Episode:{i_ep}/{cfg.train_eps}, Episode Timestep:{ep_timestep}, Reward:{ep_reward:.3f}")
+# 		rewards.append(ep_reward)
+# 		# 计算滑动窗口的reward
+# 		if ma_rewards:
+# 			ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)
+# 		else:
+# 			ma_rewards.append(ep_reward) 
+# 		# Evaluate episode
+# 		if (i_ep+1) % cfg.eval_freq == 0:
+# 			evaluations.append(eval(cfg.env,agent, cfg.seed))
+# 	return rewards,ma_rewards
 
 
 if __name__ == "__main__":
