@@ -44,7 +44,7 @@ def eval(env,agent, seed, eval_episodes=10):
 	for _ in range(eval_episodes):
 		state, done = eval_env.reset(), False
 		while not done:
-			# eval_env.render()
+			eval_env.render()
 			action = agent.choose_action(np.array(state))
 			state, reward, done, _ = eval_env.step(action)
 			avg_reward += reward
@@ -160,10 +160,13 @@ if __name__ == "__main__":
 	action_dim = env.action_space.shape[0] 
 	max_action = float(env.action_space.high[0])
 	agent = TD3(state_dim,action_dim,max_action,cfg)
-	rewards,ma_rewards = train(cfg,env,agent)
-	make_dir(cfg.result_path)
-	agent.save(path=cfg.result_path)
-	save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
-	plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+	cfg.result_path = './TD3/results/HalfCheetah-v2/20210416-130341/'
+	agent.load(cfg.result_path)
+	eval(cfg.env,agent, cfg.seed)
+	# rewards,ma_rewards = train(cfg,env,agent)
+	# make_dir(cfg.result_path)
+	# agent.save(path=cfg.result_path)
+	# save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
+	# plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
 	
 		
