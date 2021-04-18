@@ -19,7 +19,7 @@ Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in diff
 
 ## Runnig Environment
 
-python 3.7.9、pytorch 1.6.0、gym 0.18.0
+python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 ## Usage
 
 run ```main.py``` or ```main.ipynb```, or run files with ```task```(like ```task1.py```)
