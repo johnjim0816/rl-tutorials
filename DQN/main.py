@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-04-18 14:35:39
+LastEditTime: 2021-04-18 14:43:30
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -27,8 +27,8 @@ class DQNConfig:
     def __init__(self):
         self.algo = "DQN"  # name of algo
         self.env = 'CartPole-v0'
-        self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/results/'  # path to save results
-        self.model_path = curr_path+"/results/" +self.env+'/'+curr_time+'/models/'  # path to save results
+        self.result_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/results/'  # path to save results
+        self.model_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/models/'  # path to save results
         self.gamma = 0.95
         self.epsilon_start = 1 # e-greedy策略的初始epsilon
         self.epsilon_end = 0.01
