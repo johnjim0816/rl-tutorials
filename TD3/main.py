@@ -25,7 +25,7 @@ class TD3Config:
 		self.start_timestep = 25e3 # Time steps initial random policy is used
 		self.eval_freq = 5e3 # How often (time steps) we evaluate
 		# self.train_eps = 800
-		self.max_timestep = 2000000 # Max time steps to run environment
+		self.max_timestep = 4000000 # Max time steps to run environment
 		self.expl_noise = 0.1 # Std of Gaussian exploration noise
 		self.batch_size = 256 # Batch size for both actor and critic
 		self.gamma = 0.99 # gamma factor
