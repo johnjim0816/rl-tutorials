@@ -45,11 +45,8 @@ python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 
 
 
-
 ## Refs
-
 
 [RL-Adventure-2](https://github.com/higgsfield/RL-Adventure-2)
 
 [RL-Adventure](https://github.com/higgsfield/RL-Adventure)
-

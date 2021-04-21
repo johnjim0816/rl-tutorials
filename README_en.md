@@ -51,5 +51,3 @@ run ```main.py``` or ```main.ipynb```, or run files with ```task```(like ```task
 [RL-Adventure-2](https://github.com/higgsfield/RL-Adventure-2)
 
 [RL-Adventure](https://github.com/higgsfield/RL-Adventure)
-
-
