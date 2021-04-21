@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2021-04-21 11:07:57
 LastEditor: JiangJi
-LastEditTime: 2021-04-21 11:12:20
+LastEditTime: 2021-04-21 11:15:00
 Discription: 
 Environment: 
 '''
@@ -31,7 +31,7 @@ class TD3Config:
 		self.env = 'HalfCheetah-v2'
 		self.seed = 0
 		self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/results/'  # path to save results
-		self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/models/'  # path to save models
+		self.model_path = curr_path+"/results/" +self.env+'/'+curr_time+'/models/'  # path to save models
 		self.eval_freq = 5e3 # How often (time steps) we evaluate
 		# self.train_eps = 800
 		self.max_timestep = 4000000 # Max time steps to run environment

@@ -21,7 +21,8 @@ class TD3Config:
 		self.algo = 'TD3'
 		self.env = 'HalfCheetah-v2'
 		self.seed = 0
-		self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/'  # path to save results
+		self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/results/'  # path to save results
+		self.model_path = curr_path+"/results/" +self.env+'/'+curr_time+'/models/'  # path to save models
 		self.start_timestep = 25e3 # Time steps initial random policy is used
 		self.eval_freq = 5e3 # How often (time steps) we evaluate
 		# self.train_eps = 800
@@ -161,8 +162,8 @@ if __name__ == "__main__":
 	max_action = float(env.action_space.high[0])
 	agent = TD3(state_dim,action_dim,max_action,cfg)
 	rewards,ma_rewards = train(cfg,env,agent)
-	make_dir(cfg.result_path)
-	agent.save(path=cfg.result_path)
+	make_dir(cfg.result_path,cfg.model_path)
+	agent.save(path=cfg.model_path)
 	save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
 	plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
 	# cfg.result_path = './TD3/results/HalfCheetah-v2/20210416-130341/'
