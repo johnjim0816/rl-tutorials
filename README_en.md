@@ -21,8 +21,12 @@ Note that ```model.py```,```memory.py```,```plot.py``` shall be utilized in diff
 
 python 3.7、pytorch 1.6.0-1.7.1、gym 0.17.0-0.18.0
 ## Usage
+运行带有```train```的py文件或ipynb文件进行训练，如果前面带有```task```如```task0_train.py```，表示对task0任务训练
+类似的带有```eval```即为测试。
 
-run ```main.py``` or ```main.ipynb```, or run files with ```task```(like ```task1.py```)
+run python scripts or jupyter notebook file with ```train``` to train the agent, if there is a ```task``` like ```task0_train.py```, it means to train with task 0.
+
+similar to file with ```eval```, which means to evaluate the agent.
 
 ## Schedule
 
