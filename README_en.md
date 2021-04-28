@@ -46,7 +46,6 @@ similar to file with ```eval```, which means to evaluate the agent.
 |               [PPO](./PPO)               |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [CartPole-v0](./envs/gym_info.md)     |       |
 |              [DDPG](./DDPG)              |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](./envs/gym_info.md)     |       |
 |               [TD3](./TD3)               |        [TD3 Paper](https://arxiv.org/abs/1802.09477)        | HalfCheetah-v2                        |       |
-|                   GAIL                   |                                                             |                                       |       |
 
 
 ## Refs
