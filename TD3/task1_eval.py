@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2021-04-23 20:36:23
 LastEditor: JiangJi
-LastEditTime: 2021-04-28 10:02:46
+LastEditTime: 2021-04-28 10:14:33
 Discription: 
 Environment: 
 '''
@@ -77,7 +77,7 @@ if __name__ == "__main__":
 	cfg.model_path = './TD3/results/Pendulum-v0/20210428-092059/models/'
 	cfg.result_path = './TD3/results/Pendulum-v0/20210428-092059/results/'
 	td3.load(cfg.model_path)
-	td3_rewards,td3_ma_rewards = eval(cfg.env,td3,cfg.seed)
+	rewards,ma_rewards = eval(cfg.env,td3,cfg.seed)
 	make_dir(cfg.result_path,cfg.model_path)
-	save_results(td3_rewards,td3_ma_rewards,tag='eval',path=cfg.result_path)
-	plot_rewards({'td3_rewards':td3_rewards,'td3_ma_rewards':td3_ma_rewards,},tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+	save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
+	plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)

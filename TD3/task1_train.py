@@ -108,7 +108,5 @@ if __name__ == "__main__":
 	agent.save(path=cfg.model_path)
 	save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
 	plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
-	# cfg.result_path = './TD3/results/HalfCheetah-v2/20210416-130341/'
-	# agent.load(cfg.result_path)
-	# eval(cfg.env,agent, cfg.seed)
+
 		
