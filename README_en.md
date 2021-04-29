@@ -40,13 +40,11 @@ similar to file with ```eval```, which means to evaluate the agent.
 |         [DoubleDQN](./DoubleDQN)         |                                                             | [CartPole-v0](./envs/gym_info.md)     |       |
 |   [Hierarchical DQN](HierarchicalDQN)    |    [Hierarchical DQN](https://arxiv.org/abs/1604.06057)     | [CartPole-v0](./envs/gym_info.md)     |       |
 |    [PolicyGradient](./PolicyGradient)    |                                                             | [CartPole-v0](./envs/gym_info.md)     |       |
-|                   A2C                    |        [A3C Paper](https://arxiv.org/abs/1602.01783)        | [CartPole-v0](./envs/gym_info.md)     |       |
-|                   A3C                    |        [A3C Paper](https://arxiv.org/abs/1602.01783)        |                                       |       |
-|                   SAC                    |        [SAC Paper](https://arxiv.org/abs/1801.01290)        |                                       |       |
+|               [A2C](./A2C)               |        [A3C Paper](https://arxiv.org/abs/1602.01783)        | [CartPole-v0](./envs/gym_info.md)     |       |
+|               [SAC](./SAC)               |        [SAC Paper](https://arxiv.org/abs/1801.01290)        |                                       |       |
 |               [PPO](./PPO)               |        [PPO paper](https://arxiv.org/abs/1707.06347)        | [CartPole-v0](./envs/gym_info.md)     |       |
 |              [DDPG](./DDPG)              |       [DDPG Paper](https://arxiv.org/abs/1509.02971)        | [Pendulum-v0](./envs/gym_info.md)     |       |
 |               [TD3](./TD3)               |        [TD3 Paper](https://arxiv.org/abs/1802.09477)        | HalfCheetah-v2                        |       |
-
 
 ## Refs
 
