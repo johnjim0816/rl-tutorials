@@ -1,3 +1,5 @@
+# MuJoCo
+
 MuJoCo（Multi-Joint dynamics with Contact）是一个物理模拟器，可以用于机器人控制优化等研究。安装见[Mac安装MuJoCo以及mujoco_py](https://blog.csdn.net/JohnJim0/article/details/115656392?spm=1001.2014.3001.5501)
 
 
