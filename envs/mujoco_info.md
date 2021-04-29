@@ -10,7 +10,7 @@ MuJoCo（Multi-Joint dynamics with Contact）是一个物理模拟器，可以�
 
 该环境基于mujoco仿真引擎，该环境的目的是使一只两只脚的“猎豹”跑得越快越好(下面图谷歌HalfCheetah-v2的，https://gym.openai.com/envs/HalfCheetah-v2/)。
 
-<img src="../../../%25E5%2585%25BC%25E8%2581%258C/%25E5%25B7%25B2%25E5%25AE%258C%25E6%2588%2590/%25E5%258D%2595%25E5%25AD%259020210421/assets/image-20210423193925207.png" alt="image-20210423193925207" style="zoom:50%;" />
+<img src="assets/image-20210429150630806.png" alt="image-20210429150630806" style="zoom:50%;" />
 
 动作空间：Box(6,)，一只脚需要控制三个关节一共6个关节，每个关节的运动范围为[-1, 1]。
 
@@ -37,6 +37,6 @@ def step(self, action):
 
 但是这个环境有一些问题，目前经过搜索并不知道一个回合的reward上限，实验中训练好的episode能跑出平台之外：
 
-![image-20210423204450661](assets/image-20210423204450661.png)
+<img src="assets/image-20210429150622353.png" alt="image-20210429150622353" style="zoom:50%;" />
 
 加上时间有限，所以训练中reward一直处于一个平缓上升的状态，本人猜测这可能是gym的一个bug。
