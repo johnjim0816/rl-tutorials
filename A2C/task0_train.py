@@ -2,25 +2,19 @@ import sys,os
 curr_path = os.path.dirname(__file__)
 parent_path = os.path.dirname(curr_path)
 sys.path.append(parent_path)  # add current terminal path to sys.path
-import math
-import random
+
 
 import gym
 import numpy as np
-
 import torch
-import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
-from torch.distributions import Categorical
 
-import matplotlib.pyplot as plt
 
 use_cuda = torch.cuda.is_available()
 device   = torch.device("cuda" if use_cuda else "cpu")
 
 from common.multiprocessing_env import SubprocVecEnv
-
+from A2C.model import ActorCritic
 num_envs = 8
 env_name = "CartPole-v0"
 
@@ -30,35 +24,10 @@ def make_env():
         return env
     return _thunk
 
-plt.ion()
 envs = [make_env() for i in range(num_envs)]
 envs = SubprocVecEnv(envs) # 8 env
 
 env = gym.make(env_name) # a single env
-
-class ActorCritic(nn.Module):
-    def __init__(self, num_inputs, num_outputs, hidden_size, std=0.0):
-        super(ActorCritic, self).__init__()
-        
-        self.critic = nn.Sequential(
-            nn.Linear(num_inputs, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, 1)
-        )
-        
-        self.actor = nn.Sequential(
-            nn.Linear(num_inputs, hidden_size),
-            nn.ReLU(),
-            nn.Linear(hidden_size, num_outputs),
-            nn.Softmax(dim=1),
-        )
-        
-    def forward(self, x):
-        value = self.critic(x)
-        probs = self.actor(x)
-        dist  = Categorical(probs)
-        return dist, value
-
 
 def test_env(vis=False):
     state = env.reset()
@@ -83,10 +52,7 @@ def compute_returns(next_value, rewards, masks, gamma=0.99):
         returns.insert(0, R)
     return returns
 
-def plot(frame_idx, rewards):
-    plt.plot(rewards,'b-')
-    plt.title('frame %s. reward: %s' % (frame_idx, rewards[-1]))
-    plt.pause(0.0001)
+
 
 
 num_inputs  = envs.observation_space.shape[0]
