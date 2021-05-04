@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-29 10:37:32
 LastEditor: John
-LastEditTime: 2021-05-04 20:02:46
+LastEditTime: 2021-05-04 22:35:56
 Discription: 
 Environment: 
 '''
@@ -21,8 +21,8 @@ import numpy as np
 import torch
 import gym
 
-from common.utils import save_results
-from common.plot import plot_rewards,plot_losses
+from common.utils import save_results,make_dir
+from common.plot import plot_rewards
 from HierarchicalDQN.agent import HierarchicalDQN
 
 curr_time = datetime.datetime.now().strftime(
@@ -60,6 +60,7 @@ def env_agent_config(cfg,seed=1):
 
 def train(cfg, env, agent):
     print('Start to train !')
+    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
     rewards = []
     ma_rewards = []  # moveing average reward
     for i_ep in range(cfg.train_eps):
@@ -94,19 +95,52 @@ def train(cfg, env, agent):
     print('Complete training！')
     return rewards, ma_rewards
 
+def eval(cfg, env, agent):
+    print('Start to eval !')
+    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
+    rewards = []
+    ma_rewards = []  # moveing average reward
+    for i_ep in range(cfg.train_eps):
+        state = env.reset()
+        done = False
+        ep_reward = 0
+        while not done:
+            goal = agent.set_goal(state)
+            onehot_goal = agent.to_onehot(goal)
+            extrinsic_reward = 0
+            while not done and goal != np.argmax(state):
+                goal_state = np.concatenate([state, onehot_goal])
+                action = agent.choose_action(goal_state)
+                next_state, reward, done, _ = env.step(action)
+                ep_reward += reward
+                extrinsic_reward += reward
+                state = next_state
+                agent.update()
+        print(f'Episode:{i_ep+1}/{cfg.train_eps}, Reward:{ep_reward}, Loss:{agent.loss_numpy:.2f}, Meta_Loss:{agent.meta_loss_numpy:.2f}')
+        rewards.append(ep_reward)
+        if ma_rewards:
+            ma_rewards.append(
+                0.9*ma_rewards[-1]+0.1*ep_reward)
+        else:
+            ma_rewards.append(ep_reward)
+    print('Complete training！')
+    return rewards, ma_rewards
 
 if __name__ == "__main__":
     cfg = HierarchicalDQNConfig()
-    env = gym.make('CartPole-v0')
-    env.seed(1)
-    
-    state_dim = env.observation_space.shape[0]
-    action_dim = env.action_space.n
-    agent = HierarchicalDQN(state_dim, action_dim, cfg)
+
+    # train
+    env,agent = env_agent_config(cfg,seed=1)
     rewards, ma_rewards = train(cfg, env, agent)
-    agent.save(path=SAVED_MODEL_PATH)
-    save_results(rewards, ma_rewards, tag='train', path=RESULT_PATH)
+    make_dir(cfg.result_path, cfg.model_path)
+    agent.save(path=cfg.model_path)
+    save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
     plot_rewards(rewards, ma_rewards, tag="train",
-                 algo=cfg.algo, path=RESULT_PATH)
-    plot_losses(agent.losses,algo=cfg.algo, path=RESULT_PATH)
+                 algo=cfg.algo, path=cfg.result_path)
+    # eval
+    env,agent = env_agent_config(cfg,seed=10)
+    agent.load(path=cfg.model_path)
+    rewards,ma_rewards = eval(cfg,env,agent)
+    save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
 
