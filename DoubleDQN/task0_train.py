@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-05-04 15:05:37
+LastEditTime: 2021-05-04 18:53:20
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -104,6 +104,7 @@ def eval(cfg,env,agent):
     return rewards,ma_rewards    
 if __name__ == "__main__":
     cfg = DoubleDQNConfig()
+    # train
     env,agent = env_agent_config(cfg,seed=1)
     rewards, ma_rewards = train(cfg, env, agent)
     make_dir(cfg.result_path, cfg.model_path)
@@ -112,6 +113,7 @@ if __name__ == "__main__":
     plot_rewards(rewards, ma_rewards, tag="train",
                  algo=cfg.algo, path=cfg.result_path)
 
+    # eval
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = eval(cfg,env,agent)
