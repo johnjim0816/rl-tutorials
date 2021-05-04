@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-04-29 22:23:38
+LastEditTime: 2021-05-04 02:38:22
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -18,15 +18,12 @@ import datetime
 import torch
 import gym
 
-from common.utils import save_results, make_dir, del_empty_dir
+from common.utils import save_results, make_dir
 from common.plot import plot_rewards
 from DQN.agent import DQN
 
-
-
 curr_time = datetime.datetime.now().strftime(
     "%Y%m%d-%H%M%S")  # obtain current time
-
 
 class DQNConfig:
     def __init__(self):
