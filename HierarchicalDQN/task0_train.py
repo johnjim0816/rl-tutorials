@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-29 10:37:32
 LastEditor: John
-LastEditTime: 2021-03-31 14:58:49
+LastEditTime: 2021-05-04 20:02:46
 Discription: 
 Environment: 
 '''
@@ -25,23 +25,19 @@ from common.utils import save_results
 from common.plot import plot_rewards,plot_losses
 from HierarchicalDQN.agent import HierarchicalDQN
 
-SEQUENCE = datetime.datetime.now().strftime(
+curr_time = datetime.datetime.now().strftime(
     "%Y%m%d-%H%M%S")  # obtain current time
-SAVED_MODEL_PATH = curr_path+"/saved_model/"+SEQUENCE+'/'  # path to save model
-if not os.path.exists(curr_path+"/saved_model/"):
-    os.mkdir(curr_path+"/saved_model/")
-if not os.path.exists(SAVED_MODEL_PATH):
-    os.mkdir(SAVED_MODEL_PATH)
-RESULT_PATH = curr_path+"/results/"+SEQUENCE+'/'  # path to save rewards
-if not os.path.exists(curr_path+"/results/"):
-    os.mkdir(curr_path+"/results/")
-if not os.path.exists(RESULT_PATH):
-    os.mkdir(RESULT_PATH)
-
 
 class HierarchicalDQNConfig:
     def __init__(self):
         self.algo = "H-DQN"  # name of algo
+        self.env = 'CartPole-v0'
+        self.result_path = curr_path+"/outputs/" + self.env + \
+            '/'+curr_time+'/results/'  # path to save results
+        self.model_path = curr_path+"/outputs/" + self.env + \
+            '/'+curr_time+'/models/'  # path to save models
+        self.train_eps = 300  # 训练的episode数目
+        self.eval_eps = 50  # 测试的episode数目
         self.gamma = 0.99
         self.epsilon_start = 1  # start epsilon of e-greedy policy
         self.epsilon_end = 0.01
@@ -49,19 +45,24 @@ class HierarchicalDQNConfig:
         self.lr = 0.0001  # learning rate
         self.memory_capacity = 10000  # Replay Memory capacity
         self.batch_size = 32
-        self.train_eps = 300  # 训练的episode数目
         self.target_update = 2  # target net的更新频率
-        self.eval_eps = 20  # 测试的episode数目
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测gpu
         self.hidden_dim = 256  # dimension of hidden layer
 
+def env_agent_config(cfg,seed=1):
+    env = gym.make(cfg.env)  
+    env.seed(seed)
+    state_dim = env.observation_space.shape[0]
+    action_dim = env.action_space.n
+    agent = HierarchicalDQN(state_dim,action_dim,cfg)
+    return env,agent
 
 def train(cfg, env, agent):
     print('Start to train !')
     rewards = []
     ma_rewards = []  # moveing average reward
-    for i_episode in range(cfg.train_eps):
+    for i_ep in range(cfg.train_eps):
         state = env.reset()
         done = False
         ep_reward = 0
@@ -83,7 +84,7 @@ def train(cfg, env, agent):
                 state = next_state
                 agent.update()
         agent.meta_memory.push(meta_state, goal, extrinsic_reward, state, done)
-        print('Episode:{}/{}, Reward:{}, Loss:{:.2f}, Meta_Loss:{:.2f}'.format(i_episode+1, cfg.train_eps, ep_reward,agent.loss_numpy ,agent.meta_loss_numpy ))
+        print('Episode:{}/{}, Reward:{}, Loss:{:.2f}, Meta_Loss:{:.2f}'.format(i_ep+1, cfg.train_eps, ep_reward,agent.loss_numpy ,agent.meta_loss_numpy ))
         rewards.append(ep_reward)
         if ma_rewards:
             ma_rewards.append(
@@ -95,9 +96,10 @@ def train(cfg, env, agent):
 
 
 if __name__ == "__main__":
+    cfg = HierarchicalDQNConfig()
     env = gym.make('CartPole-v0')
     env.seed(1)
-    cfg = HierarchicalDQNConfig()
+    
     state_dim = env.observation_space.shape[0]
     action_dim = env.action_space.n
     agent = HierarchicalDQN(state_dim, action_dim, cfg)

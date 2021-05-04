@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-05-04 19:06:29
+LastEditTime: 2021-05-04 22:29:40
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -42,7 +42,7 @@ class DQNConfig:
         self.lr = 0.0001  # learning rate
         self.memory_capacity = 100000  # capacity of Replay Memory
         self.batch_size = 64
-        self.target_update = 2 # update frequency of target net
+        self.target_update = 4 # update frequency of target net
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # check gpu
         self.hidden_dim = 256  # hidden size of net
@@ -73,7 +73,7 @@ def train(cfg, env, agent):
             agent.update()
             if done:
                 break
-        if i_ep % cfg.target_update == 0:
+        if (i_ep+1) % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         if (i_ep+1)%10 == 0:
             print('Episode:{}/{}, Reward:{}'.format(i_ep+1, cfg.train_eps, ep_reward))
