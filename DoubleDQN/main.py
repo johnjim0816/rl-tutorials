@@ -5,58 +5,63 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-03-28 11:05:14
+LastEditTime: 2021-05-04 15:05:37
 @Discription: 
 @Environment: python 3.7.7
 '''
 import sys,os
-sys.path.append(os.getcwd()) # add current terminal path
+curr_path = os.path.dirname(__file__)
+parent_path = os.path.dirname(curr_path)
+sys.path.append(parent_path)  # add current terminal path to sys.path
+
 import gym
 import torch
 import datetime
 from DoubleDQN.agent import DoubleDQN
 from common.plot import plot_rewards
-from common.utils import save_results
+from common.utils import save_results, make_dir
 
-SEQUENCE = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
-SAVED_MODEL_PATH = os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"+SEQUENCE+'/' # 生成保存的模型路径
-if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/"): 
-    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/saved_model/")
-if not os.path.exists(SAVED_MODEL_PATH): 
-    os.mkdir(SAVED_MODEL_PATH)
-RESULT_PATH = os.path.split(os.path.abspath(__file__))[0]+"/results/"+SEQUENCE+'/' # 存储reward的路径
-if not os.path.exists(os.path.split(os.path.abspath(__file__))[0]+"/results/"): 
-    os.mkdir(os.path.split(os.path.abspath(__file__))[0]+"/results/")
-if not os.path.exists(RESULT_PATH): 
-    os.mkdir(RESULT_PATH)
+curr_time = datetime.datetime.now().strftime(
+    "%Y%m%d-%H%M%S")  # obtain current time
 
 class DoubleDQNConfig:
     def __init__(self):
-        self.algo = "Double DQN" # name of algo
-        self.gamma = 0.99
-        self.epsilon_start = 0.9 # e-greedy策略的初始epsilon
-        self.epsilon_end = 0.01
+        self.algo = "DoubleDQN" # name of algo
+        self.env = 'CartPole-v0'  # env name
+        self.result_path = curr_path+"/outputs/" + self.env + \
+            '/'+curr_time+'/results/'  # path to save results
+        self.model_path = curr_path+"/outputs/" + self.env + \
+            '/'+curr_time+'/models/'  # path to save results
+        self.gamma = 0.99 
+        self.epsilon_start = 0.9 # start epsilon of e-greedy policy
+        self.epsilon_end = 0.01 
         self.epsilon_decay = 200
-        self.lr = 0.01 # 学习率
-        self.memory_capacity = 10000 # Replay Memory容量
+        self.lr = 0.01 # learning rate
+        self.memory_capacity = 10000 # capacity of Replay Memory
         self.batch_size = 128
-        self.train_eps = 300 # 训练的episode数目
-        self.train_steps = 200 # 训练每个episode的最大长度
-        self.target_update = 2 # target net的更新频率
-        self.eval_eps = 20 # 测试的episode数目
-        self.eval_steps = 200 # 测试每个episode的最大长度
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测gpu
-        self.hidden_dim = 128 # 神经网络隐藏层维度
+        self.train_eps = 300 # max tranng episodes
+        self.train_steps = 200 # max training steps per episode
+        self.target_update = 2 # update frequency of target net
+        self.eval_eps = 50 # max evaling episodes
+        self.eval_steps = 200 # max evaling steps per episode
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # check gpu
+        self.hidden_dim = 128 # hidden size of net
  
-
+def env_agent_config(cfg,seed=1):
+    env = gym.make(cfg.env)  
+    env.seed(seed)
+    state_dim = env.observation_space.shape[0]
+    action_dim = env.action_space.n
+    agent = DoubleDQN(state_dim,action_dim,cfg)
+    return env,agent
+    
 def train(cfg,env,agent):
     print('Start to train !')
     rewards,ma_rewards = [],[]
-    ep_steps = []
-    for i_episode in range(cfg.train_eps):
+    for i_ep in range(cfg.train_eps):
         state = env.reset() # reset环境状态
         ep_reward = 0
-        for i_step in range(cfg.train_steps):
+        while True:
             action = agent.choose_action(state) # 根据当前环境state选择action
             next_state, reward, done, _ = env.step(action) # 更新环境参数
             ep_reward += reward
@@ -65,13 +70,10 @@ def train(cfg,env,agent):
             agent.update() # 每步更新网络
             if done:
                 break
-        # 更新target network，复制DQN中的所有weights and biases
-        if i_episode % cfg.target_update == 0:
+        if i_ep % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
-        print('Episode:{}/{}, Reward:{}, Steps:{}, Done:{}'.format(i_episode+1,cfg.train_eps,ep_reward,i_step,done))
-        ep_steps.append(i_step)
+        print(f'Episode:{i_ep+1}/{cfg.train_eps}, Reward:{ep_reward}')
         rewards.append(ep_reward)
-        # 计算滑动窗口的reward
         if ma_rewards:
             ma_rewards.append(
                 0.9*ma_rewards[-1]+0.1*ep_reward)
@@ -79,15 +81,39 @@ def train(cfg,env,agent):
             ma_rewards.append(ep_reward)   
     print('Complete training！')
     return rewards,ma_rewards
-    
+
+def eval(cfg,env,agent):
+    rewards = []  
+    ma_rewards = []
+    for i_ep in range(cfg.eval_eps):
+        state = env.reset() 
+        ep_reward = 0   
+        while True:
+            action = agent.predict(state)  
+            next_state, reward, done, _ = env.step(action)  
+            state = next_state  
+            ep_reward += reward
+            if done:
+                break
+        rewards.append(ep_reward)
+        if ma_rewards:
+            ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
+        else:
+            ma_rewards.append(ep_reward)
+        print(f"Episode:{i_ep+1}/{cfg.eval_eps}, reward:{ep_reward:.1f}")
+    return rewards,ma_rewards    
 if __name__ == "__main__":
     cfg = DoubleDQNConfig()
-    env = gym.make('CartPole-v0').unwrapped # 可google为什么unwrapped gym，此处一般不需要
-    env.seed(1) # 设置env随机种子
-    state_dim = env.observation_space.shape[0]
-    action_dim = env.action_space.n
-    agent = DoubleDQN(state_dim,action_dim,cfg)
-    rewards,ma_rewards = train(cfg,env,agent)
-    agent.save(path=SAVED_MODEL_PATH)
-    save_results(rewards,ma_rewards,tag='train',path=RESULT_PATH)
-    plot_rewards(rewards,ma_rewards,tag="train",algo = cfg.algo,path=RESULT_PATH)
+    env,agent = env_agent_config(cfg,seed=1)
+    rewards, ma_rewards = train(cfg, env, agent)
+    make_dir(cfg.result_path, cfg.model_path)
+    agent.save(path=cfg.model_path)
+    save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
+    plot_rewards(rewards, ma_rewards, tag="train",
+                 algo=cfg.algo, path=cfg.result_path)
+
+    env,agent = env_agent_config(cfg,seed=10)
+    agent.load(path=cfg.model_path)
+    rewards,ma_rewards = eval(cfg,env,agent)
+    save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
