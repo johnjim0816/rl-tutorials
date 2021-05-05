@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-05-04 22:29:40
+LastEditTime: 2021-05-05 16:49:15
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -32,7 +32,7 @@ class DQNConfig:
         self.result_path = curr_path+"/outputs/" + self.env + \
             '/'+curr_time+'/results/'  # path to save results
         self.model_path = curr_path+"/outputs/" + self.env + \
-            '/'+curr_time+'/models/'  # path to save results
+            '/'+curr_time+'/models/'  # path to save models
         self.train_eps = 300  # max trainng episodes
         self.eval_eps = 50 # number of episodes for evaluating
         self.gamma = 0.95

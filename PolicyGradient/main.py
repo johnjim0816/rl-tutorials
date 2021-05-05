@@ -5,15 +5,17 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-11-22 23:21:53
 LastEditor: John
-LastEditTime: 2021-03-23 16:38:54
+LastEditTime: 2021-05-05 17:03:03
 Discription: 
 Environment: 
 '''
 import sys,os
 sys.path.append(os.getcwd()) # add current terminal path to sys.path
 from itertools import count
-import datetime
+
 import gym
+import datetime
+
 from PolicyGradient.agent import PolicyGradient
 from common.plot import plot_rewards
 from common.utils import save_results
