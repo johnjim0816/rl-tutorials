@@ -5,14 +5,14 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-05-05 16:49:15
+LastEditTime: 2021-09-07 12:00:28
 @Discription: 
 @Environment: python 3.7.7
 '''
 import sys,os
-curr_path = os.path.dirname(__file__)
-parent_path = os.path.dirname(curr_path)
-sys.path.append(parent_path)  # add current terminal path to sys.path
+curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前文件所在绝对路径
+parent_path = os.path.dirname(curr_path) # 父路径
+sys.path.append(parent_path) # 添加父路径到系统路径sys.path
 
 import gym
 import torch
@@ -78,7 +78,7 @@ def train(cfg, env, agent):
         if (i_ep+1)%10 == 0:
             print('Episode:{}/{}, Reward:{}'.format(i_ep+1, cfg.train_eps, ep_reward))
         rewards.append(ep_reward)
-        # save ma rewards
+        # save ma_rewards
         if ma_rewards:
             ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)
         else:
