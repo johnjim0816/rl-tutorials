@@ -5,14 +5,14 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-05-06 17:04:38
+LastEditTime: 2021-09-10 16:17:04
 Discription: 
 Environment: 
 '''
 import sys,os
-curr_path = os.path.dirname(__file__)
-parent_path=os.path.dirname(curr_path) 
-sys.path.append(parent_path) # add current terminal path to sys.path
+curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前路径
+parent_path=os.path.dirname(curr_path) # 父路径，这里就是我们的项目路径
+sys.path.append(parent_path) # 由于需要引用项目路径下的其他模块比如envs，所以需要添加路径到sys.path
 
 import gym
 import torch
@@ -20,19 +20,20 @@ import datetime
 
 from envs.gridworld_env import CliffWalkingWapper
 from QLearning.agent import QLearning
-from common.plot import plot_rewards
+from common.plot import plot_rewards,plot_rewards_cn
 from common.utils import save_results,make_dir
-curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current time
+
+curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
 
 class QlearningConfig:
     '''训练相关参数'''
     def __init__(self):
-        self.algo = 'Qlearning'
-        self.env = 'CliffWalking-v0' # 0 up, 1 right, 2 down, 3 left
-        self.result_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/results/'  # path to save results
-        self.model_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/models/'  # path to save models
-        self.train_eps = 300 # 训练的episode数目
-        self.eval_eps = 30
+        self.algo = 'Q-learning' # 算法名称
+        self.env = 'CliffWalking-v0' # 环境名称
+        self.result_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/results/'  # 保存结果的路径
+        self.model_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/models/'  # 保存模型的路径
+        self.train_eps = 200 # 训练的回合数
+        self.eval_eps = 30 # 测试的回合数
         self.gamma = 0.9 # reward的衰减率
         self.epsilon_start = 0.95 # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01 # e-greedy策略中的终止epsilon
@@ -44,19 +45,19 @@ class QlearningConfig:
 def env_agent_config(cfg,seed=1):
     env = gym.make(cfg.env)  
     env = CliffWalkingWapper(env)
-    env.seed(seed)
-    state_dim = env.observation_space.n
-    action_dim = env.action_space.n
-    agent = QLearning(state_dim,action_dim,cfg)
+    env.seed(seed) # 设置随机种子
+    n_states = env.observation_space.n # 状态维度
+    n_actions = env.action_space.n # 动作维度
+    agent = QLearning(n_states,n_actions,cfg)
     return env,agent
 
 def train(cfg,env,agent):
     print('Start to train !')
     print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
     rewards = []  
-    ma_rewards = [] # moving average reward
+    ma_rewards = [] # 滑动平均奖励
     for i_ep in range(cfg.train_eps):
-        ep_reward = 0  # 记录每个episode的reward
+        ep_reward = 0  # 记录每个回合的奖励
         state = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
         while True:
             action = agent.choose_action(state)  # 根据算法选择一个动作
@@ -108,12 +109,12 @@ if __name__ == "__main__":
     make_dir(cfg.result_path,cfg.model_path)
     agent.save(path=cfg.model_path)
     save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards_cn(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
 
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards_cn(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
     
     

@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-09-07 12:00:28
+LastEditTime: 2021-09-10 15:29:34
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -57,7 +57,7 @@ def env_agent_config(cfg,seed=1):
     
 def train(cfg, env, agent):
     print('Start to train !')
-    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
+    print(f'Env: {cfg.env}, Algorithm: {cfg.algo}, Device: {cfg.device}')
     rewards = []
     ma_rewards = []  # moveing average reward
     for i_ep in range(cfg.train_eps):
@@ -88,7 +88,7 @@ def train(cfg, env, agent):
 
 def eval(cfg,env,agent):
     print('Start to eval !')
-    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
+    print(f'Env: {cfg.env}, Algorithm: {cfg.algo}, Device: {cfg.device}')
     rewards = []  
     ma_rewards = [] # moving average rewards
     for i_ep in range(cfg.eval_eps):
