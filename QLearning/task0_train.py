@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-09-10 16:17:04
+LastEditTime: 2021-09-10 16:51:31
 Discription: 
 Environment: 
 '''
@@ -80,7 +80,7 @@ def eval(cfg,env,agent):
     # env = gym.make("FrozenLake-v0", is_slippery=False)  # 0 left, 1 down, 2 right, 3 up
     # env = FrozenLakeWapper(env)
     print('Start to eval !')
-    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
+    print(f'Env: {cfg.env}, Algorithm: {cfg.algo}, Device: {cfg.device}')
     rewards = []  # 记录所有episode的reward
     ma_rewards = [] # 滑动平均的reward
     for i_ep in range(cfg.eval_eps):
