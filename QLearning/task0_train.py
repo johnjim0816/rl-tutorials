@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-09-10 16:51:31
+LastEditTime: 2021-09-10 18:47:41
 Discription: 
 Environment: 
 '''
@@ -38,8 +38,8 @@ class QlearningConfig:
         self.epsilon_start = 0.95 # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01 # e-greedy策略中的终止epsilon
         self.epsilon_decay = 200 # e-greedy策略中epsilon的衰减率
-        self.lr = 0.1 # learning rate
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # check gpu
+        self.lr = 0.1 # 学习率
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测GPU
 
         
 def env_agent_config(cfg,seed=1):
@@ -63,7 +63,7 @@ def train(cfg,env,agent):
             action = agent.choose_action(state)  # 根据算法选择一个动作
             next_state, reward, done, _ = env.step(action)  # 与环境进行一次动作交互
             agent.update(state, action, reward, next_state, done)  # Q-learning算法更新
-            state = next_state  # 存储上一个观察值
+            state = next_state  # 更新状态
             ep_reward += reward
             if done:
                 break
