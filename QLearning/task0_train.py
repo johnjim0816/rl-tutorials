@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-09-10 18:47:41
+LastEditTime: 2021-09-11 21:42:44
 Discription: 
 Environment: 
 '''
@@ -24,7 +24,6 @@ from common.plot import plot_rewards,plot_rewards_cn
 from common.utils import save_results,make_dir
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
-
 class QlearningConfig:
     '''训练相关参数'''
     def __init__(self):
@@ -52,8 +51,8 @@ def env_agent_config(cfg,seed=1):
     return env,agent
 
 def train(cfg,env,agent):
-    print('Start to train !')
-    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
+    print('开始训练！')
+    print(f'环境:{cfg.env}, 算法:{cfg.algo}, 设备:{cfg.device}')
     rewards = []  
     ma_rewards = [] # 滑动平均奖励
     for i_ep in range(cfg.train_eps):
@@ -72,20 +71,18 @@ def train(cfg,env,agent):
             ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
         else:
             ma_rewards.append(ep_reward)
-        print("Episode:{}/{}: reward:{:.1f}".format(i_ep+1, cfg.train_eps,ep_reward))
-    print('Complete training！')
+        print("回合数：{}/{}，奖励{:.1f}".format(i_ep+1, cfg.train_eps,ep_reward))
+    print('完成训练！')
     return rewards,ma_rewards
     
 def eval(cfg,env,agent):
-    # env = gym.make("FrozenLake-v0", is_slippery=False)  # 0 left, 1 down, 2 right, 3 up
-    # env = FrozenLakeWapper(env)
-    print('Start to eval !')
-    print(f'Env: {cfg.env}, Algorithm: {cfg.algo}, Device: {cfg.device}')
-    rewards = []  # 记录所有episode的reward
-    ma_rewards = [] # 滑动平均的reward
+    print('开始测试！')
+    print(f'环境：{cfg.env}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    rewards = []  # 记录所有回合的奖励
+    ma_rewards = [] # 滑动平均的奖励
     for i_ep in range(cfg.eval_eps):
         ep_reward = 0  # 记录每个episode的reward
-        state = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
+        state = env.reset()  # 重置环境, 重新开一局（即开始新的一个回合）
         while True:
             action = agent.predict(state)  # 根据算法选择一个动作
             next_state, reward, done, _ = env.step(action)  # 与环境进行一个交互
@@ -98,21 +95,21 @@ def eval(cfg,env,agent):
             ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
         else:
             ma_rewards.append(ep_reward)
-        print(f"Episode:{i_ep+1}/{cfg.eval_eps}, reward:{ep_reward:.1f}")
-    print('Complete evaling！')
+        print(f"回合数：{i_ep+1}/{cfg.eval_eps}, 奖励：{ep_reward:.1f}")
+    print('完成测试！')
     return rewards,ma_rewards
     
 if __name__ == "__main__":
     cfg = QlearningConfig()
     env,agent = env_agent_config(cfg,seed=1)
     rewards,ma_rewards = train(cfg,env,agent)
-    make_dir(cfg.result_path,cfg.model_path)
-    agent.save(path=cfg.model_path)
-    save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
+    make_dir(cfg.result_path,cfg.model_path) # 创建文件夹
+    agent.save(path=cfg.model_path) # 保存模型
+    save_results(rewards,ma_rewards,tag='train',path=cfg.result_path) # 保存结果
     plot_rewards_cn(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
 
     env,agent = env_agent_config(cfg,seed=10)
-    agent.load(path=cfg.model_path)
+    agent.load(path=cfg.model_path) # 加载模型
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
     plot_rewards_cn(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)

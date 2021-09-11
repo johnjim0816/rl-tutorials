@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-09-10 15:24:45
+LastEditTime: 2021-09-11 21:39:56
 Discription: use defaultdict to define Q table
 Environment: 
 '''
@@ -54,6 +54,8 @@ class QLearning(object):
             f=path+"Qleaning_model.pkl",
             pickle_module=dill
         )
+        print("保存模型成功")
     def load(self, path):
         import dill
         self.Q_table =torch.load(f=path+'Qleaning_model.pkl',pickle_module=dill)
+        print("加载模型成功")

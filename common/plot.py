@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-10-07 20:57:11
 LastEditor: John
-LastEditTime: 2021-09-10 18:44:26
+LastEditTime: 2021-09-11 21:35:00
 Discription: 
 Environment: 
 '''
@@ -29,14 +29,14 @@ def plot_rewards_cn(rewards,ma_rewards,tag="train",env='CartPole-v0',algo = "DQN
     ''' 中文画图
     '''
     sns.set()
-    plt.title(u"{}环境下{}算法的学习曲线".format(env,algo),fontproperties=chinese_font())
+    plt.title(u"{}环境下Q学习算法的学习曲线".format(env),fontproperties=chinese_font())
     plt.xlabel(u'回合数',fontproperties=chinese_font())
     plt.plot(rewards)
     plt.plot(ma_rewards)
     plt.legend((u'奖励',u'滑动平均奖励',),loc="best",prop=chinese_font())
     if save:
         plt.savefig(path+f"{tag}_rewards_curve_cn")
-    plt.show()
+    # plt.show()
 
 def plot_losses(losses,algo = "DQN",save=True,path='./'):
     sns.set()
@@ -46,5 +46,5 @@ def plot_losses(losses,algo = "DQN",save=True,path='./'):
     plt.legend()
     if save:
         plt.savefig(path+"losses_curve")
-    plt.show()
+    # plt.show()
    

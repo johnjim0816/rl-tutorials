@@ -95,7 +95,7 @@ rewards = []
 ma_rewards = [] # 滑动平均奖励
 for i_ep in range(cfg.train_eps):
     ep_reward = 0  # 记录每个回合的奖励
-    state = env.reset()  # 重置环境, 重新开一局（即开始新的一个episode）
+    state = env.reset()  # 重置环境, 重新开一局（即开始新的一个回合）
     while True:
         action = agent.choose_action(state)  # 根据算法选择一个动作
         next_state, reward, done, _ = env.step(action)  # 与环境进行一次动作交互
@@ -120,7 +120,7 @@ if ma_rewards:
 ```python
 def choose_action(self, state):
       self.sample_count += 1
-      self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
+      self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) 
           math.exp(-1. * self.sample_count / self.epsilon_decay) # epsilon是会递减的，这里选择指数递减
       # e-greedy 策略
       if np.random.uniform(0, 1) > self.epsilon:
@@ -132,7 +132,7 @@ def choose_action(self, state):
 
 
 
-一般我们使用epsilon-greedy策略选择动作，我们的输入就是当前的状态，随机选取一个值，当这个值大于我们设置的epsilion时，我们选取Q值最大对应的动作，否则随机选择动作，这样就能在训练中让智能体保持一定的探索率，这也是平衡探索与利用的技巧之一。
+一般我们使用$\varepsilon-greedy$策略选择动作，我们的输入就是当前的状态，随机选取一个值，当这个值大于我们设置的$\varepsilon$时，我们选取Q值最大对应的动作，否则随机选择动作，这样就能在训练中让智能体保持一定的探索率，这也是平衡探索与利用的技巧之一。
 
 下面是我们要实现的策略更新函数：
 
@@ -148,7 +148,7 @@ def update(self, state, action, reward, next_state, done):
 
 这里面实现的逻辑就是伪代码中的更新公式：
 
-<img src="/Users/johnjim/Library/Application Support/typora-user-images/image-20210910151439599.png" alt="image-20210910151439599" style="zoom: 33%;" />
+<img src="assets/image-20210911213241605.png" alt="image-20210911213241605" style="zoom:50%;" />
 
 注意终止状态下，我们是获取不到下一个动作的，我们直接将Q值（Q_target）更新为对应的奖励即可。
 
@@ -156,10 +156,10 @@ def update(self, state, action, reward, next_state, done):
 
 到现在我们就基本完成了Q学习的代码实现，具体可以查看github上的源码，运行代码结果如下：
 
-<img src="/Users/johnjim/Desktop/rl-tutorials/QLearning/outputs/CliffWalking-v0/20210910-184442/results/train_rewards_curve_cn.png" alt="train_rewards_curve_cn" style="zoom:72%;" />
+
 
 由于这个环境比较简单，可以看到算法很快达到收敛，然后我们再测试我们训练好的模型，一般测试模型只需要20到50左右的回合数即可：
 
-<img src="/Users/johnjim/Desktop/rl-tutorials/QLearning/outputs/CliffWalking-v0/20210910-184442/results/eval_rewards_curve_cn.png" alt="eval_rewards_curve_cn" style="zoom:72%;" />
+
 
 这里我们测试的回合数为30，可以看到每个回合智能体都达到了最优的奖励，说明我们的算法训练的效果很不错！
