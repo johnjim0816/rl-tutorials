@@ -1,6 +1,6 @@
 # 使用Q学习解决悬崖寻路问题
 
-强化学习在运动规划方面也有很大的应用前景，已有很多适用于强化学习的相关仿真环境，小到迷宫，大到贴近真实的自动驾驶环境[CARLA](http://carla.org/)。本次使用[OpenAI Gym](https://gym.openai.com/)开发的CliffWalking-v0环境，带大家入门Q学习的代码实战。
+强化学习在运动规划方面也有很大的应用前景，已有很多适用于强化学习的相关仿真环境，小到迷宫，大到贴近真实的自动驾驶环境[CARLA](http://carla.org/)。本次使用[OpenAI Gym](https://gym.openai.com/)开发的CliffWalking-v0环境，带大家入门Q学习算法的代码实战。
 
 ## CliffWalking-v0环境简介
 
