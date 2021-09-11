@@ -156,10 +156,10 @@ def update(self, state, action, reward, next_state, done):
 
 到现在我们就基本完成了Q学习的代码实现，具体可以查看github上的源码，运行代码结果如下：
 
-
+![train_rewards_curve_cn](assets/train_rewards_curve_cn.png)
 
 由于这个环境比较简单，可以看到算法很快达到收敛，然后我们再测试我们训练好的模型，一般测试模型只需要20到50左右的回合数即可：
 
-
+![eval_rewards_curve_cn](assets/eval_rewards_curve_cn.png)
 
 这里我们测试的回合数为30，可以看到每个回合智能体都达到了最优的奖励，说明我们的算法训练的效果很不错！
