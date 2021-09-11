@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-09-11 21:42:44
+LastEditTime: 2021-09-12 00:52:07
 Discription: 
 Environment: 
 '''
@@ -34,10 +34,10 @@ class QlearningConfig:
         self.train_eps = 200 # 训练的回合数
         self.eval_eps = 30 # 测试的回合数
         self.gamma = 0.9 # reward的衰减率
-        self.epsilon_start = 0.95 # e-greedy策略中初始epsilon
+        self.epsilon_start = 0.99 # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01 # e-greedy策略中的终止epsilon
         self.epsilon_decay = 200 # e-greedy策略中epsilon的衰减率
-        self.lr = 0.1 # 学习率
+        self.lr = 0.05 # 学习率
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 检测GPU
 
         
