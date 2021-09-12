@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2021-09-12 00:52:07
+LastEditTime: 2021-09-12 01:29:40
 Discription: 
 Environment: 
 '''
@@ -34,7 +34,7 @@ class QlearningConfig:
         self.train_eps = 200 # 训练的回合数
         self.eval_eps = 30 # 测试的回合数
         self.gamma = 0.9 # reward的衰减率
-        self.epsilon_start = 0.99 # e-greedy策略中初始epsilon
+        self.epsilon_start = 0.90 # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01 # e-greedy策略中的终止epsilon
         self.epsilon_decay = 200 # e-greedy策略中epsilon的衰减率
         self.lr = 0.05 # 学习率
@@ -101,6 +101,8 @@ def eval(cfg,env,agent):
     
 if __name__ == "__main__":
     cfg = QlearningConfig()
+
+    # 训练
     env,agent = env_agent_config(cfg,seed=1)
     rewards,ma_rewards = train(cfg,env,agent)
     make_dir(cfg.result_path,cfg.model_path) # 创建文件夹
@@ -108,8 +110,9 @@ if __name__ == "__main__":
     save_results(rewards,ma_rewards,tag='train',path=cfg.result_path) # 保存结果
     plot_rewards_cn(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
 
-    env,agent = env_agent_config(cfg,seed=10)
-    agent.load(path=cfg.model_path) # 加载模型
+    # # 测试
+    # env,agent = env_agent_config(cfg,seed=10)
+    # agent.load(path=cfg.model_path) # 加载模型
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
     plot_rewards_cn(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
