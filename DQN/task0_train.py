@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-09-12 01:31:19
+LastEditTime: 2021-09-15 02:19:54
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -26,8 +26,8 @@ curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时
 
 class DQNConfig:
     def __init__(self):
-        self.algo = "DQN"  # 算法鸣唱
-        self.env = 'CartPole-v0'
+        self.algo = "DQN"  # 算法名称
+        self.env = 'CartPole-v0' # 环境名称
         self.result_path = curr_path+"/outputs/" + self.env + \
             '/'+curr_time+'/results/'  # path to save results
         self.model_path = curr_path+"/outputs/" + self.env + \
@@ -49,9 +49,9 @@ class DQNConfig:
 def env_agent_config(cfg,seed=1):
     env = gym.make(cfg.env)  
     env.seed(seed)
-    state_dim = env.observation_space.shape[0]
-    action_dim = env.action_space.n
-    agent = DQN(state_dim,action_dim,cfg)
+    n_states = env.observation_space.shape[0]
+    n_actions = env.action_space.n
+    agent = DQN(n_states,n_actions,cfg)
     return env,agent
     
 def train(cfg, env, agent):
