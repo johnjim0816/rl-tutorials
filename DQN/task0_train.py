@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-09-15 02:19:54
+LastEditTime: 2021-09-15 14:51:25
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -19,7 +19,7 @@ import torch
 import datetime
 
 from common.utils import save_results, make_dir
-from common.plot import plot_rewards
+from common.plot import plot_rewards,plot_rewards_cn
 from DQN.agent import DQN
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
@@ -55,10 +55,10 @@ def env_agent_config(cfg,seed=1):
     return env,agent
     
 def train(cfg, env, agent):
-    print('Start to train !')
-    print(f'Env: {cfg.env}, Algorithm: {cfg.algo}, Device: {cfg.device}')
-    rewards = []
-    ma_rewards = []  # moveing average reward
+    print('开始训练!')
+    print(f'环境：{cfg.env}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    rewards = [] # 记录奖励
+    ma_rewards = []  # 记录滑动平均奖励
     for i_ep in range(cfg.train_eps):
         state = env.reset()
         done = False
@@ -75,19 +75,19 @@ def train(cfg, env, agent):
         if (i_ep+1) % cfg.target_update == 0:
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         if (i_ep+1)%10 == 0:
-            print('Episode:{}/{}, Reward:{}'.format(i_ep+1, cfg.train_eps, ep_reward))
+            print('回合：{}/{}, 奖励：{}'.format(i_ep+1, cfg.train_eps, ep_reward))
         rewards.append(ep_reward)
         # save ma_rewards
         if ma_rewards:
             ma_rewards.append(0.9*ma_rewards[-1]+0.1*ep_reward)
         else:
             ma_rewards.append(ep_reward)
-    print('Complete training！')
+    print('完成训练！')
     return rewards, ma_rewards
 
 def eval(cfg,env,agent):
-    print('Start to eval !')
-    print(f'Env: {cfg.env}, Algorithm: {cfg.algo}, Device: {cfg.device}')
+    print('开始测试!')
+    print(f'环境：{cfg.env}, 算法：{cfg.algo}, 设备：{cfg.device}')
     rewards = []  
     ma_rewards = [] # moving average rewards
     for i_ep in range(cfg.eval_eps):
@@ -105,24 +105,23 @@ def eval(cfg,env,agent):
             ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
         else:
             ma_rewards.append(ep_reward)
-        print(f"Episode:{i_ep+1}/{cfg.eval_eps}, reward:{ep_reward:.1f}")
-    print('Complete evaling！')
+        print(f"回合：{i_ep+1}/{cfg.eval_eps}, 奖励：{ep_reward:.1f}")
+    print('完成测试！')
     return rewards,ma_rewards
 
 if __name__ == "__main__":
     cfg = DQNConfig()
-
-    # train
+    # 训练
     env,agent = env_agent_config(cfg,seed=1)
     rewards, ma_rewards = train(cfg, env, agent)
     make_dir(cfg.result_path, cfg.model_path)
     agent.save(path=cfg.model_path)
     save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
-    plot_rewards(rewards, ma_rewards, tag="train",
+    plot_rewards_cn(rewards, ma_rewards, tag="train",
                  algo=cfg.algo, path=cfg.result_path)
-    # eval
+    # 测试
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards_cn(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
