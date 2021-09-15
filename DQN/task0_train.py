@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:48:57
 @LastEditor: John
-LastEditTime: 2021-09-15 14:51:25
+LastEditTime: 2021-09-15 15:34:13
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -29,21 +29,21 @@ class DQNConfig:
         self.algo = "DQN"  # 算法名称
         self.env = 'CartPole-v0' # 环境名称
         self.result_path = curr_path+"/outputs/" + self.env + \
-            '/'+curr_time+'/results/'  # path to save results
+            '/'+curr_time+'/results/'  # 保存结果的路径
         self.model_path = curr_path+"/outputs/" + self.env + \
-            '/'+curr_time+'/models/'  # path to save models
+            '/'+curr_time+'/models/'  # 保存模型的路径
         self.train_eps = 200 # 训练的回合数
         self.eval_eps = 30 # 测试的回合数
-        self.gamma = 0.95 
+        self.gamma = 0.95 # 强化学习中的折扣因子
         self.epsilon_start = 0.90 # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01 # e-greedy策略中的终止epsilon
         self.epsilon_decay = 500 # e-greedy策略中epsilon的衰减率
         self.lr = 0.0001  # 学习率
-        self.memory_capacity = 100000  # capacity of Replay Memory
-        self.batch_size = 64
+        self.memory_capacity = 100000  # 经验回放的容量
+        self.batch_size = 64 # mini-batch SGD中的批量大小
         self.target_update = 4 # 目标网络的更新频率
         self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")  # jian che
+            "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.hidden_dim = 256  # hidden size of net
         
 def env_agent_config(cfg,seed=1):
