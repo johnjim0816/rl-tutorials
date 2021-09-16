@@ -144,7 +144,7 @@ class MLP(nn.Module):
 
 ## DQN算法
 
-跟前面的项目实战一样，DQN算法一般也包括选择动作和更新策略两个函数，首先我们看选择动：
+跟前面的项目实战一样，DQN算法一般也包括选择动作和更新策略两个函数，首先我们看选择动作：
 
 ```python
 def choose_action(self, state):
@@ -199,10 +199,10 @@ def update(self):
 
 完成代码之后，我们先来看看DQN算法的训练效果，曲线如下：
 
-![train_rewards_curve_cn](assets/train_rewards_curve_cn-1689150.png)
+![train_rewards_curve_cn](../../easy_rl_book/res/ch7/assets/train_rewards_curve_cn-1689150.png)
 
 从图中看出，算法其实已经在60回合左右达到收敛，最后一直维持在最佳奖励200左右，可能会有轻微的波动，这是因为我们在收敛的情况下依然保持了一定的探索率，即epsilon_end=0.01。现在我们可以载入模型看看测试的效果：
 
-![eval_rewards_curve_cn](assets/eval_rewards_curve_cn-1689282.png)
+![eval_rewards_curve_cn](../../easy_rl_book/res/ch7/assets/eval_rewards_curve_cn-1689282.png)
 
 我们测试了30个回合，每回合都保持在200左右，说明我们的模型学习得不错了！
