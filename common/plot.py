@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-10-07 20:57:11
 LastEditor: John
-LastEditTime: 2021-09-15 14:56:15
+LastEditTime: 2021-09-19 21:06:10
 Discription: 
 Environment: 
 '''
@@ -36,7 +36,7 @@ def plot_rewards_cn(rewards,ma_rewards,tag="train",env='CartPole-v0',algo = "DQN
     plt.legend((u'奖励',u'滑动平均奖励',),loc="best",prop=chinese_font())
     if save:
         plt.savefig(path+f"{tag}_rewards_curve_cn")
-    plt.show()
+    # plt.show()
 
 def plot_losses(losses,algo = "DQN",save=True,path='./'):
     sns.set()
