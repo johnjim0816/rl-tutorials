@@ -19,7 +19,7 @@ import torch
 import datetime
 
 from common.utils import save_results, make_dir
-from common.plot import plot_rewards,plot_rewards_cn
+from common.plot import plot_rewards
 from DQN.agent import DQN
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
@@ -117,11 +117,11 @@ if __name__ == "__main__":
     make_dir(cfg.result_path, cfg.model_path)
     agent.save(path=cfg.model_path)
     save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
-    plot_rewards_cn(rewards, ma_rewards, tag="train",
+    plot_rewards(rewards, ma_rewards, tag="train",
                  algo=cfg.algo, path=cfg.result_path)
     # 测试
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
-    plot_rewards_cn(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
