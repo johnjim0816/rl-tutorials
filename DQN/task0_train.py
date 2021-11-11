@@ -38,7 +38,7 @@ class DQNConfig:
         self.batch_size = 64 # mini-batch SGD中的批量大小
         self.target_update = 4 # 目标网络的更新频率
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
-        self.hidden_dim = 256  # hidden size of net
+        self.hidden_dim = 256  # 网络隐藏层
 class PlotConfig:
     def __init__(self) -> None:
         self.algo = "DQN"  # 算法名称
