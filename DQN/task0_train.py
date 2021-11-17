@@ -12,7 +12,7 @@ LastEditTime: 2021-09-15 15:34:13
 import sys,os
 curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前文件所在绝对路径
 parent_path = os.path.dirname(curr_path) # 父路径
-sys.path.append(parent_path) # 添加父路径到系统路径sys.path
+sys.path.append(parent_path) # 添加路径到系统路径sys.path
 
 import gym
 import torch
@@ -27,8 +27,10 @@ class DQNConfig:
     def __init__(self):
         self.algo = "DQN"  # 算法名称
         self.env = 'CartPole-v0' # 环境名称
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.train_eps = 200 # 训练的回合数
         self.eval_eps = 30 # 测试的回合数
+        # 超参数
         self.gamma = 0.95 # 强化学习中的折扣因子
         self.epsilon_start = 0.90 # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01 # e-greedy策略中的终止epsilon
@@ -37,7 +39,6 @@ class DQNConfig:
         self.memory_capacity = 100000  # 经验回放的容量
         self.batch_size = 64 # mini-batch SGD中的批量大小
         self.target_update = 4 # 目标网络的更新频率
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.hidden_dim = 256  # 网络隐藏层
 class PlotConfig:
     def __init__(self) -> None:
