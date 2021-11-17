@@ -10,14 +10,13 @@ Discription:
 Environment: 
 '''
 import sys,os
-curr_path = os.path.dirname(__file__)
-parent_path=os.path.dirname(curr_path) 
-sys.path.append(parent_path) # add current terminal path to sys.path
+curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前文件所在绝对路径
+parent_path = os.path.dirname(curr_path) # 父路径
+sys.path.append(parent_path) # 添加路径到系统路径
 
 import gym
 import torch
 import datetime
-import tqdm
 from PPO.agent import PPO
 from common.plot import plot_rewards
 from common.utils import save_results,make_dir
@@ -26,12 +25,11 @@ curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current t
 
 class PPOConfig:
     def __init__(self) -> None:
-        self.env = 'CartPole-v0'
-        self.algo = 'PPO'
-        self.result_path = curr_path+"/results/" +self.env+'/'+curr_time+'/results/'  # path to save results
-        self.model_path = curr_path+"/results/" +self.env+'/'+curr_time+'/models/'  # path to save models
-        self.train_eps = 200 # max training episodes
-        self.eval_eps = 50
+        self.algo = "DQN"  # 算法名称
+        self.env_name = 'CartPole-v0' # 环境名称
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
+        self.train_eps = 200 # 训练的回合数
+        self.eval_eps = 20 # 测试的回合数
         self.batch_size = 5
         self.gamma=0.99
         self.n_epochs = 4
@@ -41,10 +39,20 @@ class PPOConfig:
         self.policy_clip=0.2
         self.hidden_dim = 256
         self.update_fre = 20 # frequency of agent update
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # check gpu
 
+class PlotConfig:
+    def __init__(self) -> None:
+        self.algo = "DQN"  # 算法名称
+        self.env_name = 'CartPole-v0' # 环境名称
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
+        self.result_path = curr_path+"/outputs/" + self.env_name + \
+            '/'+curr_time+'/results/'  # 保存结果的路径
+        self.model_path = curr_path+"/outputs/" + self.env_name + \
+            '/'+curr_time+'/models/'  # 保存模型的路径
+        self.save = True # 是否保存图片
+        
 def env_agent_config(cfg,seed=1):
-    env = gym.make(cfg.env)  
+    env = gym.make(cfg.env_name)  
     env.seed(seed)
     state_dim = env.observation_space.shape[0]
     action_dim = env.action_space.n
@@ -53,9 +61,9 @@ def env_agent_config(cfg,seed=1):
             
 def train(cfg,env,agent):
     print('开始训练！')
-    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
-    rewards= []
-    ma_rewards = [] # moving average rewards
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    rewards = [] # 记录所有回合的奖励
+    ma_rewards = []  # 记录所有回合的滑动平均奖励
     running_steps = 0
     for i_ep in range(cfg.train_eps):
         state = env.reset()
@@ -77,14 +85,14 @@ def train(cfg,env,agent):
         else:
             ma_rewards.append(ep_reward)
         print(f"回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.2f}")
-    print('Complete training！')
+    print('完成训练！')
     return rewards,ma_rewards
 
 def eval(cfg,env,agent):
-    print('Start to eval !')
-    print(f'Env:{cfg.env}, Algorithm:{cfg.algo}, Device:{cfg.device}')
-    rewards= []
-    ma_rewards = [] # moving average rewards
+    print('开始测试!')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    rewards = [] # 记录所有回合的奖励
+    ma_rewards = []  # 记录所有回合的滑动平均奖励
     for i_ep in range(cfg.eval_eps):
         state = env.reset()
         done = False
@@ -100,23 +108,23 @@ def eval(cfg,env,agent):
                 0.9*ma_rewards[-1]+0.1*ep_reward)
         else:
             ma_rewards.append(ep_reward)
-        print(f"Episode:{i_ep+1}/{cfg.eval_eps}, Reward:{ep_reward:.3f}")
-    print('Complete evaling！')
+        print('回合：{}/{}, 奖励：{}'.format(i_ep+1, cfg.train_eps, ep_reward))
+    print('完成训练！')
     return rewards,ma_rewards
     
 if __name__ == '__main__':
     cfg  = PPOConfig()
-    # train
+    plot_cfg = PlotConfig()
+    # 训练
     env,agent = env_agent_config(cfg,seed=1)
     rewards, ma_rewards = train(cfg, env, agent)
-    make_dir(cfg.result_path, cfg.model_path)
-    agent.save(path=cfg.model_path)
-    save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
-    plot_rewards(rewards, ma_rewards, tag="train",
-                 algo=cfg.algo, path=cfg.result_path)
-    # eval
+    make_dir(plot_cfg.result_path, plot_cfg.model_path) # 创建保存结果和模型路径的文件夹
+    agent.save(path=plot_cfg.model_path)
+    save_results(rewards, ma_rewards, tag='train', path=plot_cfg.result_path)
+    plot_rewards(rewards, ma_rewards, plot_cfg, tag="train")
+    # 测试
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,plot_cfg,tag="eval")
