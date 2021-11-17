@@ -26,7 +26,7 @@ curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时
 class DQNConfig:
     def __init__(self):
         self.algo = "DQN"  # 算法名称
-        self.env = 'CartPole-v0' # 环境名称
+        self.env_name = 'CartPole-v0' # 环境名称
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.train_eps = 200 # 训练的回合数
         self.eval_eps = 30 # 测试的回合数
@@ -43,10 +43,10 @@ class DQNConfig:
 class PlotConfig:
     def __init__(self) -> None:
         self.algo = "DQN"  # 算法名称
-        self.env = 'CartPole-v0' # 环境名称
-        self.result_path = curr_path+"/outputs/" + self.env + \
+        self.env_name = 'CartPole-v0' # 环境名称
+        self.result_path = curr_path+"/outputs/" + self.env_name + \
             '/'+curr_time+'/results/'  # 保存结果的路径
-        self.model_path = curr_path+"/outputs/" + self.env + \
+        self.model_path = curr_path+"/outputs/" + self.env_name + \
             '/'+curr_time+'/models/'  # 保存模型的路径
         self.save = True # 是否保存图片
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
@@ -54,7 +54,7 @@ class PlotConfig:
 def env_agent_config(cfg,seed=1):
     ''' 创建环境和智能体
     '''
-    env = gym.make(cfg.env)  # 创建环境
+    env = gym.make(cfg.env_name)  # 创建环境
     env.seed(seed) # 设置随机种子
     n_states = env.observation_space.shape[0] # 状态数
     n_actions = env.action_space.n # 动作数
@@ -65,7 +65,7 @@ def train(cfg, env, agent):
     ''' 训练
     '''
     print('开始训练!')
-    print(f'环境：{cfg.env}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
     rewards = [] # 记录所有回合的奖励
     ma_rewards = []  # 记录所有回合的滑动平均奖励
     for i_ep in range(cfg.train_eps):
@@ -94,7 +94,7 @@ def train(cfg, env, agent):
 
 def eval(cfg,env,agent):
     print('开始测试!')
-    print(f'环境：{cfg.env}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
     # 由于测试不需要使用epsilon-greedy策略，所以相应的值设置为0
     cfg.epsilon_start = 0.0 # e-greedy策略中初始epsilon
     cfg.epsilon_end = 0.0 # e-greedy策略中的终止epsilon

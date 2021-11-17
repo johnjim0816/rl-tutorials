@@ -1,8 +1,7 @@
 import sys,os
-curr_path = os.path.dirname(__file__)
-parent_path = os.path.dirname(curr_path)
-sys.path.append(parent_path)  # add current terminal path to sys.path
-
+curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前文件所在绝对路径
+parent_path = os.path.dirname(curr_path) # 父路径
+sys.path.append(parent_path) # 添加路径到系统路径sys.path
 
 import gym
 import numpy as np
@@ -18,9 +17,9 @@ curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current t
 class A2CConfig:
     def __init__(self) -> None:
         self.algo='A2C'
-        self.env= 'CartPole-v0'
-        self.result_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/results/'  # path to save results
-        self.model_path = curr_path+"/outputs/" +self.env+'/'+curr_time+'/models/'  # path to save models
+        self.env_name= 'CartPole-v0'
+        self.result_path = curr_path+"/outputs/" +self.env_name+'/'+curr_time+'/results/'  # path to save results
+        self.model_path = curr_path+"/outputs/" +self.env_name+'/'+curr_time+'/models/'  # path to save models
         self.n_envs = 8
         self.gamma = 0.99
         self.hidden_size = 256
@@ -57,7 +56,7 @@ def compute_returns(next_value, rewards, masks, gamma=0.99):
 
 
 def train(cfg,envs):
-    env = gym.make(cfg.env) # a single env
+    env = gym.make(cfg.env_name) # a single env
     env.seed(10)
     state_dim  = envs.observation_space.shape[0]
     action_dim = envs.action_space.n
@@ -112,9 +111,9 @@ def train(cfg,envs):
     return test_rewards, test_ma_rewards
 if __name__ == "__main__":
     cfg = A2CConfig()
-    envs = [make_envs(cfg.env) for i in range(cfg.n_envs)]
+    envs = [make_envs(cfg.env_name) for i in range(cfg.n_envs)]
     envs = SubprocVecEnv(envs) # 8 env
     rewards,ma_rewards = train(cfg,envs)
     make_dir(cfg.result_path,cfg.model_path)
     save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env_name,algo = cfg.algo,path=cfg.result_path)
