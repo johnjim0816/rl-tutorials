@@ -44,13 +44,13 @@ class PlotConfig:
     def __init__(self) -> None:
         self.algo = "DQN"  # 算法名称
         self.env_name = 'CartPole-v0' # 环境名称
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.result_path = curr_path+"/outputs/" + self.env_name + \
             '/'+curr_time+'/results/'  # 保存结果的路径
         self.model_path = curr_path+"/outputs/" + self.env_name + \
             '/'+curr_time+'/models/'  # 保存模型的路径
         self.save = True # 是否保存图片
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
-
+        
 def env_agent_config(cfg,seed=1):
     ''' 创建环境和智能体
     '''
