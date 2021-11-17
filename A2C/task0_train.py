@@ -16,17 +16,28 @@ from common.plot import plot_rewards
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current time
 class A2CConfig:
     def __init__(self) -> None:
-        self.algo='A2C'
-        self.env_name= 'CartPole-v0'
-        self.result_path = curr_path+"/outputs/" +self.env_name+'/'+curr_time+'/results/'  # path to save results
-        self.model_path = curr_path+"/outputs/" +self.env_name+'/'+curr_time+'/models/'  # path to save models
-        self.n_envs = 8
-        self.gamma = 0.99
-        self.hidden_size = 256
+        self.algo='A2C' # 算法名称
+        self.env_name= 'CartPole-v0' # 环境名称
+        self.n_envs = 8 # 异步的环境数目
+        self.gamma = 0.99 # 强化学习中的折扣因子
+        self.hidden_dim = 256
         self.lr = 1e-3 # learning rate
         self.max_frames = 30000
         self.n_steps = 5
         self.device  = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+class PlotConfig:
+    def __init__(self) -> None:
+        self.algo = "DQN"  # 算法名称
+        self.env_name = 'CartPole-v0' # 环境名称
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
+
+        self.result_path = curr_path+"/outputs/" + self.env_name + \
+            '/'+curr_time+'/results/'  # 保存结果的路径
+        self.model_path = curr_path+"/outputs/" + self.env_name + \
+            '/'+curr_time+'/models/'  # 保存模型的路径
+        self.save = True # 是否保存图片
+        
+
 def make_envs(env_name):
     def _thunk():
         env = gym.make(env_name)
@@ -60,7 +71,7 @@ def train(cfg,envs):
     env.seed(10)
     state_dim  = envs.observation_space.shape[0]
     action_dim = envs.action_space.n
-    model = ActorCritic(state_dim, action_dim, cfg.hidden_size).to(cfg.device)
+    model = ActorCritic(state_dim, action_dim, cfg.hidden_dim).to(cfg.device)
     optimizer = optim.Adam(model.parameters())
     frame_idx    = 0
     test_rewards = []
@@ -111,9 +122,11 @@ def train(cfg,envs):
     return test_rewards, test_ma_rewards
 if __name__ == "__main__":
     cfg = A2CConfig()
+    plot_cfg = PlotConfig()
     envs = [make_envs(cfg.env_name) for i in range(cfg.n_envs)]
-    envs = SubprocVecEnv(envs) # 8 env
+    envs = SubprocVecEnv(envs) 
+    # 训练
     rewards,ma_rewards = train(cfg,envs)
-    make_dir(cfg.result_path,cfg.model_path)
-    save_results(rewards,ma_rewards,tag='train',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="train",env=cfg.env_name,algo = cfg.algo,path=cfg.result_path)
+    make_dir(plot_cfg.result_path,plot_cfg.model_path)
+    save_results(rewards, ma_rewards, tag='train', path=plot_cfg.result_path) # 保存结果
+    plot_rewards(rewards, ma_rewards, plot_cfg, tag="train") # 画出结果
