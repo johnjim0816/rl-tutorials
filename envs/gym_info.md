@@ -8,7 +8,7 @@
 
 ### [Pendulum-v0](https://github.com/openai/gym/wiki/Pendulum-v0)
 
-注：新的gym版本中Pendulum-v0已经改为Pendulum-v1
+注：gym 0.18.0之后版本中Pendulum-v0已经改为Pendulum-v1
 <img src="assets/image-20200820174814084.png" alt="image-20200820174814084" style="zoom:50%;" />
 
 钟摆以随机位置开始，目标是将其摆动，使其保持向上直立。动作空间是连续的，值的区间为[-2,2]。每个step给的reward最低为-16.27，最高为0。目前最好的成绩是100个episode的reward之和为-123.11 ± 6.86。
