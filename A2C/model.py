@@ -13,19 +13,19 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Categorical
 class ActorCritic(nn.Module):
-    def __init__(self, n_states, n_actions, hidden_dim):
+    def __init__(self, state_dim, action_dim, hidden_dim):
         super(ActorCritic, self).__init__()
         
         self.critic = nn.Sequential(
-            nn.Linear(n_states, hidden_dim),
+            nn.Linear(state_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, 1)
         )
         
         self.actor = nn.Sequential(
-            nn.Linear(n_states, hidden_dim),
+            nn.Linear(state_dim, hidden_dim),
             nn.ReLU(),
-            nn.Linear(hidden_dim, n_actions),
+            nn.Linear(hidden_dim, action_dim),
             nn.Softmax(dim=1),
         )
         

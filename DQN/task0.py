@@ -46,9 +46,9 @@ def env_agent_config(cfg,seed=1):
     '''
     env = gym.make(cfg.env_name)  # 创建环境
     env.seed(seed) # 设置随机种子
-    n_states = env.observation_space.shape[0] # 状态数
-    n_actions = env.action_space.n # 动作数
-    agent = DQN(n_states,n_actions,cfg) # 创建智能体
+    state_dim = env.observation_space.shape[0] # 状态数
+    action_dim = env.action_space.n # 动作数
+    agent = DQN(state_dim,action_dim,cfg) # 创建智能体
     return env,agent
 
 cfg = DQNConfig()

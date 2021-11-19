@@ -1,28 +1,29 @@
 #!/usr/bin/env python
 # coding=utf-8
 '''
-@Author: John
-@Email: johnjim0816@gmail.com
-@Date: 2020-06-12 00:48:57
-@LastEditor: John
-LastEditTime: 2021-09-10 15:26:05
-@Discription: 
-@Environment: python 3.7.7
+Author: JiangJi
+Email: johnjim0816@gmail.com
+Date: 2021-11-07 18:10:37
+LastEditor: JiangJi
+LastEditTime: 2021-11-19 18:34:05
+Discription: 
 '''
+
 import sys,os
-curr_path = os.path.dirname(__file__)
-parent_path = os.path.dirname(curr_path)
-sys.path.append(parent_path)  # add current terminal path to sys.path
+curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前文件所在绝对路径
+parent_path = os.path.dirname(curr_path) # 父路径
+sys.path.append(parent_path) # 添加路径到系统路径
 
 import gym
 import torch
 import datetime
-from DoubleDQN.agent import DoubleDQN
-from common.plot import plot_rewards
-from common.utils import save_results, make_dir
 
-curr_time = datetime.datetime.now().strftime(
-    "%Y%m%d-%H%M%S")  # obtain current time
+from common.utils import save_results, make_dir
+from common.utils import plot_rewards
+from DoubleDQN.agent import DoubleDQN
+from DoubleDQN.train import train
+
+curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 
 class DoubleDQNConfig:
     def __init__(self):
