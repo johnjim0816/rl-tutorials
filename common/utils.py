@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2021-09-11 21:48:49
+LastEditTime: 2021-11-30 18:37:03
 Discription: 
 Environment: 
 '''
@@ -14,6 +14,26 @@ import numpy as np
 from pathlib import Path
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+# from matplotlib.font_manager import FontProperties # 导入字体模块
+
+# def chinese_font():  
+#     ''' 设置中文字体
+#     '''
+#     return FontProperties(fname='/System/Library/Fonts/STHeiti Light.ttc',size=15)  # fname系统字体路径，此处是mac的
+# def plot_rewards_cn(rewards,ma_rewards,plot_cfg,tag='train'):
+#     ''' 中文画图
+#     '''
+#     sns.set()
+#     plt.figure()
+#     plt.title(u"{}环境下{}算法的学习曲线".format(env,algo),fontproperties=chinese_font())
+#     plt.xlabel(u'回合数',fontproperties=chinese_font())
+#     plt.plot(rewards)
+#     plt.plot(ma_rewards)
+#     plt.legend((u'奖励',u'滑动平均奖励',),loc="best",prop=chinese_font())
+#     if save:
+#         plt.savefig(path+f"{tag}_rewards_curve_cn")
+#     # plt.show()
 
 def plot_rewards(rewards,ma_rewards,plot_cfg,tag='train'):
     sns.set() 
