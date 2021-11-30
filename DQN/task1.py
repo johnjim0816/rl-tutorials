@@ -1,24 +1,29 @@
-import gym
-import torch
-import datetime
-from common.utils import save_results, make_dir
-from common.utils import plot_rewards
-from DQN.agent import DQN
 from DQN.train import train
+from DQN.agent import DQN
+from common.utils import plot_rewards
+from common.utils import save_results, make_dir
+import datetime
+import torch
+import gym
 import sys
 import os
-
 curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
 parent_path = os.path.dirname(curr_path)  # 父路径
 sys.path.append(parent_path)  # 添加路径到系统路径
 
+
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
+algo_name = "DQN"  # 算法名称
+env_name = 'CartPole-v1'  # 环境名称
 
 
 class DQNConfig:
+    ''' 算法相关参数设置
+    '''
+
     def __init__(self):
-        self.algo = "DQN"  # 算法名称
-        self.env_name = 'CartPole-v0'  # 环境名称
+        self.algo = algo_name  # 算法名称
+        self.env_name = env_name  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.train_eps = 200  # 训练的回合数
@@ -36,9 +41,12 @@ class DQNConfig:
 
 
 class PlotConfig:
+    ''' 绘图相关参数设置
+    '''
+
     def __init__(self) -> None:
-        self.algo = "DQN"  # 算法名称
-        self.env_name = 'CartPole-v0'  # 环境名称
+        self.algo = algo_name  # 算法名称
+        self.env_name = env_name  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.result_path = curr_path+"/outputs/" + self.env_name + \
@@ -73,5 +81,6 @@ plot_rewards(rewards, ma_rewards, plot_cfg, tag="train")  # 画出结果
 env, agent = env_agent_config(cfg, seed=10)
 agent.load(path=plot_cfg.model_path)  # 导入模型
 rewards, ma_rewards = eval(cfg, env, agent)
-save_results(rewards, ma_rewards, tag='eval', path=plot_cfg.result_path)  # 保存结果
+save_results(rewards, ma_rewards, tag='eval',
+             path=plot_cfg.result_path)  # 保存结果
 plot_rewards(rewards, ma_rewards, plot_cfg, tag="eval")  # 画出结果
