@@ -1,3 +1,9 @@
+import sys
+import os
+curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
+parent_path = os.path.dirname(curr_path)  # 父路径
+sys.path.append(parent_path)  # 添加路径到系统路径
+
 import gym
 import torch
 import datetime
@@ -5,12 +11,7 @@ from common.utils import save_results, make_dir
 from common.utils import plot_rewards
 from DQN.agent import DQN
 from DQN.train import train
-import sys
-import os
 
-curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
-parent_path = os.path.dirname(curr_path)  # 父路径
-sys.path.append(parent_path)  # 添加路径到系统路径
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 
@@ -41,10 +42,10 @@ class PlotConfig:
         self.env_name = 'CartPole-v0'  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
-        self.result_path = curr_path+"/outputs/" + self.env_name + \
-            '/'+curr_time+'/results/'  # 保存结果的路径
-        self.model_path = curr_path+"/outputs/" + self.env_name + \
-            '/'+curr_time+'/models/'  # 保存模型的路径
+        self.result_path = curr_path + "/outputs/" + self.env_name + \
+            '/' + curr_time + '/results/'  # 保存结果的路径
+        self.model_path = curr_path + "/outputs/" + self.env_name + \
+            '/' + curr_time + '/models/'  # 保存模型的路径
         self.save = True  # 是否保存图片
 
 
