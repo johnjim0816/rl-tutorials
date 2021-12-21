@@ -10,16 +10,16 @@ import datetime
 from common.utils import save_results, make_dir
 from common.utils import plot_rewards
 from DQN.agent import DQN
-from DQN.train import train
-
+from DQN.train import train,test
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
-
+algo_name = "DQN"  # 算法名称
+env_name = 'CartPole-v0'  # 环境名称
 
 class DQNConfig:
     def __init__(self):
-        self.algo = "DQN"  # 算法名称
-        self.env_name = 'CartPole-v0'  # 环境名称
+        self.algo_name = algo_name  # 算法名称
+        self.env_name = env_name  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.train_eps = 200  # 训练的回合数
@@ -34,12 +34,10 @@ class DQNConfig:
         self.batch_size = 64  # mini-batch SGD中的批量大小
         self.target_update = 4  # 目标网络的更新频率
         self.hidden_dim = 256  # 网络隐藏层
-
-
 class PlotConfig:
     def __init__(self) -> None:
-        self.algo = "DQN"  # 算法名称
-        self.env_name = 'CartPole-v0'  # 环境名称
+        self.algo = algo_name  # 算法名称
+        self.env_name = env_name  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.result_path = curr_path + "/outputs/" + self.env_name + \
@@ -47,7 +45,6 @@ class PlotConfig:
         self.model_path = curr_path + "/outputs/" + self.env_name + \
             '/' + curr_time + '/models/'  # 保存模型的路径
         self.save = True  # 是否保存图片
-
 
 def env_agent_config(cfg, seed=1):
     ''' 创建环境和智能体
@@ -73,6 +70,6 @@ plot_rewards(rewards, ma_rewards, plot_cfg, tag="train")  # 画出结果
 # 测试
 env, agent = env_agent_config(cfg, seed=10)
 agent.load(path=plot_cfg.model_path)  # 导入模型
-rewards, ma_rewards = eval(cfg, env, agent)
-save_results(rewards, ma_rewards, tag='eval', path=plot_cfg.result_path)  # 保存结果
-plot_rewards(rewards, ma_rewards, plot_cfg, tag="eval")  # 画出结果
+rewards, ma_rewards = test(cfg, env, agent)
+save_results(rewards, ma_rewards, tag='test', path=plot_cfg.result_path)  # 保存结果
+plot_rewards(rewards, ma_rewards, plot_cfg, tag="test")  # 画出结果

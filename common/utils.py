@@ -17,13 +17,15 @@ import seaborn as sns
 
 from matplotlib.font_manager import FontProperties  # 导入字体模块
 
-
 def chinese_font():
-    ''' 设置中文字体
+    ''' 设置中文字体，注意需要根据自己电脑情况更改字体路径，否则还是默认的字体
     '''
-    return FontProperties(
-        fname='/System/Library/Fonts/STHeiti Light.ttc', size=15)  # fname系统字体路径，此处是mac的
-
+    try:
+        font = FontProperties(
+        fname='/System/Library/Fonts/STHeiti Light.ttc', size=15) # fname系统字体路径，此处是mac的
+    except:
+        font = None
+    return font
 
 def plot_rewards_cn(rewards, ma_rewards, plot_cfg, tag='train'):
     ''' 中文画图

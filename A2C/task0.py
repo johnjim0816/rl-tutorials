@@ -1,7 +1,8 @@
-import sys,os
-curr_path = os.path.dirname(os.path.abspath(__file__)) # 当前文件所在绝对路径
-parent_path = os.path.dirname(curr_path) # 父路径
-sys.path.append(parent_path) # 添加路径到系统路径sys.path
+import sys
+import os
+curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
+parent_path = os.path.dirname(curr_path)  # 父路径
+sys.path.append(parent_path)  # 添加路径到系统路径
 
 import gym
 import numpy as np
@@ -9,15 +10,18 @@ import torch
 import torch.optim as optim
 import datetime
 from common.multiprocessing_env import SubprocVecEnv
-from A2C.model import ActorCritic
+from A2C.agent import ActorCritic
 from common.utils import save_results, make_dir
-from common.plot import plot_rewards
+from common.utils import plot_rewards
 
-curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # obtain current time
+curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
+algo_name = 'A2C'  # 算法名称
+env_name = 'CartPole-v0'  # 环境名称
+
 class A2CConfig:
     def __init__(self) -> None:
-        self.algo='A2C' # 算法名称
-        self.env_name= 'CartPole-v0' # 环境名称
+        self.algo_name = algo_name# 算法名称
+        self.env_name = env_name # 环境名称
         self.n_envs = 8 # 异步的环境数目
         self.gamma = 0.99 # 强化学习中的折扣因子
         self.hidden_dim = 256
@@ -27,10 +31,9 @@ class A2CConfig:
         self.device  = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class PlotConfig:
     def __init__(self) -> None:
-        self.algo = "DQN"  # 算法名称
-        self.env_name = 'CartPole-v0' # 环境名称
+        self.algo_name = algo_name # 算法名称
+        self.env_name = env_name # 环境名称
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
-
         self.result_path = curr_path+"/outputs/" + self.env_name + \
             '/'+curr_time+'/results/'  # 保存结果的路径
         self.model_path = curr_path+"/outputs/" + self.env_name + \
@@ -67,6 +70,8 @@ def compute_returns(next_value, rewards, masks, gamma=0.99):
 
 
 def train(cfg,envs):
+    print('开始训练!')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
     env = gym.make(cfg.env_name) # a single env
     env.seed(10)
     state_dim  = envs.observation_space.shape[0]
@@ -119,6 +124,7 @@ def train(cfg,envs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+    print('完成训练！')
     return test_rewards, test_ma_rewards
 if __name__ == "__main__":
     cfg = A2CConfig()

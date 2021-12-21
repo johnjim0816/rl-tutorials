@@ -13,7 +13,7 @@ def train(cfg, env, agent):
     ''' 训练
     '''
     print('开始训练!')
-    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}')
     rewards = [] # 记录所有回合的奖励
     ma_rewards = []  # 记录所有回合的滑动平均奖励
     for i_ep in range(cfg.train_eps):
@@ -40,9 +40,9 @@ def train(cfg, env, agent):
     print('完成训练！')
     return rewards, ma_rewards
 
-def eval(cfg,env,agent):
+def test(cfg,env,agent):
     print('开始测试!')
-    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    print(f'环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}')
     # 由于测试不需要使用epsilon-greedy策略，所以相应的值设置为0
     cfg.epsilon_start = 0.0 # e-greedy策略中初始epsilon
     cfg.epsilon_end = 0.0 # e-greedy策略中的终止epsilon
@@ -63,7 +63,7 @@ def eval(cfg,env,agent):
             ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
         else:
             ma_rewards.append(ep_reward)
-        print(f"回合：{i_ep+1}/{cfg.eval_eps}, 奖励：{ep_reward:.1f}")
+        print(f"回合：{i_ep+1}/{cfg.eval_eps}，奖励：{ep_reward:.1f}")
     print('完成测试！')
     return rewards,ma_rewards
 
@@ -133,6 +133,6 @@ if __name__ == "__main__":
     # 测试
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=plot_cfg.model_path) # 导入模型
-    rewards,ma_rewards = eval(cfg,env,agent)
-    save_results(rewards,ma_rewards,tag='eval',path=plot_cfg.result_path) # 保存结果
-    plot_rewards(rewards,ma_rewards, plot_cfg, tag="eval") # 画出结果
+    rewards,ma_rewards = test(cfg,env,agent)
+    save_results(rewards,ma_rewards,tag='test',path=plot_cfg.result_path) # 保存结果
+    plot_rewards(rewards,ma_rewards, plot_cfg, tag="test") # 画出结果
