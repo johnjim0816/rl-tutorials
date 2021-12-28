@@ -25,6 +25,7 @@ class Config:
         self.env_name = 'CartPole-v0'  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPUgjgjlkhfsf风刀霜的撒发十
+        self.seed = 1 # 随机种子，置0则不设置随机种子
         self.train_eps = 200  # 训练的回合数
         self.test_eps = 30  # 测试的回合数
         ################################################################################
@@ -50,17 +51,17 @@ class Config:
         ################################################################################
 
 
-def env_agent_config(cfg, seed=1):
+def env_agent_config(cfg):
     ''' 创建环境和智能体
     '''
     env = gym.make(cfg.env_name)  # 创建环境
     state_dim = env.observation_space.shape[0]  # 状态维度
     action_dim = env.action_space.n  # 动作维度
     agent = DQN(state_dim, action_dim, cfg)  # 创建智能体
-    if seed !=0: # 设置随机种子
-        torch.manual_seed(seed)
-        env.seed(seed)
-        np.random.seed(seed)
+    if cfg.seed !=0: # 设置随机种子
+        torch.manual_seed(cfg.seed)
+        env.seed(cfg.seed)
+        np.random.seed(cfg.seed)
     return env, agent
 
 
@@ -128,7 +129,7 @@ def test(cfg, env, agent):
 if __name__ == "__main__":
     cfg = Config()
     # 训练
-    env, agent = env_agent_config(cfg, seed=1)
+    env, agent = env_agent_config(cfg)
     rewards, ma_rewards = train(cfg, env, agent)
     make_dir(cfg.result_path, cfg.model_path)  # 创建保存结果和模型路径的文件夹
     agent.save(path=cfg.model_path)  # 保存模型
@@ -136,7 +137,7 @@ if __name__ == "__main__":
                  path=cfg.result_path)  # 保存结果
     plot_rewards(rewards, ma_rewards, cfg, tag="train")  # 画出结果
     # 测试
-    env, agent = env_agent_config(cfg, seed=10)
+    env, agent = env_agent_config(cfg)
     agent.load(path=cfg.model_path)  # 导入模型
     rewards, ma_rewards = test(cfg, env, agent)
     save_results(rewards, ma_rewards, tag='test',
