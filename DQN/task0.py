@@ -102,9 +102,10 @@ def train(cfg, env, agent):
 def test(cfg, env, agent):
     print('开始测试!')
     print(f'环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}')
-    # 由于测试不需要使用epsilon-greedy策略，所以相应的值设置为0
+    ############# 由于测试不需要使用epsilon-greedy策略，所以相应的值设置为0 ###############
     cfg.epsilon_start = 0.0  # e-greedy策略中初始epsilon
     cfg.epsilon_end = 0.0  # e-greedy策略中的终止epsilon
+    ################################################################################
     rewards = []  # 记录所有回合的奖励
     ma_rewards = []  # 记录所有回合的滑动平均奖励
     for i_ep in range(cfg.test_eps):
