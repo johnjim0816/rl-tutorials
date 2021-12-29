@@ -95,6 +95,7 @@ def train(cfg, env, agent):
         if (i_ep + 1) % 10 == 0:
             print('回合：{}/{}, 奖励：{}'.format(i_ep + 1, cfg.train_eps, ep_reward))
     print('完成训练！')
+    env.close()
     return rewards, ma_rewards
 
 
@@ -123,6 +124,7 @@ def test(cfg, env, agent):
             ma_rewards.append(ep_reward)
         print(f"回合：{i_ep+1}/{cfg.test_eps}，奖励：{ep_reward:.1f}")
     print('完成测试！')
+    env.close()
     return rewards, ma_rewards
 
 
