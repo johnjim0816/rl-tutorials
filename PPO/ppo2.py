@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-23 15:17:42
 LastEditor: John
-LastEditTime: 2021-09-26 22:02:00
+LastEditTime: 2021-12-31 19:38:33
 Discription: 
 Environment: 
 '''
@@ -13,8 +13,71 @@ import os
 import numpy as np
 import torch 
 import torch.optim as optim
-from PPO.model import Actor,Critic
-from PPO.memory import PPOMemory
+import torch.nn as nn
+from torch.distributions.categorical import Categorical
+class PPOMemory:
+    def __init__(self, batch_size):
+        self.states = []
+        self.probs = []
+        self.vals = []
+        self.actions = []
+        self.rewards = []
+        self.dones = []
+        self.batch_size = batch_size
+    def sample(self):
+        batch_step = np.arange(0, len(self.states), self.batch_size)
+        indices = np.arange(len(self.states), dtype=np.int64)
+        np.random.shuffle(indices)
+        batches = [indices[i:i+self.batch_size] for i in batch_step]
+        return np.array(self.states),np.array(self.actions),np.array(self.probs),\
+                np.array(self.vals),np.array(self.rewards),np.array(self.dones),batches
+                
+    def push(self, state, action, probs, vals, reward, done):
+        self.states.append(state)
+        self.actions.append(action)
+        self.probs.append(probs)
+        self.vals.append(vals)
+        self.rewards.append(reward)
+        self.dones.append(done)
+
+    def clear(self):
+        self.states = []
+        self.probs = []
+        self.actions = []
+        self.rewards = []
+        self.dones = []
+        self.vals = []
+class Actor(nn.Module):
+    def __init__(self,state_dim, action_dim,
+            hidden_dim):
+        super(Actor, self).__init__()
+
+        self.actor = nn.Sequential(
+                nn.Linear(state_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, action_dim),
+                nn.Softmax(dim=-1)
+        )
+    def forward(self, state):
+        dist = self.actor(state)
+        dist = Categorical(dist)
+        return dist
+
+class Critic(nn.Module):
+    def __init__(self, state_dim,hidden_dim):
+        super(Critic, self).__init__()
+        self.critic = nn.Sequential(
+                nn.Linear(state_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, hidden_dim),
+                nn.ReLU(),
+                nn.Linear(hidden_dim, 1)
+        )
+    def forward(self, state):
+        value = self.critic(state)
+        return value
 class PPO:
     def __init__(self, state_dim, action_dim,cfg):
         self.gamma = cfg.gamma
@@ -31,7 +94,8 @@ class PPO:
         self.loss = 0
 
     def choose_action(self, state):
-        state = torch.tensor([state], dtype=torch.float).to(self.device)
+        state = np.array([state]) # 先转成数组再转tensor更高效
+        state = torch.tensor(state, dtype=torch.float).to(self.device)
         dist = self.actor(state)
         value = self.critic(state)
         action = dist.sample()
