@@ -6,10 +6,9 @@ sys.path.append(parent_path) # 添加路径到系统路径
 import gym
 import torch
 import datetime
-from common.plot import plot_rewards
+from common.utils import plot_rewards
 from common.utils import save_results,make_dir
-from PPO.ppo2 import PPO
-from PPO.train import train
+from ppo2 import PPO
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 

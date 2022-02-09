@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2021-12-22 11:14:17
 LastEditor: JiangJi
-LastEditTime: 2021-12-22 15:27:48
+LastEditTime: 2022-02-10 06:17:46
 Discription: 使用 DQN-cnn  训练 PongNoFrameskip-v4
 '''
 import sys
@@ -20,7 +20,7 @@ import datetime
 from common.utils import save_results, make_dir
 from common.utils import plot_rewards, plot_rewards_cn
 from common.atari_wrappers import make_atari, wrap_deepmind
-from DQN.dqn import DQN
+from dqn import DQN
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 algo_name = 'DQN-cnn'  # 算法名称

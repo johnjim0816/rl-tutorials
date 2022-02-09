@@ -9,7 +9,7 @@ import numpy as np
 import datetime
 from common.utils import plot_rewards
 from common.utils import save_results,make_dir
-from PPO.ppo2 import PPO
+from ppo2 import PPO
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 

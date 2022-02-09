@@ -10,7 +10,7 @@ import datetime
 import numpy as np
 from common.utils import save_results, make_dir
 from common.utils import plot_rewards
-from DQN.dqn import DQN
+from dqn import DQN
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 
