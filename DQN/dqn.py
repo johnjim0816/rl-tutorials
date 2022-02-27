@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2021-12-22 14:01:37
+LastEditTime: 2022-02-28 01:31:37
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -86,7 +86,7 @@ class DQN:
         self.frame_idx += 1
         if random.random() > self.epsilon(self.frame_idx):
             with torch.no_grad():
-                state = torch.tensor([state], device=self.device, dtype=torch.float32)
+                state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
                 q_values = self.policy_net(state)
                 action = q_values.max(1)[1].item() # 选择Q值最大的动作
         else:

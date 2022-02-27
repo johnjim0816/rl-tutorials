@@ -4,46 +4,55 @@ import torch.optim as optim
 import torch.autograd as autograd 
 import random
 import math
+import numpy as np
 class CNN(nn.Module):
-    def __init__(self, input_dim, output_dim):
-        super(CNN, self).__init__()
+    def __init__(self, n_frames, n_actions):
+        super(CNN,self).__init__()
+        self.n_frames = n_frames
+        self.n_actions = n_actions
         
-        self.input_dim = input_dim
-        self.output_dim = output_dim
+        # Layers
+        self.conv1 = nn.Conv2d(
+            in_channels=n_frames,
+            out_channels=16,
+            kernel_size=8,
+            stride=4,
+            padding=2
+            )
+        self.conv2 = nn.Conv2d(
+            in_channels=16,
+            out_channels=32,
+            kernel_size=4,
+            stride=2,
+            padding=1
+            )
+        self.fc1 = nn.Linear(
+            in_features=3200,
+            out_features=256,
+            )
+        self.fc2 = nn.Linear(
+            in_features=256,
+            out_features=n_actions,
+            )
         
-        self.features = nn.Sequential(
-            nn.Conv2d(input_dim[0], 32, kernel_size=8, stride=4),
-            nn.ReLU(),
-            nn.Conv2d(32, 64, kernel_size=4, stride=2),
-            nn.ReLU(),
-            nn.Conv2d(64, 64, kernel_size=3, stride=1),
-            nn.ReLU()
-        )
-        
-        self.fc = nn.Sequential(
-            nn.Linear(self.feature_size(), 512),
-            nn.ReLU(),
-            nn.Linear(512, self.output_dim)
-        )
-        
-    def forward(self, x):
-        x = self.features(x)
-        x = x.view(x.size(0), -1)
-        x = self.fc(x)
+        # Activation Functions
+        self.relu = nn.ReLU()
+    
+    def flatten(self, x):
+        batch_size = x.size()[0]
+        x = x.view(batch_size, -1)
         return x
     
-    def feature_size(self):
-        return self.features(autograd.Variable(torch.zeros(1, *self.input_dim))).view(1, -1).size(1)
-
-
-    def act(self, state, epsilon):
-        if random.random() > epsilon:
-            state   = Variable(torch.FloatTensor(np.float32(state)).unsqueeze(0), volatile=True)
-            q_value = self.forward(state)
-            action  = q_value.max(1)[1].data[0]
-        else:
-            action = random.randrange(env.action_space.n)
-        return action
+    def forward(self, x):
+        
+        # Forward pass
+        x = self.relu(self.conv1(x))  # In: (80, 80, 4)  Out: (20, 20, 16)
+        x = self.relu(self.conv2(x))  # In: (20, 20, 16) Out: (10, 10, 32)
+        x = self.flatten(x)           # In: (10, 10, 32) Out: (3200,)
+        x = self.relu(self.fc1(x))    # In: (3200,)      Out: (256,)
+        x = self.fc2(x)               # In: (256,)       Out: (4,)
+        
+        return x
 
 class ReplayBuffer:
     def __init__(self, capacity):
@@ -70,9 +79,9 @@ class ReplayBuffer:
         return len(self.buffer)
 
 class DQN:
-    def __init__(self, state_dim, action_dim, cfg):
+    def __init__(self, n_states, n_actions, cfg):
 
-        self.action_dim = action_dim  # 总的动作个数
+        self.n_actions = n_actions  # 总的动作个数
         self.device = cfg.device  # 设备，cpu或gpu等
         self.gamma = cfg.gamma  # 奖励的折扣因子
         # e-greedy策略相关参数
@@ -81,8 +90,8 @@ class DQN:
             (cfg.epsilon_start - cfg.epsilon_end) * \
             math.exp(-1. * frame_idx / cfg.epsilon_decay)
         self.batch_size = cfg.batch_size
-        self.policy_net = CNN(state_dim, action_dim).to(self.device)
-        self.target_net = CNN(state_dim, action_dim).to(self.device)
+        self.policy_net = CNN(n_states, n_actions).to(self.device)
+        self.target_net = CNN(n_states, n_actions).to(self.device)
         for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): # 复制参数到目标网路targe_net
             target_param.data.copy_(param.data)
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr) # 优化器
@@ -94,12 +103,11 @@ class DQN:
         self.frame_idx += 1
         if random.random() > self.epsilon(self.frame_idx):
             with torch.no_grad():
-                print(type(state))
                 state = torch.tensor([state], device=self.device, dtype=torch.float32)
                 q_values = self.policy_net(state)
                 action = q_values.max(1)[1].item() # 选择Q值最大的动作
         else:
-            action = random.randrange(self.action_dim)
+            action = random.randrange(self.n_actions)
         return action
     def update(self):
         if len(self.memory) < self.batch_size: # 当memory中不满足一个批量时，不更新策略

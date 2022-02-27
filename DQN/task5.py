@@ -22,7 +22,7 @@ class Config:
     def __init__(self):
         ################################## 环境超参数 ###################################
         self.algo_name = 'DQN'  # 算法名称
-        self.env_name = 'CartPole-v1'  # 环境名称
+        self.env_name = 'SpaceInvaders-ram-v0'  # 环境名称
         self.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPUgjgjlkhfsf风刀霜的撒发十
         self.seed = 10 # 随机种子，置0则不设置随机种子
@@ -31,15 +31,15 @@ class Config:
         ################################################################################
         
         ################################## 算法超参数 ###################################
-        self.gamma = 0.95  # 强化学习中的折扣因子
-        self.epsilon_start = 0.90  # e-greedy策略中初始epsilon
+        self.gamma = 0.99  # 强化学习中的折扣因子
+        self.epsilon_start = 0.95  # e-greedy策略中初始epsilon
         self.epsilon_end = 0.01  # e-greedy策略中的终止epsilon
-        self.epsilon_decay = 500  # e-greedy策略中epsilon的衰减率
-        self.lr = 0.0001  # 学习率
-        self.memory_capacity = 100000  # 经验回放的容量
-        self.batch_size = 64  # mini-batch SGD中的批量大小
+        self.epsilon_decay = 20000  # e-greedy策略中epsilon的衰减率
+        self.lr = 2e-4  # 学习率
+        self.memory_capacity = int(1e5)  # 经验回放的容量
+        self.batch_size = 32  # mini-batch SGD中的批量大小
         self.target_update = 4  # 目标网络的更新频率
-        self.hidden_dim = 256  # 网络隐藏层
+        self.hidden_dim = 512  # 网络隐藏层
         ################################################################################
         
         ################################# 保存结果相关参数 ################################
@@ -55,9 +55,10 @@ def env_agent_config(cfg):
     ''' 创建环境和智能体
     '''
     env = gym.make(cfg.env_name)  # 创建环境
-    state_dim = env.observation_space.shape[0]  # 状态维度
-    action_dim = env.action_space.n  # 动作维度
-    agent = DQN(state_dim, action_dim, cfg)  # 创建智能体
+    n_states = env.observation_space.shape[0]  # 状态维度
+    n_actions = env.action_space.n  # 动作维度
+    print(f"n states: {n_states}, n actions: {n_actions}")
+    agent = DQN(n_states, n_actions, cfg)  # 创建智能体
     if cfg.seed !=0: # 设置随机种子
         torch.manual_seed(cfg.seed)
         env.seed(cfg.seed)
@@ -92,7 +93,7 @@ def train(cfg, env, agent):
             ma_rewards.append(0.9 * ma_rewards[-1] + 0.1 * ep_reward)
         else:
             ma_rewards.append(ep_reward)
-        if (i_ep + 1) % 2 == 0:
+        if (i_ep + 1) % 1 == 0:
             print(f'Episode：{i_ep+1}/{cfg.train_eps}, Reward:{ep_reward:.2f}, Epislon:{agent.epsilon(agent.frame_idx):.3f}')
     print('完成训练！')
     env.close()
