@@ -17,16 +17,16 @@ from dqn_1 import DQN
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
 
 class MLP(nn.Module):
-    def __init__(self, state_dim,action_dim,hidden_dim=256):
+    def __init__(self, n_states,n_actions,hidden_dim=256):
         """ 初始化q网络，为全连接网络
-            state_dim: 输入的特征数即环境的状态维度
-            action_dim: 输出的动作维度
+            n_states: 输入的特征数即环境的状态维度
+            n_actions: 输出的动作维度
         """
         super(MLP, self).__init__()
-        self.fc1 = nn.Linear(state_dim, hidden_dim) # 输入层
+        self.fc1 = nn.Linear(n_states, hidden_dim) # 输入层
         self.fc2 = nn.Linear(hidden_dim,hidden_dim) # 隐藏层
         self.fc3 = nn.Linear(hidden_dim,hidden_dim) # 隐藏层
-        self.fc4 = nn.Linear(hidden_dim, action_dim) # 输出层
+        self.fc4 = nn.Linear(hidden_dim, n_actions) # 输出层
         
     def forward(self, x):
         # 各层对应的激活函数

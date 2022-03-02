@@ -48,16 +48,16 @@ class PPOMemory:
         self.dones = []
         self.vals = []
 class Actor(nn.Module):
-    def __init__(self,state_dim, action_dim,
+    def __init__(self,n_states, n_actions,
             hidden_dim):
         super(Actor, self).__init__()
 
         self.actor = nn.Sequential(
-                nn.Linear(state_dim, hidden_dim),
+                nn.Linear(n_states, hidden_dim),
                 nn.ReLU(),
                 nn.Linear(hidden_dim, hidden_dim),
                 nn.ReLU(),
-                nn.Linear(hidden_dim, action_dim),
+                nn.Linear(hidden_dim, n_actions),
                 nn.Softmax(dim=-1)
         )
     def forward(self, state):
@@ -66,10 +66,10 @@ class Actor(nn.Module):
         return dist
 
 class Critic(nn.Module):
-    def __init__(self, state_dim,hidden_dim):
+    def __init__(self, n_states,hidden_dim):
         super(Critic, self).__init__()
         self.critic = nn.Sequential(
-                nn.Linear(state_dim, hidden_dim),
+                nn.Linear(n_states, hidden_dim),
                 nn.ReLU(),
                 nn.Linear(hidden_dim, hidden_dim),
                 nn.ReLU(),
@@ -79,15 +79,15 @@ class Critic(nn.Module):
         value = self.critic(state)
         return value
 class PPO:
-    def __init__(self, state_dim, action_dim,cfg):
+    def __init__(self, n_states, n_actions,cfg):
         self.gamma = cfg.gamma
         self.continuous = cfg.continuous 
         self.policy_clip = cfg.policy_clip
         self.n_epochs = cfg.n_epochs
         self.gae_lambda = cfg.gae_lambda
         self.device = cfg.device
-        self.actor = Actor(state_dim, action_dim,cfg.hidden_dim).to(self.device)
-        self.critic = Critic(state_dim,cfg.hidden_dim).to(self.device)
+        self.actor = Actor(n_states, n_actions,cfg.hidden_dim).to(self.device)
+        self.critic = Critic(n_states,cfg.hidden_dim).to(self.device)
         self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
         self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg.critic_lr)
         self.memory = PPOMemory(cfg.batch_size)

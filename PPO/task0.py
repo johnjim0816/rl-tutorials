@@ -49,12 +49,12 @@ def env_agent_config(cfg):
     ''' 创建环境和智能体
     '''
     env = gym.make(cfg.env_name)  # 创建环境
-    state_dim = env.observation_space.shape[0]  # 状态维度
+    n_states = env.observation_space.shape[0]  # 状态维度
     if cfg.continuous:
-        action_dim = env.action_space.shape[0] # 动作维度
+        n_actions = env.action_space.shape[0] # 动作维度
     else:
-        action_dim = env.action_space.n  # 动作维度
-    agent = PPO(state_dim, action_dim, cfg)  # 创建智能体
+        n_actions = env.action_space.n  # 动作维度
+    agent = PPO(n_states, n_actions, cfg)  # 创建智能体
     if cfg.seed !=0: # 设置随机种子
         torch.manual_seed(cfg.seed)
         env.seed(cfg.seed)

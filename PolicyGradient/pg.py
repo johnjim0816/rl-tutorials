@@ -24,7 +24,7 @@ class MLP(nn.Module):
     '''
     def __init__(self,input_dim,hidden_dim = 36):
         super(MLP, self).__init__()
-        # 24和36为hidden layer的层数，可根据input_dim, action_dim的情况来改变
+        # 24和36为hidden layer的层数，可根据input_dim, n_actions的情况来改变
         self.fc1 = nn.Linear(input_dim, hidden_dim)
         self.fc2 = nn.Linear(hidden_dim,hidden_dim)
         self.fc3 = nn.Linear(hidden_dim, 1)  # Prob of Left
@@ -37,9 +37,9 @@ class MLP(nn.Module):
         
 class PolicyGradient:
     
-    def __init__(self, state_dim,cfg):
+    def __init__(self, n_states,cfg):
         self.gamma = cfg.gamma
-        self.policy_net = MLP(state_dim,hidden_dim=cfg.hidden_dim)
+        self.policy_net = MLP(n_states,hidden_dim=cfg.hidden_dim)
         self.optimizer = torch.optim.RMSprop(self.policy_net.parameters(), lr=cfg.lr)
         self.batch_size = cfg.batch_size
 
