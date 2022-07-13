@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-02-28 11:50:11
+LastEditTime: 2022-07-13 21:16:43
 Discription: 
 Environment: 
 '''
@@ -27,33 +27,33 @@ def chinese_font():
         font = None
     return font
 
-def plot_rewards_cn(rewards, ma_rewards, plot_cfg, tag='train'):
+def plot_rewards_cn(rewards, ma_rewards, cfg, tag='train'):
     ''' 中文画图
     '''
     sns.set()
     plt.figure()
-    plt.title(u"{}环境下{}算法的学习曲线".format(plot_cfg.env_name,
-              plot_cfg.algo_name), fontproperties=chinese_font())
+    plt.title(u"{}环境下{}算法的学习曲线".format(cfg.env_name,
+              cfg.algo_name), fontproperties=chinese_font())
     plt.xlabel(u'回合数', fontproperties=chinese_font())
     plt.plot(rewards)
     plt.plot(ma_rewards)
     plt.legend((u'奖励', u'滑动平均奖励',), loc="best", prop=chinese_font())
-    if plot_cfg.save:
-        plt.savefig(plot_cfg.result_path+f"{tag}_rewards_curve_cn")
+    if cfg.save:
+        plt.savefig(cfg.result_path+f"{tag}_rewards_curve_cn")
     # plt.show()
 
 
-def plot_rewards(rewards, ma_rewards, plot_cfg, tag='train'):
+def plot_rewards(rewards, ma_rewards, cfg, tag='train'):
     sns.set()
     plt.figure()  # 创建一个图形实例，方便同时多画几个图
     plt.title("learning curve on {} of {} for {}".format(
-        plot_cfg.device, plot_cfg.algo_name, plot_cfg.env_name))
+        cfg.device, cfg.algo_name, cfg.env_name))
     plt.xlabel('epsiodes')
     plt.plot(rewards, label='rewards')
     plt.plot(ma_rewards, label='ma rewards')
     plt.legend()
-    if plot_cfg.save:
-        plt.savefig(plot_cfg.result_path+"{}_rewards_curve".format(tag))
+    if cfg.save_fig:
+        plt.savefig(cfg.result_path+"{}_rewards_curve".format(tag))
     plt.show()
 
 
