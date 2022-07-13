@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-07-13 21:16:43
+LastEditTime: 2022-07-13 22:10:22
 Discription: 
 Environment: 
 '''
@@ -98,3 +98,14 @@ def del_empty_dir(*paths):
         for dir in dirs:
             if not os.listdir(os.path.join(path, dir)):
                 os.removedirs(os.path.join(path, dir))
+
+def save_args(args):
+    # save parameters    
+    argsDict = args.__dict__
+    with open(args.result_path+'params.txt', 'w') as f:
+        f.writelines('------------------ start ------------------' + '\n')
+        for eachArg, value in argsDict.items():
+            f.writelines(eachArg + ' : ' + str(value) + '\n')
+        f.writelines('------------------- end -------------------')     
+    print("Parameters saved!")
+    

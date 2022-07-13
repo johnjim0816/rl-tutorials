@@ -14,7 +14,7 @@ import datetime
 import numpy as np
 import argparse
 from common.utils import save_results_1, make_dir
-from common.utils import plot_rewards
+from common.utils import plot_rewards,save_args
 from dqn import DQN
 
 def get_args():
@@ -44,16 +44,7 @@ def get_args():
     args.device = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")  # check GPU                        
     return args
-def save_args(args):
-    # save parameters    
-    argsDict = args.__dict__
-    with open(args.result_path+'params.txt', 'w') as f:
-        f.writelines('------------------ start ------------------' + '\n')
-        for eachArg, value in argsDict.items():
-            f.writelines(eachArg + ' : ' + str(value) + '\n')
-        f.writelines('------------------- end -------------------')     
-    print("Parameters saved!")
-    
+
 def env_agent_config(cfg,seed=1):
     ''' 创建环境和智能体
     '''
