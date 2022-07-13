@@ -53,42 +53,7 @@ def save_args(args):
             f.writelines(eachArg + ' : ' + str(value) + '\n')
         f.writelines('------------------- end -------------------')     
     print("Parameters saved!")
-class Config:
-    '''超参数
-    '''
-
-    def __init__(self):
-        ############################### hyperparameters ################################
-        self.algo_name = 'DQN'  # algorithm name
-        self.env_name = 'CartPole-v0'  # environment name
-        self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")  # check GPU
-        self.seed = 10 # 随机种子，置0则不设置随机种子
-        self.train_eps = 200  # 训练的回合数
-        self.test_eps = 20  # 测试的回合数
-        ################################################################################
-        
-        ################################## 算法超参数 ###################################
-        self.gamma = 0.95  # 强化学习中的折扣因子
-        self.epsilon_start = 0.90  # e-greedy策略中初始epsilon
-        self.epsilon_end = 0.005  # e-greedy策略中的终止epsilon
-        self.epsilon_decay = 500  # e-greedy策略中epsilon的衰减率
-        self.lr = 0.0001  # 学习率
-        self.memory_capacity = 100000  # 经验回放的容量
-        self.batch_size = 64  # mini-batch SGD中的批量大小
-        self.target_update = 4  # 目标网络的更新频率
-        self.hidden_dim = 256  # 网络隐藏层
-        ################################################################################
-        
-        ################################# 保存结果相关参数 ################################
-        self.result_path = curr_path + "/outputs/" + self.env_name + \
-            '/' + curr_time + '/results/'  # 保存结果的路径
-        self.model_path = curr_path + "/outputs/" + self.env_name + \
-            '/' + curr_time + '/models/'  # 保存模型的路径
-        self.save = True # 是否保存图片
-        ################################################################################
-
-
+    
 def env_agent_config(cfg,seed=1):
     ''' 创建环境和智能体
     '''
