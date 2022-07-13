@@ -1,6 +1,4 @@
 import sys,os
-
-from parso import parse
 curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
 parent_path = os.path.dirname(curr_path)  # parent path
 sys.path.append(parent_path)  # add to system path
@@ -14,7 +12,7 @@ import argparse
 from common.multiprocessing_env import SubprocVecEnv
 from a2c import ActorCritic
 from common.utils import save_results, make_dir
-from common.utils import plot_rewards
+from common.utils import plot_rewards, save_args
 
 
 def get_args():
@@ -26,7 +24,7 @@ def get_args():
     parser.add_argument('--env_name',default='CartPole-v0',type=str,help="name of environment")
     parser.add_argument('--n_envs',default=8,type=int,help="numbers of environments")
 
-    parser.add_argument('--max_steps',default=30000,type=int,help="episodes of training")
+    parser.add_argument('--max_steps',default=20000,type=int,help="episodes of training")
     parser.add_argument('--n_steps',default=5,type=int,help="episodes of testing")
     parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor")
     parser.add_argument('--lr',default=1e-3,type=float,help="learning rate")
@@ -71,8 +69,8 @@ def compute_returns(next_value, rewards, masks, gamma=0.99):
 
 
 def train(cfg,envs):
-    print('开始训练!')
-    print(f'环境：{cfg.env_name}, 算法：{cfg.algo}, 设备：{cfg.device}')
+    print('Start training!')
+    print(f'Env:{cfg.env_name}, Algorithm:{cfg.algo_name}, Device:{cfg.device}')
     env = gym.make(cfg.env_name) # a single env
     env.seed(10)
     n_states  = envs.observation_space.shape[0]
@@ -134,5 +132,6 @@ if __name__ == "__main__":
     # training
     rewards,ma_rewards = train(cfg,envs)
     make_dir(cfg.result_path,cfg.model_path)
+    save_args(cfg)
     save_results(rewards, ma_rewards, tag='train', path=cfg.result_path) # 保存结果
     plot_rewards(rewards, ma_rewards, cfg, tag="train") # 画出结果
