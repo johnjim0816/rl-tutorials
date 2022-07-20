@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2022-07-20 23:50:44
+LastEditTime: 2022-07-21 00:05:41
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -41,7 +41,7 @@ def get_args():
     parser.add_argument('--target_update',default=2,type=int)
     parser.add_argument('--soft_tau',default=1e-2,type=float)
     parser.add_argument('--hidden_dim',default=256,type=int)
-    parser.add_argument('--deivce',default='cpu',type=str,help="cpu or cuda") 
+    parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/results/' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
@@ -121,11 +121,11 @@ if __name__ == "__main__":
     save_args(cfg)
     agent.save(path=cfg.model_path)
     save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
-    plot_rewards(rewards, ma_rewards, cfg, tag="train")  # 画出结果
+    plot_rewards(rewards, ma_rewards, cfg, tag="train")  
     # testing
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = test(cfg,env,agent)
     save_results(rewards,ma_rewards,tag = 'test',path = cfg.result_path)
-    plot_rewards(rewards, ma_rewards, cfg, tag="test")  # 画出结果
+    plot_rewards(rewards, ma_rewards, cfg, tag="test")  
 

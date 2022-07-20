@@ -32,7 +32,7 @@ def get_args():
     parser.add_argument('--batch_size',default=64,type=int)
     parser.add_argument('--target_update',default=4,type=int)
     parser.add_argument('--hidden_dim',default=256,type=int)
-    parser.add_argument('--deivce',default='cpu',type=str,help="cpu or cuda") 
+    parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/results/' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
