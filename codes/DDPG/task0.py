@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-11 20:58:21
 @LastEditor: John
-LastEditTime: 2022-07-13 22:53:11
+LastEditTime: 2022-07-20 23:50:44
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -41,14 +41,13 @@ def get_args():
     parser.add_argument('--target_update',default=2,type=int)
     parser.add_argument('--soft_tau',default=1e-2,type=float)
     parser.add_argument('--hidden_dim',default=256,type=int)
+    parser.add_argument('--deivce',default='cpu',type=str,help="cpu or cuda") 
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/results/' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/models/' ) # path to save models
-    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
-    args = parser.parse_args()    
-    args.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")  # check GPU                        
+    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")   
+    args = parser.parse_args()                           
     return args
 
 def env_agent_config(cfg,seed=1):
