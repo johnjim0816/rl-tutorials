@@ -1,12 +1,9 @@
-from lib2to3.pytree import type_repr
-import sys
-import os
-from parso import parse
+import sys,os
+curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
+parent_path = os.path.dirname(curr_path)  # parent path
+sys.path.append(parent_path)  # add to system path
 import torch.nn as nn
 import torch.nn.functional as F
-curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
-parent_path = os.path.dirname(curr_path)  # 父路径
-sys.path.append(parent_path)  # 添加路径到系统路径
 
 import gym
 import torch
