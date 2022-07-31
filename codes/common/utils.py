@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-01 00:36:45
+LastEditTime: 2022-08-01 00:41:22
 Discription: 
 Environment: 
 '''
@@ -43,7 +43,7 @@ def plot_rewards_cn(rewards, ma_rewards, cfg, tag='train'):
         plt.savefig(cfg.result_path+f"{tag}_rewards_curve_cn")
     # plt.show()
 def smooth(data, weight=0.9):  
-    '''_summary_
+    '''用于平滑曲线，类似于Tensorboard中的smooth
 
     Args:
         data (List):输入数据
