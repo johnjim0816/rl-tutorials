@@ -7,45 +7,39 @@ import gym
 import torch
 import numpy as np
 import datetime
-from common.utils import plot_rewards
-from common.utils import save_results,make_dir
+import argparse
+from common.utils import plot_rewards,save_args,save_results,make_dir
 from ppo2 import PPO
 
-curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
-
-class Config:
-    def __init__(self) -> None:
-        ################################## 环境超参数 ###################################
-        self.algo_name = "PPO"  # 算法名称
-        self.env_name = 'CartPole-v0' # 环境名称
-        self.continuous = False # 环境是否为连续动作
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
-        self.seed = 10 # 随机种子，置0则不设置随机种子
-        self.train_eps = 200 # 训练的回合数
-        self.test_eps = 20 # 测试的回合数
-        ################################################################################
+def get_args():
+    """ Hyperparameters
+    """
+    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
+    parser = argparse.ArgumentParser(description="hyperparameters")      
+    parser.add_argument('--algo_name',default='PPO',type=str,help="name of algorithm")
+    parser.add_argument('--env_name',default='CartPole-v0',type=str,help="name of environment")
+    parser.add_argument('--continuous',default=False,type=bool,help="if PPO is continous") # PPO既可适用于连续动作空间，也可以适用于离散动作空间
+    parser.add_argument('--train_eps',default=200,type=int,help="episodes of training")
+    parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing")
+    parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor")
+    parser.add_argument('--batch_size',default=5,type=int) # mini-batch SGD中的批量大小
+    parser.add_argument('--n_epochs',default=4,type=int)
+    parser.add_argument('--actor_lr',default=0.0003,type=float,help="learning rate of actor net")
+    parser.add_argument('--critic_lr',default=0.0003,type=float,help="learning rate of critic net")
+    parser.add_argument('--gae_lambda',default=0.95,type=float)
+    parser.add_argument('--policy_clip',default=0.2,type=float) # PPO-clip中的clip参数，一般是0.1~0.2左右
+    parser.add_argument('--update_fre',default=20,type=int)
+    parser.add_argument('--hidden_dim',default=256,type=int)
+    parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
+    parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
+            '/' + curr_time + '/results/' )
+    parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
+            '/' + curr_time + '/models/' ) # path to save models
+    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
+    args = parser.parse_args()                          
+    return args
         
-        ################################## 算法超参数 ####################################
-        self.batch_size = 5  # mini-batch SGD中的批量大小
-        self.gamma = 0.95  # 强化学习中的折扣因子
-        self.n_epochs = 4
-        self.actor_lr = 0.0003 # actor的学习率
-        self.critic_lr = 0.0003 # critic的学习率
-        self.gae_lambda = 0.95
-        self.policy_clip = 0.2
-        self.hidden_dim = 256
-        self.update_fre = 20 # 策略更新频率
-        ################################################################################
-        
-        ################################# 保存结果相关参数 ################################
-        self.result_path = curr_path+"/outputs/" + self.env_name + \
-            '/'+curr_time+'/results/'  # 保存结果的路径
-        self.model_path = curr_path+"/outputs/" + self.env_name + \
-            '/'+curr_time+'/models/'  # 保存模型的路径
-        self.save = True # 是否保存图片
-        ################################################################################
-        
-def env_agent_config(cfg):
+def env_agent_config(cfg,seed = 1):
     ''' 创建环境和智能体
     '''
     env = gym.make(cfg.env_name)  # 创建环境
@@ -55,10 +49,10 @@ def env_agent_config(cfg):
     else:
         n_actions = env.action_space.n  # 动作维度
     agent = PPO(n_states, n_actions, cfg)  # 创建智能体
-    if cfg.seed !=0: # 设置随机种子
-        torch.manual_seed(cfg.seed)
-        env.seed(cfg.seed)
-        np.random.seed(cfg.seed)
+    if seed !=0: # 设置随机种子
+        torch.manual_seed(seed)
+        env.seed(seed)
+        np.random.seed(seed)
     return env, agent
 
 def train(cfg,env,agent):
@@ -88,7 +82,9 @@ def train(cfg,env,agent):
         if (i_ep+1)%10 == 0: 
             print(f"回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.2f}")
     print('完成训练！')
-    return rewards,ma_rewards
+    env.close()
+    res_dic = {'rewards':rewards,'ma_rewards':ma_rewards}
+    return res_dic
 
 def test(cfg,env,agent):
     print('开始测试!')
@@ -112,20 +108,25 @@ def test(cfg,env,agent):
             ma_rewards.append(ep_reward)
         print('回合：{}/{}, 奖励：{}'.format(i_ep+1, cfg.test_eps, ep_reward))
     print('完成训练！')
-    return rewards,ma_rewards
+    env.close()
+    res_dic = {'rewards':rewards,'ma_rewards':ma_rewards}
+    return res_dic
 
 if __name__ == "__main__":
-    cfg  = Config()
+    cfg = get_args()
     # 训练
-    env,agent = env_agent_config(cfg)
-    rewards, ma_rewards = train(cfg, env, agent)
-    make_dir(cfg.result_path, cfg.model_path) # 创建保存结果和模型路径的文件夹
-    agent.save(path=cfg.model_path)
-    save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
-    plot_rewards(rewards, ma_rewards, cfg, tag="train")
+    env, agent = env_agent_config(cfg)
+    res_dic = train(cfg, env, agent)
+    make_dir(cfg.result_path, cfg.model_path)  
+    save_args(cfg) # 保存参数
+    agent.save(path=cfg.model_path)  # save model
+    save_results(res_dic, tag='train',
+                 path=cfg.result_path)  
+    plot_rewards(res_dic['rewards'], res_dic['ma_rewards'], cfg, tag="train")  
     # 测试
-    env,agent = env_agent_config(cfg)
-    agent.load(path=cfg.model_path)
-    rewards,ma_rewards = test(cfg,env,agent)
-    save_results(rewards,ma_rewards,tag='test',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,cfg,tag="test")
+    env, agent = env_agent_config(cfg)
+    agent.load(path=cfg.model_path)  # 导入模型
+    res_dic = test(cfg, env, agent)
+    save_results(res_dic, tag='test',
+                 path=cfg.result_path)  # 保存结果
+    plot_rewards(res_dic['rewards'], res_dic['ma_rewards'],cfg, tag="test")  # 画出结果
