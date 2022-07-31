@@ -1,11 +1,12 @@
-中文｜[English](./README_en.md)
-## 写在前面
+## 0、写在前面
 
 本项目用于学习RL基础算法，尽量做到: **注释详细**，**结构清晰**。
 
 代码结构主要分为以下几个脚本：
 
-* ```model.py``` 强化学习算法的基本模型，比如神经网络，actor，critic等
+* ```[algorithm_name].py```：即保存算法的脚本，例如```dqn.py```，每种算法都会有一定的基础模块，例如```Replay Buffer```、```MLP```(多层感知机)等等
+* ```task.py```: 即保存任务的脚本，基本包括基于```argparse```模块的参数，训练以及测试函数等等
+* ```utils.py```：该脚本用于保存诸如存储结果以及画图的软件，在实际项目或研究中，推荐大家使用```Tensorboard```来保存结果，然后使用诸如```matplotlib```以及```seabron```来进一步画图
 * ```memory.py``` 保存Replay Buffer，用于off-policy
 * ```plot.py``` 利用matplotlib或seaborn绘制rewards图，包括滑动平均的reward，结果保存在result文件夹中
 * ```env.py``` 用于构建强化学习环境，也可以重新自定义环境，比如给action加noise
@@ -17,7 +18,7 @@
 **注意：新版本中将```model```,```memory```相关内容全部放到了```agent.py```里面，```plot```放到了```common.utils```中。**
 ## 运行环境
 
-python 3.7、pytorch 1.6.0-1.8.1、gym 0.21.0
+python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
 
 ## 使用说明
 
