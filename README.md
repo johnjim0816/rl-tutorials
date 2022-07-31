@@ -20,6 +20,10 @@
 
 python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
 
+或者在```README.md```目录下执行以下命令复现环境：
+```bash
+conda env create -f environment.yaml
+```
 ## 使用说明
 
 直接运行带有```train```的py文件或ipynb文件会进行训练默认的任务；  
