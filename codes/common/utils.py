@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-07-31 23:18:04
+LastEditTime: 2022-08-01 00:36:45
 Discription: 
 Environment: 
 '''
@@ -42,7 +42,23 @@ def plot_rewards_cn(rewards, ma_rewards, cfg, tag='train'):
     if cfg.save:
         plt.savefig(cfg.result_path+f"{tag}_rewards_curve_cn")
     # plt.show()
+def smooth(data, weight=0.9):  
+    '''_summary_
 
+    Args:
+        data (List):输入数据
+        weight (Float): 平滑权重，处于0-1之间，数值越高说明越平滑，一般取0.9
+
+    Returns:
+        smoothed (List): 平滑后的数据
+    '''
+    last = data[0]  # First value in the plot (first timestep)
+    smoothed = list()
+    for point in data:
+        smoothed_val = last * weight + (1 - weight) * point  # 计算平滑值
+        smoothed.append(smoothed_val)                    
+        last = smoothed_val                                
+    return smoothed
 
 def plot_rewards(rewards, ma_rewards, cfg, tag='train'):
     sns.set()
@@ -51,12 +67,11 @@ def plot_rewards(rewards, ma_rewards, cfg, tag='train'):
         cfg.device, cfg.algo_name, cfg.env_name))
     plt.xlabel('epsiodes')
     plt.plot(rewards, label='rewards')
-    plt.plot(ma_rewards, label='ma rewards')
+    plt.plot(smooth(rewards), label='smoothed')
     plt.legend()
     if cfg.save_fig:
         plt.savefig(cfg.result_path+"{}_rewards_curve".format(tag))
     plt.show()
-
 
 def plot_losses(losses, algo="DQN", save=True, path='./'):
     sns.set()
@@ -106,21 +121,3 @@ def save_args(args):
     with open(args.result_path+'params.json', 'w') as fp:
         json.dump(args_dict, fp)   
     print("Parameters saved!")
-def smooth(data, weight=0.9):  
-    '''_summary_
-
-    Args:
-        data (List):输入数据
-        weight (Float): 平滑权重，处于0-1之间，数值越高说明越平滑，一般取0.9
-
-    Returns:
-        smoothed (List): 平滑后的数据
-    '''
-    last = data[0]  # First value in the plot (first timestep)
-    smoothed = list()
-    for point in data:
-        smoothed_val = last * weight + (1 - weight) * point  # 计算平滑值
-        smoothed.append(smoothed_val)                    
-        last = smoothed_val                                
-
-    return smoothed

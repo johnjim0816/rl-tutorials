@@ -90,7 +90,7 @@ def train(cfg, env, agent):
             print(f'Episode：{i_ep+1}/{cfg.train_eps}, Reward:{ep_reward:.2f}, Step:{ep_step:.2f} Epislon:{agent.epsilon(agent.frame_idx):.3f}')
     print('Finish training!')
     env.close()
-    res_dic = {'rewards':rewards,'ma_rewards':ma_rewards,'steps':steps}
+    res_dic = {'rewards':rewards}
     return res_dic
 
 
@@ -125,7 +125,7 @@ def test(cfg, env, agent):
         print(f'Episode：{i_ep+1}/{cfg.test_eps}, Reward:{ep_reward:.2f}, Step:{ep_step:.2f}')
     print('Finish testing')
     env.close()
-    return {'rewards':rewards,'ma_rewards':ma_rewards,'steps':steps}
+    return {'rewards':rewards}
 
 
 if __name__ == "__main__":
@@ -138,11 +138,11 @@ if __name__ == "__main__":
     agent.save(path=cfg.model_path)  # save model
     save_results(res_dic, tag='train',
                  path=cfg.result_path)  
-    plot_rewards(res_dic['rewards'], res_dic['ma_rewards'], cfg, tag="train")  
+    plot_rewards(res_dic['rewards'], cfg, tag="train")  
     # 测试
     env, agent = env_agent_config(cfg)
     agent.load(path=cfg.model_path)  # 导入模型
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
                  path=cfg.result_path)  # 保存结果
-    plot_rewards(res_dic['rewards'], res_dic['ma_rewards'],cfg, tag="test")  # 画出结果
+    plot_rewards(res_dic['rewards'], cfg, tag="test")  # 画出结果
