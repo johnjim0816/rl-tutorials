@@ -18,44 +18,36 @@ sys.path.append(parent_path)  # 添加路径到系统路径
 import gym
 import torch
 import datetime
-
+import argparse
 from env.gridworld_env import CliffWalkingWapper
 from qlearning import QLearning
-from common.utils import plot_rewards
+from common.utils import plot_rewards,save_args
 from common.utils import save_results,make_dir
 
+def get_args():
+    """ 
+    """
+    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
+    parser = argparse.ArgumentParser(description="hyperparameters")      
+    parser.add_argument('--algo_name',default='Q-learning',type=str,help="name of algorithm")
+    parser.add_argument('--env_name',default='CliffWalking-v0',type=str,help="name of environment")
+    parser.add_argument('--train_eps',default=400,type=int,help="episodes of training") # 训练的回合数
+    parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing") # 测试的回合数
+    parser.add_argument('--gamma',default=0.90,type=float,help="discounted factor") # 折扣因子
+    parser.add_argument('--epsilon_start',default=0.95,type=float,help="initial value of epsilon") #  e-greedy策略中初始epsilon
+    parser.add_argument('--epsilon_end',default=0.01,type=float,help="final value of epsilon") # e-greedy策略中的终止epsilon
+    parser.add_argument('--epsilon_decay',default=300,type=int,help="decay rate of epsilon") # e-greedy策略中epsilon的衰减率
+    parser.add_argument('--lr',default=0.1,type=float,help="learning rate")
+    parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
+    parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
+            '/' + curr_time + '/results/' )
+    parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
+            '/' + curr_time + '/models/' ) # path to save models
+    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
+    args = parser.parse_args()                          
+    return args
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S") # 获取当前时间
-class Config:
-    '''超参数
-    '''
-
-    def __init__(self):
-        ################################## 环境超参数 ###################################
-        self.algo_name = 'Q-learning'  # 算法名称
-        self.env_name = 'CliffWalking-v0'  # 环境名称
-        self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPUgjgjlkhfsf风刀霜的撒发十
-        self.seed = 10 # 随机种子，置0则不设置随机种子
-        self.train_eps = 400  # 训练的回合数
-        self.test_eps = 30  # 测试的回合数
-        ################################################################################
-        
-        ################################## 算法超参数 ###################################
-        self.gamma = 0.90  # 强化学习中的折扣因子
-        self.epsilon_start = 0.95  # e-greedy策略中初始epsilon
-        self.epsilon_end = 0.01  # e-greedy策略中的终止epsilon
-        self.epsilon_decay = 300  # e-greedy策略中epsilon的衰减率
-        self.lr = 0.1  # 学习率
-        ################################################################################
-        
-        ################################# 保存结果相关参数 ################################
-        self.result_path = curr_path + "/outputs/" + self.env_name + \
-            '/' + curr_time + '/results/'  # 保存结果的路径
-        self.model_path = curr_path + "/outputs/" + self.env_name + \
-            '/' + curr_time + '/models/'  # 保存模型的路径
-        self.save = True # 是否保存图片
-        ################################################################################
-        
+      
 def train(cfg,env,agent):
     print('开始训练！')
     print(f'环境:{cfg.env_name}, 算法:{cfg.algo_name}, 设备:{cfg.device}')
@@ -77,15 +69,14 @@ def train(cfg,env,agent):
             ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
         else:
             ma_rewards.append(ep_reward)
-        print("回合数：{}/{}，奖励{:.1f}".format(i_ep+1, cfg.train_eps,ep_reward))
+        print(f"回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.1f}，Epsilon：{agent.epsilon}")
     print('完成训练！')
-    return rewards,ma_rewards
+    return {"rewards":rewards}
     
 def test(cfg,env,agent):
     print('开始测试！')
     print(f'环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}')
     rewards = []  # 记录所有回合的奖励
-    ma_rewards = [] # 滑动平均的奖励
     for i_ep in range(cfg.test_eps):
         ep_reward = 0  # 记录每个episode的reward
         state = env.reset()  # 重置环境, 重新开一局（即开始新的一个回合）
@@ -97,13 +88,9 @@ def test(cfg,env,agent):
             if done:
                 break
         rewards.append(ep_reward)
-        if ma_rewards:
-            ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
-        else:
-            ma_rewards.append(ep_reward)
         print(f"回合数：{i_ep+1}/{cfg.test_eps}, 奖励：{ep_reward:.1f}")
     print('完成测试！')
-    return rewards,ma_rewards
+    return {"rewards":rewards}
         
 def env_agent_config(cfg,seed=1):
     '''创建环境和智能体
@@ -122,20 +109,23 @@ def env_agent_config(cfg,seed=1):
     agent = QLearning(n_states,n_actions,cfg)
     return env,agent
 if __name__ == "__main__":
-    cfg = Config()
+    cfg = get_args()
     # 训练
-    env, agent = env_agent_config(cfg, seed=1)
-    rewards, ma_rewards = train(cfg, env, agent)
-    make_dir(cfg.result_path, cfg.model_path)  # 创建保存结果和模型路径的文件夹
-    agent.save(path=cfg.model_path)  # 保存模型
-    save_results(rewards, ma_rewards, tag='train',
-                path=cfg.result_path)  # 保存结果
-    plot_rewards(rewards, ma_rewards, cfg, tag="train")  # 画出结果
+    env, agent = env_agent_config(cfg)
+    res_dic = train(cfg, env, agent)
+    make_dir(cfg.result_path, cfg.model_path)  
+    save_args(cfg) # save parameters
+    agent.save(path=cfg.model_path)  # save model
+    save_results(res_dic, tag='train',
+                 path=cfg.result_path)  
+    plot_rewards(res_dic['rewards'], cfg, tag="train")  
     # 测试
-    env, agent = env_agent_config(cfg, seed=10)
+    env, agent = env_agent_config(cfg)
     agent.load(path=cfg.model_path)  # 导入模型
-    rewards, ma_rewards = test(cfg, env, agent)
-    save_results(rewards, ma_rewards, tag='test', path=cfg.result_path)  # 保存结果
-    plot_rewards(rewards, ma_rewards, cfg, tag="test")  # 画出结果
+    res_dic = test(cfg, env, agent)
+    save_results(res_dic, tag='test',
+                 path=cfg.result_path)  # 保存结果
+    plot_rewards(res_dic['rewards'], cfg, tag="test")  # 画出结果
+
         
     

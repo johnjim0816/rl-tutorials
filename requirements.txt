@@ -6,3 +6,4 @@ ipykernel==6.15.1
 matplotlib==3.5.2
 seaborn==0.11.2
 dill==0.3.5.1
+argparse==1.4.0

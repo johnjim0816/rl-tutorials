@@ -60,7 +60,7 @@ def smooth(data, weight=0.9):
         last = smoothed_val                                
     return smoothed
 
-def plot_rewards(rewards, ma_rewards, cfg, tag='train'):
+def plot_rewards(rewards,cfg, tag='train'):
     sns.set()
     plt.figure()  # 创建一个图形实例，方便同时多画几个图
     plt.title("learning curve on {} of {} for {}".format(

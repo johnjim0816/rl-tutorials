@@ -20,7 +20,7 @@ class QLearning(object):
         self.n_actions = n_actions 
         self.lr = cfg.lr  # 学习率
         self.gamma = cfg.gamma  
-        self.epsilon = 0 
+        self.epsilon = cfg.epsilon_start
         self.sample_count = 0  
         self.epsilon_start = cfg.epsilon_start
         self.epsilon_end = cfg.epsilon_end
