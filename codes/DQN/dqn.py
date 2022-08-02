@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-07-20 23:57:16
+LastEditTime: 2022-08-03 00:11:30
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -62,7 +62,7 @@ class ReplayBuffer:
         return len(self.buffer)
 
 class DQN:
-    def __init__(self, n_states,n_actions,cfg):
+    def __init__(self,n_actions,model,memory,cfg):
 
         self.n_actions = n_actions  
         self.device = torch.device(cfg.device)  # cpu or cuda
@@ -73,14 +73,14 @@ class DQN:
             (cfg.epsilon_start - cfg.epsilon_end) * \
             math.exp(-1. * frame_idx / cfg.epsilon_decay)
         self.batch_size = cfg.batch_size
-        self.policy_net = MLP(n_states,n_actions).to(self.device)
-        self.target_net = MLP(n_states,n_actions).to(self.device)
+        self.policy_net = model.to(self.device)
+        self.target_net = model.to(self.device)
         for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): # 复制参数到目标网路targe_net
             target_param.data.copy_(param.data)
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr) # 优化器
-        self.memory = ReplayBuffer(cfg.memory_capacity) # 经验回放
+        self.memory = memory # 经验回放
 
-    def choose_action(self, state):
+    def sample(self, state):
         ''' 选择动作
         '''
         self.frame_idx += 1
@@ -91,6 +91,12 @@ class DQN:
                 action = q_values.max(1)[1].item() # 选择Q值最大的动作
         else:
             action = random.randrange(self.n_actions)
+        return action
+    def predict(self,state):
+        with torch.no_grad():
+            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            q_values = self.policy_net(state)
+            action = q_values.max(1)[1].item() # 选择Q值最大的动作
         return action
     def update(self):
         if len(self.memory) < self.batch_size: # 当memory中不满足一个批量时，不更新策略
