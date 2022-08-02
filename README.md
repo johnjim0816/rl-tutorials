@@ -12,7 +12,7 @@
 
 python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
 
-或者在```README.md```目录下执行以下命令复现环境：
+或者在```README.md```目录下执行以下命令复现环境，注意复现环境需要更改```environment.yaml```的一些参数，参考[Conda环境的复制与迁移](https://blog.csdn.net/JohnJim0/article/details/125876692?spm=1001.2014.3001.5502)：
 ```bash
 conda env create -f environment.yaml
 ```
