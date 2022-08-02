@@ -52,12 +52,11 @@ def train(cfg,env,agent):
     print('开始训练！')
     print(f'环境:{cfg.env_name}, 算法:{cfg.algo_name}, 设备:{cfg.device}')
     rewards = []  # 记录奖励
-    ma_rewards = [] # 记录滑动平均奖励
     for i_ep in range(cfg.train_eps):
         ep_reward = 0  # 记录每个回合的奖励
         state = env.reset()  # 重置环境,即开始新的回合
         while True:
-            action = agent.choose_action(state)  # 根据算法选择一个动作
+            action = agent.sample(state)  # 根据算法采样一个动作
             next_state, reward, done, _ = env.step(action)  # 与环境进行一次动作交互
             agent.update(state, action, reward, next_state, done)  # Q学习算法更新
             state = next_state  # 更新状态
@@ -65,10 +64,6 @@ def train(cfg,env,agent):
             if done:
                 break
         rewards.append(ep_reward)
-        if ma_rewards:
-            ma_rewards.append(ma_rewards[-1]*0.9+ep_reward*0.1)
-        else:
-            ma_rewards.append(ep_reward)
         print(f"回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.1f}，Epsilon：{agent.epsilon}")
     print('完成训练！')
     return {"rewards":rewards}
