@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-01 00:41:22
+LastEditTime: 2022-08-03 14:31:27
 Discription: 
 Environment: 
 '''
@@ -63,8 +63,7 @@ def smooth(data, weight=0.9):
 def plot_rewards(rewards,cfg, tag='train'):
     sns.set()
     plt.figure()  # 创建一个图形实例，方便同时多画几个图
-    plt.title("learning curve on {} of {} for {}".format(
-        cfg.device, cfg.algo_name, cfg.env_name))
+    plt.title(f"{tag}ing curve on {cfg.device} of {cfg.algo_name} for {cfg.env_name}")
     plt.xlabel('epsiodes')
     plt.plot(rewards, label='rewards')
     plt.plot(smooth(rewards), label='smoothed')
