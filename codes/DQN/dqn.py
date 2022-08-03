@@ -102,7 +102,6 @@ class DQN:
         if len(self.memory) < self.batch_size: # 当memory中不满足一个批量时，不更新策略
             return
         # 从经验回放中(replay memory)中随机采样一个批量的转移(transition)
-        # print('updating')
         
         state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.memory.sample(
             self.batch_size)
@@ -124,9 +123,9 @@ class DQN:
         self.optimizer.step() 
 
     def save(self, path):
-        torch.save(self.target_net.state_dict(), path+'dqn_checkpoint.pth')
+        torch.save(self.target_net.state_dict(), path+'checkpoint.pth')
 
     def load(self, path):
-        self.target_net.load_state_dict(torch.load(path+'dqn_checkpoint.pth'))
+        self.target_net.load_state_dict(torch.load(path+'checkpoint.pth'))
         for target_param, param in zip(self.target_net.parameters(), self.policy_net.parameters()):
             param.data.copy_(target_param.data)

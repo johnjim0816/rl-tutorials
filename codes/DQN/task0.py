@@ -94,8 +94,7 @@ def train(cfg, env, agent):
 
 def test(cfg, env, agent):
     print("开始测试！")
-    print(f'Env:{cfg.env_name}, A{cfg.algo_name}, 设备：{cfg.device}')
-    ################################################################################
+    print(f"回合：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
     rewards = []  # 记录所有回合的奖励
     steps = []
     for i_ep in range(cfg.test_eps):
@@ -104,7 +103,7 @@ def test(cfg, env, agent):
         state = env.reset()  # 重置环境，返回初始状态
         while True:
             ep_step+=1
-            action = agent.sample(state)  # 选择动作
+            action = agent.predict(state)  # 选择动作
             next_state, reward, done, _ = env.step(action)  # 更新环境，返回transition
             state = next_state  # 更新下一个状态
             ep_reward += reward  # 累加奖励
