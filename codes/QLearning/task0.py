@@ -101,7 +101,8 @@ def env_agent_config(cfg,seed=1):
     env.seed(seed) # 设置随机种子
     n_states = env.observation_space.n # 状态维度
     n_actions = env.action_space.n # 动作维度
-    agent = QLearning(n_states,n_actions,cfg)
+    print(f"状态数：{n_states}，动作数：{n_actions}")
+    agent = QLearning(n_actions,cfg)
     return env,agent
 if __name__ == "__main__":
     cfg = get_args()

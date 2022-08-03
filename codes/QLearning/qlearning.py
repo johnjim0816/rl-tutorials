@@ -15,7 +15,7 @@ import torch
 from collections import defaultdict
 
 class QLearning(object):
-    def __init__(self,n_states,
+    def __init__(self,
                  n_actions,cfg):
         self.n_actions = n_actions 
         self.lr = cfg.lr  # 学习率
