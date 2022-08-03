@@ -48,7 +48,7 @@ def env_agent_config(cfg,seed=1):
     env = gym.make(cfg.env_name)  # 创建环境
     n_states = env.observation_space.shape[0]  # 状态维度
     n_actions = env.action_space.n  # 动作维度
-    print(f"n states: {n_states}, n actions: {n_actions}")
+    print(f"状态数：{n_states}，动作数：{n_actions}")
     model = MLP(n_states,n_actions,hidden_dim=cfg.hidden_dim)
     memory =  ReplayBuffer(cfg.memory_capacity) # 经验回放
     agent = DQN(n_actions,model,memory,cfg)  # 创建智能体
