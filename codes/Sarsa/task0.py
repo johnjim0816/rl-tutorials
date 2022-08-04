@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-11 17:59:16
 LastEditor: John
-LastEditTime: 2022-08-03 14:27:27
+LastEditTime: 2022-08-04 22:28:51
 Discription: 
 Environment: 
 '''
@@ -47,8 +47,8 @@ def get_args():
 
 def env_agent_config(cfg,seed=1):
     env = RacetrackEnv()
-    n_states = 9 # 状态数
-    agent = Sarsa(n_states,cfg)
+    n_actions = 9 # 动作数
+    agent = Sarsa(n_actions,cfg)
     return env,agent
         
 def train(cfg,env,agent):

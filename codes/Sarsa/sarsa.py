@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:58:16
 LastEditor: John
-LastEditTime: 2022-08-03 14:21:15
+LastEditTime: 2022-08-04 22:22:16
 Discription: 
 Environment: 
 '''
@@ -40,7 +40,7 @@ class Sarsa(object):
         if done:
             Q_target = reward  # 终止状态
         else:
-            Q_target = reward + self.gamma * self.Q[next_state][next_action] 
+            Q_target = reward + self.gamma * self.Q[next_state][next_action] # 与Q learning不同，Sarsa是拿下一步动作对应的Q值去更新
         self.Q[state][action] += self.lr * (Q_target - Q_predict) 
     def save(self,path):
         '''把 Q表格 的数据保存到文件中
