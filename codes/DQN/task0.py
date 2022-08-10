@@ -1,5 +1,4 @@
-import sys
-import os
+import sys,os
 curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
 parent_path = os.path.dirname(curr_path)  # 父路径
 sys.path.append(parent_path)  # 添加路径到系统路径
@@ -90,7 +89,6 @@ def train(cfg, env, agent):
     env.close()
     res_dic = {'rewards':rewards}
     return res_dic
-
 
 def test(cfg, env, agent):
     print("开始测试！")
