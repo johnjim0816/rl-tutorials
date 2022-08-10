@@ -2,27 +2,27 @@
 \usepackage{ctex}
 \usepackage[linesnumbered, ruled, lined,boxed,commentsnumbered]{algorithm2e}[1]
 \usepackage{amssymb}
-\renewcommand{\algorithmcfname}{算法4 -}  %<---细节与重点
+
+\renewcommand{\algorithmcfname}{算法} % 算法序号
 \SetKwInput{KwIn}{输入}  %<---细节与重点
 \SetKwInput{KwOut}{输出}  %<---细节与重点
 
 \begin{document}
  \begin{algorithm}[H]
-  \renewcommand{\thealgocf}{3}     %<---细节与重点
+  \renewcommand{\thealgocf}{}   % 算法小序号 
+  \caption{利用跳元(Skip-Gram)模型更新节点嵌入参数}
   \SetAlgoLined
   \KwIn{路径集合 $\mathcal{W} $ }
- 
+
   \KwOut{ 节点的嵌入式表示 $\mathbb{R}$ }
-  
+
   \ForEach{$v_j$ in $\mathcal{W}_{v_i}$}
   {
    \ForEach{$u_k \in \mathcal{W}_{v_i}  \left[ j-w : j +w  \right] $}
    {
     $J(\Phi) = - log P\left( u_k | \Phi  ( v_j) \right)$ \;
     $\Phi = \Phi - \alpha * \frac{\partial J}{\partial \Phi }$ \;
-
    }
-  }  
-  \caption{利用跳元(Skip-Gram)模型更新节点嵌入参数}
+  }
  \end{algorithm}
 \end{document}
