@@ -1,4 +1,7 @@
+
 ## 0、写在前面
+
+注意：本分支为开发版，可能存在bug，下载master分支的代码就行。
 
 本项目用于学习RL基础算法，尽量做到: **注释详细**(经过很长时间的纠结，还是中文注释好了！！！)，**结构清晰**。
 
@@ -19,13 +22,4 @@ conda env create -f environment.yaml
 ## 使用说明
 
 直接运行带有```train```的py文件或ipynb文件会进行训练默认的任务；  
-也可以运行带有```task```的py文件训练不同的任务
-
-                                   
-## Refs
-
-[RL-Adventure-2](https://github.com/higgsfield/RL-Adventure-2)
-
-[RL-Adventure](https://github.com/higgsfield/RL-Adventure)
-
-[Google 开源项目风格指南——中文版](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
+也可以运行带有```task```的py文件训练不同的任务。
