@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-03 14:31:27
+LastEditTime: 2022-08-11 10:05:59
 Discription: 
 Environment: 
 '''
@@ -60,7 +60,7 @@ def smooth(data, weight=0.9):
         last = smoothed_val                                
     return smoothed
 
-def plot_rewards(rewards,cfg, tag='train'):
+def plot_rewards(rewards,cfg,path=None,tag='train'):
     sns.set()
     plt.figure()  # 创建一个图形实例，方便同时多画几个图
     plt.title(f"{tag}ing curve on {cfg.device} of {cfg.algo_name} for {cfg.env_name}")
@@ -69,7 +69,7 @@ def plot_rewards(rewards,cfg, tag='train'):
     plt.plot(smooth(rewards), label='smoothed')
     plt.legend()
     if cfg.save_fig:
-        plt.savefig(cfg.result_path+"{}_rewards_curve".format(tag))
+        plt.savefig(f"{path}/{tag}ing_curve.png")
     plt.show()
 
 def plot_losses(losses, algo="DQN", save=True, path='./'):
@@ -83,19 +83,13 @@ def plot_losses(losses, algo="DQN", save=True, path='./'):
         plt.savefig(path+"losses_curve")
     plt.show()
 
-def save_results(dic, tag='train', path='./results'):
+def save_results(dic, tag='train', path = None):
     ''' 保存奖励
     '''
+    Path(path).mkdir(parents=True, exist_ok=True)
     for key,value in dic.items():
         np.save(path+'{}_{}.npy'.format(tag,key),value)
     print('Results saved！')
-    
-# def save_results(rewards, ma_rewards, tag='train', path='./results'):
-#     ''' 保存奖励
-#     '''
-#     np.save(path+'{}_rewards.npy'.format(tag), rewards)
-#     np.save(path+'{}_ma_rewards.npy'.format(tag), ma_rewards)
-#     print('Result saved!')
 
 
 def make_dir(*paths):
@@ -114,9 +108,10 @@ def del_empty_dir(*paths):
             if not os.listdir(os.path.join(path, dir)):
                 os.removedirs(os.path.join(path, dir))
 
-def save_args(args):
-    # save parameters    
-    args_dict = vars(args)   
-    with open(args.result_path+'params.json', 'w') as fp:
+def save_args(args,path=None):
+    # 保存参数   
+    args_dict = vars(args)  
+    Path(path).mkdir(parents=True, exist_ok=True) 
+    with open(f"{path}/params.json", 'w') as fp:
         json.dump(args_dict, fp)   
-    print("Parameters saved!")
+    print("参数已保存！")

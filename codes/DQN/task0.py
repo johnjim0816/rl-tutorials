@@ -8,7 +8,7 @@ import torch
 import datetime
 import numpy as np
 import argparse
-from common.utils import save_results, make_dir
+from common.utils import save_results
 from common.utils import plot_rewards,save_args
 from common.models import MLP
 from common.memories import ReplayBuffer
@@ -17,7 +17,6 @@ from dqn import DQN
 def get_args():
     """ Hyperparameters
     """
-    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
     parser = argparse.ArgumentParser(description="hyperparameters")      
     parser.add_argument('--algo_name',default='DQN',type=str,help="name of algorithm")
     parser.add_argument('--env_name',default='CartPole-v0',type=str,help="name of environment")
@@ -33,10 +32,7 @@ def get_args():
     parser.add_argument('--target_update',default=4,type=int)
     parser.add_argument('--hidden_dim',default=256,type=int)
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
-    parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/results/' )
-    parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/models/' ) # 保存模型的路径
+    parser.add_argument('--output_path',default=f"./outputs",type=str,help="path to save outputs")
     parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
     args = parser.parse_args()                          
     return args
@@ -84,7 +80,7 @@ def train(cfg, env, agent):
         steps.append(ep_step)
         rewards.append(ep_reward)
         if (i_ep + 1) % 10 == 0:
-            print(f'回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.2f}，Epislon：{agent.epsilon(agent.frame_idx):.3f}')
+            print(f'回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.2f}，Epislon：{agent.epsilon:.3f}')
     print("完成训练！")
     env.close()
     res_dic = {'rewards':rewards}
@@ -109,7 +105,7 @@ def test(cfg, env, agent):
                 break
         steps.append(ep_step)
         rewards.append(ep_reward)
-        print(f'回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.2f}')
+        print(f'回合：{i_ep+1}/{cfg.test_eps}，奖励：{ep_reward:.2f}')
     print("完成测试")
     env.close()
     return {'rewards':rewards}
@@ -117,19 +113,20 @@ def test(cfg, env, agent):
 
 if __name__ == "__main__":
     cfg = get_args()
+    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
+    model_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/models/"
+    result_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/results/"
     # 训练
     env, agent = env_agent_config(cfg)
     res_dic = train(cfg, env, agent)
-    make_dir(cfg.result_path, cfg.model_path)  
-    save_args(cfg) # 保存参数
-    agent.save(path=cfg.model_path)  # 保存模型
-    save_results(res_dic, tag='train',
-                 path=cfg.result_path)  
-    plot_rewards(res_dic['rewards'], cfg, tag="train")  
+    save_args(cfg,path=result_path) # 保存参数
+    agent.save(path = model_path)  # 保存模型
+    save_results(res_dic, tag='train', path = result_path)  
+    plot_rewards(res_dic['rewards'], cfg, path=result_path,tag="train")  
     # 测试
-    env, agent = env_agent_config(cfg)
-    agent.load(path=cfg.model_path)  # 导入模型
+    env, agent = env_agent_config(cfg) # 也可以不加，加这一行的是为了避免训练之后环境可能会出现问题，因此新建一个环境用于测试
+    agent.load(path = model_path)  # 导入模型
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
-                 path=cfg.result_path)  # 保存结果
-    plot_rewards(res_dic['rewards'], cfg, tag="test")  # 画出结果
+                 path = result_path)  # 保存结果
+    plot_rewards(res_dic['rewards'], cfg, path=result_path,tag="test")  # 画出结果

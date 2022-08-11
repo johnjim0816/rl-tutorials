@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2022-08-04 22:30:14
+LastEditTime: 2022-08-10 11:25:56
 Discription: 
 Environment: 
 '''
@@ -40,9 +40,9 @@ def get_args():
     parser.add_argument('--lr',default=0.1,type=float,help="learning rate")
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/results/' )
+            '/' + curr_time + '/results/',type=str )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/models/' ) # path to save models
+            '/' + curr_time + '/models/',type=str,help="path to save models")
     parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
     args = parser.parse_args()                          
     return args

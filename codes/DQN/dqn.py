@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-08-06 09:31:10
+LastEditTime: 2022-08-11 09:52:23
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -27,9 +27,11 @@ class DQN:
         self.gamma = cfg.gamma  # 奖励的折扣因子
         # e-greedy策略相关参数
         self.sample_count = 0  # 用于epsilon的衰减计数
-        self.epsilon = lambda sample_count: cfg.epsilon_end + \
-            (cfg.epsilon_start - cfg.epsilon_end) * \
-            math.exp(-1. * sample_count / cfg.epsilon_decay)
+        self.epsilon = cfg.epsilon_start
+        self.sample_count = 0  
+        self.epsilon_start = cfg.epsilon_start
+        self.epsilon_end = cfg.epsilon_end
+        self.epsilon_decay = cfg.epsilon_decay
         self.batch_size = cfg.batch_size
         self.policy_net = model.to(self.device)
         self.target_net = model.to(self.device)
@@ -42,7 +44,9 @@ class DQN:
         ''' 选择动作
         '''
         self.sample_count += 1
-        if random.random() > self.epsilon(self.sample_count):
+        self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
+            math.exp(-1. * self.sample_count / self.epsilon_decay) # epsilon是会递减的，这里选择指数递减
+        if random.random() > self.epsilon:
             with torch.no_grad():
                 state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
                 q_values = self.policy_net(state)
@@ -81,6 +85,8 @@ class DQN:
         self.optimizer.step() 
 
     def save(self, path):
+        from pathlib import Path
+        Path(path).mkdir(parents=True, exist_ok=True)
         torch.save(self.target_net.state_dict(), path+'checkpoint.pth')
 
     def load(self, path):
