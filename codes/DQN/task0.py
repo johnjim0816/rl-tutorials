@@ -15,7 +15,7 @@ from common.memories import ReplayBuffer
 from dqn import DQN
 
 def get_args():
-    """ Hyperparameters
+    """ 超参数
     """
     parser = argparse.ArgumentParser(description="hyperparameters")      
     parser.add_argument('--algo_name',default='DQN',type=str,help="name of algorithm")
@@ -114,19 +114,19 @@ def test(cfg, env, agent):
 if __name__ == "__main__":
     cfg = get_args()
     curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
-    model_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/models/"
-    result_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/results/"
+    model_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/models/" # 模型路径
+    result_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/results/" # 结果路径
     # 训练
     env, agent = env_agent_config(cfg)
     res_dic = train(cfg, env, agent)
-    save_args(cfg,path=result_path) # 保存参数
+    save_args(cfg,path = model_path) # 保存参数到模型路径上
     agent.save(path = model_path)  # 保存模型
-    save_results(res_dic, tag='train', path = result_path)  
-    plot_rewards(res_dic['rewards'], cfg, path=result_path,tag="train")  
+    save_results(res_dic, tag = 'train', path = result_path)  
+    plot_rewards(res_dic['rewards'], cfg, path = result_path,tag = "train")  
     # 测试
     env, agent = env_agent_config(cfg) # 也可以不加，加这一行的是为了避免训练之后环境可能会出现问题，因此新建一个环境用于测试
     agent.load(path = model_path)  # 导入模型
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
                  path = result_path)  # 保存结果
-    plot_rewards(res_dic['rewards'], cfg, path=result_path,tag="test")  # 画出结果
+    plot_rewards(res_dic['rewards'], cfg, path = result_path,tag = "test")  # 画出结果
