@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-11 10:05:59
+LastEditTime: 2022-08-15 18:11:27
 Discription: 
 Environment: 
 '''
@@ -70,7 +70,8 @@ def plot_rewards(rewards,cfg,path=None,tag='train'):
     plt.legend()
     if cfg.save_fig:
         plt.savefig(f"{path}/{tag}ing_curve.png")
-    plt.show()
+    if cfg.show_fig:
+        plt.show()
 
 def plot_losses(losses, algo="DQN", save=True, path='./'):
     sns.set()
