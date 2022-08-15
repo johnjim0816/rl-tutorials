@@ -17,6 +17,7 @@ from dqn import DQN
 def get_args():
     """ 超参数
     """
+    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
     parser = argparse.ArgumentParser(description="hyperparameters")      
     parser.add_argument('--algo_name',default='DQN',type=str,help="name of algorithm")
     parser.add_argument('--env_name',default='CartPole-v0',type=str,help="name of environment")
@@ -32,7 +33,11 @@ def get_args():
     parser.add_argument('--target_update',default=4,type=int)
     parser.add_argument('--hidden_dim',default=256,type=int)
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
-    parser.add_argument('--output_path',default=f"./outputs",type=str,help="path to save outputs")
+    parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
+            '/' + curr_time + '/results/' )
+    parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
+            '/' + curr_time + '/models/' ) 
+    parser.add_argument('--show_fig',default=False,type=bool,help="if show figure or not")  
     parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
     args = parser.parse_args()                          
     return args
@@ -113,20 +118,17 @@ def test(cfg, env, agent):
 
 if __name__ == "__main__":
     cfg = get_args()
-    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
-    model_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/models/" # 模型路径
-    result_path = f"{cfg.output_path}/{cfg.env_name}/{curr_time}/results/" # 结果路径
     # 训练
     env, agent = env_agent_config(cfg)
     res_dic = train(cfg, env, agent)
-    save_args(cfg,path = model_path) # 保存参数到模型路径上
-    agent.save(path = model_path)  # 保存模型
-    save_results(res_dic, tag = 'train', path = result_path)  
-    plot_rewards(res_dic['rewards'], cfg, path = result_path,tag = "train")  
+    save_args(cfg,path = cfg.result_path) # 保存参数到模型路径上
+    agent.save(path = cfg.model_path)  # 保存模型
+    save_results(res_dic, tag = 'train', path = cfg.result_path)  
+    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "train")  
     # 测试
     env, agent = env_agent_config(cfg) # 也可以不加，加这一行的是为了避免训练之后环境可能会出现问题，因此新建一个环境用于测试
-    agent.load(path = model_path)  # 导入模型
+    agent.load(path = cfg.model_path)  # 导入模型
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
-                 path = result_path)  # 保存结果
-    plot_rewards(res_dic['rewards'], cfg, path = result_path,tag = "test")  # 画出结果
+                 path = cfg.result_path)  # 保存结果
+    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "test")  # 画出结果
