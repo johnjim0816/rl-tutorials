@@ -19,13 +19,14 @@
 		% \ENSURE $y = x^n$ % 输出
 		\STATE 初始化策略网络参数$\theta$ % 初始化
 		\STATE 复制参数到目标网络$\hat{Q} \leftarrow Q$
+		\STATE 初始化经验回放$D$
 		\FOR {回合数 = $1,M$}
-		
 			\STATE 重置环境，获得初始状态$s_t$
 			\FOR {时步 = $1,t$}
-				\STATE 根据$\varepsilon-greedy$策略选择动作$a_t$
+				\STATE 根据$\varepsilon-greedy$策略采样动作$a_t$
 				\STATE 环境根据$a_t$反馈奖励$s_t$和下一个状态$s_{t+1}$
 				\STATE 存储transition即$(s_t,a_t,r_t,s_{t+1})$到经验回放$D$中
+				\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
 				\STATE {\bfseries 更新策略：}
 				\STATE 从$D$中采样一个batch的transition
 				\STATE 计算实际的$Q$值，即$y_{j}= \begin{cases}r_{j} & \text {对于终止状态} s_{j+1} \\ r_{j}+\gamma \max _{a^{\prime}} Q\left(s_{j+1}, a^{\prime} ; \theta\right) & \text {对于非终止状态} s_{j+1}\end{cases}$
@@ -33,24 +34,6 @@
 				\STATE 每$C$步复制参数$\hat{Q} \leftarrow Q$
 			\ENDFOR
 		\ENDFOR
-			
-		% 逻辑
-		\IF{$n < 0$} 
-			\STATE $X \leftarrow 1 / x$ 
-			\STATE $N \leftarrow -n$ 
-		\ELSE 
-			\STATE $X \leftarrow x$ 
-			\STATE $N \leftarrow n$
-		\ENDIF
-		\WHILE{$N \neq 0$} 
-			\IF{$N$ is even} 
-				\STATE $X \leftarrow X \times X$ 
-				\STATE $N \leftarrow N / 2$ 
-			\ELSIF{$N$ is odd}
-				\STATE $y \leftarrow y \times X$ 
-				\STATE $N \leftarrow N - 1$ 
-			\ENDIF 
-		\ENDWHILE
 	\end{algorithmic}
 \end{algorithm}
 
@@ -62,23 +45,18 @@
 	\caption{}  
 	\begin{algorithmic}
 		\STATE 初始化参数$\theta$和$\phi$% 初始化
-		% 逻辑
-		\IF{$n < 0$} 
-			\STATE $X \leftarrow 1 / x$ 
-			\STATE $N \leftarrow -n$ 
-		\ELSE 
-			\STATE $X \leftarrow x$ 
-			\STATE $N \leftarrow n$
-		\ENDIF
-		\WHILE{$N \neq 0$} 
-			\IF{$N$ is even} 
-				\STATE $X \leftarrow X \times X$ 
-				\STATE $N \leftarrow N / 2$ 
-			\ELSIF{$N$ is odd}
-				\STATE $y \leftarrow y \times X$ 
-				\STATE $N \leftarrow N - 1$ 
-			\ENDIF 
-		\ENDWHILE
+		\STATE 复制参数$\bar{\theta} \leftarrow \theta, \bar{\phi} \leftarrow \phi$
+		\STATE 初始化经验回放$D$
+		\FOR {回合数 = $1,M$}
+			\FOR {时步 = $1,t$}
+				\STATE 根据$a_{t} \leftarrow f^{\phi}\left(\xi ; \mathbf{s}_{t}\right)$采样动作，其中$\xi \sim \mathcal{N}(\mathbf{0}, \boldsymbol{I})$
+				\STATE 环境根据$a_t$反馈奖励$s_t$和下一个状态$s_{t+1}$
+				\STATE 存储transition即$(s_t,a_t,r_t,s_{t+1})$到经验回放$D$中
+				\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
+				\STATE 待完善
+			\ENDFOR
+		\ENDFOR
+			
 	\end{algorithmic}
 \end{algorithm}
 

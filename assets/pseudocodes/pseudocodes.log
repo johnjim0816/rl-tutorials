@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.22)  15 AUG 2022 14:54
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.8.22)  15 AUG 2022 15:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -377,24 +377,22 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 20.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (38.0069pt too wide) in paragraph at lines 31--32
+Overfull \hbox (38.0069pt too wide) in paragraph at lines 32--33
 [] []\TU/SongtiSCLight(0)/m/n/10.95 计 算 实 际 的 $\OML/cmm/m/it/10.95 Q$ \TU/SongtiSCLight(0)/m/n/10.95 值，|  即 $\OML/cmm/m/it/10.95 y[] \OT1/cmr/m/n/10.95 = []$ 
  []
 
+[1
 
-LaTeX Warning: Float too large for page by 41.03326pt on input line 55.
-
-[1] [2
-
+] [2
 
 ] (./pseudocodes.aux) ) 
 Here is how much of TeX's memory you used:
- 7824 strings out of 476919
- 208580 string characters out of 5821840
- 533246 words of memory out of 5000000
- 27727 multiletter control sequences out of 15000+600000
- 408206 words of font info for 61 fonts, out of 8000000 for 9000
+ 7847 strings out of 476919
+ 208964 string characters out of 5821840
+ 529246 words of memory out of 5000000
+ 27739 multiletter control sequences out of 15000+600000
+ 410995 words of font info for 73 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 101i,11n,104p,414b,667s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 101i,11n,104p,414b,663s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on pseudocodes.pdf (2 pages).
