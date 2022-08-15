@@ -1,14 +1,26 @@
 ## 0、写在前面
 
-本项目用于学习RL基础算法，尽量做到: **注释详细**(经过很长时间的纠结，还是中文注释好了！！！)，**结构清晰**。
+本项目用于学习RL基础算法，主要面向对象为RL初学者、需要结合RL的非专业学习者，尽量做到: **(中文)注释详细**，**结构清晰**。
 
-代码结构主要分为以下几个脚本：
+注意本项目为实战内容，建议首先掌握相关算法的一些理论基础，再来享用本项目，理论教程参考本人参与编写的[蘑菇书](https://github.com/datawhalechina/easy-rl)。
 
+未来开发计划包括但不限于：多智能体算法、强化学习Python包以及强化学习图形化编程平台等等。
+
+## 1、项目说明
+
+项目内容主要包含以下几个部分：
+* [Jupyter Notebook](./notebooks/)：使用Notebook写的算法，有比较详细的实战引导，推荐新手食用
+* [codes](./assets/)：这些是基于Python脚本写的算法，风格比较接近实际项目的写法，推荐有一定代码基础的人阅读，下面会说明其具体的一些架构
+* [parl](./PARL/)：应业务需求，写了一些基于百度飞浆平台和```parl```模块的RL实例
+* [附件](./assets/)：目前包含强化学习各算法的中文伪代码
+
+
+[codes](./assets/)结构主要分为以下几个脚本：
 * ```[algorithm_name].py```：即保存算法的脚本，例如```dqn.py```，每种算法都会有一定的基础模块，例如```Replay Buffer```、```MLP```(多层感知机)等等；
 * ```task.py```: 即保存任务的脚本，基本包括基于```argparse```模块的参数，训练以及测试函数等等；
 * ```utils.py```：该脚本用于保存诸如存储结果以及画图的软件，在实际项目或研究中，推荐大家使用```Tensorboard```来保存结果，然后使用诸如```matplotlib```以及```seabron```来进一步画图。
 
-## 运行环境
+## 2、运行环境
 
 python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
 
@@ -16,16 +28,7 @@ python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
 ```bash
 pip install -r requirements.txt
 ```
-## 使用说明
+## 3、使用说明
 
 直接运行带有```train```的py文件或ipynb文件会进行训练默认的任务；  
 也可以运行带有```task```的py文件训练不同的任务
-
-                                   
-## Refs
-
-[RL-Adventure-2](https://github.com/higgsfield/RL-Adventure-2)
-
-[RL-Adventure](https://github.com/higgsfield/RL-Adventure)
-
-[Google 开源项目风格指南——中文版](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
