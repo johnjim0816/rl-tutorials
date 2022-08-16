@@ -22,7 +22,7 @@
 
 ## 2、运行环境
 
-python 3.7、pytorch 1.10.0、gym 0.21.0
+Python 3.7、PyTorch 1.10.0、Gym 0.21.0
 
 在项目根目录下执行以下命令复现环境：
 ```bash
@@ -50,5 +50,9 @@ pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --e
 对于[codes](./assets/)：
 * 运行带有task的py脚本
 
-对于[Jupyter Notebook](./notebooks/)]：
+对于[Jupyter Notebook](./notebooks/)：
 * 直接运行对应的ipynb文件就行
+
+## 4、友情说明
+
+推荐使用VS Code做项目，入门可参考[VSCode上手指南](https://blog.csdn.net/JohnJim0/article/details/126366454)
