@@ -28,6 +28,14 @@ python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
 ```bash
 pip install -r requirements.txt
 ```
+如果需要使用CUDA，则需另外安装```cudatoolkit```，推荐```10.2```或者```11.3```版本的CUDA，如下：
+```bash
+conda install cudatoolkit=11.3 -c pytorch
+```
+如果conda需要镜像加速安装的话，点击[该清华镜像链接](https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/)，选择对应的操作系统，比如```win-64```，然后复制链接，执行如下命令：
+```bash
+conda install cudatoolkit=11.3 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/
+```
 ## 3、使用说明
 
 直接运行带有```train```的py文件或ipynb文件会进行训练默认的任务；  
