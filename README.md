@@ -47,5 +47,8 @@ pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --e
 ```
 ## 3、使用说明
 
-直接运行带有```train```的py文件或ipynb文件会进行训练默认的任务；  
-也可以运行带有```task```的py文件训练不同的任务
+对于[codes](./assets/)：
+* 运行带有task的py脚本
+
+对于[Jupyter Notebook](./notebooks/)]：
+* 直接运行对应的ipynb文件就行
