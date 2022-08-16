@@ -22,7 +22,7 @@
 
 ## 2、运行环境
 
-python 3.7、pytorch 1.6.0-1.9.0、gym 0.21.0
+python 3.7、pytorch 1.10.0、gym 0.21.0
 
 在项目根目录下执行以下命令复现环境：
 ```bash
@@ -35,6 +35,15 @@ conda install cudatoolkit=11.3 -c pytorch
 如果conda需要镜像加速安装的话，点击[该清华镜像链接](https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/)，选择对应的操作系统，比如```win-64```，然后复制链接，执行如下命令：
 ```bash
 conda install cudatoolkit=11.3 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/
+```
+执行以下Python脚本，如果返回True说明cuda安装成功:
+```python
+import torch
+print(torch.cuda.is_available())
+```
+如果还是不成功，可以使用pip安装：
+```bash
+pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --extra-index-url https://download.pytorch.org/whl/cu113
 ```
 ## 3、使用说明
 
