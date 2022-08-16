@@ -50,11 +50,8 @@ pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --e
 对于[codes](./assets/)：
 * 运行带有task的py脚本
 
-<<<<<<< HEAD
 对于[Jupyter Notebook](./notebooks/)：
-=======
-对于[Jupyter Notebook](./notebooks/)]：
->>>>>>> f38aa9dd54b563352fba0504030efe21a3f17508
+
 * 直接运行对应的ipynb文件就行
 
 ## 4、友情说明
