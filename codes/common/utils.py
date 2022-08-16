@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-16 11:25:41
+LastEditTime: 2022-08-16 11:32:06
 Discription: 
 Environment: 
 '''
@@ -127,8 +127,7 @@ def all_seed(env,seed=1):
     import numpy as np
     import random
     print(f"随机种子 = {seed}")
-    env.seed(seed)
-    
+    env.seed(seed) # 环境设置
     np.random.seed(seed)
     random.seed(seed)
     torch.manual_seed(seed) # 为CPU设置种子
