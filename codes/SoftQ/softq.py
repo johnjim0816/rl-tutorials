@@ -74,6 +74,21 @@ class SoftQNetwork(nn.Module):
 class SoftQ:
     def __init__(self,n_actions,model,memory,cfg):
         pass
+    def sample_action(self,state):
+        state = torch.FloatTensor(state).unsqueeze(0).to(device)
+        # print('state : ', state)
+        with torch.no_grad():
+            q = self.forward(state)
+            v = self.getV(q).squeeze()
+            # print('q & v', q, v)
+            dist = torch.exp((q-v)/self.alpha)
+            # print(dist)
+            dist = dist / torch.sum(dist)
+            # print(dist)
+            c = Categorical(dist)
+            a = c.sample()
+        return a.item()
+
 
 if __name__ == "__main__":
     env = gym.make('CartPole-v0')
