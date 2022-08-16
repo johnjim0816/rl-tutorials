@@ -8,7 +8,7 @@ import torch
 import datetime
 import numpy as np
 import argparse
-from common.utils import save_results
+from common.utils import save_results,all_seed
 from common.utils import plot_rewards,save_args
 from common.models import MLP
 from common.memories import ReplayBuffer
@@ -33,6 +33,7 @@ def get_args():
     parser.add_argument('--target_update',default=4,type=int)
     parser.add_argument('--hidden_dim',default=256,type=int)
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
+    parser.add_argument('--seed',default=10,type=int,help="seed") 
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/results/' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
@@ -42,20 +43,18 @@ def get_args():
     args = parser.parse_args()                          
     return args
 
-def env_agent_config(cfg,seed=1):
+def env_agent_config(cfg):
     ''' 创建环境和智能体
     '''
     env = gym.make(cfg.env_name)  # 创建环境
+    if cfg.seed !=0: # 设置随机种子
+        all_seed(env,seed=cfg.seed)
     n_states = env.observation_space.shape[0]  # 状态维度
     n_actions = env.action_space.n  # 动作维度
     print(f"状态数：{n_states}，动作数：{n_actions}")
     model = MLP(n_states,n_actions,hidden_dim=cfg.hidden_dim)
     memory =  ReplayBuffer(cfg.memory_capacity) # 经验回放
     agent = DQN(n_actions,model,memory,cfg)  # 创建智能体
-    if seed !=0: # 设置随机种子
-        torch.manual_seed(seed)
-        env.seed(seed)
-        np.random.seed(seed)
     return env, agent
 
 def train(cfg, env, agent):

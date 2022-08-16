@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-15 18:11:27
+LastEditTime: 2022-08-16 11:25:41
 Discription: 
 Environment: 
 '''
@@ -116,3 +116,26 @@ def save_args(args,path=None):
     with open(f"{path}/params.json", 'w') as fp:
         json.dump(args_dict, fp)   
     print("参数已保存！")
+
+def all_seed(env,seed=1):
+    ''' 强化学习万能大seed，注意seed的位置，最好直接放定义环境的后面
+    Args:
+        env (_type_): 环境
+        seed (int, optional): _description_. Defaults to 1.
+    '''
+    import torch
+    import numpy as np
+    import random
+    print(f"随机种子 = {seed}")
+    env.seed(seed)
+    
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.manual_seed(seed) # 为CPU设置种子
+    torch.cuda.manual_seed(seed) # 为GPU设置种子
+    os.environ['PYTHONHASHSEED'] = str(seed) # python脚本设置随机种子
+    # cudnn设置随机种子
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.enabled = False
+    
