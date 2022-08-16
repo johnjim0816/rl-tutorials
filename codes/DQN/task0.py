@@ -61,7 +61,7 @@ def train(cfg, env, agent):
     ''' 训练
     '''
     print("开始训练！")
-    print(f"回合：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
+    print(f"环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
     rewards = []  # 记录所有回合的奖励
     steps = []
     for i_ep in range(cfg.train_eps):
@@ -92,7 +92,7 @@ def train(cfg, env, agent):
 
 def test(cfg, env, agent):
     print("开始测试！")
-    print(f"回合：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
+    print(f"环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
     rewards = []  # 记录所有回合的奖励
     steps = []
     for i_ep in range(cfg.test_eps):
