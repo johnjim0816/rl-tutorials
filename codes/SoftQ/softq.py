@@ -1,163 +1,61 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from itertools import count
 from collections import deque
 import random
-from tensorboardX import SummaryWriter
 from torch.distributions import Categorical
 import gym
 import numpy as np
 
-
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-
-class Memory(object):
-    def __init__(self, memory_capacity: int) -> None:
-        self.memory_capacity = memory_capacity
-        self.buffer = deque(maxlen=self.memory_capacity)
-
-    def add(self, experience) -> None:
-        self.buffer.append(experience)
-
-    def size(self):
-        return len(self.buffer)
-
-    def sample(self, batch_size: int, continuous: bool = True):
-        if batch_size > len(self.buffer):
-            batch_size = len(self.buffer)
-        if continuous:
-            rand = random.randint(0, len(self.buffer) - batch_size)
-            return [self.buffer[i] for i in range(rand, rand + batch_size)]
-        else:
-            indexes = np.random.choice(np.arange(len(self.buffer)), size=batch_size, replace=False)
-            return [self.buffer[i] for i in indexes]
-
-    def clear(self):
-        self.buffer.clear()
-
-
-class SoftQNetwork(nn.Module):
-    def __init__(self):
-        super(SoftQNetwork, self).__init__()
-        self.alpha = 4
-        self.fc1 = nn.Linear(4, 64)
-        self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(64, 256)
-        self.fc3 = nn.Linear(256, 2)
-        
-    def forward(self, x):
-        x = self.relu(self.fc1(x))
-        x = self.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
-
-    def getV(self, q_value):
-        v = self.alpha * torch.log(torch.sum(torch.exp(q_value/self.alpha), dim=1, keepdim=True))
-        return v
-        
-    def choose_action(self, state):
-        state = torch.FloatTensor(state).unsqueeze(0).to(device)
-        # print('state : ', state)
-        with torch.no_grad():
-            q = self.forward(state)
-            v = self.getV(q).squeeze()
-            # print('q & v', q, v)
-            dist = torch.exp((q-v)/self.alpha)
-            # print(dist)
-            dist = dist / torch.sum(dist)
-            # print(dist)
-            c = Categorical(dist)
-            a = c.sample()
-        return a.item()
 class SoftQ:
     def __init__(self,n_actions,model,memory,cfg):
-        pass
+        self.memory = memory
+        self.alpha = cfg.alpha
+        self.gamma = cfg.gamma  # discount factor
+        self.batch_size = cfg.batch_size
+        self.device = torch.device(cfg.device) 
+        self.policy_net = model.to(self.device)
+        self.target_net = model.to(self.device)
+        self.target_net.load_state_dict(self.policy_net.state_dict()) # 复制参数
+        self.optimizer = torch.optim.Adam(self.policy_net.parameters(), lr=cfg.lr)
+        self.losses = [] # save losses
+
     def sample_action(self,state):
-        state = torch.FloatTensor(state).unsqueeze(0).to(device)
-        # print('state : ', state)
+        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
         with torch.no_grad():
-            q = self.forward(state)
-            v = self.getV(q).squeeze()
-            # print('q & v', q, v)
+            q = self.policy_net(state)
+            v = self.alpha * torch.log(torch.sum(torch.exp(q/self.alpha), dim=1, keepdim=True)).squeeze()
             dist = torch.exp((q-v)/self.alpha)
-            # print(dist)
             dist = dist / torch.sum(dist)
-            # print(dist)
             c = Categorical(dist)
             a = c.sample()
         return a.item()
-
-
-if __name__ == "__main__":
-    env = gym.make('CartPole-v0')
-    onlineQNetwork = SoftQNetwork().to(device)
-    targetQNetwork = SoftQNetwork().to(device)
-    targetQNetwork.load_state_dict(onlineQNetwork.state_dict())
-
-    optimizer = torch.optim.Adam(onlineQNetwork.parameters(), lr=1e-4)
-
-    GAMMA = 0.99
-    REPLAY_MEMORY = 50000
-    BATCH = 16
-    UPDATE_STEPS = 4
-
-    memory_replay = Memory(REPLAY_MEMORY)
-    writer = SummaryWriter('logs/sql')
-
-    learn_steps = 0
-    begin_learn = False
-    episode_reward = 0
-
-    for epoch in count():
-        state = env.reset()
-        episode_reward = 0
-        for time_steps in range(200):
-            action = onlineQNetwork.choose_action(state)
-            next_state, reward, done, _ = env.step(action)
-            episode_reward += reward
-            memory_replay.add((state, next_state, action, reward, done))
-
-            if memory_replay.size() > 128:
-                if begin_learn is False:
-                    print('learn begin!')
-                    begin_learn = True
-                learn_steps += 1
-                if learn_steps % UPDATE_STEPS == 0:
-                    targetQNetwork.load_state_dict(onlineQNetwork.state_dict())
-                batch = memory_replay.sample(BATCH, False)
-                batch_state, batch_next_state, batch_action, batch_reward, batch_done = zip(*batch)
-
-                batch_state = torch.FloatTensor(batch_state).to(device)
-                batch_next_state = torch.FloatTensor(batch_next_state).to(device)
-                batch_action = torch.FloatTensor(batch_action).unsqueeze(1).to(device)
-                batch_reward = torch.FloatTensor(batch_reward).unsqueeze(1).to(device)
-                batch_done = torch.FloatTensor(batch_done).unsqueeze(1).to(device)
-
-                with torch.no_grad():
-                    next_q = targetQNetwork(batch_next_state)
-                    next_v = targetQNetwork.getV(next_q)
-                    y = batch_reward + (1 - batch_done) * GAMMA * next_v
-
-                loss = F.mse_loss(onlineQNetwork(batch_state).gather(1, batch_action.long()), y)
-                optimizer.zero_grad()
-                loss.backward()
-                optimizer.step()
-                writer.add_scalar('loss', loss.item(), global_step=learn_steps)
-            
-            if done:
-                break
-            
-            state = next_state
-        writer.add_scalar('episode reward', episode_reward, global_step=epoch)
-        if epoch % 10 == 0:
-            torch.save(onlineQNetwork.state_dict(), 'sql-policy.para')
-            print('Ep {}\tMoving average score: {:.2f}\t'.format(epoch, episode_reward))
-
-
-
-
-
-
-
+    def predict_action(self,state):
+        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
+        with torch.no_grad():
+            q = self.policy_net(state)
+            v = self.alpha * torch.log(torch.sum(torch.exp(q/self.alpha), dim=1, keepdim=True)).squeeze()
+            dist = torch.exp((q-v)/self.alpha)
+            dist = dist / torch.sum(dist)
+            c = Categorical(dist)
+            a = c.sample()
+        return a.item()
+    def update(self):
+        if len(self.memory) < self.batch_size: # when the memory capacity does not meet a batch, the network will not update
+            return
+        state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.memory.sample(self.batch_size)
+        state_batch = torch.FloatTensor(state_batch).to(self.device)
+        action_batch = torch.FloatTensor(action_batch).to(self.device)
+        reward_batch = torch.FloatTensor(reward_batch).to(self.device)
+        next_state_batch = torch.FloatTensor(next_state_batch).to(self.device) 
+        done_batch = torch.FloatTensor(done_batch).to(self.device)
+        with torch.no_grad():
+            next_q = self.target_net(next_state_batch)
+            next_v = self.alpha * torch.log(torch.sum(torch.exp(next_q/self.alpha), dim=1, keepdim=True))
+            y = reward_batch + (1 - done_batch ) * self.gamma * next_v
+        print()
+        loss = F.mse_loss(self.policy_net(state_batch).gather(1, action_batch.long()), y)
+        self.losses.append(loss)
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
