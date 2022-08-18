@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-08-11 09:52:23
+LastEditTime: 2022-08-18 10:16:16
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -67,11 +67,12 @@ class DQN:
         
         state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.memory.sample(
             self.batch_size)
-        state_batch = torch.tensor(np.array(state_batch), device=self.device, dtype=torch.float)
-        action_batch = torch.tensor(action_batch, device=self.device).unsqueeze(1)  
-        reward_batch = torch.tensor(reward_batch, device=self.device, dtype=torch.float)  
-        next_state_batch = torch.tensor(np.array(next_state_batch), device=self.device, dtype=torch.float)
-        done_batch = torch.tensor(np.float32(done_batch), device=self.device)
+        state_batch = torch.tensor(np.array(state_batch), device=self.device, dtype=torch.float) # shape(batchsize,n_states)
+        action_batch = torch.tensor(action_batch, device=self.device).unsqueeze(1) # shape(batchsize,1)
+        reward_batch = torch.tensor(reward_batch, device=self.device, dtype=torch.float) # shape(batchsize)
+        next_state_batch = torch.tensor(np.array(next_state_batch), device=self.device, dtype=torch.float) # shape(batchsize,n_states)
+        done_batch = torch.tensor(np.float32(done_batch), device=self.device) # shape(batchsize)
+        # print(state_batch.shape,action_batch.shape,reward_batch.shape,next_state_batch.shape,done_batch.shape)
         q_values = self.policy_net(state_batch).gather(dim=1, index=action_batch) # 计算当前状态(s_t,a)对应的Q(s_t, a)
         next_q_values = self.target_net(next_state_batch).max(1)[0].detach() # 计算下一时刻的状态(s_t_,a)对应的Q值
         # 计算期望的Q值，对于终止状态，此时done_batch[0]=1, 对应的expected_q_value等于reward
