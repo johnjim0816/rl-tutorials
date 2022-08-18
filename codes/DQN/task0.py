@@ -35,9 +35,9 @@ def get_args():
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
     parser.add_argument('--seed',default=10,type=int,help="seed") 
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/results/' )
+            '/' + curr_time + '/results' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/models/' ) 
+            '/' + curr_time + '/models' ) 
     parser.add_argument('--show_fig',default=False,type=bool,help="if show figure or not")  
     parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
     args = parser.parse_args()                          
@@ -87,7 +87,7 @@ def train(cfg, env, agent):
             print(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}: Epislon: {agent.epsilon:.3f}')
     print("finish training!")
     env.close()
-    res_dic = {'rewards':rewards}
+    res_dic = {'episodes':range(len(rewards)),'rewards':rewards}
     return res_dic
 
 def test(cfg, env, agent):
@@ -112,22 +112,22 @@ def test(cfg, env, agent):
         print(f'Episode: {i_ep+1}/{cfg.test_eps}，Reward: {ep_reward:.2f}')
     print("finish testing!")
     env.close()
-    return {'rewards':rewards}
+    return {'episodes':range(len(rewards)),'rewards':rewards}
 
 
 if __name__ == "__main__":
     cfg = get_args()
-    # 训练
+    # training
     env, agent = env_agent_config(cfg)
     res_dic = train(cfg, env, agent)
-    save_args(cfg,path = cfg.result_path) # 保存参数到模型路径上
-    agent.save(path = cfg.model_path)  # 保存模型
-    save_results(res_dic, tag = 'train', path = cfg.result_path)  
-    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "train")  
-    # 测试
-    env, agent = env_agent_config(cfg) # 也可以不加，加这一行的是为了避免训练之后环境可能会出现问题，因此新建一个环境用于测试
-    agent.load(path = cfg.model_path)  # 导入模型
+    save_args(cfg,path = cfg.result_path) # save parameters
+    agent.save_model(path = cfg.model_path)  # save models
+    save_results(res_dic, tag = 'train', path = cfg.result_path) # save results
+    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "train")  # plot results
+    # testing
+    env, agent = env_agent_config(cfg) # create new env for testing, sometimes can ignore this step
+    agent.load_model(path = cfg.model_path)  # load model
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
-                 path = cfg.result_path)  # 保存结果
-    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "test")  # 画出结果
+                 path = cfg.result_path)  
+    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "test")  

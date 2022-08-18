@@ -154,12 +154,12 @@ if __name__ == "__main__":
     env, agent = env_agent_config(cfg)
     res_dic = train(cfg, env, agent)
     save_args(cfg,path = cfg.result_path) # 保存参数到模型路径上
-    agent.save(path = cfg.model_path)  # 保存模型
+    agent.save_model(path = cfg.model_path)  # 保存模型
     save_results(res_dic, tag = 'train', path = cfg.result_path)  
     plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "train")  
     # 测试
     env, agent = env_agent_config(cfg) # 也可以不加，加这一行的是为了避免训练之后环境可能会出现问题，因此新建一个环境用于测试
-    agent.load(path = cfg.model_path)  # 导入模型
+    agent.load_model(path = cfg.model_path)  # 导入模型
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
                  path = cfg.result_path)  # 保存结果

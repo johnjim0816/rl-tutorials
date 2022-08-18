@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-08-18 11:16:31
+LastEditTime: 2022-08-18 14:27:18
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -23,9 +23,9 @@ class DQN:
     def __init__(self,n_actions,model,memory,cfg):
 
         self.n_actions = n_actions  
-        self.device = torch.device(cfg.device)  # cpu or cuda
+        self.device = torch.device(cfg.device) 
         self.gamma = cfg.gamma  
-        # e-greedy策略相关参数
+        ## e-greedy parameters
         self.sample_count = 0  # sample count for epsilon decay
         self.epsilon = cfg.epsilon_start
         self.sample_count = 0  
@@ -35,10 +35,12 @@ class DQN:
         self.batch_size = cfg.batch_size
         self.policy_net = model.to(self.device)
         self.target_net = model.to(self.device)
-        for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): # 复制参数到目标网路targe_net
+        ## copy parameters from policy net to target net
+        for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): 
             target_param.data.copy_(param.data)
-        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr) # 优化器
-        self.memory = memory # 经验回放
+        # self.target_net.load_state_dict(self.policy_net.state_dict()) # or use this to copy parameters
+        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr) 
+        self.memory = memory 
         self.update_flag = False 
 
     def sample_action(self, state):
@@ -56,7 +58,7 @@ class DQN:
         else:
             action = random.randrange(self.n_actions)
         return action
-    def predict(self,state):
+    def predict_action(self,state):
         ''' predict action
         '''
         with torch.no_grad():
@@ -98,13 +100,13 @@ class DQN:
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step() 
 
-    def save(self, path):
+    def save_model(self, path):
         from pathlib import Path
         # create path
         Path(path).mkdir(parents=True, exist_ok=True)
-        torch.save(self.target_net.state_dict(), path+'checkpoint.pth')
+        torch.save(self.target_net.state_dict(), f"{path}/checkpoint.pt")
 
-    def load(self, path):
-        self.target_net.load_state_dict(torch.load(path+'checkpoint.pth'))
+    def load_model(self, path):
+        self.target_net.load_state_dict(torch.load(f"{path}/checkpoint.pt"))
         for target_param, param in zip(self.target_net.parameters(), self.policy_net.parameters()):
             param.data.copy_(target_param.data)
