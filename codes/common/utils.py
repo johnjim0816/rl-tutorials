@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-18 14:30:33
+LastEditTime: 2022-08-18 15:44:24
 Discription: 
 Environment: 
 '''
@@ -116,25 +116,25 @@ def save_args(args,path=None):
     Path(path).mkdir(parents=True, exist_ok=True) 
     with open(f"{path}/params.json", 'w') as fp:
         json.dump(args_dict, fp)   
-    print("参数已保存！")
+    print("Parameters saved!")
 
 def all_seed(env,seed = 1):
     ''' omnipotent seed for RL, attention the position of seed function, you'd better put it just following the env create function
     Args:
-        env (_type_): 环境
+        env (_type_): 
         seed (int, optional): _description_. Defaults to 1.
     '''
     import torch
     import numpy as np
     import random
     print(f"随机种子 = {seed}")
-    env.seed(seed) # 环境设置
+    env.seed(seed) # env config
     np.random.seed(seed)
     random.seed(seed)
-    torch.manual_seed(seed) # 为CPU设置种子
-    torch.cuda.manual_seed(seed) # 为GPU设置种子
-    os.environ['PYTHONHASHSEED'] = str(seed) # python脚本设置随机种子
-    # cudnn设置随机种子
+    torch.manual_seed(seed) # config for CPU
+    torch.cuda.manual_seed(seed) # config for GPU
+    os.environ['PYTHONHASHSEED'] = str(seed) # config for python scripts
+    # config for cudnn
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.enabled = False

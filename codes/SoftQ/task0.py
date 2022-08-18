@@ -1,8 +1,7 @@
-from collections import deque
 import sys,os
-curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
-parent_path = os.path.dirname(curr_path)  # 父路径
-sys.path.append(parent_path)  # 添加路径到系统路径
+curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
+parent_path = os.path.dirname(curr_path)  # parent path 
+sys.path.append(parent_path)  # add path to system path
 
 import argparse
 import datetime
@@ -11,15 +10,17 @@ import torch
 import random
 import numpy as np
 import torch.nn as nn
+from common.memories import ReplayBufferQue
+from common.models import MLP
 from common.utils import save_results,all_seed,plot_rewards,save_args
 from softq import SoftQ
 
 def get_args():
-    """ 超参数
+    """ hyperparameters
     """
-    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
+    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # obtain current time
     parser = argparse.ArgumentParser(description="hyperparameters")      
-    parser.add_argument('--algo_name',default='DQN',type=str,help="name of algorithm")
+    parser.add_argument('--algo_name',default='SoftQ',type=str,help="name of algorithm")
     parser.add_argument('--env_name',default='CartPole-v0',type=str,help="name of environment")
     parser.add_argument('--train_eps',default=200,type=int,help="episodes of training")
     parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing")
@@ -40,32 +41,10 @@ def get_args():
     parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
     args = parser.parse_args()                          
     return args
-class Memory(object):
-    def __init__(self, capacity: int) -> None:
-        self.capacity = capacity
-        self.buffer = deque(maxlen=self.capacity)
-    def push(self,trainsitions):
-        '''_summary_
-        Args:
-            trainsitions (tuple): _description_
-        '''
-        self.buffer.append(trainsitions)
-    def sample(self, batch_size: int, sequential: bool = False):
-        if batch_size > len(self.buffer):
-            batch_size = len(self.buffer)
-        if sequential: # sequential sampling
-            rand = random.randint(0, len(self.buffer) - batch_size)
-            return [self.buffer[i] for i in range(rand, rand + batch_size)]
-        else:
-            batch = random.sample(self.buffer, batch_size)
-            return zip(*batch)
-            indexes = np.random.choice(np.arange(len(self.buffer)), size=batch_size, replace=False)
-            return [self.buffer[i] for i in indexes]
-    def clear(self):
-        self.buffer.clear()
-    def __len__(self):
-        return len(self.buffer)
+
 class SoftQNetwork(nn.Module):
+    '''Actually almost same to common.models.MLP
+    '''
     def __init__(self,input_dim,output_dim):
         super(SoftQNetwork,self).__init__()
         self.fc1 = nn.Linear(input_dim, 64)
@@ -78,75 +57,72 @@ class SoftQNetwork(nn.Module):
         x = self.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+
 def env_agent_config(cfg):
-    ''' 创建环境和智能体
+    ''' create env and agent
     '''
-    env = gym.make(cfg.env_name)  # 创建环境
-    if cfg.seed !=0: # 设置随机种子
+    env = gym.make(cfg.env_name)  # create env
+    if cfg.seed !=0: # set random seed
         all_seed(env,seed=cfg.seed)
-    n_states = env.observation_space.shape[0]  # 状态维度
-    n_actions = env.action_space.n  # 动作维度
-    print(f"状态数：{n_states}，动作数：{n_actions}")
+    n_states = env.observation_space.shape[0]  # state dimension
+    n_actions = env.action_space.n  # action dimension
+    print(f"state dim: {n_states}, action dim: {n_actions}")
+    # model = MLP(n_states,n_actions)
     model = SoftQNetwork(n_states,n_actions)
-    memory =  Memory(cfg.memory_capacity) # 经验回放
-    agent = SoftQ(n_actions,model,memory,cfg)  # 创建智能体
+    memory =  ReplayBufferQue(cfg.memory_capacity) # replay buffer
+    agent = SoftQ(n_actions,model,memory,cfg)  # create agent
     return env, agent
 
 def train(cfg, env, agent):
-    ''' 训练
+    ''' training
     '''
-    print("开始训练！")
-    print(f"环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
-    rewards = []  # 记录所有回合的奖励
-    steps = []
+    print("start training!")
+    print(f"Env: {cfg.env_name}, Algo: {cfg.algo_name}, Device: {cfg.device}")
+    rewards = []  # record rewards for all episodes
+    steps = [] # record steps for all episodes, sometimes need
     for i_ep in range(cfg.train_eps):
-        ep_reward = 0  # 记录一回合内的奖励
+        ep_reward = 0  # reward per episode
         ep_step = 0
-        state = env.reset()  # 重置环境，返回初始状态
-        # while True:
-        for _ in range(cfg.max_steps):
+        state = env.reset()   # reset and obtain initial state
+        while True:
+        # for _ in range(cfg.max_steps):
             ep_step += 1
-            action = agent.sample_action(state)  # 选择动作
-            next_state, reward, done, _ = env.step(action)  # 更新环境，返回transition
-            agent.memory.push((state, action, reward, next_state, done))  # 保存transition
-            state = next_state  # 更新下一个状态
-            agent.update()  # 更新智能体
-            ep_reward += reward  # 累加奖励
+            action = agent.sample_action(state) # sample action
+            next_state, reward, done, _ = env.step(action)  # update env and return transitions
+            agent.memory.push((state, action, reward, next_state, done))  # save transitions
+            state = next_state  # update next state for env
+            agent.update()  # update agent
+            ep_reward += reward  
             if done:
                 break
-        if (i_ep + 1) % cfg.target_update == 0:  # 智能体目标网络更新
+        if (i_ep + 1) % cfg.target_update == 0:  # target net update, target_update means "C" in pseucodes
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         steps.append(ep_step)
         rewards.append(ep_reward)
         if (i_ep + 1) % 10 == 0:
-            print(f'回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.2f}')
-    print("完成训练！")
-    env.close()
-    res_dic = {'rewards':rewards,'losses':agent.losses}
+            print(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}')
+    print("finish training!")
+    res_dic = {'episodes':range(len(rewards)),'rewards':rewards}
     return res_dic
 def test(cfg, env, agent):
-    print("开始测试！")
-    print(f"环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}")
-    rewards = []  # 记录所有回合的奖励
-    steps = []
+    print("start testing!")
+    print(f"Env: {cfg.env_name}, Algo: {cfg.algo_name}, Device: {cfg.device}")
+    rewards = []  # record rewards for all episodes
     for i_ep in range(cfg.test_eps):
-        ep_reward = 0  # 记录一回合内的奖励
-        ep_step = 0
-        state = env.reset()  # 重置环境，返回初始状态
+        ep_reward = 0  # reward per episode
+        state = env.reset()  # reset and obtain initial state
         while True:
-            ep_step+=1
-            action = agent.predict(state)  # 选择动作
-            next_state, reward, done, _ = env.step(action)  # 更新环境，返回transition
-            state = next_state  # 更新下一个状态
-            ep_reward += reward  # 累加奖励
+            action = agent.predict_action(state)  # predict action
+            next_state, reward, done, _ = env.step(action)  
+            state = next_state  
+            ep_reward += reward 
             if done:
                 break
-        steps.append(ep_step)
         rewards.append(ep_reward)
-        print(f'回合：{i_ep+1}/{cfg.test_eps}，奖励：{ep_reward:.2f}')
-    print("完成测试")
+        print(f'Episode: {i_ep+1}/{cfg.test_eps}，Reward: {ep_reward:.2f}')
+    print("finish testing!")
     env.close()
-    return {'rewards':rewards}
+    return {'episodes':range(len(rewards)),'rewards':rewards}
 
 if __name__ == "__main__":
     cfg = get_args()
