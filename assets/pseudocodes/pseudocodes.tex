@@ -62,13 +62,13 @@
 				\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
 				\STATE {\bfseries 更新soft Q函数参数：}
 				\STATE 对于每个$s^{(i)}_{t+1}$采样$\left\{\mathbf{a}^{(i, j)}\right\}_{j=0}^{M} \sim q_{\mathbf{a}^{\prime}}$
-				\STATE 计算empirical soft values $V_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}\right)=\alpha \log \mathbb{E}_{q_{\mathbf{a}^{\prime}}}\left[\frac{\exp \left(\frac{1}{\alpha} Q_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}, \mathbf{a}^{\prime}\right)\right)}{q_{\mathbf{a}^{\prime}}\left(\mathbf{a}^{\prime}\right)}\right]$
-				\STATE 计算empirical gradient $J_{Q}(\theta)=\mathbb{E}_{\mathbf{s}_{t} \sim q_{\mathbf{s}_{t}}, \mathbf{a}_{t} \sim q_{\mathbf{a}_{t}}}\left[\frac{1}{2}\left(\hat{Q}_{\mathrm{soft}}^{\bar{\theta}}\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)-Q_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)\right)^{2}\right]$
+				\STATE 计算empirical soft values $V_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}\right)$\footnotemark[1]
+				\STATE 计算empirical gradient $J_{Q}(\theta)$\footnotemark[2]
 				\STATE 根据$J_{Q}(\theta)$使用ADAM更新参数$\theta$
 				\STATE {\bfseries 更新策略：}
 				\STATE  对于每个$s^{(i)}_{t}$采样$\left\{\xi^{(i, j)}\right\}_{j=0}^{M} \sim \mathcal{N}(\mathbf{0}, \boldsymbol{I})$
 				\STATE 计算$\mathbf{a}_{t}^{(i, j)}=f^{\phi}\left(\xi^{(i, j)}, \mathbf{s}_{t}^{(i)}\right)$
-				\STATE 使用经验估计计算$\begin{aligned} \Delta f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)=& \mathbb{E}_{\mathbf{a}_{t} \sim \pi^{\phi}}\left[\left.\kappa\left(\mathbf{a}_{t}, f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)\right) \nabla_{\mathbf{a}^{\prime}} Q_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}, \mathbf{a}^{\prime}\right)\right|_{\mathbf{a}^{\prime}=\mathbf{a}_{t}}\right.\\ &\left.+\left.\alpha \nabla_{\mathbf{a}^{\prime}} \kappa\left(\mathbf{a}^{\prime}, f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)\right)\right|_{\mathbf{a}^{\prime}=\mathbf{a}_{t}}\right] \end{aligned}$
+				\STATE 使用经验估计计算$\Delta f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)$\footnotemark[3]
 				\STATE 计算经验估计$\frac{\partial J_{\pi}\left(\phi ; \mathbf{s}_{t}\right)}{\partial \phi} \propto \mathbb{E}_{\xi}\left[\Delta f^{\phi}\left(\xi ; \mathbf{s}_{t}\right) \frac{\partial f^{\phi}\left(\xi ; \mathbf{s}_{t}\right)}{\partial \phi}\right]$，即$\hat{\nabla}_{\phi} J_{\pi}$
 				\STATE 根据$\hat{\nabla}_{\phi} J_{\pi}$使用ADAM更新参数$\phi$
 				\STATE 
@@ -77,6 +77,9 @@
 		\ENDFOR	
 	\end{algorithmic}
 \end{algorithm}
+\footnotetext[1]{$V_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}\right)=\alpha \log \mathbb{E}_{q_{\mathbf{a}^{\prime}}}\left[\frac{\exp \left(\frac{1}{\alpha} Q_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}, \mathbf{a}^{\prime}\right)\right)}{q_{\mathbf{a}^{\prime}}\left(\mathbf{a}^{\prime}\right)}\right]$}
+\footnotetext[2]{$J_{Q}(\theta)=\mathbb{E}_{\mathbf{s}_{t} \sim q_{\mathbf{s}_{t}}, \mathbf{a}_{t} \sim q_{\mathbf{a}_{t}}}\left[\frac{1}{2}\left(\hat{Q}_{\mathrm{soft}}^{\bar{\theta}}\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)-Q_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)\right)^{2}\right]$}
+\footnotetext[3]{$\begin{aligned} \Delta f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)=& \mathbb{E}_{\mathbf{a}_{t} \sim \pi^{\phi}}\left[\left.\kappa\left(\mathbf{a}_{t}, f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)\right) \nabla_{\mathbf{a}^{\prime}} Q_{\mathrm{soft}}^{\theta}\left(\mathbf{s}_{t}, \mathbf{a}^{\prime}\right)\right|_{\mathbf{a}^{\prime}=\mathbf{a}_{t}}\right.\\ &\left.+\left.\alpha \nabla_{\mathbf{a}^{\prime}} \kappa\left(\mathbf{a}^{\prime}, f^{\phi}\left(\cdot ; \mathbf{s}_{t}\right)\right)\right|_{\mathbf{a}^{\prime}=\mathbf{a}_{t}}\right] \end{aligned}$}
 \clearpage
 \section{SAC算法}
 \begin{algorithm}[H] % [H]固定位置
