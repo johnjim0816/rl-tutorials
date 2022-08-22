@@ -31,7 +31,7 @@ class SoftQ:
             a = c.sample()
         return a.item()
     def predict_action(self,state):
-        state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
+        state = torch.tensor(np.array(state), device=self.device, dtype=torch.float).unsqueeze(0)
         with torch.no_grad():
             q = self.policy_net(state)
             v = self.alpha * torch.log(torch.sum(torch.exp(q/self.alpha), dim=1, keepdim=True)).squeeze()
