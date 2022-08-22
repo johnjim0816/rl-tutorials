@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-10 15:27:16
 @LastEditor: John
-LastEditTime: 2022-08-18 15:00:04
+LastEditTime: 2022-08-22 17:23:21
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -59,3 +59,16 @@ class ReplayBufferQue:
         self.buffer.clear()
     def __len__(self):
         return len(self.buffer)
+
+class PGReplay(ReplayBufferQue):
+    '''replay buffer for policy gradient based methods, each time these methods will sample all transitions
+    Args:
+        ReplayBufferQue (_type_): _description_
+    '''
+    def __init__(self):
+        self.buffer = deque()
+    def sample(self):
+        ''' sample all the transitions
+        '''
+        batch = list(self.buffer)
+        return zip(*batch)
