@@ -14,6 +14,37 @@
 \tableofcontents % 目录，注意要运行两下或者vscode保存两下才能显示
 % \singlespacing
 \clearpage
+\section{模版备用}
+\begin{algorithm}[H] % [H]固定位置
+    \floatname{algorithm}{{算法}} 
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\begin{algorithmic}[1] % [1]显示步数
+		\STATE 测试
+	\end{algorithmic}
+\end{algorithm}
+\clearpage
+\section{Q learning算法}
+\begin{algorithm}[H] % [H]固定位置
+    \floatname{algorithm}{{Q-learning算法}\footnotemark[1]}
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\begin{algorithmic}[1] % [1]显示步数
+		\STATE 初始化Q表$Q(s,a)$为任意值，但其中$Q(s_{terminal},)=0$，即终止状态对应的Q值为0
+		\FOR {回合数 = $1,M$}
+			\STATE 重置环境，获得初始状态$s_t$
+			\FOR {时步 = $1,t$}
+				\STATE 根据$\varepsilon-greedy$策略采样动作$a_t$
+				\STATE 环境根据$a_t$反馈奖励$r_t$和下一个状态$s_{t+1}$
+				\STATE {\bfseries 更新策略：}
+				\STATE $Q(s_t,a_t) \leftarrow Q(s_t,a_t)+\alpha[r_t+\gamma\max _{a}Q(s_{t+1},a)-Q(s_t,a_t)]$
+				\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
+			\ENDFOR
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+\footnotetext[1]{Reinforcement Learning: An Introduction}
+\clearpage
 \section{DQN算法}
 \begin{algorithm}[H] % [H]固定位置
     \floatname{algorithm}{{DQN算法}}  
@@ -21,7 +52,7 @@
 	\caption{} 
     \renewcommand{\algorithmicrequire}{\textbf{输入:}}  
     \renewcommand{\algorithmicensure}{\textbf{输出:}} 
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		% \REQUIRE $n \geq 0 \vee x \neq 0$ % 输入
 		% \ENSURE $y = x^n$ % 输出
 		\STATE 初始化策略网络参数$\theta$ % 初始化
@@ -50,7 +81,7 @@
     \floatname{algorithm}{{SoftQ算法}}  
     \renewcommand{\thealgorithm}{} % 去掉算法标号
 	\caption{}  
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		\STATE 初始化参数$\theta$和$\phi$% 初始化
 		\STATE 复制参数$\bar{\theta} \leftarrow \theta, \bar{\phi} \leftarrow \phi$
 		\STATE 初始化经验回放$D$
@@ -86,7 +117,7 @@
     \floatname{algorithm}{{Soft Actor Critic算法}}  
     \renewcommand{\thealgorithm}{} % 去掉算法标号
 	\caption{} 
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		\STATE 初始化两个Actor的网络参数$\theta_1,\theta_2$以及一个Critic网络参数$\phi$ % 初始化
 		\STATE 复制参数到目标网络$\bar{\theta_1} \leftarrow \theta_1,\bar{\theta_2} \leftarrow \theta_2,$
 		\STATE 初始化经验回放$D$
