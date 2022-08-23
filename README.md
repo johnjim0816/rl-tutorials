@@ -30,7 +30,7 @@
 |   [SoftQ](codes/SoftQ)    |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |      |      |
 |     [SAC](codes/SAC)      |      [SAC paper](https://arxiv.org/pdf/1812.05905.pdf)       |      |      |
 | [SAC-Discrete](codes/SAC) |  [SAC-Discrete paper](https://arxiv.org/pdf/1910.07207.pdf)  |      |      |
-|           SAC-V           |       [SAC-V paper](https://arxiv.org/abs/1801.01290)        |      |      |
+|           SAC-S           |       [SAC-S paper](https://arxiv.org/abs/1801.01290)        |      |      |
 |           DSAC            | [DSAC paper](https://paperswithcode.com/paper/addressing-value-estimation-errors-in) |      | 待更 |
 
 
