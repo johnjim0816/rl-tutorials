@@ -35,12 +35,13 @@ def get_args():
     parser.add_argument('--hidden_dim',default=256,type=int)
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
     parser.add_argument('--seed',default=10,type=int,help="seed") 
+    parser.add_argument('--show_fig',default=False,type=bool,help="if show figure or not")  
+    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")
+    # please manually change the following args in this script if you want
     parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/results' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/models' ) 
-    parser.add_argument('--show_fig',default=False,type=bool,help="if show figure or not")  
-    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
+            '/' + curr_time + '/models' )    
     args = parser.parse_args()                          
     return args
 
