@@ -63,7 +63,8 @@ pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --e
 ## 4、使用说明
 
 对于[codes](./codes/)：
-* 运行带有task的py脚本
+* 运行带有```main.py```脚本
+* ```sh task[number].py```，推荐创建名为"easyrl"的conda环境，否则需要更改sh脚本相关信息。对于Windows系统，建议安装Git然后使用git bash终端，而非PowerShell或者cmd终端！
 
 对于[Jupyter Notebook](./notebooks/)：
 
