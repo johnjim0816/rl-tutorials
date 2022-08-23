@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-22 17:41:28
+LastEditTime: 2022-08-24 00:02:59
 Discription: 
 Environment: 
 '''
@@ -111,11 +111,10 @@ def del_empty_dir(*paths):
                 os.removedirs(os.path.join(path, dir))
 
 def save_args(args,path=None):
-    # 保存参数   
-    args_dict = vars(args)  
+    # save parameters  
     Path(path).mkdir(parents=True, exist_ok=True) 
     with open(f"{path}/params.json", 'w') as fp:
-        json.dump(args_dict, fp)   
+        json.dump(args, fp)   
     print("Parameters saved!")
 
 def all_seed(env,seed = 1):

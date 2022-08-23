@@ -42,31 +42,33 @@ def get_args():
             '/' + curr_time + '/results' )
     parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
             '/' + curr_time + '/models' )    
-    args = parser.parse_args()                          
+    args = parser.parse_args()    
+    args = {**vars(args)}  # type(dict)         
     return args
 
 def env_agent_config(cfg):
     ''' create env and agent
     '''
-    env = gym.make(cfg.env_name)  # create env
-    if cfg.seed !=0: # set random seed
-        all_seed(env,seed=cfg.seed)
+    env = gym.make(cfg['env_name'])  # create env
+    if cfg['seed'] !=0: # set random seed
+        all_seed(env,seed=cfg["seed"])
     n_states = env.observation_space.shape[0]  # state dimension
     n_actions = env.action_space.n  # action dimension
-    print(f"state dim: {n_states}, action dim: {n_actions}")
-    model = MLP(n_states,n_actions,hidden_dim=cfg.hidden_dim)
-    memory =  ReplayBuffer(cfg.memory_capacity) # replay buffer
-    agent = DQN(n_actions,model,memory,cfg)  # create agent
+    print(f"n_states: {n_states}, n_actions: {n_actions}")
+    cfg.update({"n_states":n_states,"n_actions":n_actions}) # update to cfg paramters
+    model = MLP(n_states,n_actions,hidden_dim=cfg["hidden_dim"])
+    memory =  ReplayBuffer(cfg["memory_capacity"]) # replay buffer
+    agent = DQN(model,memory,cfg)  # create agent
     return env, agent
 
 def train(cfg, env, agent):
     ''' 训练
     '''
     print("start training!")
-    print(f"Env: {cfg.env_name}, Algo: {cfg.algo_name}, Device: {cfg.device}")
+    print(f"Env: {cfg['env_name']}, Algo: {cfg['algo_name']}, Device: {cfg['device']}")
     rewards = []  # record rewards for all episodes
     steps = []
-    for i_ep in range(cfg.train_eps):
+    for i_ep in range(cfg["train_eps"]):
         ep_reward = 0  # reward per episode
         ep_step = 0
         state = env.reset()  # reset and obtain initial state
@@ -81,12 +83,12 @@ def train(cfg, env, agent):
             ep_reward += reward  #
             if done:
                 break
-        if (i_ep + 1) % cfg.target_update == 0:  # target net update, target_update means "C" in pseucodes
+        if (i_ep + 1) % cfg["target_update"] == 0:  # target net update, target_update means "C" in pseucodes
             agent.target_net.load_state_dict(agent.policy_net.state_dict())
         steps.append(ep_step)
         rewards.append(ep_reward)
         if (i_ep + 1) % 10 == 0:
-            print(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}: Epislon: {agent.epsilon:.3f}')
+            print(f'Episode: {i_ep+1}/{cfg["train_eps"]}, Reward: {ep_reward:.2f}: Epislon: {agent.epsilon:.3f}')
     print("finish training!")
     env.close()
     res_dic = {'episodes':range(len(rewards)),'rewards':rewards}
@@ -122,14 +124,14 @@ if __name__ == "__main__":
     # training
     env, agent = env_agent_config(cfg)
     res_dic = train(cfg, env, agent)
-    save_args(cfg,path = cfg.result_path) # save parameters
-    agent.save_model(path = cfg.model_path)  # save models
-    save_results(res_dic, tag = 'train', path = cfg.result_path) # save results
-    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "train")  # plot results
+    save_args(cfg,path = cfg['result_path']) # save parameters
+    agent.save_model(path = cfg['model_path'])  # save models
+    save_results(res_dic, tag = 'train', path = cfg['result_path']) # save results
+    plot_rewards(res_dic['rewards'], cfg, path = cfg['result_path'],tag = "train")  # plot results
     # testing
     env, agent = env_agent_config(cfg) # create new env for testing, sometimes can ignore this step
-    agent.load_model(path = cfg.model_path)  # load model
+    agent.load_model(path = cfg['model_path'])  # load model
     res_dic = test(cfg, env, agent)
     save_results(res_dic, tag='test',
-                 path = cfg.result_path)  
-    plot_rewards(res_dic['rewards'], cfg, path = cfg.result_path,tag = "test")  
+                 path = cfg['result_path'])  
+    plot_rewards(res_dic['rewards'], cfg, path = cfg['result_path'],tag = "test")  
