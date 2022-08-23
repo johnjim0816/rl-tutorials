@@ -10,6 +10,7 @@
 \usepackage{titlesec}
 \usepackage{float} % 调用该包能够使用[H]
 % \pagestyle{plain} % 去除页眉，但是保留页脚编号，都去掉plain换empty
+
 \begin{document}
 \tableofcontents % 目录，注意要运行两下或者vscode保存两下才能显示
 % \singlespacing
@@ -88,7 +89,7 @@
 \clearpage
 \section{DQN算法}
 \begin{algorithm}[H] % [H]固定位置
-    \floatname{algorithm}{{DQN算法}}  
+    \floatname{algorithm}{{DQN算法}{\hypersetup{linkcolor=white}\footnotemark}}  
     \renewcommand{\thealgorithm}{} % 去掉算法标号
 	\caption{} 
     \renewcommand{\algorithmicrequire}{\textbf{输入:}}  
@@ -108,13 +109,17 @@
 				\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
 				\STATE {\bfseries 更新策略：}
 				\STATE 从$D$中采样一个batch的transition
-				\STATE 计算实际的$Q$值，即$y_{j}= \begin{cases}r_{j} & \text {对于终止状态} s_{j+1} \\ r_{j}+\gamma \max _{a^{\prime}} Q\left(s_{j+1}, a^{\prime} ; \theta\right) & \text {对于非终止状态} s_{j+1}\end{cases}$
-				\STATE 对损失 $\left(y_{j}-Q\left(s_{j}, a_{j} ; \theta\right)\right)^{2}$关于参数$\theta$做随机梯度下降
+				\STATE 计算实际的$Q$值，即$y_{j}${\hypersetup{linkcolor=white}\footnotemark}
+				\STATE 对损失 $L(\theta)=\left(y_{i}-Q\left(s_{i}, a_{i} ; \theta\right)\right)^{2}$关于参数$\theta$做随机梯度下降{\hypersetup{linkcolor=white}\footnotemark}
 			\ENDFOR
-			\STATE 每$C$个回合复制参数$\hat{Q}\leftarrow Q$(此处也可像原论文中放到小循环中改成每$C$步，但没有每$C$个回合稳定)
+			\STATE 每$C$个回合复制参数$\hat{Q}\leftarrow Q${\hypersetup{linkcolor=white}\footnotemark}
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}
+\footnotetext[1]{Playing Atari with Deep Reinforcement Learning}
+\footnotetext[2]{$y_{i}= \begin{cases}r_{i} & \text {对于终止状态} s_{i+1} \\ r_{i}+\gamma \max _{a^{\prime}} Q\left(s_{i+1}, a^{\prime} ; \theta\right) & \text {对于非终止状态} s_{i+1}\end{cases}$}
+\footnotetext[3]{$\theta_i \leftarrow \theta_i - \lambda \nabla_{\theta_{i}} L_{i}\left(\theta_{i}\right)$}
+\footnotetext[4]{此处也可像原论文中放到小循环中改成每$C$步，但没有每$C$个回合稳定}
 \clearpage
 
 \section{SoftQ算法}
