@@ -12,4 +12,5 @@ else
     echo 'please manually config the conda source path'
 fi
 conda activate easyrl # easyrl here can be changed to another name of conda env that you have created
-python main.py --env_name CartPole-v1 --train_eps 500 --epsilon_decay 1000 --memory_capacity 200000 --batch_size 128 --device cuda
+codes_dir=$(dirname $(dirname $(readlink -f "$0"))) # "codes" path
+python $codes_dir/DQN/main.py --env_name CartPole-v1 --train_eps 500 --epsilon_decay 1000 --memory_capacity 200000 --batch_size 128 --device cuda
