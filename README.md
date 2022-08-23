@@ -23,19 +23,21 @@
 
 注：点击对应的名称会跳到[codes](./codes/)下对应的算法中，其他版本还请读者自行翻阅
 
-|         算法名称          |                           参考文献                           | 环境 | 备注 |
-| :-----------------------: | :----------------------------------------------------------: | :--: | :--: |
-|                           |                                                              |      |      |
-|          DQN-CNN          |                                                              |      | 待更 |
-|   [SoftQ](codes/SoftQ)    |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |      |      |
-|     [SAC](codes/SAC)      |      [SAC paper](https://arxiv.org/pdf/1812.05905.pdf)       |      |      |
-| [SAC-Discrete](codes/SAC) |  [SAC-Discrete paper](https://arxiv.org/pdf/1910.07207.pdf)  |      |      |
-|           SAC-S           |       [SAC-S paper](https://arxiv.org/abs/1801.01290)        |      |      |
-|           DSAC            | [DSAC paper](https://paperswithcode.com/paper/addressing-value-estimation-errors-in) |      | 待更 |
+|         算法名称          |                           参考文献                           | 备注 |
+| :-----------------------: | :----------------------------------------------------------: | :--: |
+|                           |                                                              |      |
+|          DQN-CNN          |                                                              | 待更 |
+|   [SoftQ](codes/SoftQ)    |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |      |
+|     [SAC](codes/SAC)      |      [SAC paper](https://arxiv.org/pdf/1812.05905.pdf)       |      |
+| [SAC-Discrete](codes/SAC) |  [SAC-Discrete paper](https://arxiv.org/pdf/1910.07207.pdf)  |      |
+|           SAC-S           |       [SAC-S paper](https://arxiv.org/abs/1801.01290)        |      |
+|           DSAC            | [DSAC paper](https://paperswithcode.com/paper/addressing-value-estimation-errors-in) | 待更 |
 
+## 3、算法环境
 
+跳转到[env](./codes/envs/README.md)
 
-## 3、运行环境
+## 4、运行环境
 
 Python 3.7、PyTorch 1.10.0、Gym 0.21.0
 
@@ -60,7 +62,7 @@ print(torch.cuda.is_available())
 ```bash
 pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --extra-index-url https://download.pytorch.org/whl/cu113
 ```
-## 4、使用说明
+## 5、使用说明
 
 对于[codes](./codes/)：
 * 运行带有```main.py```脚本
@@ -70,6 +72,6 @@ pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --e
 
 * 直接运行对应的ipynb文件就行
 
-## 5、友情说明
+## 6、友情说明
 
 推荐使用VS Code做项目，入门可参考[VSCode上手指南](https://blog.csdn.net/JohnJim0/article/details/126366454)
