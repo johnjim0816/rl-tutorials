@@ -1,4 +1,4 @@
-# run DQN on CartPole-v1, not finished yet
+# run DQN on Acrobot-v1, not the best tuned parameters
 
 # source conda, if you are already in proper conda environment, then comment the codes util "conda activate easyrl" 
 if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
