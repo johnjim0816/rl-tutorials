@@ -5,14 +5,15 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-11 17:59:16
 LastEditor: John
-LastEditTime: 2022-08-04 22:28:51
+LastEditTime: 2022-08-25 00:48:19
 Discription: 
 Environment: 
 '''
 import sys,os
-curr_path = os.path.dirname(os.path.abspath(__file__))  # 当前文件所在绝对路径
-parent_path = os.path.dirname(curr_path)  # 父路径
-sys.path.append(parent_path)  # 添加路径到系统路径
+os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
+curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
+parent_path = os.path.dirname(curr_path)  # parent path 
+sys.path.append(parent_path)  # add path to system path
 
 import datetime
 import argparse
@@ -21,33 +22,35 @@ from Sarsa.sarsa import Sarsa
 from common.utils import save_results,make_dir,plot_rewards,save_args
 
 def get_args():
-    """ 超参数
-    """
-    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
+    curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
     parser = argparse.ArgumentParser(description="hyperparameters")      
     parser.add_argument('--algo_name',default='Sarsa',type=str,help="name of algorithm")
     parser.add_argument('--env_name',default='CliffWalking-v0',type=str,help="name of environment")
-    parser.add_argument('--train_eps',default=300,type=int,help="episodes of training") # 训练的回合数
-    parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing") # 测试的回合数
-    parser.add_argument('--ep_max_steps',default=200,type=int) # 每回合最大的部署
-    parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor") # 折扣因子
-    parser.add_argument('--epsilon_start',default=0.90,type=float,help="initial value of epsilon") #  e-greedy策略中初始epsilon
-    parser.add_argument('--epsilon_end',default=0.01,type=float,help="final value of epsilon") # e-greedy策略中的终止epsilon
-    parser.add_argument('--epsilon_decay',default=200,type=int,help="decay rate of epsilon") # e-greedy策略中epsilon的衰减率
+    parser.add_argument('--train_eps',default=300,type=int,help="episodes of training") 
+    parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing") 
+    parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor") 
+    parser.add_argument('--epsilon_start',default=0.90,type=float,help="initial value of epsilon") 
+    parser.add_argument('--epsilon_end',default=0.01,type=float,help="final value of epsilon") 
+    parser.add_argument('--epsilon_decay',default=200,type=int,help="decay rate of epsilon") 
     parser.add_argument('--lr',default=0.2,type=float,help="learning rate")
     parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
-    parser.add_argument('--result_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/results/' )
-    parser.add_argument('--model_path',default=curr_path + "/outputs/" + parser.parse_args().env_name + \
-            '/' + curr_time + '/models/' ) # path to save models
-    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")           
-    args = parser.parse_args()                          
+    parser.add_argument('--seed',default=10,type=int,help="seed") 
+    parser.add_argument('--show_fig',default=False,type=bool,help="if show figure or not")  
+    parser.add_argument('--save_fig',default=True,type=bool,help="if save figure or not")   
+    args = parser.parse_args()   
+    default_args = {'result_path':f"{curr_path}/outputs/{args.env_name}/{curr_time}/results/",
+                    'model_path':f"{curr_path}/outputs/{args.env_name}/{curr_time}/models/",
+    }
+    args = {**vars(args),**default_args}  # type(dict)                         
     return args
 
 
-def env_agent_config(cfg,seed=1):
+
+def env_agent_config(cfg):
     env = RacetrackEnv()
-    n_actions = 9 # 动作数
+    n_states = env.observation_space.n or env.observation_space.shape[0]  # state dimension
+    n_actions = env.action_space.n  # action dimension
+    print(f"n_states: {n_states}, n_actions: {n_actions}")
     agent = Sarsa(n_actions,cfg)
     return env,agent
         
