@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-11 17:59:16
 LastEditor: John
-LastEditTime: 2022-08-25 10:58:19
+LastEditTime: 2022-08-25 14:26:36
 Discription: 
 Environment: 
 '''
@@ -14,12 +14,13 @@ os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializ
 curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
 parent_path = os.path.dirname(curr_path)  # parent path 
 sys.path.append(parent_path)  # add path to system path
-
+import gym
 import datetime
 import argparse
-from envs.racetrack import RacetrackEnv
+from envs.register import register_env
+from envs.wrappers import CliffWalkingWapper
 from Sarsa.sarsa import Sarsa
-from common.utils import save_results,make_dir,plot_rewards,save_args
+from common.utils import save_results,make_dir,plot_rewards,save_args,all_seed
 
 def get_args():
     curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
@@ -45,61 +46,73 @@ def get_args():
     return args
 
 def env_agent_config(cfg):
-    env = RacetrackEnv()
-    try:
+    register_env(cfg['env_name'])
+    env = gym.make(cfg['env_name'])
+    if cfg['seed'] !=0: # set random seed
+        all_seed(env,seed= cfg['seed']) 
+    if cfg['env_name'] == 'CliffWalking-v0':
+        env = CliffWalkingWapper(env)
+    try: # state dimension
         n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
     except AttributeError:
         n_states = env.observation_space.shape[0] # print(hasattr(env.observation_space, 'shape'))
-    # n_states = env.observation_space.n or env.observation_space.shape[0]  # state dimension
     n_actions = env.action_space.n  # action dimension
     print(f"n_states: {n_states}, n_actions: {n_actions}")
+    cfg.update({"n_states":n_states,"n_actions":n_actions}) # update to cfg paramters
     agent = Sarsa(cfg)
     return env,agent
         
 def train(cfg,env,agent):
-    print('开始训练！')
-    print(f'环境:{cfg.env_name}, 算法:{cfg.algo_name}, 设备:{cfg.device}')
-    rewards = []  # 记录奖励
-    for i_ep in range(cfg.train_eps):
-        state = env.reset()
-        action = agent.sample(state)
-        ep_reward = 0
-        # while True:
-        for _ in range(cfg.ep_max_steps):
-            next_state, reward, done = env.step(action)
-            ep_reward+=reward
-            next_action = agent.sample(next_state)
-            agent.update(state, action, reward, next_state, next_action,done)
-            state = next_state
+    print("Start training!")
+    print(f"Env: {cfg['env_name']}, Algorithm: {cfg['algo_name']}, Device: {cfg['device']}")
+    rewards = []  # record rewards for all episodes
+    steps = [] # record steps for all episodes
+    for i_ep in range(cfg['train_eps']):
+        ep_reward = 0  # reward per episode
+        ep_step = 0 # step per episode
+        state = env.reset()  # reset and obtain initial state
+        action = agent.sample_action(state)
+        while True:
+        # for _ in range(cfg.ep_max_steps):
+            next_state, reward, done, _ = env.step(action)  # update env and return transitions
+            next_action =  agent.sample_action(next_state)
+            agent.update(state, action, reward, next_state, next_action,done)  # update agent
+            state = next_state  # update state
             action = next_action
+            ep_reward += reward
+            ep_step += 1
             if done:
-                break  
+                break
         rewards.append(ep_reward)
-        if (i_ep+1)%2==0:
-            print(f"回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.1f}，Epsilon：{agent.epsilon}")
-    print('完成训练！')
-    return {"rewards":rewards}
+        steps.append(ep_step)
+        if (i_ep+1)%10==0:
+            print(f'Episode: {i_ep+1}/{cfg["train_eps"]}, Reward: {ep_reward:.2f}, Steps:{ep_step}, Epislon: {agent.epsilon:.3f}')
+    print("Finish training!")
+    return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
 
 def test(cfg,env,agent):
-    print('开始测试！')
-    print(f'环境：{cfg.env_name}, 算法：{cfg.algo_name}, 设备：{cfg.device}')
-    rewards = []
-    for i_ep in range(cfg.test_eps):
-        state = env.reset()
-        ep_reward = 0
-        # while True:
-        for _ in range(cfg.ep_max_steps):
-            action = agent.predict(state)
+    print("Start testing!")
+    print(f"Env: {cfg['env_name']}, Algorithm: {cfg['algo_name']}, Device: {cfg['device']}")
+    rewards = []  # record rewards for all episodes
+    steps = [] # record steps for all episodes
+    for i_ep in range(cfg['test_eps']):
+        ep_reward = 0  # reward per episode
+        ep_step = 0
+        while True:
+        # for _ in range(cfg.ep_max_steps):
+            action = agent.predict_action(state)
             next_state, reward, done = env.step(action)
-            ep_reward+=reward
             state = next_state
+            ep_reward+=reward
+            ep_step+=1
             if done:
                 break  
         rewards.append(ep_reward)
-        print(f"回合数：{i_ep+1}/{cfg.test_eps}, 奖励：{ep_reward:.1f}")
-    print('完成测试！')
-    return {"rewards":rewards}
-        
+        steps.append(ep_step)
+        print(f"Episode: {i_ep+1}/{cfg['test_eps']}, Steps:{ep_step}, Reward: {ep_reward:.2f}")
+    print("Finish testing!")
+    return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+
 if __name__ == "__main__":
     cfg = get_args()
     # 训练
