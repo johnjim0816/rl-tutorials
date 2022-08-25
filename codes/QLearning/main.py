@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2022-08-24 11:27:01
+LastEditTime: 2022-08-25 14:16:52
 Discription: 
 Environment: 
 '''
@@ -18,7 +18,9 @@ sys.path.append(parent_path)  # add path to system path
 import gym
 import datetime
 import argparse
-from envs.gridworld_env import CliffWalkingWapper,FrozenLakeWapper
+from envs.gridworld_env import FrozenLakeWapper
+from envs.wrappers import CliffWalkingWapper
+from envs.register import register_env
 from qlearning import QLearning
 from common.utils import plot_rewards,save_args,all_seed
 from common.utils import save_results,make_dir
@@ -47,12 +49,11 @@ def get_args():
     return args
 def env_agent_config(cfg):
     ''' create env and agent
-    '''   
+    '''  
+    register_env(cfg['env_name'])
+    env = gym.make(cfg['env_name']) 
     if cfg['env_name'] == 'CliffWalking-v0':
-        env = gym.make(cfg['env_name'])
         env = CliffWalkingWapper(env)
-    if cfg['env_name'] == 'FrozenLake-v1': 
-        env = gym.make(cfg['env_name'],is_slippery=False) 
     if cfg['seed'] !=0: # set random seed
         all_seed(env,seed=cfg["seed"]) 
     n_states = env.observation_space.n  # state dimension
@@ -62,27 +63,6 @@ def env_agent_config(cfg):
     agent = QLearning(cfg)
     return env,agent
           
-def main(cfg,env,agent,tag = 'train'):
-    print(f"Start {tag}ing!")
-    print(f"Env: {cfg['env_name']}, Algorithm: {cfg['algo_name']}, Device: {cfg['device']}")
-    rewards = []  # 记录奖励
-    for i_ep in range(cfg.train_eps):
-        ep_reward = 0  # 记录每个回合的奖励
-        state = env.reset()  # 重置环境,即开始新的回合
-        while True:
-            if tag == 'train':action = agent.sample_action(state)  # 根据算法采样一个动作
-            else: agent.predict_action(state)
-            next_state, reward, done, _ = env.step(action)  # 与环境进行一次动作交互
-            if tag == 'train':agent.update(state, action, reward, next_state, done)  # Q学习算法更新
-            state = next_state  # 更新状态
-            ep_reward += reward
-            if done:
-                break
-        rewards.append(ep_reward)
-        print(f"回合：{i_ep+1}/{cfg.train_eps}，奖励：{ep_reward:.1f}，Epsilon：{agent.epsilon}")
-    print(f"Finish {tag}ing!")
-    return {"rewards":rewards}
-
 def train(cfg,env,agent):
     print("Start training!")
     print(f"Env: {cfg['env_name']}, Algorithm: {cfg['algo_name']}, Device: {cfg['device']}")

@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-11 17:59:16
 LastEditor: John
-LastEditTime: 2022-08-25 00:48:19
+LastEditTime: 2022-08-25 10:58:19
 Discription: 
 Environment: 
 '''
@@ -17,7 +17,7 @@ sys.path.append(parent_path)  # add path to system path
 
 import datetime
 import argparse
-from envs.racetrack_env import RacetrackEnv
+from envs.racetrack import RacetrackEnv
 from Sarsa.sarsa import Sarsa
 from common.utils import save_results,make_dir,plot_rewards,save_args
 
@@ -25,7 +25,7 @@ def get_args():
     curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
     parser = argparse.ArgumentParser(description="hyperparameters")      
     parser.add_argument('--algo_name',default='Sarsa',type=str,help="name of algorithm")
-    parser.add_argument('--env_name',default='CliffWalking-v0',type=str,help="name of environment")
+    parser.add_argument('--env_name',default='Racetrack-v0',type=str,help="name of environment")
     parser.add_argument('--train_eps',default=300,type=int,help="episodes of training") 
     parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing") 
     parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor") 
@@ -44,14 +44,16 @@ def get_args():
     args = {**vars(args),**default_args}  # type(dict)                         
     return args
 
-
-
 def env_agent_config(cfg):
     env = RacetrackEnv()
-    n_states = env.observation_space.n or env.observation_space.shape[0]  # state dimension
+    try:
+        n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
+    except AttributeError:
+        n_states = env.observation_space.shape[0] # print(hasattr(env.observation_space, 'shape'))
+    # n_states = env.observation_space.n or env.observation_space.shape[0]  # state dimension
     n_actions = env.action_space.n  # action dimension
     print(f"n_states: {n_states}, n_actions: {n_actions}")
-    agent = Sarsa(n_actions,cfg)
+    agent = Sarsa(cfg)
     return env,agent
         
 def train(cfg,env,agent):
