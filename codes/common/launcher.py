@@ -3,9 +3,11 @@ class Launcher:
     def __init__(self) -> None:
         pass
     def get_args(self):
-        pass
+        cfg = {}
+        return cfg
     def env_agent_config(self,cfg):
-        pass
+        env,agent = None,None
+        return env,agent
     def train(self,cfg, env, agent):
         res_dic = {}
         return res_dic
