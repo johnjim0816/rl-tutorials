@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2022-08-25 14:56:47
+LastEditTime: 2022-08-25 14:59:15
 Discription: 
 Environment: 
 '''
@@ -22,8 +22,7 @@ from envs.gridworld_env import FrozenLakeWapper
 from envs.wrappers import CliffWalkingWapper
 from envs.register import register_env
 from qlearning import QLearning
-from common.utils import plot_rewards,save_args,all_seed
-from common.utils import save_results
+from common.utils import all_seed
 from common.launcher import Launcher
 
 class Main(Launcher):
