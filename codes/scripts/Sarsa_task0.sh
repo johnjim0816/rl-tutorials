@@ -9,5 +9,4 @@ else
 fi
 conda activate easyrl # easyrl here can be changed to another name of conda env that you have created
 codes_dir=$(dirname $(dirname $(readlink -f "$0"))) # "codes" path
-python $codes_dir/envs/register.py # register environment
-python $codes_dir/Sarsa/main.py
+python $codes_dir/Sarsa/main.py --env_name Racetrack-v0
