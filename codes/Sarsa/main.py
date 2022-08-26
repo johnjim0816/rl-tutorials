@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-11 17:59:16
 LastEditor: John
-LastEditTime: 2022-08-25 21:26:43
+LastEditTime: 2022-08-26 23:03:39
 Discription: 
 Environment: 
 '''
@@ -27,10 +27,11 @@ class Main(Launcher):
     def get_args(self):
         curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
         parser = argparse.ArgumentParser(description="hyperparameters")      
-        parser.add_argument('--algo_name',default='Sarsa',type=str,help="name of algorithm")
-        parser.add_argument('--env_name',default='Racetrack-v0',type=str,help="name of environment")
-        parser.add_argument('--train_eps',default=300,type=int,help="episodes of training") 
-        parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing") 
+        parser.add_argument('--algo_name',default = 'Sarsa',type=str,help="name of algorithm")
+        parser.add_argument('--env_name',default = 'Racetrack-v0',type=str,help="name of environment")
+        parser.add_argument('--train_eps',default = 300,type=int,help="episodes of training") 
+        parser.add_argument('--test_eps',default = 20,type=int,help="episodes of testing") 
+        parser.add_argument('--ep_max_steps',default = 100000,type=int,help="steps per episode, much larger value can simulate infinite steps") 
         parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor") 
         parser.add_argument('--epsilon_start',default=0.90,type=float,help="initial value of epsilon") 
         parser.add_argument('--epsilon_end',default=0.01,type=float,help="final value of epsilon") 
@@ -74,8 +75,8 @@ class Main(Launcher):
             ep_step = 0 # step per episode
             state = env.reset()  # reset and obtain initial state
             action = agent.sample_action(state)
-            while True:
-            # for _ in range(cfg.ep_max_steps):
+            # while True:
+            for _ in range(cfg['ep_max_steps']):
                 next_state, reward, done, _ = env.step(action)  # update env and return transitions
                 next_action =  agent.sample_action(next_state)
                 agent.update(state, action, reward, next_state, next_action,done)  # update agent
@@ -88,7 +89,7 @@ class Main(Launcher):
             rewards.append(ep_reward)
             steps.append(ep_step)
             if (i_ep+1)%10==0:
-                print(f'Episode: {i_ep+1}/{cfg["train_eps"]}, Reward: {ep_reward:.2f}, Steps:{ep_step}, Epislon: {agent.epsilon:.3f}')
+                print(f'Episode: {i_ep+1}/{cfg["train_eps"]}, Reward: {ep_reward:.2f}, Steps: {ep_step}, Epislon: {agent.epsilon:.3f}')
         print("Finish training!")
         return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
 
@@ -101,8 +102,7 @@ class Main(Launcher):
             ep_reward = 0  # reward per episode
             ep_step = 0
             state = env.reset()  # reset and obtain initial state
-            while True:
-            # for _ in range(cfg.ep_max_steps):
+            for _ in range(cfg['ep_max_steps']):
                 action = agent.predict_action(state)
                 next_state, reward, done, _ = env.step(action)
                 state = next_state
@@ -112,7 +112,7 @@ class Main(Launcher):
                     break  
             rewards.append(ep_reward)
             steps.append(ep_step)
-            print(f"Episode: {i_ep+1}/{cfg['test_eps']}, Steps:{ep_step}, Reward: {ep_reward:.2f}")
+            print(f"Episode: {i_ep+1}/{cfg['test_eps']}, Steps: {ep_step}, Reward: {ep_reward:.2f}")
         print("Finish testing!")
         return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
 
