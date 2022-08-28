@@ -10,7 +10,7 @@ import torch.optim as optim
 import datetime
 import argparse
 from common.multiprocessing_env import SubprocVecEnv
-from a2c import ActorCritic
+from a3c import ActorCritic
 from common.utils import save_results, make_dir
 from common.utils import plot_rewards, save_args
 
