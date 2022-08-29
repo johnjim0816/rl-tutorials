@@ -8,35 +8,13 @@ import datetime
 import argparse
 import gym
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.autograd import Variable
 import numpy as np
 from common.utils import all_seed
 from common.launcher import Launcher
 from common.memories import PGReplay
+from common.models import ActorCriticSoftmax
 from envs.register import register_env
 from a2c_2 import A2C_2
-
-class ActorCritic(nn.Module):
-    def __init__(self, input_dim, output_dim, hidden_dim):
-        super(ActorCritic, self).__init__()
-
-        self.critic_fc1 = nn.Linear(input_dim, hidden_dim)
-        self.critic_fc2 = nn.Linear(hidden_dim, 1)
-
-        self.actor_fc1 = nn.Linear(input_dim, hidden_dim)
-        self.actor_fc2 = nn.Linear(hidden_dim, output_dim)
-    
-    def forward(self, state):
-        state = Variable(torch.from_numpy(state).float().unsqueeze(0))
-        value = F.relu(self.critic_fc1(state))
-        value = self.critic_fc2(value)
-        
-        policy_dist = F.relu(self.actor_fc1(state))
-        policy_dist = F.softmax(self.actor_fc2(policy_dist), dim=1)
-
-        return value, policy_dist
 
 class Main(Launcher):
     def get_args(self):
@@ -49,7 +27,8 @@ class Main(Launcher):
         parser.add_argument('--ep_max_steps',default = 100000,type=int,help="steps per episode, much larger value can simulate infinite steps")
         parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor") 
         parser.add_argument('--lr',default=3e-4,type=float,help="learning rate")
-        parser.add_argument('--hidden_dim',default=256,type=int)
+        parser.add_argument('--actor_hidden_dim',default=256,type=int)
+        parser.add_argument('--critic_hidden_dim',default=256,type=int)
         parser.add_argument('--device',default='cpu',type=str,help="cpu or cuda") 
         parser.add_argument('--seed',default=10,type=int,help="seed") 
         parser.add_argument('--show_fig',default=False,type=bool,help="if show figure or not")  
@@ -74,8 +53,8 @@ class Main(Launcher):
         n_actions = env.action_space.n  # action dimension
         print(f"n_states: {n_states}, n_actions: {n_actions}")
         cfg.update({"n_states":n_states,"n_actions":n_actions}) # update to cfg paramters
-        models = {'ActorCritic':ActorCritic(cfg['n_states'],cfg['n_actions'], cfg['hidden_dim'])}
-        memories = {'ACMemories':PGReplay()}
+        models = {'ActorCritic':ActorCriticSoftmax(cfg['n_states'],cfg['n_actions'], actor_hidden_dim = cfg['actor_hidden_dim'],critic_hidden_dim=cfg['critic_hidden_dim'])}
+        memories = {'ACMemory':PGReplay()}
         agent = A2C_2(models,memories,cfg)
         return env,agent
     def train(self,cfg,env,agent):
@@ -102,7 +81,7 @@ class Main(Launcher):
                 ep_step += 1
                 if done:
                     break
-            agent.update(next_state,entropy)  # update agent
+            agent.update(next_state,ep_entropy)  # update agent
             rewards.append(ep_reward)
             steps.append(ep_step)
             if (i_ep+1)%10==0:

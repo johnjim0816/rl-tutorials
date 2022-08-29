@@ -1,7 +1,4 @@
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.autograd import Variable
 import numpy as np
 
 class A2C_2:
@@ -9,21 +6,27 @@ class A2C_2:
         self.n_actions = cfg['n_actions']
         self.gamma = cfg['gamma']
         self.device = torch.device(cfg['device']) 
-        self.memory = memories['ACMemories']
+        self.memory = memories['ACMemory']
         self.ac_net = models['ActorCritic'].to(self.device)
         self.ac_optimizer = torch.optim.Adam(self.ac_net.parameters(), lr=cfg['lr'])
     def sample_action(self,state):
-        value, dist = self.ac_net(state)
+        state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+        value, dist = self.ac_net(state) # note that 'dist' need require_grad=True
         value = value.detach().numpy().squeeze(0)[0]
-        action = np.random.choice(self.n_actions, p=dist.detach().numpy().squeeze(0)) # p_shape(n_actions,1)
+        action = np.random.choice(self.n_actions, p=dist.detach().numpy().squeeze(0)) # shape(p=(n_actions,1)
         return action,value,dist
     def predict_action(self,state):
-        value, dist = self.ac_net(state)
-        value = value.detach().numpy().squeeze(0)[0]
-        action = np.random.choice(self.n_actions, p=dist.detach().numpy().squeeze(0)) # p_shape(n_actions,1)
+        ''' predict can be all wrapped with no_grad(), then donot need detach(), or you can just copy contents of 'sample_action'
+        '''
+        with torch.no_grad(): 
+            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            value, dist = self.ac_net(state)
+            value = value.numpy().squeeze(0)[0] # shape(value) = (1,)
+            action = np.random.choice(self.n_actions, p=dist.numpy().squeeze(0)) # shape(p=(n_actions,1)
         return action,value,dist
     def update(self,next_state,entropy):
         value_pool,log_prob_pool,reward_pool = self.memory.sample()
+        next_state = torch.tensor(next_state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         next_value,_ = self.ac_net(next_state)
         returns = np.zeros_like(reward_pool)
         for t in reversed(range(len(reward_pool))):
