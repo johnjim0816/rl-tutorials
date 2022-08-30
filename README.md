@@ -26,6 +26,7 @@
 | :-------------------------------------: | :----------------------------------------------------------: | :--: |
 | [Policy Gradient](codes/PolicyGradient) | [Policy Gradient paper](https://proceedings.neurips.cc/paper/1999/file/464d828b85b0bed98e80ade0a5c43b0f-Paper.pdf) |      |
 |                 DQN-CNN                 |                                                              | 待更 |
+|      [DoubleDQN](codes/DoubleDQN)       |     [Double DQN Paper](https://arxiv.org/abs/1509.06461)     |      |
 |          [SoftQ](codes/SoftQ)           |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |      |
 |            [SAC](codes/SAC)             |      [SAC paper](https://arxiv.org/pdf/1812.05905.pdf)       |      |
 |        [SAC-Discrete](codes/SAC)        |  [SAC-Discrete paper](https://arxiv.org/pdf/1910.07207.pdf)  |      |
