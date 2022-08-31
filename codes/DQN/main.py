@@ -48,7 +48,7 @@ class Main(Launcher):
         args = {**vars(args)}  # type(dict)         
         return args
 
-    def env_agent_config(cfg):
+    def env_agent_config(self,cfg):
         ''' create env and agent
         '''
         register_env(cfg['env_name'])
@@ -67,7 +67,7 @@ class Main(Launcher):
         agent = DQN(model,memory,cfg)  # create agent
         return env, agent
 
-    def train(cfg, env, agent):
+    def train(self,cfg, env, agent):
         ''' 训练
         '''
         print("Start training!")
@@ -100,7 +100,7 @@ class Main(Launcher):
         res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
         return res_dic
 
-    def test(cfg, env, agent):
+    def test(self,cfg, env, agent):
         print("Start testing!")
         print(f"Env: {cfg['env_name']}, Algorithm: {cfg['algo_name']}, Device: {cfg['device']}")
         rewards = []  # record rewards for all episodes
