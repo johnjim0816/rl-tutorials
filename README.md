@@ -82,7 +82,7 @@ print(torch.cuda.is_available())
 
 对于[codes](./codes/)：
 * 运行带有```main.py```脚本
-* 执行[scripts](codes\scripts)下对应的Bash脚本，例如```sh codes/scripts/DQN_task0.sh```，推荐创建名为"easyrl"的conda环境，否则需要更改sh脚本相关信息。对于Windows系统，建议安装Git(不要更改默认安装路径，否则VS Code可能不会显示Git Bash)然后使用git bash终端，而非PowerShell或者cmd终端！
+* 在对应的Conda环境下，执行[scripts](codes\scripts)下对应的Bash脚本，如```sh codes/scripts/DQN_task0.sh```，对于Windows系统，需要安装Git Bash终端。
 
 对于[Jupyter Notebook](./notebooks/)：
 

@@ -1,5 +1,5 @@
 # run DQN on CartPole-v0
-# source conda, if you are already in proper conda environment, then comment the codes util "conda activate easyrl" 
+# source conda (has been deprecated), if you are already in proper conda environment, then comment the codes util "conda activate easyrl" 
 
 if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
     echo "source file at ~/anaconda3/etc/profile.d/conda.sh"
