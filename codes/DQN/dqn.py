@@ -42,7 +42,7 @@ class DQN:
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg['lr']) 
         self.memory = memory 
         self.update_flag = False 
-
+        
     def sample_action(self, state):
         ''' sample action with e-greedy policy
         '''
@@ -58,6 +58,21 @@ class DQN:
         else:
             action = random.randrange(self.n_actions)
         return action
+    # @torch.no_grad()
+    # def sample_action(self, state):
+    #     ''' sample action with e-greedy policy
+    #     '''
+    #     self.sample_count += 1
+    #     # epsilon must decay(linear,exponential and etc.) for balancing exploration and exploitation
+    #     self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
+    #         math.exp(-1. * self.sample_count / self.epsilon_decay) 
+    #     if random.random() > self.epsilon:
+    #         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+    #         q_values = self.policy_net(state)
+    #         action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
+    #     else:
+    #         action = random.randrange(self.n_actions)
+    #     return action
     def predict_action(self,state):
         ''' predict action
         '''
