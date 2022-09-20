@@ -24,7 +24,7 @@ class Main(Launcher):
         parser.add_argument('--env_name',default='CartPole-v0',type=str,help="name of environment")
         parser.add_argument('--train_eps',default=1600,type=int,help="episodes of training") 
         parser.add_argument('--test_eps',default=20,type=int,help="episodes of testing") 
-        parser.add_argument('--ep_max_steps',default = 100000,type=int,help="steps per episode, much larger value can simulate infinite steps")
+        parser.add_argument('--max_steps',default = 100000,type=int,help="steps per episode, much larger value can simulate infinite steps")
         parser.add_argument('--gamma',default=0.99,type=float,help="discounted factor") 
         parser.add_argument('--actor_lr',default=3e-4,type=float,help="learning rate of actor")
         parser.add_argument('--critic_lr',default=1e-3,type=float,help="learning rate of critic")
@@ -70,11 +70,11 @@ class Main(Launcher):
             ep_entropy = 0
             state = env.reset()  # reset and obtain initial state
             
-            for _ in range(cfg['ep_max_steps']):
+            for _ in range(cfg['max_steps']):
                 action, value, dist = agent.sample_action(state)  # sample action
                 next_state, reward, done, _ = env.step(action)  # update env and return transitions
                 log_prob = torch.log(dist.squeeze(0)[action])
-                entropy = -np.sum(np.mean(dist.detach().numpy()) * np.log(dist.detach().numpy()))
+                entropy = -np.sum(np.mean(dist.detach().cpu().numpy()) * np.log(dist.detach().cpu().numpy()))
                 agent.memory.push((value,log_prob,reward))  # save transitions
                 state = next_state  # update state
                 ep_reward += reward
@@ -98,7 +98,7 @@ class Main(Launcher):
             ep_reward = 0  # reward per episode
             ep_step = 0
             state = env.reset()  # reset and obtain initial state
-            for _ in range(cfg['ep_max_steps']):
+            for _ in range(cfg['max_steps']):
                 action,_,_ = agent.predict_action(state)  # predict action
                 next_state, reward, done, _ = env.step(action)  
                 state = next_state 

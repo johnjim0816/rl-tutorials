@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-08-24 10:31:30
+LastEditTime: 2022-09-21 00:21:35
 Discription: 
 Environment: 
 '''
@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import json
 import pandas as pd
+from functools import wraps
+from time import time
 
 from matplotlib.font_manager import FontProperties  # 导入字体模块
 
@@ -127,6 +129,18 @@ def save_args(args,path=None):
         json.dump(args, fp,cls=NpEncoder)   
     print("Parameters saved!")
 
+
+def timing(func):
+    ''' a decorator to print the running time of a function
+    ''' 
+    @wraps(func)
+    def wrap(*args, **kw):
+        ts = time()
+        result = func(*args, **kw)
+        te = time()
+        print(f"func: {func.__name__}, took: {te-ts:2.4f} seconds")
+        return result
+    return wrap
 def all_seed(env,seed = 1):
     ''' omnipotent seed for RL, attention the position of seed function, you'd better put it just following the env create function
     Args:

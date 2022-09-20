@@ -1,4 +1,4 @@
-from common.utils import save_args,save_results,plot_rewards
+from common.utils import save_args,save_results,plot_rewards,timing
 class Launcher:
     def __init__(self) -> None:
         pass
@@ -14,7 +14,7 @@ class Launcher:
     def test(self,cfg, env, agent):
         res_dic = {}
         return res_dic
-
+    @timing
     def run(self):
         cfg = self.get_args()
         env, agent = self.env_agent_config(cfg)
