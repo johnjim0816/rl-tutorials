@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-09-21 00:21:35
+LastEditTime: 2022-09-27 15:47:42
 Discription: 
 Environment: 
 '''
@@ -150,7 +150,7 @@ def all_seed(env,seed = 1):
     import torch
     import numpy as np
     import random
-    print(f"seed = {seed}")
+    # print(f"seed = {seed}")
     env.seed(seed) # env config
     np.random.seed(seed)
     random.seed(seed)

@@ -38,13 +38,14 @@
 \clearpage
 \section{模版备用}
 \begin{algorithm}[H] % [H]固定位置
-    \floatname{algorithm}{{算法}} 
+    \floatname{algorithm}{{算法}\footnotemark[1]} 
 	\renewcommand{\thealgorithm}{} % 去掉算法标号
 	\caption{} 
 	\begin{algorithmic}[1] % [1]显示步数
 		\STATE 测试
 	\end{algorithmic}
 \end{algorithm}
+\footnotetext[1]{脚注}
 \clearpage
 \section{Q learning算法}
 \begin{algorithm}[H] % [H]固定位置
@@ -164,6 +165,33 @@
 \end{algorithm}
 \footnotetext[1]{这里结合TD error的特性按照从$t+1$到$1$计算法Advantage更方便}
 
+\clearpage
+
+\section{DDPG算法}
+\begin{algorithm}[H] % [H]固定位置
+    \floatname{algorithm}{{DDPG算法}\footnotemark[1]} 
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\begin{algorithmic}[1] % [1]显示步数
+		\STATE 初始化critic网络$Q\left(s, a \mid \theta^Q\right)$和actor网络$\mu(s|\theta^{\mu})$的参数$\theta^Q$和$\theta^{\mu}$
+		\STATE 初始化对应的目标网络参数，即$\theta^{Q^{\prime}} \leftarrow \theta^Q, \theta^{\mu^{\prime}} \leftarrow \theta^\mu$
+		\STATE 初始化经验回放$R$
+		\FOR {回合数 = $1,M$}
+			\STATE 选择动作$a_t=\mu\left(s_t \mid \theta^\mu\right)+\mathcal{N}_t$，$\mathcal{N}_t$为探索噪声
+			\STATE 环境根据$a_t$反馈奖励$s_t$和下一个状态$s_{t+1}$
+			\STATE 存储transition$(s_t,a_t,r_t,s_{t+1})$到经验回放$R$中
+			\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
+			\STATE {\bfseries 更新策略：}
+			\STATE 从$R$中取出一个随机批量的$(s_i,a_i,r_i,s_{i+1})$
+			\STATE 求得$y_i=r_i+\gamma Q^{\prime}\left(s_{i+1}, \mu^{\prime}\left(s_{i+1} \mid \theta^{\mu^{\prime}}\right) \mid \theta^{Q^{\prime}}\right)$
+			\STATE 更新critic参数，其损失为：$L=\frac{1}{N} \sum_i\left(y_i-Q\left(s_i, a_i \mid \theta^Q\right)\right)^2$
+			\STATE 更新actor参数：$\left.\left.\nabla_{\theta^\mu} J \approx \frac{1}{N} \sum_i \nabla_a Q\left(s, a \mid \theta^Q\right)\right|_{s=s_i, a=\mu\left(s_i\right)} \nabla_{\theta^\mu} \mu\left(s \mid \theta^\mu\right)\right|_{s_i}$
+			\STATE 软更新目标网络：$\theta^{Q^{\prime}} \leftarrow \tau \theta^Q+(1-\tau) \theta^{Q^{\prime}}$，
+			$\theta^{\mu^{\prime}} \leftarrow \tau \theta^\mu+(1-\tau) \theta^{\mu^{\prime}}$
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+\footnotetext[1]{Continuous control with deep reinforcement learning}
 \clearpage
 \section{SoftQ算法}
 \begin{algorithm}[H]
