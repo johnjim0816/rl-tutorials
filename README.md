@@ -81,10 +81,6 @@ pip install gym==0.21.0
 ```bash
 pip install gym[atari,accept-rom-license]==0.21.0
 ```
-有条件的话，直接all省心安装：
-```bash
-pip install gym[all]==0.21.0
-```
 
 ### 4.5. 安装其他依赖
 
