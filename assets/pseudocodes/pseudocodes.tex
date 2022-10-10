@@ -135,7 +135,7 @@
 		\STATE 初始化策略参数$\boldsymbol{\theta} \in \mathbb{R}^{d^{\prime}}($ e.g., to $\mathbf{0})$
 		\FOR {回合数 = $1,M$}
 			\STATE 根据策略$\pi(\cdot \mid \cdot, \boldsymbol{\theta})$采样一个(或几个)回合的transition
-			\FOR {时步 = $1,t$}
+			\FOR {时步 = $0,1,2,...,T-1$}
 				\STATE 计算回报$G \leftarrow \sum_{k=t+1}^{T} \gamma^{k-t-1} R_{k}$
 				\STATE 更新策略$\boldsymbol{\theta} \leftarrow {\boldsymbol{\theta}+\alpha \gamma^{t}} G \nabla \ln \pi\left(A_{t} \mid S_{t}, \boldsymbol{\theta}\right)$
 			\ENDFOR
