@@ -23,7 +23,7 @@ resize = T.Compose([T.ToPILImage(),
                     T.Resize(40, interpolation=Image.CUBIC),
                     T.ToTensor()])
 
-
+# xvfb-run -s "-screen 0 640x480x24" python main1.py 
 def get_cart_location(env,screen_width):
     world_width = env.x_threshold * 2
     scale = screen_width / world_width
