@@ -91,9 +91,15 @@ pip install -r requirements.txt
 
 ## 6.使用说明
 
-对于[codes](./codes/)：
-* 运行带有```main.py```脚本
-* 在对应的Conda环境下，执行[scripts](codes\scripts)下对应的Bash脚本，如```sh codes/scripts/DQN_task0.sh```，对于Windows系统，需要安装Git Bash终端。
+对于[codes](./codes/)，`cd`到对应的算法目录下，例如`DQN`：
+
+```python task_cartpole_v1.py
+```
+
+或者加载配置文件：
+
+```python task_cartpole_v1.py --yaml configs/CartPole-v1_DQN_Train.yaml
+```
 
 对于[Jupyter Notebook](./notebooks/)：
 

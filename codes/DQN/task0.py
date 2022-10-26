@@ -1,14 +1,18 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+Author: JiangJi
+Email: johnjim0816@gmail.com
+Date: 2022-10-12 11:09:54
+LastEditor: JiangJi
+LastEditTime: 2022-10-26 09:48:37
+Discription: CartPole-v1,Acrobot-v1
+'''
 import sys,os
-os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
 curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
-parent_path = os.path.dirname(curr_path)  # parent path 
-sys.path.append(parent_path)  # add path to system path
-
+parent_path = os.path.dirname(curr_path)  # parent path
+sys.path.append(parent_path)  # add to system path
 import gym
-import torch
-import datetime
-import numpy as np
-import argparse
 from common.utils import all_seed,merge_class_attrs
 from common.models import MLP
 from common.memories import ReplayBuffer
@@ -42,12 +46,6 @@ class AlgoConfig(DefaultConfig):
         self.buffer_size = 100000 # size of replay buffer
         self.batch_size = 64 # batch size
         self.target_update = 4 # target network update frequency
-class Config(GeneralConfig,AlgoConfig):
-    def __init__(self) -> None:
-        super().__init__()
-        GeneralConfig.__init__(self)
-        AlgoConfig.__init__(self)
-        
 
 class Main(Launcher):
     # def get_cfg(self):
@@ -76,7 +74,7 @@ class Main(Launcher):
         setattr(cfg, 'n_states', n_states)
         setattr(cfg, 'n_actions', n_actions)
         # cfg.update({"n_states":n_states,"n_actions":n_actions}) # update to cfg paramters
-        model = MLP(n_states,n_actions,hidden_dim=256)
+        model = MLP(n_states,n_actions,hidden_dim=cfg.hidden_dim)
         memory =  ReplayBuffer(cfg.buffer_size) # replay buffer
         agent = DQN(model,memory,cfg)  # create agent
         return env, agent

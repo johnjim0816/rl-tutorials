@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+Author: JiangJi
+Email: johnjim0816@gmail.com
+Date: 2022-10-24 08:21:31
+LastEditor: JiangJi
+LastEditTime: 2022-10-26 09:50:49
+Discription: Not finished
+'''
 import sys,os
 os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
 curr_path = os.path.dirname(os.path.abspath(__file__))  # current path

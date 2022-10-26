@@ -56,25 +56,7 @@ class Launcher:
             res_dic = self.train(cfg, env, agent,logger)
         elif cfg.mode.lower() == 'test':
             res_dic = self.test(cfg, env, agent,logger)
-            save_results(res_dic, self.res_dir) # save results
-            save_cfgs(self.cfgs, self.task_dir) # save config
-            agent.save_model(self.model_dir)  # save models
-            plot_rewards(res_dic['rewards'], title=f"{cfg.mode.lower()}ing curve on {cfg.device} of {cfg.algo_name} for {cfg.env_name}" ,fpath= self.res_dir)
-
-
-        # cfg = self.get_cfg() # obtain the configuration
-        # self.print_cfg(cfg) # print the configuration
-
-        # env, agent = self.env_agent_config(cfg)
-        # res_dic = self.train(cfg, env, agent)
-        # save_args(cfg,path = cfg['result_path']) # save parameters
-        # agent.save_model(path = cfg['model_path'])  # save models
-        # save_results(res_dic, tag = 'train', path = cfg['result_path']) # save results
-        # plot_rewards(res_dic['rewards'], cfg, path = cfg['result_path'],tag = "train")  # plot results
-        # # testing
-        # # env, agent = self.env_agent_config(cfg) # create new env for testing, sometimes can ignore this step
-        # agent.load_model(path = cfg['model_path'])  # load model
-        # res_dic = self.test(cfg, env, agent)
-        # save_results(res_dic, tag='test',
-        #             path = cfg['result_path'])  
-        # plot_rewards(res_dic['rewards'], cfg, path = cfg['result_path'],tag = "test") 
+        save_results(res_dic, self.res_dir) # save results
+        save_cfgs(self.cfgs, self.task_dir) # save config
+        agent.save_model(self.model_dir)  # save models
+        plot_rewards(res_dic['rewards'], title=f"{cfg.mode.lower()}ing curve on {cfg.device} of {cfg.algo_name} for {cfg.env_name}" ,fpath= self.res_dir)
