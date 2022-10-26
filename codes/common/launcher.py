@@ -1,14 +1,21 @@
-from common.utils import get_logger,save_results,save_cfgs,plot_rewards
+from common.utils import get_logger,save_results,save_cfgs,plot_rewards,merge_class_attrs,load_cfgs
+from common.config import GeneralConfig,AlgoConfig,MergedConfig
 import time
 from pathlib import Path
 import datetime
+import argparse
 
 class Launcher:
     def __init__(self) -> None:
-        pass
+        self.get_cfg()
     def get_cfg(self):
-        cfgs = {}
-        return cfgs
+        self.cfgs = {'general_cfg':GeneralConfig(),'algo_cfg':AlgoConfig()}  # create config 
+    def process_yaml_cfg(self):
+        parser = argparse.ArgumentParser(description="hyperparameters")  
+        parser.add_argument('--yaml', default = None, type=str,help='the path of config file')
+        args = parser.parse_args()
+        if args.yaml is not None:
+            load_cfgs(self.cfgs, args.yaml)
     def print_cfg(self,cfg):
         cfg_dict = vars(cfg)
         print("Hyperparameters:")
@@ -27,26 +34,34 @@ class Launcher:
     def test(self,cfg, env, agent,logger):
         res_dic = {}
         return res_dic
-    def create_path(self,cfg,mode):
+    def create_path(self,cfg):
         curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
-        self.task_dir = f"{mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
+        self.task_dir = f"{cfg.mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
         Path(self.task_dir).mkdir(parents=True, exist_ok=True)
+        self.model_dir = f"{self.task_dir}/models/"
         self.res_dir = f"{self.task_dir}/results/"
-    def run(self,mode='train'):
-        if mode.lower() == 'train':
-            cfgs = self.get_cfg() # obtain the configuration
-            cfg = cfgs['cfg']
-            self.print_cfg(cfg) # print the configuration
-            self.create_path(cfg,mode) # create the path to save the results
-            logger = get_logger(f"{self.task_dir}/logs/")
-            env, agent = self.env_agent_config(cfg,logger)
+        self.log_dir = f"{self.task_dir}/logs/"
+    def run(self):
+        self.process_yaml_cfg()
+        cfg = MergedConfig()
+        cfg = merge_class_attrs(cfg,self.cfgs['general_cfg'])
+        cfg = merge_class_attrs(cfg,self.cfgs['algo_cfg'])
+        self.print_cfg(cfg) # print the configuration
+        self.create_path(cfg) # create the path to save the results
+        logger = get_logger(self.log_dir)
+        env, agent = self.env_agent_config(cfg,logger)
+        if cfg.load_checkpoint:
+            agent.load_model(f"{cfg.load_path}/models/")
+        if cfg.mode.lower() == 'train':
             res_dic = self.train(cfg, env, agent,logger)
-            self.res_dir = f"{self.task_dir}/results/"
+        elif cfg.mode.lower() == 'test':
+            res_dic = self.test(cfg, env, agent,logger)
             save_results(res_dic, self.res_dir) # save results
-            save_cfgs({'general_cfg':cfgs['general_cfg'],'algo_cfg':cfgs['algo_cfg']}, self.task_dir) # save config
-            agent.save_model(path = f"{self.task_dir}/models")  # save models
-            plot_rewards(res_dic['rewards'], title=f"{mode}ing curve on {cfg.device} of {cfg.algo_name} for {cfg.env_name}" ,fpath= self.res_dir)
-            
+            save_cfgs(self.cfgs, self.task_dir) # save config
+            agent.save_model(self.model_dir)  # save models
+            plot_rewards(res_dic['rewards'], title=f"{cfg.mode.lower()}ing curve on {cfg.device} of {cfg.algo_name} for {cfg.env_name}" ,fpath= self.res_dir)
+
+
         # cfg = self.get_cfg() # obtain the configuration
         # self.print_cfg(cfg) # print the configuration
 

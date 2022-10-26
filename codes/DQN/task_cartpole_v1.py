@@ -9,13 +9,14 @@ import torch
 import datetime
 import numpy as np
 import argparse
-from common.utils import all_seed
+from common.utils import all_seed,merge_class_attrs
 from common.models import MLP
 from common.memories import ReplayBuffer
 from common.launcher import Launcher
 from common.config import DefaultConfig
 from envs.register import register_env
 from dqn import DQN
+from config.config import GeneralConfigDQN,AlgoConfigDQN
 
 class GeneralConfig(DefaultConfig):
     def __init__(self) -> None:
@@ -49,12 +50,15 @@ class Config(GeneralConfig,AlgoConfig):
         
 
 class Main(Launcher):
-    def get_cfg(self):
-        """ hyperparameters
-        """
-        cfgs = {'cfg':Config(),'general_cfg':GeneralConfig(),'algo_cfg':AlgoConfig()}  # create config object      
-        return cfgs
-
+    # def get_cfg(self):
+    #     """ hyperparameters
+    #     """
+    #     cfgs = {'cfg':Config(),'general_cfg':GeneralConfig(),'algo_cfg':AlgoConfig()}  # create config object      
+    #     return cfgs
+    def __init__(self) -> None:
+        super().__init__()
+        self.cfgs['general_cfg'] = merge_class_attrs(self.cfgs['general_cfg'],GeneralConfigDQN())
+        self.cfgs['algo_cfg'] = merge_class_attrs(self.cfgs['algo_cfg'],AlgoConfigDQN())
     def env_agent_config(self,cfg,logger):
         ''' create env and agent
         '''
@@ -109,12 +113,12 @@ class Main(Launcher):
         res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
         return res_dic
 
-    def test(self,cfg, env, agent):
-        print("Start testing!")
-        print(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
+    def test(self,cfg, env, agent,logger):
+        logger.info("Start testing!")
+        logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
         rewards = []  # record rewards for all episodes
         steps = []
-        for i_ep in range(cfg['test_eps']):
+        for i_ep in range(cfg.test_eps):
             ep_reward = 0  # reward per episode
             ep_step = 0
             state = env.reset()  # reset and obtain initial state
@@ -128,13 +132,13 @@ class Main(Launcher):
                     break
             steps.append(ep_step)
             rewards.append(ep_reward)
-            print(f"Episode: {i_ep+1}/{cfg['test_eps']}，Reward: {ep_reward:.2f}")
-        print("Finish testing!")
+            logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}")
+        logger.info("Finish testing!")
         env.close()
         return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
 
 
 if __name__ == "__main__":
     main = Main()
-    main.run(mode='train')
+    main.run()
 

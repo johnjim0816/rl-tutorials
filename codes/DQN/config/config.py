@@ -1,10 +1,5 @@
-
-class DefaultConfig:
-    def __init__(self) -> None:
-        pass
-    def print_cfg(self):
-        print(self.__dict__)
-class GeneralConfig(DefaultConfig):
+from common.config import GeneralConfig,AlgoConfig
+class GeneralConfigDQN(GeneralConfig):
     def __init__(self) -> None:
         self.env_name = "CartPole-v1" # name of environment
         self.algo_name = "DQN" # name of algorithm
@@ -19,18 +14,14 @@ class GeneralConfig(DefaultConfig):
         self.show_fig = False # show figure or not
         self.save_fig = True # save figure or not
         
-class AlgoConfig(DefaultConfig):
+class AlgoConfigDQN(AlgoConfig):
     def __init__(self) -> None:
         # set epsilon_start=epsilon_end can obtain fixed epsilon=epsilon_end
-        # self.epsilon_start = 0.95 # epsilon start value
-        # self.epsilon_end = 0.01 # epsilon end value
-        # self.epsilon_decay = 500 # epsilon decay rate
+        self.epsilon_start = 0.95 # epsilon start value
+        self.epsilon_end = 0.01 # epsilon end value
+        self.epsilon_decay = 500 # epsilon decay rate
         self.gamma = 0.95 # discount factor
-        # self.lr = 0.0001 # learning rate
-        # self.buffer_size = 100000 # size of replay buffer
-        # self.batch_size = 64 # batch size
-        # self.target_update = 4 # target network update frequency
-class MergedConfig:
-    def __init__(self) -> None:
-        pass
-        
+        self.lr = 0.0001 # learning rate
+        self.buffer_size = 100000 # size of replay buffer
+        self.batch_size = 64 # batch size
+        self.target_update = 4 # target network update frequency

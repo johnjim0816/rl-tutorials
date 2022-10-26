@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-10-26 03:17:50
+LastEditTime: 2022-10-26 07:50:24
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -115,13 +115,13 @@ class DQN:
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step() 
 
-    def save_model(self, path):
+    def save_model(self, fpath):
         from pathlib import Path
         # create path
-        Path(path).mkdir(parents=True, exist_ok=True)
-        torch.save(self.target_net.state_dict(), f"{path}/checkpoint.pt")
+        Path(fpath).mkdir(parents=True, exist_ok=True)
+        torch.save(self.target_net.state_dict(), f"{fpath}/checkpoint.pt")
 
-    def load_model(self, path):
-        self.target_net.load_state_dict(torch.load(f"{path}/checkpoint.pt"))
+    def load_model(self, fpath):
+        self.target_net.load_state_dict(torch.load(f"{fpath}/checkpoint.pt"))
         for target_param, param in zip(self.target_net.parameters(), self.policy_net.parameters()):
             param.data.copy_(target_param.data)

@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-10-26 05:43:17
+LastEditTime: 2022-10-26 07:38:17
 Discription: 
 Environment: 
 '''
@@ -96,7 +96,9 @@ def save_results(res_dic,fpath = None):
     Path(fpath).mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame(res_dic)
     df.to_csv(f"{fpath}/res.csv",index=None)
-
+def merge_class_attrs(ob1, ob2):
+    ob1.__dict__.update(ob2.__dict__)
+    return ob1
 def get_logger(fpath):
     Path(fpath).mkdir(parents=True, exist_ok=True)
     logger = logging.getLogger(name='r')  # set root logger if not set name
@@ -124,6 +126,12 @@ def save_cfgs(cfgs, fpath):
     with open(f"{fpath}/config.yaml", 'w') as f:
         for cfg_type in cfgs:
             yaml.dump({cfg_type: cfgs[cfg_type].__dict__}, f, default_flow_style=False)
+def load_cfgs(cfgs, fpath):
+    with open(fpath) as f:
+        load_cfg = yaml.load(f,Loader=yaml.FullLoader)
+        for cfg_type in cfgs:
+            for k, v in load_cfg[cfg_type].items():
+                setattr(cfgs[cfg_type], k, v)
 # def del_empty_dir(*paths):
 #     ''' 删除目录下所有空文件夹
 #     '''
