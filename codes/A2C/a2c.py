@@ -24,8 +24,10 @@ class A2C:
     def predict_action(self,state):
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         dist = self.actor(state)
+        value = self.critic(state) # note that 'dist' need require_grad=True
+        value = value.detach().cpu().numpy().squeeze(0)[0]
         action = np.random.choice(self.n_actions, p=dist.detach().cpu().numpy().squeeze(0)) # shape(p=(n_actions,1)
-        return action,0,dist 
+        return action,value,dist 
     def update(self,next_state,entropy):
         value_pool,log_prob_pool,reward_pool = self.memory.sample()
         next_state = torch.tensor(next_state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)

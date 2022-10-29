@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+Author: JiangJi
+Email: johnjim0816@gmail.com
+Date: 2022-09-19 14:48:16
+LastEditor: JiangJi
+LastEditTime: 2022-10-30 01:21:50
+Discription: #TODO，待更新模版
+'''
 import torch
 import numpy as np
 
