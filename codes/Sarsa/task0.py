@@ -1,39 +1,35 @@
 #!/usr/bin/env python
 # coding=utf-8
 '''
-Author: John
+Author: JiangJi
 Email: johnjim0816@gmail.com
-Date: 2020-09-11 23:03:00
-LastEditor: John
-LastEditTime: 2022-10-30 02:04:55
+Date: 2022-09-19 14:48:16
+LastEditor: JiangJi
+LastEditTime: 2022-10-30 02:11:31
 Discription: 
-Environment: 
 '''
 import sys,os
 os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
 curr_path = os.path.dirname(os.path.abspath(__file__))  # current path
 parent_path = os.path.dirname(curr_path)  # parent path 
 sys.path.append(parent_path)  # add path to system path
-
 import gym
 import datetime
 import argparse
-from envs.gridworld_env import FrozenLakeWapper
-from envs.wrappers import CliffWalkingWapper
 from envs.register import register_env
-from qlearning import QLearning
+from envs.wrappers import CliffWalkingWapper
+from Sarsa.sarsa import Sarsa
 from common.utils import all_seed,merge_class_attrs
 from common.launcher import Launcher
-from config.config import GeneralConfigQLearning,AlgoConfigQLearning
+from config.config import GeneralConfigSarsa,AlgoConfigSarsa
 
 class Main(Launcher):
     def __init__(self) -> None:
         super().__init__()
-        self.cfgs['general_cfg'] = merge_class_attrs(self.cfgs['general_cfg'],GeneralConfigQLearning())
-        self.cfgs['algo_cfg'] = merge_class_attrs(self.cfgs['algo_cfg'],AlgoConfigQLearning())
+        self.cfgs['general_cfg'] = merge_class_attrs(self.cfgs['general_cfg'],GeneralConfigSarsa())
+        self.cfgs['algo_cfg'] = merge_class_attrs(self.cfgs['algo_cfg'],AlgoConfigSarsa())
+
     def env_agent_config(self,cfg,logger):
-        ''' create env and agent
-        '''  
         register_env(cfg.env_name)
         env = gym.make(cfg.env_name,new_step_api=False)  # create env
         if cfg.env_name == 'CliffWalking-v0':
@@ -49,8 +45,9 @@ class Main(Launcher):
         # update to cfg paramters
         setattr(cfg, 'n_states', n_states)
         setattr(cfg, 'n_actions', n_actions)
-        agent = QLearning(cfg)
+        agent = Sarsa(cfg)
         return env,agent
+        
     def train(self,cfg,env,agent,logger):
         logger.info("Start training!")
         logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
@@ -60,20 +57,24 @@ class Main(Launcher):
             ep_reward = 0  # reward per episode
             ep_step = 0 # step per episode
             state = env.reset()  # reset and obtain initial state
+            action = agent.sample_action(state)
+            # while True:
             for _ in range(cfg.max_steps):
-                action = agent.sample_action(state)  # sample action
-                next_state, reward, terminated, _ = env.step(action)  # update env and return transitions
-                agent.update(state, action, reward, next_state, terminated)  # update agent
+                next_state, reward, done, _ = env.step(action)  # update env and return transitions
+                next_action =  agent.sample_action(next_state)
+                agent.update(state, action, reward, next_state, next_action,done)  # update agent
                 state = next_state  # update state
+                action = next_action
                 ep_reward += reward
                 ep_step += 1
-                if terminated:
+                if done:
                     break
             rewards.append(ep_reward)
             steps.append(ep_step)
             logger.info(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}, Steps:{ep_step:d}, Epislon: {agent.epsilon:.3f}')
         logger.info("Finish training!")
         return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+
     def test(self,cfg,env,agent,logger):
         logger.info("Start testing!")
         logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
@@ -84,13 +85,13 @@ class Main(Launcher):
             ep_step = 0
             state = env.reset()  # reset and obtain initial state
             for _ in range(cfg.max_steps):
-                action = agent.predict_action(state)  # predict action
-                next_state, reward, terminated, _ = env.step(action)  
-                state = next_state 
-                ep_reward += reward
-                ep_step += 1
-                if terminated:
-                    break
+                action = agent.predict_action(state)
+                next_state, reward, done, _ = env.step(action)
+                state = next_state
+                ep_reward+=reward
+                ep_step+=1
+                if done:
+                    break  
             rewards.append(ep_reward)
             steps.append(ep_step)
             logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}, Steps:{ep_step:d}")
@@ -100,7 +101,6 @@ class Main(Launcher):
 if __name__ == "__main__":
     main = Main()
     main.run()
-   
-
-        
     
+    
+
