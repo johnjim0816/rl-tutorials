@@ -39,7 +39,7 @@
 
 ## 4. 运行环境
 
-主要依赖：Python 3.7、PyTorch 1.10.0、Gym 0.21.0。
+主要依赖：Python 3.7、PyTorch 1.10.0、Gym 0.25.2。
 
 ### 4.1. 创建Conda环境
 ```bash
@@ -74,12 +74,12 @@ print(torch.cuda.is_available())
 ### 4.4. 安装Gym
 
 ```bash
-pip install gym==0.21.0
+pip install gym==0.25.2
 ```
 如需安装Atari环境，则需另外安装
 
 ```bash
-pip install gym[atari,accept-rom-license]==0.21.0
+pip install gym[atari,accept-rom-license]==0.25.2
 ```
 
 ### 4.5. 安装其他依赖
@@ -93,7 +93,7 @@ pip install -r requirements.txt
 
 对于[codes](./codes/)，`cd`到对应的算法目录下，例如`DQN`：
 
-```python task_cartpole_v1.py
+```python task_0.py
 ```
 
 或者加载配置文件：

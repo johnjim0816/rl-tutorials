@@ -11,12 +11,16 @@ class Launcher:
     def get_cfg(self):
         self.cfgs = {'general_cfg':GeneralConfig(),'algo_cfg':AlgoConfig()}  # create config 
     def process_yaml_cfg(self):
+        ''' load yaml config
+        '''
         parser = argparse.ArgumentParser(description="hyperparameters")  
         parser.add_argument('--yaml', default = None, type=str,help='the path of config file')
         args = parser.parse_args()
         if args.yaml is not None:
             load_cfgs(self.cfgs, args.yaml)
     def print_cfg(self,cfg):
+        ''' print parameters
+        '''
         cfg_dict = vars(cfg)
         print("Hyperparameters:")
         print(''.join(['=']*80))
@@ -42,13 +46,13 @@ class Launcher:
         self.res_dir = f"{self.task_dir}/results/"
         self.log_dir = f"{self.task_dir}/logs/"
     def run(self):
-        self.process_yaml_cfg()
-        cfg = MergedConfig()
+        self.process_yaml_cfg() # load yaml config
+        cfg = MergedConfig() # merge config
         cfg = merge_class_attrs(cfg,self.cfgs['general_cfg'])
         cfg = merge_class_attrs(cfg,self.cfgs['algo_cfg'])
         self.print_cfg(cfg) # print the configuration
         self.create_path(cfg) # create the path to save the results
-        logger = get_logger(self.log_dir)
+        logger = get_logger(self.log_dir) # create the logger
         env, agent = self.env_agent_config(cfg,logger)
         if cfg.load_checkpoint:
             agent.load_model(f"{cfg.load_path}/models/")

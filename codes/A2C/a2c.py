@@ -5,14 +5,14 @@ import numpy as np
         
 class A2C:
     def __init__(self,models,memories,cfg):
-        self.n_actions = cfg['n_actions']
-        self.gamma = cfg['gamma']
-        self.device = torch.device(cfg['device']) 
+        self.n_actions = cfg.n_actions
+        self.gamma = cfg.gamma
+        self.device = torch.device(cfg.device) 
         self.memory = memories['ACMemory']
         self.actor = models['Actor'].to(self.device)
         self.critic = models['Critic'].to(self.device)
-        self.actor_optim = torch.optim.Adam(self.actor.parameters(), lr=cfg['actor_lr'])
-        self.critic_optim = torch.optim.Adam(self.critic.parameters(), lr=cfg['critic_lr'])
+        self.actor_optim = torch.optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
+        self.critic_optim = torch.optim.Adam(self.critic.parameters(), lr=cfg.critic_lr)
     def sample_action(self,state):
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         dist = self.actor(state)
@@ -24,10 +24,8 @@ class A2C:
     def predict_action(self,state):
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         dist = self.actor(state)
-        value = self.critic(state) # note that 'dist' need require_grad=True
-        value = value.detach().cpu().numpy().squeeze(0)[0]
         action = np.random.choice(self.n_actions, p=dist.detach().cpu().numpy().squeeze(0)) # shape(p=(n_actions,1)
-        return action,value,dist 
+        return action,0,dist 
     def update(self,next_state,entropy):
         value_pool,log_prob_pool,reward_pool = self.memory.sample()
         next_state = torch.tensor(next_state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)

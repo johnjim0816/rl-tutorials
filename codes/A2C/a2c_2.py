@@ -3,12 +3,12 @@ import numpy as np
 
 class A2C_2:
     def __init__(self,models,memories,cfg):
-        self.n_actions = cfg['n_actions']
-        self.gamma = cfg['gamma']
-        self.device = torch.device(cfg['device']) 
+        self.n_actions = cfg.n_actions
+        self.gamma = cfg.gamma
+        self.device = torch.device(cfg.device) 
         self.memory = memories['ACMemory']
         self.ac_net = models['ActorCritic'].to(self.device)
-        self.ac_optimizer = torch.optim.Adam(self.ac_net.parameters(), lr=cfg['lr'])
+        self.ac_optimizer = torch.optim.Adam(self.ac_net.parameters(), lr = cfg.lr)
     def sample_action(self,state):
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         value, dist = self.ac_net(state) # note that 'dist' need require_grad=True

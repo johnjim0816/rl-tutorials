@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-12 11:09:54
 LastEditor: JiangJi
-LastEditTime: 2022-10-26 09:48:37
+LastEditTime: 2022-10-30 01:05:09
 Discription: CartPole-v1,Acrobot-v1
 '''
 import sys,os
@@ -17,36 +17,9 @@ from common.utils import all_seed,merge_class_attrs
 from common.models import MLP
 from common.memories import ReplayBuffer
 from common.launcher import Launcher
-from common.config import DefaultConfig
 from envs.register import register_env
 from dqn import DQN
 from config.config import GeneralConfigDQN,AlgoConfigDQN
-
-class GeneralConfig(DefaultConfig):
-    def __init__(self) -> None:
-        self.env_name = "CartPole-v1" # name of environment
-        self.algo_name = "DQN" # name of algorithm
-        self.seed = 0 # random seed
-        self.device = "cuda" # device to use
-        self.train_eps = 200 # number of episodes for training
-        self.test_eps = 10 # number of episodes for testing
-        self.max_steps = 200 # max steps for each episode
-        self.load_path = "tasks" # path to load model
-        self.show_fig = False # show figure or not
-        self.save_fig = True # save figure or not
-        
-class AlgoConfig(DefaultConfig):
-    def __init__(self) -> None:
-        # set epsilon_start=epsilon_end can obtain fixed epsilon=epsilon_end
-        self.epsilon_start = 0.95 # epsilon start value
-        self.epsilon_end = 0.01 # epsilon end value
-        self.epsilon_decay = 500 # epsilon decay rate
-        self.gamma = 0.95 # discount factor
-        self.lr = 0.0001 # learning rate
-        self.buffer_size = 100000 # size of replay buffer
-        self.batch_size = 64 # batch size
-        self.target_update = 4 # target network update frequency
-
 class Main(Launcher):
     # def get_cfg(self):
     #     """ hyperparameters
@@ -85,7 +58,7 @@ class Main(Launcher):
         logger.info("Start training!")
         logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
         rewards = []  # record rewards for all episodes
-        steps = []
+        steps = [] # record steps for all episodes
         for i_ep in range(cfg.train_eps):   
             ep_reward = 0  # reward per episode
             ep_step = 0
@@ -115,7 +88,7 @@ class Main(Launcher):
         logger.info("Start testing!")
         logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
         rewards = []  # record rewards for all episodes
-        steps = []
+        steps = [] # record steps for all episodes
         for i_ep in range(cfg.test_eps):
             ep_reward = 0  # reward per episode
             ep_step = 0
