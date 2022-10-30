@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2022-10-30 12:01:49
+LastEditTime: 2022-10-30 18:17:19
 Discription: 
 Environment: 
 '''
@@ -40,8 +40,8 @@ class ActorSoftmax(nn.Module):
     def forward(self,x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        dist = F.softmax(self.fc3(x),dim=1)
-        return dist
+        probs = F.softmax(self.fc3(x),dim=1)
+        return probs
 
 # class ActorSoftmax(nn.Module):
 #     def __init__(self,input_dim, output_dim,
@@ -69,7 +69,7 @@ class Critic(nn.Module):
     def forward(self,x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        value = self.fc3(value)
+        value = self.fc3(x)
         return value
 
 class ActorCriticSoftmax(nn.Module):

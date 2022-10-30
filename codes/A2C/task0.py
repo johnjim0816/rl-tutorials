@@ -40,55 +40,85 @@ class Main(Launcher):
         memories = {'ACMemory':PGReplay()}
         agent = A2C(models,memories,cfg)
         return env,agent
-    def train(self,cfg,env,agent,logger):
-        logger.info("Start training!")
-        logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
-        rewards = []  # record rewards for all episodes
-        steps = [] # record steps for all episodes
-        for i_ep in range(cfg.train_eps):
-            ep_reward = 0  # reward per episode
-            ep_step = 0 # step per episode
-            ep_entropy = 0
-            state = env.reset()  # reset and obtain initial state
-            for _ in range(cfg.max_steps):
-                action = agent.sample_action(state)  # sample action
-                next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions
-                agent.memory.push((agent.value,agent.log_prob,reward))  # save transitions
-                state = next_state  # update state
-                ep_reward += reward
-                ep_entropy += agent.entropy
-                ep_step += 1
-                if terminated:
-                    break
-            agent.update(next_state,ep_entropy)  # update agent
-            rewards.append(ep_reward)
-            steps.append(ep_step)
-            logger.info(f"Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}, Steps:{ep_step}")
-        logger.info("Finish training!")
-        return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
-    def test(self,cfg,env,agent,logger):
-        logger.info("Start testing!")
-        logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
-        rewards = []  # record rewards for all episodes
-        steps = [] # record steps for all episodes
-        for i_ep in range(cfg.test_eps):
-            ep_reward = 0  # reward per episode
-            ep_step = 0
-            state = env.reset()  # reset and obtain initial state
-            for _ in range(cfg.max_steps):
-                action = agent.predict_action(state)  # predict action
-                next_state, reward, terminated, truncated , info = env.step(action)  
-                state = next_state 
-                ep_reward += reward
-                ep_step += 1
-                if terminated:
-                    break
-            rewards.append(ep_reward)
-            steps.append(ep_step)
-            logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}, Steps:{ep_step}")
-        logger.info("Finish testing!")
-        env.close()
-        return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+    def train_one_episode(self, env, agent, cfg):
+        ep_reward = 0  # reward per episode
+        ep_step = 0 # step per episode
+        ep_entropy = 0 # entropy per episode
+        state = env.reset()  # reset and obtain initial state
+        for _ in range(cfg.max_steps):
+            action = agent.sample_action(state)  # sample action
+            next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions
+            agent.memory.push((agent.value,agent.log_prob,reward))  # save transitions
+            state = next_state  # update state
+            ep_reward += reward
+            ep_entropy += agent.entropy
+            ep_step += 1
+            if terminated:
+                break
+        agent.update(next_state,ep_entropy)  # update agent
+        return agent,ep_reward,ep_step
+    def test_one_episode(self, env, agent, cfg):
+        ep_reward = 0  # reward per episode
+        ep_step = 0 # step per episode
+        state = env.reset()  # reset and obtain initial state
+        for _ in range(cfg.max_steps):
+            action = agent.predict_action(state)  # predict action
+            next_state, reward, terminated, truncated , info = env.step(action)  
+            state = next_state 
+            ep_reward += reward
+            ep_step += 1
+            if terminated:
+                break
+        return agent,ep_reward,ep_step
+    # def train(self,cfg,env,agent,logger):
+    #     logger.info("Start training!")
+    #     logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
+    #     rewards = []  # record rewards for all episodes
+    #     steps = [] # record steps for all episodes
+    #     for i_ep in range(cfg.train_eps):
+    #         ep_reward = 0  # reward per episode
+    #         ep_step = 0 # step per episode
+    #         ep_entropy = 0
+    #         state = env.reset()  # reset and obtain initial state
+    #         for _ in range(cfg.max_steps):
+    #             action = agent.sample_action(state)  # sample action
+    #             next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions
+    #             agent.memory.push((agent.value,agent.log_prob,reward))  # save transitions
+    #             state = next_state  # update state
+    #             ep_reward += reward
+    #             ep_entropy += agent.entropy
+    #             ep_step += 1
+    #             if terminated:
+    #                 break
+    #         agent.update(next_state,ep_entropy)  # update agent
+    #         rewards.append(ep_reward)
+    #         steps.append(ep_step)
+    #         logger.info(f"Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}, Steps:{ep_step}")
+    #     logger.info("Finish training!")
+    #     return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+    # def test(self,cfg,env,agent,logger):
+    #     logger.info("Start testing!")
+    #     logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
+    #     rewards = []  # record rewards for all episodes
+    #     steps = [] # record steps for all episodes
+    #     for i_ep in range(cfg.test_eps):
+    #         ep_reward = 0  # reward per episode
+    #         ep_step = 0
+    #         state = env.reset()  # reset and obtain initial state
+    #         for _ in range(cfg.max_steps):
+    #             action = agent.predict_action(state)  # predict action
+    #             next_state, reward, terminated, truncated , info = env.step(action)  
+    #             state = next_state 
+    #             ep_reward += reward
+    #             ep_step += 1
+    #             if terminated:
+    #                 break
+    #         rewards.append(ep_reward)
+    #         steps.append(ep_step)
+    #         logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}, Steps:{ep_step}")
+    #     logger.info("Finish testing!")
+    #     env.close()
+    #     return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
 
 if __name__ == "__main__":
     main = Main()

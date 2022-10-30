@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 00:53:03
 LastEditor: JiangJi
-LastEditTime: 2022-10-30 01:31:32
+LastEditTime: 2022-10-30 20:40:33
 Discription: default parameters of A2C
 '''
 from common.config import GeneralConfig,AlgoConfig
@@ -17,8 +17,8 @@ class GeneralConfigA2C(GeneralConfig):
         self.mode = "train" # train or test
         self.seed = 1 # random seed
         self.device = "cuda" # device to use
-        self.train_eps = 1600 # number of episodes for training
-        self.test_eps = 10 # number of episodes for testing
+        self.train_eps = 1000 # number of episodes for training
+        self.test_eps = 20 # number of episodes for testing
         self.max_steps = 200 # max steps for each episode
         self.load_checkpoint = False
         self.load_path = "tasks" # path to load model
