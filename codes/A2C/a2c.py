@@ -16,18 +16,20 @@ class A2C:
     def sample_action(self,state):
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         dist = self.actor(state)
+        self.log_prob = torch.log(dist.squeeze(0)[action])
+        self.entropy = - np.sum(np.mean(dist.detach().cpu().numpy()) * np.log(dist.detach().cpu().numpy()))
         value = self.critic(state) # note that 'dist' need require_grad=True
-        value = value.detach().cpu().numpy().squeeze(0)[0]
+        self.value = value.detach().cpu().numpy().squeeze(0)[0]
         action = np.random.choice(self.n_actions, p=dist.detach().cpu().numpy().squeeze(0)) # shape(p=(n_actions,1)
-        return action,value,dist 
+        return action
     @torch.no_grad()
     def predict_action(self,state):
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         dist = self.actor(state)
-        value = self.critic(state) # note that 'dist' need require_grad=True
-        value = value.detach().cpu().numpy().squeeze(0)[0]
+        # value = self.critic(state) # note that 'dist' need require_grad=True
+        # value = value.detach().cpu().numpy().squeeze(0)[0]
         action = np.random.choice(self.n_actions, p=dist.detach().cpu().numpy().squeeze(0)) # shape(p=(n_actions,1)
-        return action,value,dist 
+        return action
     def update(self,next_state,entropy):
         value_pool,log_prob_pool,reward_pool = self.memory.sample()
         next_state = torch.tensor(next_state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)

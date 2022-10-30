@@ -51,14 +51,12 @@ class Main(Launcher):
             ep_entropy = 0
             state = env.reset()  # reset and obtain initial state
             for _ in range(cfg.max_steps):
-                action, value, dist = agent.sample_action(state)  # sample action
+                action = agent.sample_action(state)  # sample action
                 next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions
-                log_prob = torch.log(dist.squeeze(0)[action])
-                entropy = - np.sum(np.mean(dist.detach().cpu().numpy()) * np.log(dist.detach().cpu().numpy()))
-                agent.memory.push((value,log_prob,reward))  # save transitions
+                agent.memory.push((agent.value,agent.log_prob,reward))  # save transitions
                 state = next_state  # update state
                 ep_reward += reward
-                ep_entropy += entropy
+                ep_entropy += agent.entropy
                 ep_step += 1
                 if terminated:
                     break
@@ -78,7 +76,7 @@ class Main(Launcher):
             ep_step = 0
             state = env.reset()  # reset and obtain initial state
             for _ in range(cfg.max_steps):
-                action,_,_ = agent.predict_action(state)  # predict action
+                action = agent.predict_action(state)  # predict action
                 next_state, reward, terminated, truncated , info = env.step(action)  
                 state = next_state 
                 ep_reward += reward
