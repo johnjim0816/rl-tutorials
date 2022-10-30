@@ -32,27 +32,27 @@ class Launcher:
     def env_agent_config(self,cfg,logger):
         env,agent = None,None
         return env,agent
-    def train_one_episode(self,env, agent, cfg, logger):
+    def train_one_episode(self,env, agent, cfg):
         ep_reward = 0
         ep_step = 0
         return agent,ep_reward,ep_step
-    def test_one_episode(self,env, agent, cfg, logger):
+    def test_one_episode(self,env, agent, cfg):
         ep_reward = 0
         ep_step = 0
         return agent,ep_reward,ep_step
-    def evaluate(self,env, agent, cfg, logger):
+    def evaluate(self,env, agent, cfg):
         sum_eval_reward = 0
         for _ in range(cfg.eval_eps):
-            _,eval_ep_reward,_ = self.test_one_episode(env, agent, cfg, logger)
+            _,eval_ep_reward,_ = self.test_one_episode(env, agent, cfg)
             sum_eval_reward += eval_ep_reward
         mean_eval_reward = sum_eval_reward/cfg.eval_eps
         return mean_eval_reward
-    def train(self,cfg, env, agent,logger):
-        res_dic = {}
-        return res_dic
-    def test(self,cfg, env, agent,logger):
-        res_dic = {}
-        return res_dic
+    # def train(self,cfg, env, agent,logger):
+    #     res_dic = {}
+    #     return res_dic
+    # def test(self,cfg, env, agent,logger):
+    #     res_dic = {}
+    #     return res_dic
     def create_path(self,cfg):
         curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
         self.task_dir = f"{cfg.mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
@@ -78,13 +78,13 @@ class Launcher:
         if cfg.mode.lower() == 'train':
             best_ep_reward = -float('inf')
             for i_ep in range(cfg.train_eps):
-                agent,ep_reward,ep_step = self.train_one_episode(env, agent, cfg, logger)
+                agent,ep_reward,ep_step = self.train_one_episode(env, agent, cfg)
                 logger.info(f"Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward}, Step: {ep_step}")
                 rewards.append(ep_reward)
                 steps.append(ep_step)
                 # for _ in range
                 if (i_ep+1)%cfg.eval_per_episode == 0:
-                    mean_eval_reward = self.evaluate(env, agent, cfg, logger)
+                    mean_eval_reward = self.evaluate(env, agent, cfg)
                     if mean_eval_reward  >= best_ep_reward: # update best reward
                         logger.info(f"Current episode {i_ep+1} has the best eval reward: {mean_eval_reward:.2f}")
                         best_ep_reward = mean_eval_reward 
@@ -92,7 +92,7 @@ class Launcher:
             # env.close()
         elif cfg.mode.lower() == 'test':
             for i_ep in range(cfg.test_eps):
-                agent,ep_reward,ep_step = self.test_one_episode(env, agent, cfg, logger)
+                agent,ep_reward,ep_step = self.test_one_episode(env, agent, cfg)
                 logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward}, Step: {ep_step}")
                 rewards.append(ep_reward)
                 steps.append(ep_step)

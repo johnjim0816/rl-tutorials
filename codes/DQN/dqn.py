@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-10-26 07:50:24
+LastEditTime: 2022-10-31 00:07:19
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -33,6 +33,7 @@ class DQN:
         self.epsilon_end = cfg.epsilon_end
         self.epsilon_decay = cfg.epsilon_decay
         self.batch_size = cfg.batch_size
+        self.target_update = cfg.target_update
         self.policy_net = model.to(self.device)
         self.target_net = model.to(self.device)
         ## copy parameters from policy net to target net
@@ -114,6 +115,8 @@ class DQN:
         for param in self.policy_net.parameters():  
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step() 
+        if self.sample_count % self.target_update == 0: # target net update, target_update means "C" in pseucodes
+            self.target_net.load_state_dict(self.policy_net.state_dict())   
 
     def save_model(self, fpath):
         from pathlib import Path
