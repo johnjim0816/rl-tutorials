@@ -5,8 +5,8 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 01:19:43
 LastEditor: JiangJi
-LastEditTime: 2022-10-31 23:31:49
-Discription: 
+LastEditTime: 2022-10-31 23:33:30
+Discription: the only difference from task0.py is that the actor here we use ActorSoftmaxTanh instead of ActorSoftmax with ReLU
 '''
 import sys,os
 os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
@@ -20,7 +20,7 @@ import numpy as np
 from common.utils import all_seed,merge_class_attrs
 from common.launcher import Launcher
 from common.memories import PGReplay
-from common.models import ActorSoftmax,Critic
+from common.models import ActorSoftmaxTanh,Critic
 from envs.register import register_env
 from a2c import A2C
 from config.config import GeneralConfigA2C,AlgoConfigA2C
@@ -46,7 +46,7 @@ class Main(Launcher):
         # update to cfg paramters
         setattr(cfg, 'n_states', n_states)
         setattr(cfg, 'n_actions', n_actions)
-        models = {'Actor':ActorSoftmax(n_states,n_actions, hidden_dim = cfg.actor_hidden_dim),'Critic':Critic(n_states,1,hidden_dim=cfg.critic_hidden_dim)}
+        models = {'Actor':ActorSoftmaxTanh(n_states,n_actions, hidden_dim = cfg.actor_hidden_dim),'Critic':Critic(n_states,1,hidden_dim=cfg.critic_hidden_dim)}
         memories = {'ACMemory':PGReplay()}
         agent = A2C(models,memories,cfg)
         for k,v in models.items():

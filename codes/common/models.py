@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2022-10-31 00:20:52
+LastEditTime: 2022-10-31 23:20:21
 Discription: 
 Environment: 
 '''
@@ -43,6 +43,17 @@ class ActorSoftmax(nn.Module):
         probs = F.softmax(self.fc3(x),dim=1)
         return probs
 
+class ActorSoftmaxTanh(nn.Module):
+    def __init__(self, input_dim, output_dim, hidden_dim=256):
+        super(ActorSoftmaxTanh, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc3 = nn.Linear(hidden_dim, output_dim)
+    def forward(self,x):
+        x = F.tanh(self.fc1(x))
+        x = F.tanh(self.fc2(x))
+        probs = F.softmax(self.fc3(x),dim=1)
+        return probs
 # class ActorSoftmax(nn.Module):
 #     def __init__(self,input_dim, output_dim,
 #             hidden_dim=256):
