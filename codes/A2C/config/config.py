@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 00:53:03
 LastEditor: JiangJi
-LastEditTime: 2022-10-30 20:40:33
+LastEditTime: 2022-11-01 00:17:55
 Discription: default parameters of A2C
 '''
 from common.config import GeneralConfig,AlgoConfig
@@ -27,6 +27,7 @@ class GeneralConfigA2C(GeneralConfig):
         
 class AlgoConfigA2C(AlgoConfig):
     def __init__(self) -> None:
+        self.continuous = False # continuous or discrete action space
         self.hidden_dim = 256 # hidden_dim for MLP
         self.gamma = 0.99 # discount factor
         self.actor_lr = 3e-4 # learning rate of actor

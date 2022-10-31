@@ -79,21 +79,21 @@ class Launcher:
             best_ep_reward = -float('inf')
             for i_ep in range(cfg.train_eps):
                 agent,ep_reward,ep_step = self.train_one_episode(env, agent, cfg)
-                logger.info(f"Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward}, Step: {ep_step}")
+                logger.info(f"Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.3f}, Step: {ep_step}")
                 rewards.append(ep_reward)
                 steps.append(ep_step)
                 # for _ in range
                 if (i_ep+1)%cfg.eval_per_episode == 0:
                     mean_eval_reward = self.evaluate(env, agent, cfg)
                     if mean_eval_reward  >= best_ep_reward: # update best reward
-                        logger.info(f"Current episode {i_ep+1} has the best eval reward: {mean_eval_reward:.2f}")
+                        logger.info(f"Current episode {i_ep+1} has the best eval reward: {mean_eval_reward:.3f}")
                         best_ep_reward = mean_eval_reward 
                         agent.save_model(self.model_dir) # save models with best reward
             # env.close()
         elif cfg.mode.lower() == 'test':
             for i_ep in range(cfg.test_eps):
                 agent,ep_reward,ep_step = self.test_one_episode(env, agent, cfg)
-                logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward}, Step: {ep_step}")
+                logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.3f}, Step: {ep_step}")
                 rewards.append(ep_reward)
                 steps.append(ep_step)
             agent.save_model(self.model_dir)  # save models

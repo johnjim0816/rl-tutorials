@@ -1,5 +1,5 @@
 general_cfg:
-  algo_name: DQN
+  algo_name: A2C
   device: cuda
   env_name: CartPole-v1
   mode: train
@@ -12,6 +12,7 @@ general_cfg:
   test_eps: 20
   train_eps: 600
 algo_cfg:
+  continuous: false
   batch_size: 64
   buffer_size: 100000
   gamma: 0.0003
