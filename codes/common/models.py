@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2022-10-30 18:17:19
+LastEditTime: 2022-10-31 00:20:52
 Discription: 
 Environment: 
 '''
@@ -56,8 +56,8 @@ class ActorSoftmax(nn.Module):
 #                 nn.Softmax(dim=-1)
 #         )
 #     def forward(self, state):
-#         dist = self.actor(state)
-#         dist = Categorical(dist)
+#         probs = self.actor(state)
+#         dist = Categorical(probs)
 #         return dist
 class Critic(nn.Module):
     def __init__(self,input_dim,output_dim,hidden_dim=256):

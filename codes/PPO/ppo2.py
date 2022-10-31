@@ -1,40 +1,42 @@
 #!/usr/bin/env python
 # coding=utf-8
 '''
-Author: John
+Author: JiangJi
 Email: johnjim0816@gmail.com
-Date: 2021-03-23 15:17:42
-LastEditor: John
-LastEditTime: 2022-09-20 21:32:48
-Discription: 
-Environment: 
+Date: 2022-09-26 16:11:36
+LastEditor: JiangJi
+LastEditTime: 2022-10-31 00:36:37
+Discription: PPO-clip
 '''
+
 import os
 import numpy as np
 import torch 
 import torch.optim as optim
-
+from torch.distributions.categorical import Categorical
 
 
 class PPO:
     def __init__(self, models,memory,cfg):
-        self.gamma = cfg['gamma']
-        self.continuous = cfg['continuous'] 
-        self.policy_clip = cfg['policy_clip']
-        self.n_epochs = cfg['n_epochs']
-        self.gae_lambda = cfg['gae_lambda']
-        self.device = torch.device(cfg['device']) 
+        self.gamma = cfg.gamma
+        self.continuous = cfg.continuous
+        self.policy_clip = cfg.policy_clip
+        self.n_epochs = cfg.n_epochs
+        self.batch_size = cfg.batch_size
+        self.gae_lambda = cfg.gae_lambda
+        self.device = torch.device(cfg.device) 
         self.actor = models['Actor'].to(self.device)
         self.critic = models['Critic'].to(self.device)
-        self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg['actor_lr'])
-        self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg['critic_lr'])
+        self.actor_optimizer = optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
+        self.critic_optimizer = optim.Adam(self.critic.parameters(), lr=cfg.critic_lr)
         self.memory = memory
         self.loss = 0
 
     def sample_action(self, state):
         state = np.array([state]) # 先转成数组再转tensor更高效
         state = torch.tensor(state, dtype=torch.float).to(self.device)
-        dist = self.actor(state)
+        probs = self.actor(state)
+        dist = Categorical(probs)
         value = self.critic(state)
         action = dist.sample()
         probs = torch.squeeze(dist.log_prob(action)).item()
@@ -44,6 +46,7 @@ class PPO:
             action = torch.squeeze(action).item()
         value = torch.squeeze(value).item()
         return action, probs, value
+    @torch.no_grad()
     def predict_action(self, state):
         state = np.array([state]) # 先转成数组再转tensor更高效
         state = torch.tensor(state, dtype=torch.float).to(self.device)
