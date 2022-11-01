@@ -12,10 +12,12 @@ class GeneralConfig(DefaultConfig):
         self.seed = 0 # random seed
         self.device = "cuda" # device to use
         self.train_eps = 200 # number of episodes for training
-        self.test_eps = 10 # number of episodes for testing
+        self.test_eps = 20 # number of episodes for testing
+        self.eval_eps = 10 # number of episodes for evaluation
+        self.eval_per_episode = 5 # evaluation per episode
         self.max_steps = 200 # max steps for each episode
         self.load_checkpoint = False
-        self.load_path = "tasks" # path to load model
+        self.load_path = None # path to load model
         self.show_fig = False # show figure or not
         self.save_fig = True # save figure or not
         

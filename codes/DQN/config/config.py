@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 00:37:33
 LastEditor: JiangJi
-LastEditTime: 2022-10-30 01:19:08
+LastEditTime: 2022-10-31 00:11:57
 Discription: default parameters of DQN
 '''
 from common.config import GeneralConfig,AlgoConfig
@@ -16,7 +16,7 @@ class GeneralConfigDQN(GeneralConfig):
         self.mode = "train" # train or test
         self.seed = 1 # random seed
         self.device = "cuda" # device to use
-        self.train_eps = 200 # number of episodes for training
+        self.train_eps = 100 # number of episodes for training
         self.test_eps = 10 # number of episodes for testing
         self.max_steps = 200 # max steps for each episode
         self.load_checkpoint = False
@@ -35,4 +35,4 @@ class AlgoConfigDQN(AlgoConfig):
         self.lr = 0.0001 # learning rate
         self.buffer_size = 100000 # size of replay buffer
         self.batch_size = 64 # batch size
-        self.target_update = 4 # target network update frequency
+        self.target_update = 800 # target network update frequency per steps
