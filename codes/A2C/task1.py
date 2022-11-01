@@ -5,8 +5,8 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 01:19:43
 LastEditor: JiangJi
-LastEditTime: 2022-10-31 23:33:30
-Discription: the only difference from task0.py is that the actor here we use ActorSoftmaxTanh instead of ActorSoftmax with ReLU
+LastEditTime: 2022-11-01 01:21:12
+Discription: continuous action space
 '''
 import sys,os
 os.environ["KMP_DUPLICATE_LIB_OK"]  =  "TRUE" # avoid "OMP: Error #15: Initializing libiomp5md.dll, but found libiomp5md.dll already initialized."
@@ -15,8 +15,6 @@ parent_path = os.path.dirname(curr_path)  # parent path
 sys.path.append(parent_path)  # add path to system path
 
 import gym
-import torch
-import numpy as np
 from common.utils import all_seed,merge_class_attrs
 from common.launcher import Launcher
 from common.memories import PGReplay
