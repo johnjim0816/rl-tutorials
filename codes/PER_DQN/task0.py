@@ -23,7 +23,7 @@ parent_path = os.path.dirname(curr_path)  # parent path
 sys.path.append(parent_path)  # add to system path
 import gym
 import torch
-from torch.autograd import Variable
+
 from common.utils import all_seed,merge_class_attrs
 from common.models import MLP
 from common.memories import ReplayBuffer, ReplayTree
@@ -73,10 +73,10 @@ class Main(Launcher):
                 ep_step += 1
                 action = agent.sample_action(state)  # sample action
                 next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions under new_step_api of OpenAI Gym
-                
-                target = agent.policy_net(Variable(torch.FloatTensor(state)).cuda()).data
-                policy_val = target[action]
-                target_val = agent.target_net(Variable(torch.FloatTensor(next_state)).cuda()).data
+
+                policy_val = agent.policy_net(torch.tensor(state, device = cfg.device))[action]
+                target_val = agent.target_net(torch.tensor(next_state, device = cfg.device))
+
                 if terminated:
                     error = abs(policy_val - reward)
                 else:

@@ -29,7 +29,7 @@ import datetime
 import numpy as np
 import argparse
 import torch
-from torch.autograd import Variable
+
 from common.utils import all_seed
 from common.models import MLP
 from common.memories import ReplayBuffer, ReplayTree
@@ -179,9 +179,9 @@ class Main(Launcher):
                 current_screen = get_screen(env)
                 next_state = current_screen - last_screen
 
-                target = agent.policy_net(Variable(torch.FloatTensor(state)).cuda()).data
-                policy_val = target[action]
-                target_val = agent.target_net(Variable(torch.FloatTensor(next_state)).cuda()).data
+                policy_val = agent.policy_net(torch.tensor(state, device = cfg.device))[action]
+                target_val = agent.target_net(torch.tensor(next_state, device = cfg.device))
+                
                 if done:
                     error = abs(policy_val - reward)
                 else:

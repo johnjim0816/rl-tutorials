@@ -99,7 +99,7 @@ class PER_DQN:
                 print("Begin to update!")
                 self.update_flag = True
         # sample a batch of transitions from replay buffer
-        state_batch, action_batch, reward_batch, next_state_batch, done_batch, idxs_batch, is_weights_batch = self.memory.sample(
+        (state_batch, action_batch, reward_batch, next_state_batch, done_batch), idxs_batch, is_weights_batch = self.memory.sample(
             self.batch_size)
         state_batch = torch.tensor(np.array(state_batch), device=self.device, dtype=torch.float) # shape(batchsize,n_states)
         action_batch = torch.tensor(action_batch, device=self.device).unsqueeze(1) # shape(batchsize,1)
