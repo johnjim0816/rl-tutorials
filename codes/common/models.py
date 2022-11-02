@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 21:14:12
 LastEditor: John
-LastEditTime: 2022-10-30 12:01:49
+LastEditTime: 2022-10-31 23:53:06
 Discription: 
 Environment: 
 '''
@@ -40,9 +40,33 @@ class ActorSoftmax(nn.Module):
     def forward(self,x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        dist = F.softmax(self.fc3(x),dim=1)
-        return dist
+        probs = F.softmax(self.fc3(x),dim=1)
+        return probs
 
+class ActorSoftmaxTanh(nn.Module):
+    def __init__(self, input_dim, output_dim, hidden_dim=256):
+        super(ActorSoftmaxTanh, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc3 = nn.Linear(hidden_dim, output_dim)
+    def forward(self,x):
+        x = F.tanh(self.fc1(x))
+        x = F.tanh(self.fc2(x))
+        probs = F.softmax(self.fc3(x),dim=1)
+        return probs
+class ActorNormal(nn.Module):
+    def __init__(self, n_states,n_actions, hidden_dim=256):
+        super(ActorNormal, self).__init__()
+        self.fc1 = nn.Linear(n_states, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc3 = nn.Linear(hidden_dim, n_actions)
+        self.fc4 = nn.Linear(hidden_dim, n_actions)
+    def forward(self,x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        mu = torch.tanh(self.fc3(x))
+        sigma = F.softplus(self.fc4(x)) + 0.001 # avoid 0
+        return mu,sigma
 # class ActorSoftmax(nn.Module):
 #     def __init__(self,input_dim, output_dim,
 #             hidden_dim=256):
@@ -56,8 +80,8 @@ class ActorSoftmax(nn.Module):
 #                 nn.Softmax(dim=-1)
 #         )
 #     def forward(self, state):
-#         dist = self.actor(state)
-#         dist = Categorical(dist)
+#         probs = self.actor(state)
+#         dist = Categorical(probs)
 #         return dist
 class Critic(nn.Module):
     def __init__(self,input_dim,output_dim,hidden_dim=256):
@@ -69,7 +93,7 @@ class Critic(nn.Module):
     def forward(self,x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        value = self.fc3(value)
+        value = self.fc3(x)
         return value
 
 class ActorCriticSoftmax(nn.Module):
