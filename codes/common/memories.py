@@ -197,8 +197,7 @@ class ReplayTree:
         is_weights /= is_weights.max()
 
         # print ("is_weights = ", is_weights)
-        state, action, reward, next_state, done =  zip(*batch) # 
-        return state, action, reward, next_state, done, idxs, is_weights
+        return zip(*batch), idxs, is_weights
     
     def batch_update(self, tree_idx, abs_errors):
         abs_errors += self.epsilon
