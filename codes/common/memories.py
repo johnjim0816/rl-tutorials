@@ -79,21 +79,17 @@ class SumTree:
     This SumTree code is a modified version and the original code is from:
     https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/5.2_Prioritized_Replay_DQN/RL_brain.py
     '''
-
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.data_pointer = 0
         self.n_entries = 0
         self.tree = np.zeros(2 * capacity - 1)
-
         self.data = np.zeros(capacity, dtype = object)
 
     def update(self, tree_idx, p):
+        '''Update the sampling weight
+        '''
         change = p - self.tree[tree_idx]
-
-        # print ("change=", change)
-        # print ("self.tree.shape=", self.tree.shape)
-        # print ("self.tree[tree_idx]=", self.tree[tree_idx])
         self.tree[tree_idx] = p
 
         while tree_idx != 0:
@@ -101,6 +97,8 @@ class SumTree:
             self.tree[tree_idx] += change
 
     def add(self, p, data):
+        '''Adding new data to the sumTree
+        '''
         tree_idx = self.data_pointer + self.capacity - 1
         self.data[self.data_pointer] = data
         # print ("tree_idx=", tree_idx)
@@ -115,6 +113,8 @@ class SumTree:
             self.n_entries += 1
 
     def get_leaf(self, v):
+        '''Sampling the data
+        '''
         parent_idx = 0
         while True:
             cl_idx = 2 * parent_idx + 1
@@ -143,6 +143,7 @@ class ReplayTree:
         self.tree = SumTree(capacity)
         self.abs_err_upper = 1.
 
+        ## hyper parameter for calculating the importance sampling weight
         self.beta_increment_per_sampling = 0.001
         self.alpha = 0.6
         self.beta = 0.4
@@ -155,12 +156,14 @@ class ReplayTree:
         return self.tree.total()
 
     def push(self, error, sample):
+        '''Push the sample into the replay according to the importance sampling weight
+        '''
         p = (np.abs(error) + self.epsilon) ** self.alpha
         self.tree.add(p, sample)         
 
 
     def sample(self, batch_size):
-        '''This sample code is a modified version and the original code is from:
+        '''This is for sampling a batch data and the original code is from:
         https://github.com/rlcode/per/blob/master/prioritized_memory.py
         '''
         pri_segment = self.tree.total() / batch_size
@@ -190,10 +193,11 @@ class ReplayTree:
         is_weights = np.power(self.tree.n_entries * sampling_probabilities, -self.beta)
         is_weights /= is_weights.max()
 
-        # print ("is_weights = ", is_weights)
         return zip(*batch), idxs, is_weights
     
     def batch_update(self, tree_idx, abs_errors):
+        '''Update the importance sampling weight
+        '''
         abs_errors += self.epsilon
 
         clipped_errors = np.minimum(abs_errors, self.abs_err_upper)
