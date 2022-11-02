@@ -58,71 +58,73 @@ class Main(Launcher):
         agent = PER_DQN(model,memory,cfg)  # create agent
         return env, agent
 
-    def train(self,cfg, env, agent,logger):
+    def train_one_episode(self, i_ep, env, agent, cfg, logger):
         ''' 训练
         '''
-        logger.info("Start training!")
-        logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
-        rewards = []  # record rewards for all episodes
-        steps = [] # record steps for all episodes
-        for i_ep in range(cfg.train_eps):   
-            ep_reward = 0  # reward per episode
-            ep_step = 0
-            state = env.reset()  # reset and obtain initial state
-            for _ in range(cfg.max_steps):
-                ep_step += 1
-                action = agent.sample_action(state)  # sample action
-                next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions under new_step_api of OpenAI Gym
+        # exit()
+        # logger.info("Start training!")
+        # logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
+        # rewards = []  # record rewards for all episodes
+        # steps = [] # record steps for all episodes
+        # for i_ep in range(cfg.train_eps):   
+        ep_reward = 0  # reward per episode
+        ep_step = 0
+        state = env.reset()  # reset and obtain initial state
+        for _ in range(cfg.max_steps):
+            ep_step += 1
+            action = agent.sample_action(state)  # sample action
+            next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions under new_step_api of OpenAI Gym
 
-                policy_val = agent.policy_net(torch.tensor(state, device = cfg.device))[action]
-                target_val = agent.target_net(torch.tensor(next_state, device = cfg.device))
+            policy_val = agent.policy_net(torch.tensor(state, device = cfg.device))[action]
+            target_val = agent.target_net(torch.tensor(next_state, device = cfg.device))
 
-                if terminated:
-                    error = abs(policy_val - reward)
-                else:
-                    error = abs(policy_val - reward - cfg.gamma * torch.max(target_val))
-                agent.memory.push(error.cpu().detach().numpy(), (state, action, reward,
-                                next_state, terminated))  # save transitions
+            if terminated:
+                error = abs(policy_val - reward)
+            else:
+                error = abs(policy_val - reward - cfg.gamma * torch.max(target_val))
+            agent.memory.push(error.cpu().detach().numpy(), (state, action, reward,
+                            next_state, terminated))  # save transitions
 
-                # agent.memory.push(state, action, reward, next_state, terminated)
-                state = next_state  # update next state for env
-                agent.update()  # update agent
-                ep_reward += reward  #
-                if terminated:
-                    break
-            if (i_ep + 1) % cfg.target_update == 0:  # target net update, target_update means "C" in pseucodes
-                agent.target_net.load_state_dict(agent.policy_net.state_dict())
-            steps.append(ep_step)
-            rewards.append(ep_reward)
-            logger.info(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}: Epislon: {agent.epsilon:.3f}')
-        logger.info("Finish training!")
-        env.close()
-        res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
-        return res_dic
+            # agent.memory.push(state, action, reward, next_state, terminated)
+            state = next_state  # update next state for env
+            agent.update()  # update agent
+            ep_reward += reward  #
+            if terminated:
+                break
+        if (i_ep + 1) % cfg.target_update == 0:  # target net update, target_update means "C" in pseucodes
+            agent.target_net.load_state_dict(agent.policy_net.state_dict())
+        # steps.append(ep_step)
+        # rewards.append(ep_reward)
+        # logger.info(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}: Epislon: {agent.epsilon:.3f}')
+        # logger.info("Finish training!")
+        # env.close()
+        # res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+        return agent, ep_reward, ep_step
 
-    def test(self,cfg, env, agent,logger):
-        logger.info("Start testing!")
-        logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
-        rewards = []  # record rewards for all episodes
-        steps = [] # record steps for all episodes
-        for i_ep in range(cfg.test_eps):
-            ep_reward = 0  # reward per episode
-            ep_step = 0
-            state = env.reset()  # reset and obtain initial state
-            for _ in range(cfg.max_steps):
-                ep_step+=1
-                action = agent.predict_action(state)  # predict action
-                next_state, reward, terminated, _, _ = env.step(action)  
-                state = next_state  
-                ep_reward += reward 
-                if terminated:
-                    break
-            steps.append(ep_step)
-            rewards.append(ep_reward)
-            logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}")
-        logger.info("Finish testing!")
-        env.close()
-        return {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+    def test_one_episode(self, env, agent, cfg, logger):
+        # logger.info("Start testing!")
+        # logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
+        # rewards = []  # record rewards for all episodes
+        # steps = [] # record steps for all episodes
+        # for i_ep in range(cfg.test_eps):
+        ep_reward = 0  # reward per episode
+        ep_step = 0
+        state = env.reset()  # reset and obtain initial state
+        for _ in range(cfg.max_steps):
+            ep_step+=1
+            action = agent.predict_action(state)  # predict action
+            next_state, reward, terminated, _, _ = env.step(action)  
+            state = next_state  
+            ep_reward += reward 
+            if terminated:
+                break
+        # steps.append(ep_step)
+        # rewards.append(ep_reward)
+        # logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}")
+        # logger.info("Finish testing!")
+        # env.close()
+        # res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
+        return agent, ep_reward, ep_step
 
 
 if __name__ == "__main__":

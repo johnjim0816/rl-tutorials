@@ -2,6 +2,8 @@ general_cfg:
   algo_name: PER_DQN
   device: cuda
   env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
   load_checkpoint: false
   load_path: tasks
   max_steps: 200

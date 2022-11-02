@@ -158,12 +158,6 @@ class ReplayTree:
         p = (np.abs(error) + self.epsilon) ** self.alpha
         self.tree.add(p, sample)         
 
-    # def push(self, state, action, reward, next_state, terminated):
-    #     max_p = np.max(self.tree.tree[-self.tree.capacity:])
-    #     if max_p == 0:
-    #         max_p = self.abs_err_upper
-    #     self.tree.add(max_p, (state, action, reward, next_state, terminated)) 
-
 
     def sample(self, batch_size):
         '''This sample code is a modified version and the original code is from:
