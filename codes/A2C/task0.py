@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 01:19:43
 LastEditor: JiangJi
-LastEditTime: 2022-10-31 23:31:49
+LastEditTime: 2022-11-01 01:21:06
 Discription: 
 '''
 import sys,os
@@ -15,8 +15,6 @@ parent_path = os.path.dirname(curr_path)  # parent path
 sys.path.append(parent_path)  # add path to system path
 
 import gym
-import torch
-import numpy as np
 from common.utils import all_seed,merge_class_attrs
 from common.launcher import Launcher
 from common.memories import PGReplay
