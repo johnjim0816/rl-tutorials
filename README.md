@@ -93,12 +93,14 @@ pip install -r requirements.txt
 
 对于[codes](./codes/)，`cd`到对应的算法目录下，例如`DQN`：
 
-```python task_0.py
+```bash
+python task_0.py
 ```
 
 或者加载配置文件：
 
-```python task_cartpole_v1.py --yaml configs/CartPole-v1_DQN_Train.yaml
+```bash
+python task0.py --yaml configs/CartPole-v1_DQN_Train.yaml
 ```
 
 对于[Jupyter Notebook](./notebooks/)：
