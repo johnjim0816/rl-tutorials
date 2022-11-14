@@ -28,6 +28,7 @@
 |     [Monte Carlo](codes/MonteCarlo)     |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |            [DQN](codes/DQN)             |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |                 DQN-CNN                 |                                                              |                                                      | 待更 |
+|     [DuelingDQN](codes/DuelingDQN)      |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |        [PER_DQN](codes/PER_DQN)         |      [PER DQN Paper](https://arxiv.org/abs/1511.05952)       | [wangzhongren](https://github.com/wangzhongren-code) |      |
 |      [DoubleDQN](codes/DoubleDQN)       |     [Double DQN Paper](https://arxiv.org/abs/1509.06461)     |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |          [SoftQ](codes/SoftQ)           |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |    [johnjim0816](https://github.com/johnjim0816)     |      |
