@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-12 11:09:54
 LastEditor: JiangJi
-LastEditTime: 2022-11-14 23:59:02
+LastEditTime: 2022-11-15 00:11:24
 Discription: CartPole-v1,Acrobot-v1
 '''
 import sys,os
@@ -48,7 +48,7 @@ class DuelingNet(nn.Module):
         
     def forward(self, state):
         x = self.hidden_layer(state)
-        advantage = self.hidden_layer(x)
+        advantage = self.advantage_layer(x)
         value     = self.value_layer(x)
         return value + advantage - advantage.mean()
 
@@ -62,8 +62,7 @@ class Main(Launcher):
         '''
         register_env(cfg.env_name)
         env = gym.make(cfg.env_name,new_step_api=True)  # create env
-        if cfg.seed !=0: # set random seed
-            all_seed(env,seed=cfg.seed) 
+        all_seed(env,seed=cfg.seed) 
         try: # state dimension
             n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
         except AttributeError:

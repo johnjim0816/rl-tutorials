@@ -5,11 +5,12 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-11-14 23:50:59
 LastEditor: JiangJi
-LastEditTime: 2022-11-15 00:06:05
+LastEditTime: 2022-11-15 00:08:01
 Discription: 
 '''
 import torch
 import torch.nn as nn
+import torch.optim as optim
 import math,random
 import numpy as np
 
@@ -37,7 +38,7 @@ class DuelingDQN:
         self.memory = memory 
         self.update_flag = False 
         
-    def choose_action(self,state):
+    def sample_action(self,state):
         self.sample_count += 1
         # epsilon must decay(linear,exponential and etc.) for balancing exploration and exploitation
         self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
