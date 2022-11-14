@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-09-26 16:11:36
 LastEditor: JiangJi
-LastEditTime: 2022-10-31 00:36:37
+LastEditTime: 2022-11-14 13:29:41
 Discription: PPO-clip
 '''
 
@@ -82,7 +82,8 @@ class PPO:
                 states = torch.tensor(state_arr[batch], dtype=torch.float).to(self.device)
                 old_probs = torch.tensor(old_prob_arr[batch]).to(self.device)
                 actions = torch.tensor(action_arr[batch]).to(self.device)
-                dist = self.actor(states)
+                probs = self.actor(states)
+                dist = Categorical(probs)
                 critic_value = self.critic(states)
                 critic_value = torch.squeeze(critic_value)
                 new_probs = dist.log_prob(actions)
@@ -102,18 +103,18 @@ class PPO:
                 self.actor_optimizer.step()
                 self.critic_optimizer.step()
         self.memory.clear()  
-    def save_model(self,path):
+    def save_model(self,fpath):
         from pathlib import Path
         # create path
-        Path(path).mkdir(parents=True, exist_ok=True)
-        actor_checkpoint = os.path.join(path, 'ppo_actor.pt')
-        critic_checkpoint= os.path.join(path, 'ppo_critic.pt')
+        Path(fpath).mkdir(parents=True, exist_ok=True)
+        actor_checkpoint = os.path.join(fpath, 'ppo_actor.pt')
+        critic_checkpoint= os.path.join(fpath, 'ppo_critic.pt')
         torch.save(self.actor.state_dict(), actor_checkpoint)
         torch.save(self.critic.state_dict(), critic_checkpoint)
-    def load_model(self,path):
-        actor_checkpoint = os.path.join(path, 'ppo_actor.pt')
-        critic_checkpoint= os.path.join(path, 'ppo_critic.pt')
-        self.actor.load_state_dict(torch.load(actor_checkpoint)) 
-        self.critic.load_state_dict(torch.load(critic_checkpoint))  
+    def load_model(self,fpath):
+        actor_checkpoint = torch.load(os.path.join(fpath, 'ppo_actor.pt'), map_location=self.device)
+        critic_checkpoint = torch.load(os.path.join(fpath, 'ppo_critic.pt'), map_location=self.device)
+        self.actor.load_state_dict(actor_checkpoint) 
+        self.critic.load_state_dict(critic_checkpoint)  
 
 

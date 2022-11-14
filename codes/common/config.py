@@ -17,7 +17,7 @@ class GeneralConfig(DefaultConfig):
         self.eval_per_episode = 5 # evaluation per episode
         self.max_steps = 200 # max steps for each episode
         self.load_checkpoint = False
-        self.load_path = None # path to load model
+        self.load_path = "tasks" # path to load model
         self.show_fig = False # show figure or not
         self.save_fig = True # save figure or not
         
