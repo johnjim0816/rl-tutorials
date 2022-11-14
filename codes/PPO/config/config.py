@@ -5,14 +5,14 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-10-30 11:30:56
 LastEditor: JiangJi
-LastEditTime: 2022-10-31 00:33:15
+LastEditTime: 2022-11-14 13:12:58
 Discription: default parameters of PPO
 '''
 from common.config import GeneralConfig,AlgoConfig
 
 class GeneralConfigPPO(GeneralConfig):
     def __init__(self) -> None:
-        self.env_name = "CartPole-v0"
+        self.env_name = "CartPole-v1"
         self.algo_name = "PPO"
         self.seed = 1
         self.device = "cuda"

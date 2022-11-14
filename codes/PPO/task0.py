@@ -18,7 +18,7 @@ from common.memories import PGReplay
 from common.launcher import Launcher
 from envs.register import register_env
 from ppo2 import PPO
-from config,config import GeneralConfigPPO,AlgoConfigPPO
+from config.config import GeneralConfigPPO,AlgoConfigPPO
 class PPOMemory:
     def __init__(self, batch_size):
         self.states = []
@@ -62,7 +62,7 @@ class Main(Launcher):
         ''' create env and agent
         '''
         register_env(cfg.env_name)
-        env = gym.make(cfg.env_name,new_step_api=False)  # create env
+        env = gym.make(cfg.env_name,new_step_api=True)  # create env
         if cfg.seed !=0: # set random seed
             all_seed(env,seed=cfg.seed) 
         try: # state dimension
@@ -75,7 +75,7 @@ class Main(Launcher):
         setattr(cfg, 'n_states', n_states)
         setattr(cfg, 'n_actions', n_actions)
         models = {'Actor':ActorSoftmax(n_states,n_actions, hidden_dim = cfg.actor_hidden_dim),'Critic':Critic(n_states,1,hidden_dim=cfg.critic_hidden_dim)}
-        memory =  PGReplay # replay buffer
+        memory =  PPOMemory(cfg.batch_size) # replay buffer
         agent = PPO(models,memory,cfg)  # create agent
         return env, agent
     def train_one_episode(self, env, agent, cfg):
@@ -84,11 +84,11 @@ class Main(Launcher):
         state = env.reset()
         for _ in range(cfg.max_steps):
             action, prob, val = agent.sample_action(state)
-            next_state, reward, terminated, _ = env.step(action)
+            next_state, reward, terminated, truncated , info = env.step(action)
             ep_reward += reward
             ep_step += 1
-            agent.memory.push((state, action, prob, val, reward, terminated))
-            if ep_step % cfg['update_fre'] == 0:
+            agent.memory.push(state, action, prob, val, reward, terminated)
+            if ep_step % cfg.update_fre == 0:
                 agent.update()
             state = next_state
             if terminated:
@@ -100,7 +100,7 @@ class Main(Launcher):
         state = env.reset()
         for _ in range(cfg.max_steps):
             action, prob, val = agent.sample_action(state)
-            next_state, reward, terminated, _ = env.step(action)
+            next_state, reward, terminated, truncated , info = env.step(action)
             ep_reward += reward
             ep_step += 1
             state = next_state
