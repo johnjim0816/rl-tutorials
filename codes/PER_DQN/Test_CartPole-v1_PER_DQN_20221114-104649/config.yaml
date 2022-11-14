@@ -1,11 +1,13 @@
 general_cfg:
   algo_name: PER_DQN
-  device: cuda
+  device: cpu
   env_name: CartPole-v1
-  mode: test
+  eval_eps: 10
+  eval_per_episode: 5
   load_checkpoint: true
-  load_path: Train_CartPole-v1_PER_DQN_20221026-054757
+  load_path: Train_CartPole-v1_PER_DQN_20221113-162804
   max_steps: 200
+  mode: test
   save_fig: true
   seed: 0
   show_fig: false
@@ -18,5 +20,6 @@ algo_cfg:
   epsilon_end: 0.01
   epsilon_start: 0.95
   gamma: 0.95
+  hidden_dim: 256
   lr: 0.0001
   target_update: 4

@@ -5,7 +5,7 @@ Author: DingLi
 Email: wangzhongren@sjtu.edu.cn
 Date: 2022-10-31 22:54:00
 LastEditor: DingLi
-LastEditTime: 2022-10-31 22:54:25
+LastEditTime: 2022-11-14 10:43:18
 Discription: CartPole-v1
 '''
 
@@ -123,6 +123,8 @@ class PER_DQN:
         for param in self.policy_net.parameters():  
             param.grad.data.clamp_(-1, 1)
         self.optimizer.step() 
+        if self.sample_count % self.target_update == 0: # target net update, target_update means "C" in pseucodes
+            self.target_net.load_state_dict(self.policy_net.state_dict())  
 
     def save_model(self, fpath):
         from pathlib import Path
@@ -131,6 +133,7 @@ class PER_DQN:
         torch.save(self.target_net.state_dict(), f"{fpath}/checkpoint.pt")
 
     def load_model(self, fpath):
-        self.target_net.load_state_dict(torch.load(f"{fpath}/checkpoint.pt"))
+        checkpoint = torch.load(f"{fpath}/checkpoint.pt",map_location=self.device)
+        self.target_net.load_state_dict(checkpoint)
         for target_param, param in zip(self.target_net.parameters(), self.policy_net.parameters()):
             param.data.copy_(target_param.data)

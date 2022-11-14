@@ -5,7 +5,7 @@ Author: DingLi
 Email: wangzhongren@sjtu.edu.cn
 Date: 2022-10-31 22:54:00
 LastEditor: DingLi
-LastEditTime: 2022-10-31 22:54:25
+LastEditTime: 2022-11-14 10:45:11
 Discription: CartPole-v1
 '''
 
@@ -41,8 +41,7 @@ class Main(Launcher):
         '''
         register_env(cfg.env_name)
         env = gym.make(cfg.env_name,new_step_api=True)  # create env
-        if cfg.seed !=0: # set random seed
-            all_seed(env,seed=cfg.seed) 
+        all_seed(env,seed=cfg.seed) # set random seed
         try: # state dimension
             n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
         except AttributeError:
@@ -58,16 +57,9 @@ class Main(Launcher):
         agent = PER_DQN(model,memory,cfg)  # create agent
         return env, agent
 
-    def train_one_episode(self, i_ep, env, agent, cfg, logger):
-        ''' 训练
+    def train_one_episode(self,env, agent, cfg):
+        ''' train one episode
         '''
-        # exit()
-        # logger.info("Start training!")
-        # logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
-        # rewards = []  # record rewards for all episodes
-        # steps = [] # record steps for all episodes
-        # for i_ep in range(cfg.train_eps):   
-        ep_reward = 0  # reward per episode
         ep_step = 0
         state = env.reset()  # reset and obtain initial state
         for _ in range(cfg.max_steps):
@@ -84,29 +76,14 @@ class Main(Launcher):
                 error = abs(policy_val - reward - cfg.gamma * torch.max(target_val))
             agent.memory.push(error.cpu().detach().numpy(), (state, action, reward,
                             next_state, terminated))  # save transitions
-
-            # agent.memory.push(state, action, reward, next_state, terminated)
             state = next_state  # update next state for env
             agent.update()  # update agent
             ep_reward += reward  #
             if terminated:
                 break
-        if (i_ep + 1) % cfg.target_update == 0:  # target net update, target_update means "C" in pseucodes
-            agent.target_net.load_state_dict(agent.policy_net.state_dict())
-        # steps.append(ep_step)
-        # rewards.append(ep_reward)
-        # logger.info(f'Episode: {i_ep+1}/{cfg.train_eps}, Reward: {ep_reward:.2f}: Epislon: {agent.epsilon:.3f}')
-        # logger.info("Finish training!")
-        # env.close()
-        # res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
         return agent, ep_reward, ep_step
 
-    def test_one_episode(self, env, agent, cfg, logger):
-        # logger.info("Start testing!")
-        # logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
-        # rewards = []  # record rewards for all episodes
-        # steps = [] # record steps for all episodes
-        # for i_ep in range(cfg.test_eps):
+    def test_one_episode(self, env, agent, cfg):
         ep_reward = 0  # reward per episode
         ep_step = 0
         state = env.reset()  # reset and obtain initial state
@@ -118,12 +95,6 @@ class Main(Launcher):
             ep_reward += reward 
             if terminated:
                 break
-        # steps.append(ep_step)
-        # rewards.append(ep_reward)
-        # logger.info(f"Episode: {i_ep+1}/{cfg.test_eps}, Reward: {ep_reward:.2f}")
-        # logger.info("Finish testing!")
-        # env.close()
-        # res_dic = {'episodes':range(len(rewards)),'rewards':rewards,'steps':steps}
         return agent, ep_reward, ep_step
 
 
