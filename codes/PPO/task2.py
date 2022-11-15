@@ -5,15 +5,11 @@ parent_path = os.path.dirname(curr_path)  # parent path
 sys.path.append(parent_path)  # add path to system path
 
 import gym
-import torch
-import datetime
 import numpy as np
-import argparse
-import torch.nn as nn
 
 
 from common.utils import all_seed,merge_class_attrs
-from common.models import ActorNormal, Critic
+from common.models import ActorSoftmax, Critic
 from common.memories import PGReplay
 from common.launcher import Launcher
 from envs.register import register_env
@@ -69,17 +65,12 @@ class Main(Launcher):
             n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
         except AttributeError:
             n_states = env.observation_space.shape[0] # print(hasattr(env.observation_space, 'shape'))
-        try:
-            n_actions = env.action_space.n  # action dimension
-        except AttributeError:
-            n_actions = env.action_space.shape[0]
-            logger.info(f"action_bound: {abs(env.action_space.low.item())}") 
-            setattr(cfg, 'action_bound', abs(env.action_space.low.item()))
+        n_actions = env.action_space.n  # action dimension
         logger.info(f"n_states: {n_states}, n_actions: {n_actions}") # print info
         # update to cfg paramters
         setattr(cfg, 'n_states', n_states)
         setattr(cfg, 'n_actions', n_actions)
-        models = {'Actor':ActorNormal(n_states,n_actions, hidden_dim = cfg.actor_hidden_dim),'Critic':Critic(n_states,1,hidden_dim=cfg.critic_hidden_dim)}
+        models = {'Actor':ActorSoftmax(n_states,n_actions, hidden_dim = cfg.actor_hidden_dim),'Critic':Critic(n_states,1,hidden_dim=cfg.critic_hidden_dim)}
         memory =  PPOMemory(cfg.batch_size) # replay buffer
         agent = PPO(models,memory,cfg)  # create agent
         return env, agent

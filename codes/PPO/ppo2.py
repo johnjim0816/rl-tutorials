@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-09-26 16:11:36
 LastEditor: JiangJi
-LastEditTime: 2022-11-14 13:29:41
+LastEditTime: 2022-11-15 09:44:06
 Discription: PPO-clip
 '''
 
@@ -13,13 +13,15 @@ import os
 import numpy as np
 import torch 
 import torch.optim as optim
-from torch.distributions.categorical import Categorical
+from torch.distributions import Categorical,Normal
 
 
 class PPO:
     def __init__(self, models,memory,cfg):
         self.gamma = cfg.gamma
         self.continuous = cfg.continuous
+        if hasattr(cfg,'action_bound'):
+            self.action_bound = cfg.action_bound
         self.policy_clip = cfg.policy_clip
         self.n_epochs = cfg.n_epochs
         self.batch_size = cfg.batch_size
@@ -33,33 +35,47 @@ class PPO:
         self.loss = 0
 
     def sample_action(self, state):
-        state = np.array([state]) # 先转成数组再转tensor更高效
-        state = torch.tensor(state, dtype=torch.float).to(self.device)
-        probs = self.actor(state)
-        dist = Categorical(probs)
-        value = self.critic(state)
-        action = dist.sample()
-        probs = torch.squeeze(dist.log_prob(action)).item()
+        state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         if self.continuous:
-            action = torch.tanh(action)
+            mu, sigma = self.actor(state)
+            dist = Normal(self.action_bound * mu.view(1,), sigma.view(1,))
+            action = dist.sample()
+            value = self.critic(state)
+            # self.entropy = - np.sum(np.mean(dist.detach().cpu().numpy()) * np.log(dist.detach().cpu().numpy()))
+            value = value.detach().cpu().numpy().squeeze(0).item() # detach() to avoid gradient
+            log_probs = dist.log_prob(action).item() # Tensor([0.])
+            # self.entropy = dist.entropy().cpu().detach().numpy().squeeze(0) # detach() to avoid gradient
+            return action.cpu().detach().numpy(),log_probs,value
         else:
+            probs = self.actor(state)
+            dist = Categorical(probs)
+            value = self.critic(state)
+            action = dist.sample()
+            probs = torch.squeeze(dist.log_prob(action)).item()
             action = torch.squeeze(action).item()
-        value = torch.squeeze(value).item()
-        return action, probs, value
+            value = torch.squeeze(value).item()
+            return action, probs, value
     @torch.no_grad()
     def predict_action(self, state):
-        state = np.array([state]) # 先转成数组再转tensor更高效
-        state = torch.tensor(state, dtype=torch.float).to(self.device)
-        dist = self.actor(state)
-        value = self.critic(state)
-        action = dist.sample()
-        probs = torch.squeeze(dist.log_prob(action)).item()
+        state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         if self.continuous:
-            action = torch.tanh(action)
+            mu, sigma = self.actor(state)
+            dist = Normal(self.action_bound * mu.view(1,), sigma.view(1,))
+            action = dist.sample()
+            value = self.critic(state)
+            # self.entropy = - np.sum(np.mean(dist.detach().cpu().numpy()) * np.log(dist.detach().cpu().numpy()))
+            # value = value.detach().cpu().numpy().squeeze(0)[0] # detach() to avoid gradient
+            log_probs = dist.log_prob(action).item() # Tensor([0.])
+            # self.entropy = dist.entropy().cpu().detach().numpy().squeeze(0) # detach() to avoid gradient
+            return action.cpu().numpy(),log_probs,value.cpu()
         else:
+            dist = self.actor(state)
+            value = self.critic(state)
+            action = dist.sample()
+            probs = torch.squeeze(dist.log_prob(action)).item()
             action = torch.squeeze(action).item()
-        value = torch.squeeze(value).item()
-        return action, probs, value
+            value = torch.squeeze(value).item()
+            return action, probs, value
 
     def update(self):
         for _ in range(self.n_epochs):
