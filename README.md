@@ -18,7 +18,12 @@
 * ```[algorithm_name].py```：即保存算法的脚本，例如```dqn.py```，每种算法都会有一定的基础模块，例如```Replay Buffer```、```MLP```(多层感知机)等等；
 * ```task.py```: 即保存任务的脚本，基本包括基于```argparse```模块的参数，训练以及测试函数等等，其中训练函数即```train```遵循伪代码而设计，想读懂代码可从该函数入手；
 * ```utils.py```：该脚本用于保存诸如存储结果以及画图的软件，在实际项目或研究中，推荐大家使用```Tensorboard```来保存结果，然后使用诸如```matplotlib```以及```seabron```来进一步画图。
-## 2. 算法列表
+
+## 2. 算法环境
+
+算法环境说明请跳转[env](./codes/envs/README.md)
+
+## 3. 算法列表
 
 注：点击对应的名称会跳到[codes](./codes/)下对应的算法中，其他版本还请读者自行翻阅
 
@@ -37,9 +42,6 @@
 |                  SAC-S                  |       [SAC-S paper](https://arxiv.org/abs/1801.01290)        |                                                      |      |
 |                  DSAC                   | [DSAC paper](https://paperswithcode.com/paper/addressing-value-estimation-errors-in) |                                                      | 待更 |
 
-## 3. 算法环境
-
-算法环境说明请跳转[env](./codes/envs/README.md)
 
 ## 4. 运行环境
 
