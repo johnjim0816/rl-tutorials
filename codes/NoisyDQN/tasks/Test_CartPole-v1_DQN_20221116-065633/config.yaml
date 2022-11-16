@@ -1,0 +1,28 @@
+general_cfg:
+  algo_name: DQN
+  device: cuda
+  env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: true
+  load_path: Train_CartPole-v1_DQN_20221116-065034
+  max_steps: 200
+  mode: test
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 200
+algo_cfg:
+  alpha: 0.6
+  batch_size: 64
+  beta_frames: 600
+  beta_start: 0.4
+  buffer_size: 100000
+  epsilon_decay: 500
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  gamma: 0.95
+  hidden_dim: 256
+  lr: 0.0001
+  target_update: 800

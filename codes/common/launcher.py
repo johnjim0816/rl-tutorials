@@ -55,7 +55,7 @@ class Launcher:
     #     return res_dic
     def create_path(self,cfg):
         curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
-        self.task_dir = f"{cfg.mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
+        self.task_dir = f"tasks/{cfg.mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
         Path(self.task_dir).mkdir(parents=True, exist_ok=True)
         self.model_dir = f"{self.task_dir}/models/"
         self.res_dir = f"{self.task_dir}/results/"
@@ -70,7 +70,7 @@ class Launcher:
         logger = get_logger(self.log_dir) # create the logger
         env, agent = self.env_agent_config(cfg,logger)
         if cfg.load_checkpoint:
-            agent.load_model(f"{cfg.load_path}/models/")
+            agent.load_model(f"tasks/{cfg.load_path}/models/")
         logger.info(f"Start {cfg.mode}ing!")
         logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
         rewards = []  # record rewards for all episodes
