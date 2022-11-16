@@ -31,11 +31,12 @@
 | :-------------------------------------: | :----------------------------------------------------------: | :--------------------------------------------------: | :--: |
 | [Policy Gradient](codes/PolicyGradient) | [Policy Gradient paper](https://proceedings.neurips.cc/paper/1999/file/464d828b85b0bed98e80ade0a5c43b0f-Paper.pdf) |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |     [Monte Carlo](codes/MonteCarlo)     |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
-|            [DQN](codes/DQN)             |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
+|            [DQN](codes/DQN)             | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)  |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |                 DQN-CNN                 |                                                              |                                                      | 待更 |
-|     [DuelingDQN](codes/DuelingDQN)      |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
-|        [PER_DQN](codes/PER_DQN)         |      [PER DQN Paper](https://arxiv.org/abs/1511.05952)       | [wangzhongren](https://github.com/wangzhongren-code) |      |
 |      [DoubleDQN](codes/DoubleDQN)       |     [Double DQN Paper](https://arxiv.org/abs/1509.06461)     |    [johnjim0816](https://github.com/johnjim0816)     |      |
+|     [DuelingDQN](codes/DuelingDQN)      |     [DuelingDQN Paper](https://arxiv.org/abs/1511.06581)     |    [johnjim0816](https://github.com/johnjim0816)     |      |
+|        [PER_DQN](codes/PER_DQN)         |      [PER DQN Paper](https://arxiv.org/abs/1511.05952)       | [wangzhongren](https://github.com/wangzhongren-code) |      |
+|       [NoisyDQN](codes/NoisyDQN)        |     [Noisy DQN Paper](https://arxiv.org/abs/1706.10295)      |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |          [SoftQ](codes/SoftQ)           |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |            [SAC](codes/SAC)             |      [SAC paper](https://arxiv.org/pdf/1812.05905.pdf)       |                                                      |      |
 |        [SAC-Discrete](codes/SAC)        |  [SAC-Discrete paper](https://arxiv.org/pdf/1910.07207.pdf)  |                                                      |      |
