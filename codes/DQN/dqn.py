@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-10-31 00:07:19
+LastEditTime: 2022-11-17 15:19:55
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -27,8 +27,6 @@ class DQN:
         self.gamma = cfg.gamma  
         ## e-greedy parameters
         self.sample_count = 0  # sample count for epsilon decay
-        self.epsilon = cfg.epsilon_start
-        self.sample_count = 0  
         self.epsilon_start = cfg.epsilon_start
         self.epsilon_end = cfg.epsilon_end
         self.epsilon_decay = cfg.epsilon_decay

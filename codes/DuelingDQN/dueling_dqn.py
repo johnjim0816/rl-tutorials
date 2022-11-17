@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-11-14 23:50:59
 LastEditor: JiangJi
-LastEditTime: 2022-11-15 00:08:01
+LastEditTime: 2022-11-17 15:20:15
 Discription: 
 '''
 import torch
@@ -21,8 +21,6 @@ class DuelingDQN:
         self.gamma = cfg.gamma  
         ## e-greedy parameters
         self.sample_count = 0  # sample count for epsilon decay
-        self.epsilon = cfg.epsilon_start
-        self.sample_count = 0  
         self.epsilon_start = cfg.epsilon_start
         self.epsilon_end = cfg.epsilon_end
         self.epsilon_decay = cfg.epsilon_decay
