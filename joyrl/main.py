@@ -96,7 +96,6 @@ class Main(object):
         cfg = merge_class_attrs(cfg,self.cfgs['algo_cfg'])
         self.print_cfgs(cfg) # print the configuration
         self.create_dirs(cfg) # create dirs
-        print("Hello World")
         logger = get_logger(self.log_dir) # create the logger
         env = self.env_config(cfg,logger) # configure environment
         agent_mod = __import__(f"algos.{cfg.algo_name}.agent", fromlist=['Agent'])
