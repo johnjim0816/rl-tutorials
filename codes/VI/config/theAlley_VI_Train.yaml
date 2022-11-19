@@ -1,0 +1,22 @@
+general_cfg:
+  algo_name: VI
+  device: cpu
+  env_name: theAlley
+  mode: train
+  load_checkpoint: false
+  load_path: Train_theAlley_VI_20221119-140705
+  max_steps: 200
+  save_fig: true
+  seed: 0
+  show_fig: false
+  test_eps: 10
+  train_eps: 200
+algo_cfg:
+  batch_size: 64
+  buffer_size: 100000
+  epsilon_decay: 500
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  gamma: 0.95
+  lr: 0.0001
+  target_update: 4

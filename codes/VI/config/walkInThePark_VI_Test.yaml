@@ -1,0 +1,22 @@
+general_cfg:
+  algo_name: VI
+  device: cpu
+  env_name: walkInThePark
+  mode: test
+  load_checkpoint: false
+  load_path: Train_walkInThePark_VI_20221119-140741
+  max_steps: 100000
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 100
+algo_cfg:
+  batch_size: 128
+  buffer_size: 200000
+  epsilon_decay: 500
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  gamma: 0.95
+  lr: 0.002 
+  target_update: 4
