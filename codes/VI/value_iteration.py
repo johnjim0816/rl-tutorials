@@ -85,7 +85,3 @@ class VI:
 
     def load_model(self, fpath):
         self.policy = torch.load(f"{fpath}checkpoint.pt")
-        
-
-if __name__=="__main__":
-    agent = VI()
