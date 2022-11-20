@@ -39,7 +39,6 @@ class Agent:
         ## e-greedy parameters
         self.sample_count = 0  # sample count for epsilon decay
         self.epsilon = cfg.epsilon_start
-        self.sample_count = 0  
         self.epsilon_start = cfg.epsilon_start
         self.epsilon_end = cfg.epsilon_end
         self.epsilon_decay = cfg.epsilon_decay

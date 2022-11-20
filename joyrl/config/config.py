@@ -10,7 +10,7 @@ class MergedConfig:
 class GeneralConfig(DefaultConfig):
     def __init__(self) -> None:
         self.env_name = "CartPole-v1" # name of environment
-        self.algo_name = "PER_DQN" # name of algorithm
+        self.algo_name = "NoisyDQN" # name of algorithm
         self.mode = "train" # train or test
         self.seed = 0 # random seed
         self.device = "cpu" # device to use
