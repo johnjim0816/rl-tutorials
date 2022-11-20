@@ -17,7 +17,7 @@
 [codes](./assets/)结构主要分为以下几个脚本：
 * ```[algorithm_name].py```：即保存算法的脚本，例如```dqn.py```，每种算法都会有一定的基础模块，例如```Replay Buffer```、```MLP```(多层感知机)等等；
 * ```task.py```: 即保存任务的脚本，基本包括基于```argparse```模块的参数，训练以及测试函数等等，其中训练函数即```train```遵循伪代码而设计，想读懂代码可从该函数入手；
-* ```utils.py```：该脚本用于保存诸如存储结果以及画图的软件，在实际项目或研究中，推荐大家使用```Tensorboard```来保存结果，然后使用诸如```matplotlib```以及```seabron```来进一步画图。
+* ```utils.py```：该脚本用于保存诸如存储结果以及画图的软件，在实际项目或研究中，推荐大家使用```Tensorboard```来保存结果，然后使用诸如```matplotlib```以及```seaborn```来进一步画图。
 
 ## 2. 算法环境
 
@@ -31,11 +31,12 @@
 | :-------------------------------------: | :----------------------------------------------------------: | :--------------------------------------------------: | :--: |
 | [Policy Gradient](codes/PolicyGradient) | [Policy Gradient paper](https://proceedings.neurips.cc/paper/1999/file/464d828b85b0bed98e80ade0a5c43b0f-Paper.pdf) |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |     [Monte Carlo](codes/MonteCarlo)     |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
-|            [DQN](codes/DQN)             |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
+|            [DQN](codes/DQN)             | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)  |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |                 DQN-CNN                 |                                                              |                                                      | 待更 |
-|     [DuelingDQN](codes/DuelingDQN)      |                                                              |    [johnjim0816](https://github.com/johnjim0816)     |      |
-|        [PER_DQN](codes/PER_DQN)         |      [PER DQN Paper](https://arxiv.org/abs/1511.05952)       | [wangzhongren](https://github.com/wangzhongren-code) |      |
 |      [DoubleDQN](codes/DoubleDQN)       |     [Double DQN Paper](https://arxiv.org/abs/1509.06461)     |    [johnjim0816](https://github.com/johnjim0816)     |      |
+|     [DuelingDQN](codes/DuelingDQN)      |     [DuelingDQN Paper](https://arxiv.org/abs/1511.06581)     |    [johnjim0816](https://github.com/johnjim0816)     |      |
+|        [PER_DQN](codes/PER_DQN)         |      [PER DQN Paper](https://arxiv.org/abs/1511.05952)       | [wangzhongren](https://github.com/wangzhongren-code) |      |
+|       [NoisyDQN](codes/NoisyDQN)        |     [Noisy DQN Paper](https://arxiv.org/abs/1706.10295)      |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |          [SoftQ](codes/SoftQ)           |  [Soft Q-learning paper](https://arxiv.org/abs/1702.08165)   |    [johnjim0816](https://github.com/johnjim0816)     |      |
 |            [SAC](codes/SAC)             |      [SAC paper](https://arxiv.org/pdf/1812.05905.pdf)       |                                                      |      |
 |        [SAC-Discrete](codes/SAC)        |  [SAC-Discrete paper](https://arxiv.org/pdf/1910.07207.pdf)  |                                                      |      |
