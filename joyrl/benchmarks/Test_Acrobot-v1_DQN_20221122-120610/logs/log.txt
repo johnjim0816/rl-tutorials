@@ -1,0 +1,14 @@
+2022-11-22 12:06:10 - r - INFO: - n_states: 6, n_actions: 3
+2022-11-22 12:06:13 - r - INFO: - Start testing!
+2022-11-22 12:06:13 - r - INFO: - Env: Acrobot-v1, Algorithm: DQN, Device: cuda
+2022-11-22 12:06:13 - r - INFO: - Episode: 1/10, Reward: -90.000, Step: 91
+2022-11-22 12:06:13 - r - INFO: - Episode: 2/10, Reward: -116.000, Step: 117
+2022-11-22 12:06:13 - r - INFO: - Episode: 3/10, Reward: -120.000, Step: 121
+2022-11-22 12:06:13 - r - INFO: - Episode: 4/10, Reward: -110.000, Step: 111
+2022-11-22 12:06:13 - r - INFO: - Episode: 5/10, Reward: -71.000, Step: 72
+2022-11-22 12:06:13 - r - INFO: - Episode: 6/10, Reward: -72.000, Step: 73
+2022-11-22 12:06:13 - r - INFO: - Episode: 7/10, Reward: -96.000, Step: 97
+2022-11-22 12:06:13 - r - INFO: - Episode: 8/10, Reward: -106.000, Step: 107
+2022-11-22 12:06:13 - r - INFO: - Episode: 9/10, Reward: -100.000, Step: 101
+2022-11-22 12:06:13 - r - INFO: - Episode: 10/10, Reward: -87.000, Step: 88
+2022-11-22 12:06:13 - r - INFO: - Finish testing!

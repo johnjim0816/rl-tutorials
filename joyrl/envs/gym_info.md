@@ -1,7 +1,9 @@
 # OpenAi Gym 环境说明
+
+[Gym环境说明官方文档](https://www.gymlibrary.dev/environments/classic_control/)
 ## 基础控制
 
-### [CartPole v0](https://github.com/openai/gym/wiki/CartPole-v0)
+### Cartpole
 
 <img src="assets/image-20200820174307301.png" alt="image-20200820174307301" style="zoom:50%;" />
 
