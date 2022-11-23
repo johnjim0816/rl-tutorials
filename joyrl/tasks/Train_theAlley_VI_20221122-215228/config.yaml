@@ -1,0 +1,18 @@
+general_cfg:
+  algo_name: VI
+  device: cpu
+  env_name: theAlley
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: false
+  load_path: Train_CartPole-v1_DQN_20221026-054757
+  max_steps: 200
+  mode: train
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 100
+algo_cfg:
+  gamma: 0.95
+  lr: 0.0001
