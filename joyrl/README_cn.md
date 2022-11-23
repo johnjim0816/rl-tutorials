@@ -8,12 +8,15 @@ JoyRL是一套主要基于Torch的强化学习开源框架，旨在让读者仅�
 
 ## 安装说明
 
+目前支持Python 3.7和Gym 0.25.2版本。
+
+创建Conda环境（需先安装Anaconda）
 ```bash
 conda create -n joyrl python=3.7
 conda activate joyrl
 pip install -r requirements.txt
 ```
-Torch:
+安装Torch：
 
 ```bash
 # CPU
@@ -35,7 +38,7 @@ python main.py
 ```bash
 python main.py --yaml config/custom_config_Train.yaml
 ```
-在[defaults](./defaults/)文件夹中已经有一些预设的`yaml`文件，并且相应地在[benchmarks](./benchmarks/)文件夹中保存了一些已经训练好的结果。
+在[presets](./presets/)文件夹中已经有一些预设的`yaml`文件，并且相应地在[benchmarks](./benchmarks/)文件夹中保存了一些已经训练好的结果。
 
 ## 算法列表
 
