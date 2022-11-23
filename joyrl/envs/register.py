@@ -15,6 +15,12 @@ def register_env(env_name):
             entry_point='gym.envs.toy_text.frozen_lake:FrozenLakeEnv',
             kwargs={'map_name':"4x4",'is_slippery':False},
         )
+    elif env_name == 'theAlley':
+        register(
+            id='theAlley',
+            entry_point='gym.envs.toy_text.simple_grid:DrunkenWalkEnv',
+            kwargs={'map_name':"theAlley",'is_slippery':False},
+        )
     else:
         print("The env name must be wrong or the environment donot need to register!")
 

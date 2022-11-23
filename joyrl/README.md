@@ -4,9 +4,9 @@
 ## Install
 
 ```bash
-conda create -n easyrl python=3.7
-conda activate easyrl
-pip install -r requirements
+conda create -n joyrl python=3.7
+conda activate joyrl
+pip install -r requirements.txt
 ```
 Torch:
 

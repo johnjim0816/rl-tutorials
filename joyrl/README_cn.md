@@ -1,14 +1,17 @@
 [EN](./README.md)|中文
 
-[中文](./README_cn.md)|EN
 ## JoyRL
+
+JoyRL是一套主要基于Torch的强化学习开源框架，旨在让读者仅仅只需通过调参数的傻瓜式操作就能训练强化学习相关项目，从而远离繁琐的代码操作，并配有详细的注释以兼具帮助初学者入门的作用。
+
+本项目为JoyRL离线版，支持读者更方便的学习和自定义算法代码，同时配备[JoyRL上线版](https://github.com/datawhalechina/joyrl)，集成度相对更高。
 
 ## 安装说明
 
 ```bash
-conda create -n easyrl python=3.7
-conda activate easyrl
-pip install -r requirements
+conda create -n joyrl python=3.7
+conda activate joyrl
+pip install -r requirements.txt
 ```
 Torch:
 
