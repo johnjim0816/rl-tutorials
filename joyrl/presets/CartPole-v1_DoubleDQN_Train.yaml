@@ -1,5 +1,5 @@
 general_cfg:
-  algo_name: DQN
+  algo_name: DoubleDQN
   device: cuda
   env_name: CartPole-v1
   mode: train
@@ -27,6 +27,6 @@ algo_cfg:
   epsilon_decay: 500
   epsilon_end: 0.01
   epsilon_start: 0.95
-  gamma: 0.95
+  gamma: 0.99
   lr: 0.0001
   target_update: 4

@@ -1,6 +1,6 @@
 general_cfg:
   algo_name: DQN
-  device: cpu
+  device: cuda
   env_name: CartPole-v1
   mode: test
   load_checkpoint: true
