@@ -18,7 +18,7 @@ def register_env(env_name):
     elif env_name == 'theAlley':
         register(
             id='theAlley',
-            entry_point='gym.envs.toy_text.simple_grid:DrunkenWalkEnv',
+            entry_point='envs.simple_grid:DrunkenWalkEnv',
             kwargs={'map_name':"theAlley",'is_slippery':False},
         )
     else:
