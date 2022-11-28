@@ -1,0 +1,14 @@
+2022-11-23 09:58:34 - r - INFO: - n_states: 13, n_actions: 4
+2022-11-23 09:58:34 - r - INFO: - Start testing!
+2022-11-23 09:58:34 - r - INFO: - Env: theAlley, Algorithm: VI, Device: cpu
+2022-11-23 09:58:34 - r - INFO: - Episode: 1/10, Reward: 10.000, Step: 15
+2022-11-23 09:58:34 - r - INFO: - Episode: 2/10, Reward: 10.000, Step: 15
+2022-11-23 09:58:34 - r - INFO: - Episode: 3/10, Reward: 10.000, Step: 15
+2022-11-23 09:58:34 - r - INFO: - Episode: 4/10, Reward: -5.000, Step: 7
+2022-11-23 09:58:34 - r - INFO: - Episode: 5/10, Reward: 10.000, Step: 17
+2022-11-23 09:58:34 - r - INFO: - Episode: 6/10, Reward: 10.000, Step: 17
+2022-11-23 09:58:34 - r - INFO: - Episode: 7/10, Reward: 10.000, Step: 14
+2022-11-23 09:58:34 - r - INFO: - Episode: 8/10, Reward: 10.000, Step: 13
+2022-11-23 09:58:34 - r - INFO: - Episode: 9/10, Reward: -5.000, Step: 5
+2022-11-23 09:58:34 - r - INFO: - Episode: 10/10, Reward: 10.000, Step: 13
+2022-11-23 09:58:34 - r - INFO: - Finish testing!

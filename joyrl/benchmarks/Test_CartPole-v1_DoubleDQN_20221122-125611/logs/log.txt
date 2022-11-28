@@ -1,0 +1,14 @@
+2022-11-22 12:56:12 - r - INFO: - n_states: 4, n_actions: 2
+2022-11-22 12:56:14 - r - INFO: - Start testing!
+2022-11-22 12:56:14 - r - INFO: - Env: CartPole-v1, Algorithm: DoubleDQN, Device: cuda
+2022-11-22 12:56:14 - r - INFO: - Episode: 1/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 2/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 3/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 4/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 5/10, Reward: 138.000, Step: 138
+2022-11-22 12:56:15 - r - INFO: - Episode: 6/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 7/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 8/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 9/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Episode: 10/10, Reward: 200.000, Step: 200
+2022-11-22 12:56:15 - r - INFO: - Finish testing!
