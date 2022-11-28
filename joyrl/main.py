@@ -85,6 +85,7 @@ class Main(object):
             n_actions = env.action_space.shape[0]
             logger.info(f"action_bound: {abs(env.action_space.low.item())}") 
             setattr(cfg, 'action_bound', abs(env.action_space.low.item()))
+        setattr(cfg, 'action_space', env.action_space)
         logger.info(f"n_states: {n_states}, n_actions: {n_actions}") # print info
         # update to cfg paramters
         setattr(cfg, 'n_states', n_states)
