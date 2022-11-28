@@ -276,3 +276,22 @@ class Agent:
             if self.update_count % self.target_update_fre == 0:
                 for target_param, param in zip(self.critic_target.parameters(), self.critic.parameters()):
                     target_param.data.copy_(target_param.data * (1.0 - self.tau) + param.data * self.tau)
+    def save_model(self, fpath):
+        from pathlib import Path
+        # create path
+        Path(fpath).mkdir(parents=True, exist_ok=True)
+        
+        torch.save({'policy_state_dict': self.policy.state_dict(),
+                    'critic_state_dict': self.critic.state_dict(),
+                    'critic_target_state_dict': self.critic_target.state_dict(),
+                    'critic_optimizer_state_dict': self.critic_optim.state_dict(),
+                    'policy_optimizer_state_dict': self.policy_optim.state_dict()}, f"{fpath}/checkpoint.pt")
+        
+    
+    def load_model(self, fpath):
+        checkpoint = torch.load(fpath, map_location=self.device)
+        self.policy.load_state_dict(checkpoint['policy_state_dict'])
+        self.critic.load_state_dict(checkpoint['critic_state_dict'])
+        self.critic_target.load_state_dict(checkpoint['critic_target_state_dict'])
+        self.critic_optim.load_state_dict(checkpoint['critic_optimizer_state_dict'])
+        self.policy_optim.load_state_dict(checkpoint['policy_optimizer_state_dict'])
