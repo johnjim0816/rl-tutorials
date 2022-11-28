@@ -3,6 +3,8 @@
 __pycache__
 .vscode
 test.py
+/codes
+
 pseudocodes.bbl
 pseudocodes.blg
 pseudocodes.aux
