@@ -21,19 +21,21 @@ class Main(object):
         algo_mod = __import__(f"algos.{self.algo_name}.config", fromlist=['AlgoConfig'])
         self.algo_cfg = algo_mod.AlgoConfig()
         self.cfgs = {'general_cfg':self.general_cfg,'algo_cfg':self.algo_cfg}
-    def print_cfgs(self,cfg):
+    def print_cfgs(self,cfg,logger):
         ''' print parameters
         '''
         cfg_dict = vars(cfg)
-        print("Hyperparameters:")
-        print(''.join(['=']*80))
+        logger.info("Hyperparameters:")
+        logger.info(''.join(['=']*80))
         tplt = "{:^20}\t{:^20}\t{:^20}"
-        print(tplt.format("Name", "Value", "Type"))
+        logger.info(tplt.format("Name", "Value", "Type"))
         for k,v in cfg_dict.items():
             if v.__class__.__name__ == 'list':
                 v = str(v)
-            print(tplt.format(k,v,str(type(v))))   
-        print(''.join(['=']*80))
+            if v is None:
+                v = 'None'
+            logger.info(tplt.format(k,v,str(type(v))))   
+        logger.info(''.join(['=']*80))
     def process_yaml_cfg(self):
         ''' load yaml config
         '''
@@ -45,7 +47,7 @@ class Main(object):
                 load_cfg = yaml.load(f,Loader=yaml.FullLoader)
                 # load algo config
                 self.algo_name = load_cfg['general_cfg']['algo_name']
-                algo_mod = __import__(f"algos.{self.algo_name}.config", fromlist=['AlgoConfig'])
+                algo_mod = __import__(f"algos.{self.algo_name}.config", fromlist=['AlgoConfig']) # dynamic loading of modules
                 self.algo_cfg = algo_mod.AlgoConfig()
                 self.cfgs = {'general_cfg':self.general_cfg,'algo_cfg':self.algo_cfg}
                 # merge config
@@ -63,9 +65,16 @@ class Main(object):
         ''' configure environment
         '''
         register_env(cfg.env_name)
-        env = gym.make(cfg.env_name,new_step_api=True)  # create env
-        if cfg.seed !=0: # set random seed
-            all_seed(env,seed = cfg.seed) 
+        if cfg.render:
+            env = gym.make(cfg.env_name,new_step_api=cfg.new_step_api,render_mode = cfg.render_mode)  # create env
+        else:
+            env = gym.make(cfg.env_name,new_step_api=cfg.new_step_api)  # create env
+        if cfg.wrapper is not None:
+            wrapper_class_path = cfg.wrapper.split('.')[:-1]
+            wrapper_class_name  = cfg.wrapper.split('.')[-1]
+            env_wapper = __import__('.'.join(wrapper_class_path), fromlist=[wrapper_class_name])
+            env = getattr(env_wapper,wrapper_class_name)(env,new_step_api=cfg.new_step_api)
+        all_seed(env,seed = cfg.seed) # set seed == 0 means no seed
         try: # state dimension
             n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
         except AttributeError:
@@ -94,9 +103,9 @@ class Main(object):
         cfg = MergedConfig() # merge config
         cfg = merge_class_attrs(cfg,self.cfgs['general_cfg'])
         cfg = merge_class_attrs(cfg,self.cfgs['algo_cfg'])
-        self.print_cfgs(cfg) # print the configuration
         self.create_dirs(cfg) # create dirs
         logger = get_logger(self.log_dir) # create the logger
+        self.print_cfgs(cfg,logger) # print the configuration
         env = self.env_config(cfg,logger) # configure environment
         agent_mod = __import__(f"algos.{cfg.algo_name}.agent", fromlist=['Agent'])
         agent = agent_mod.Agent(cfg) # create agent

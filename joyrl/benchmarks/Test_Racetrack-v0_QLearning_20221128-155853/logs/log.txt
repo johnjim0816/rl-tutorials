@@ -1,0 +1,51 @@
+2022-11-28 15:58:53 - r - INFO: - Hyperparameters:
+2022-11-28 15:58:53 - r - INFO: - ================================================================================
+2022-11-28 15:58:53 - r - INFO: -         Name        	       Value        	        Type        
+2022-11-28 15:58:53 - r - INFO: -       env_name      	    Racetrack-v0    	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-11-28 15:58:53 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -        render       	         1          	   <class 'bool'>   
+2022-11-28 15:58:53 - r - INFO: -      algo_name      	     QLearning      	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -         mode        	        test        	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -         seed        	         10         	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -        device       	        cpu         	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -      train_eps      	        400         	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -       test_eps      	         20         	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -   load_checkpoint   	         1          	   <class 'bool'>   
+2022-11-28 15:58:53 - r - INFO: -      load_path      	Train_Racetrack-v0_QLearning_20221128-154935	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-11-28 15:58:53 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-11-28 15:58:53 - r - INFO: -     render_mode     	       human        	   <class 'str'>    
+2022-11-28 15:58:53 - r - INFO: -    epsilon_start    	        0.95        	  <class 'float'>   
+2022-11-28 15:58:53 - r - INFO: -     epsilon_end     	        0.01        	  <class 'float'>   
+2022-11-28 15:58:53 - r - INFO: -    epsilon_decay    	        300         	   <class 'int'>    
+2022-11-28 15:58:53 - r - INFO: -        gamma        	        0.9         	  <class 'float'>   
+2022-11-28 15:58:53 - r - INFO: -          lr         	        0.1         	  <class 'float'>   
+2022-11-28 15:58:53 - r - INFO: - ================================================================================
+2022-11-28 15:58:54 - r - INFO: - n_states: 4, n_actions: 9
+2022-11-28 15:58:54 - r - INFO: - Start testing!
+2022-11-28 15:58:54 - r - INFO: - Env: Racetrack-v0, Algorithm: QLearning, Device: cpu
+2022-11-28 15:58:56 - r - INFO: - Episode: 1/20, Reward: 4.000, Step: 6
+2022-11-28 15:58:56 - r - INFO: - Episode: 2/20, Reward: 4.000, Step: 6
+2022-11-28 15:58:59 - r - INFO: - Episode: 3/20, Reward: -13.000, Step: 13
+2022-11-28 15:59:00 - r - INFO: - Episode: 4/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:01 - r - INFO: - Episode: 5/20, Reward: 3.000, Step: 7
+2022-11-28 15:59:03 - r - INFO: - Episode: 6/20, Reward: -13.000, Step: 13
+2022-11-28 15:59:04 - r - INFO: - Episode: 7/20, Reward: 2.000, Step: 8
+2022-11-28 15:59:06 - r - INFO: - Episode: 8/20, Reward: -12.000, Step: 12
+2022-11-28 15:59:07 - r - INFO: - Episode: 9/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:08 - r - INFO: - Episode: 10/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:09 - r - INFO: - Episode: 11/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:10 - r - INFO: - Episode: 12/20, Reward: 3.000, Step: 7
+2022-11-28 15:59:11 - r - INFO: - Episode: 13/20, Reward: 2.000, Step: 8
+2022-11-28 15:59:12 - r - INFO: - Episode: 14/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:13 - r - INFO: - Episode: 15/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:14 - r - INFO: - Episode: 16/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:15 - r - INFO: - Episode: 17/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:16 - r - INFO: - Episode: 18/20, Reward: 4.000, Step: 6
+2022-11-28 15:59:18 - r - INFO: - Episode: 19/20, Reward: 1.000, Step: 9
+2022-11-28 15:59:19 - r - INFO: - Episode: 20/20, Reward: 3.000, Step: 7
+2022-11-28 15:59:19 - r - INFO: - Finish testing!

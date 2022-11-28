@@ -6,10 +6,11 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 from IPython.display import clear_output
 from gym.spaces import Discrete,Box
+from gym import Env
 from matplotlib import colors
 import gym
 
-class RacetrackEnv(gym.Env) :
+class RacetrackEnv(Env) :
     """
     Class representing a race-track environment inspired by exercise 5.12 in Sutton & Barto 2018 (p.111).
     Please do not make changes to this class - it will be overwritten with a clean version when it comes to marking.
@@ -38,9 +39,10 @@ class RacetrackEnv(gym.Env) :
         2 : "start",
         3 : "goal"
     }
+    metadata = {'render_modes': ['human'],
+     "render_fps": 4,}
 
-
-    def __init__(self) :
+    def __init__(self,render_mode = 'human') :
         # Load racetrack map from file.
         self.track = np.flip(np.loadtxt(os.path.dirname(__file__)+"/track.txt", dtype = int), axis = 0)
 
@@ -153,7 +155,7 @@ class RacetrackEnv(gym.Env) :
         return np.array([self.position[0], self.position[1], self.velocity[0], self.velocity[1]]), reward, done,{}
 
 
-    def reset(self) :
+    def reset(self,seed=None) :
         """
         Resets the environment, ready for a new episode to begin, then returns an initial state.
         The initial state will be a starting grid square randomly chosen using a uniform distribution,
@@ -174,7 +176,7 @@ class RacetrackEnv(gym.Env) :
         return np.array([self.position[0], self.position[1], self.velocity[0], self.velocity[1]])
 
 
-    def render(self, mode = 'human') :
+    def render(self, render_mode = 'human') :
         """
         Renders a pretty matplotlib plot representing the current state of the environment.
         Calling this method on subsequent timesteps will update the plot.
@@ -184,7 +186,7 @@ class RacetrackEnv(gym.Env) :
             sleep_time {float} -- How many seconds (or partial seconds) you want to wait on this rendered frame.
 
         """
-        # Turn interactive mode on.
+        # Turn interactive render_mode on.
         plt.ion()
         fig = plt.figure(num = "env_render")
         ax = plt.gca()

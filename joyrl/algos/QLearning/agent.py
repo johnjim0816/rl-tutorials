@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2022-10-30 01:38:26
+LastEditTime: 2022-11-28 16:04:26
 Discription: use defaultdict to define Q table
 Environment: 
 '''
@@ -14,9 +14,10 @@ import math
 import torch
 from collections import defaultdict
 
-class QLearning(object):
+class Agent(object):
     def __init__(self,cfg):
         self.n_actions = cfg.n_actions 
+        self.exploration_type = 'e-greedy' # e-greedy, boltzmann, softmax, ucb etc.
         self.lr = cfg.lr 
         self.gamma = cfg.gamma    
         self.epsilon = cfg.epsilon_start
@@ -28,6 +29,20 @@ class QLearning(object):
     def sample_action(self, state):
         ''' sample action with e-greedy policy while training
         '''
+        if self.exploration_type == 'e-greedy':
+            action = self._epsilon_greedy_sample_action(state)
+        else:
+            raise NotImplementedError
+        return action
+    def predict_action(self,state):
+        ''' predict action while testing 
+        '''
+        if self.exploration_type == 'e-greedy':
+            action = self._epsilon_greedy_predict_action(state)
+        else:
+            raise NotImplementedError
+        return action
+    def _epsilon_greedy_sample_action(self, state):
         self.sample_count += 1
         # epsilon must decay(linear,exponential and etc.) for balancing exploration and exploitation
         self.epsilon = self.epsilon_end + (self.epsilon_start - self.epsilon_end) * \
@@ -37,9 +52,7 @@ class QLearning(object):
         else:
             action = np.random.choice(self.n_actions) # choose action randomly
         return action
-    def predict_action(self,state):
-        ''' predict action while testing 
-        '''
+    def _epsilon_greedy_sample_action(self,state):
         action = np.argmax(self.Q_table[str(state)])
         return action
     def update(self, state, action, reward, next_state, done):
