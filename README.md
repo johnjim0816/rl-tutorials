@@ -8,12 +8,13 @@
 
 ## 1. 项目说明
 
-本项目内容主要包含以下几个子项目，每个子项目下都有对应的README描述：
+本项目内容主要包含以下几个子项目：
 * [Jupyter Notebook](./notebooks/)：使用Notebook写的算法，有比较详细的实战引导，推荐新手食用
 * [JoyRL离线版](./joyrl/)：JoyRL离线版项目
 * [PARL Tutorials](./parl_tutorials)：PARL实现强化学习代码
-* [附件](./assets/)：目前包含强化学习各算法的中文伪代码
+* [伪代码](./pseudocodes/pseudocodes.pdf)：目前包含强化学习算法的伪代码
 
+每个子项目下都有对应的README描述，请跳转到对应文件夹仔细阅读！
 ## 2. 算法环境
 
 算法环境说明请跳转[env](./codes/envs/README.md)
