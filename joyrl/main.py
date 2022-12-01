@@ -52,8 +52,9 @@ class Main(object):
                 self.cfgs = {'general_cfg':self.general_cfg,'algo_cfg':self.algo_cfg}
                 # merge config
                 for cfg_type in self.cfgs:
-                    for k, v in load_cfg[cfg_type].items():
-                        setattr(self.cfgs[cfg_type], k, v)
+                    if load_cfg[cfg_type] is not None:
+                        for k, v in load_cfg[cfg_type].items():
+                            setattr(self.cfgs[cfg_type], k, v)
     def create_dirs(self,cfg):
         curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")   # obtain current time
         self.task_dir = f"{curr_path}/tasks/{cfg.mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
