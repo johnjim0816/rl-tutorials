@@ -40,6 +40,10 @@ python main.py --yaml config/custom_config_Train.yaml
 ```
 在[presets](./presets/)文件夹中已经有一些预设的`yaml`文件，并且相应地在[benchmarks](./benchmarks/)文件夹中保存了一些已经训练好的结果。
 
+## 说明文档
+
+请跳转[Docs](./docs/README.md)
+
 ## 环境说明
 
 请跳转[envs](./envs/README.md)查看说明

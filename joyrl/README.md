@@ -35,6 +35,10 @@ python main.py --yaml config/custom_config_Train.yaml
 ```
 And there are presets yaml files in the [presets](./presets/) folder and well trained results in the [benchmarks](./benchmarks/) folder.
 
+## Docs
+
+please click [docs](./docs/README.md)
+
 ## Environments
 
 Please click [envs](./envs/README.md) to read environments instruments.
