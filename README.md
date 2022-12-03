@@ -18,5 +18,5 @@
 
 ## 2. 关于贡献
 
-欢迎联系我PR～，Wechat（johnjim0816）
+欢迎联系我PR～，Wechat：johnjim0816
 
