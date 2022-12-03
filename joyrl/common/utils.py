@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-11-14 10:27:43
+LastEditTime: 2022-11-28 15:34:30
 Discription: 
 Environment: 
 '''
@@ -182,7 +182,7 @@ def all_seed(env,seed = 1):
     if seed == 0:
         return
     # print(f"seed = {seed}")
-    env.seed(seed) # env config
+    # env.seed(seed) # env config
     np.random.seed(seed)
     random.seed(seed)
     torch.manual_seed(seed) # config for CPU

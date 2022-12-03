@@ -1,0 +1,342 @@
+2022-11-28 14:45:22 - r - INFO: - n_states: 48, n_actions: 4
+2022-11-28 14:45:22 - r - INFO: - Start training!
+2022-11-28 14:45:22 - r - INFO: - Env: CliffWalking-v0, Algorithm: QLearning, Device: cpu
+2022-11-28 14:45:22 - r - INFO: - Episode: 1/300, Reward: -397.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 2/300, Reward: -1090.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 3/300, Reward: -694.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 4/300, Reward: -397.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 5/300, Reward: -496.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Current episode 5 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 6/300, Reward: -298.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 7/300, Reward: -199.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 8/300, Reward: -298.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 9/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 10/300, Reward: -199.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Current episode 10 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 11/300, Reward: -93.000, Step: 93
+2022-11-28 14:45:22 - r - INFO: - Episode: 12/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 13/300, Reward: -199.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 14/300, Reward: -199.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 15/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Current episode 15 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 16/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 17/300, Reward: -33.000, Step: 33
+2022-11-28 14:45:22 - r - INFO: - Episode: 18/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 19/300, Reward: -66.000, Step: 66
+2022-11-28 14:45:22 - r - INFO: - Episode: 20/300, Reward: -99.000, Step: 99
+2022-11-28 14:45:22 - r - INFO: - Current episode 20 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 21/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 22/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 23/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 24/300, Reward: -54.000, Step: 54
+2022-11-28 14:45:22 - r - INFO: - Episode: 25/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Current episode 25 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 26/300, Reward: -73.000, Step: 73
+2022-11-28 14:45:22 - r - INFO: - Episode: 27/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 28/300, Reward: -90.000, Step: 90
+2022-11-28 14:45:22 - r - INFO: - Episode: 29/300, Reward: -87.000, Step: 87
+2022-11-28 14:45:22 - r - INFO: - Episode: 30/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Current episode 30 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 31/300, Reward: -46.000, Step: 46
+2022-11-28 14:45:22 - r - INFO: - Episode: 32/300, Reward: -82.000, Step: 82
+2022-11-28 14:45:22 - r - INFO: - Episode: 33/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 34/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 35/300, Reward: -67.000, Step: 67
+2022-11-28 14:45:22 - r - INFO: - Current episode 35 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 36/300, Reward: -75.000, Step: 75
+2022-11-28 14:45:22 - r - INFO: - Episode: 37/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 38/300, Reward: -45.000, Step: 45
+2022-11-28 14:45:22 - r - INFO: - Episode: 39/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 40/300, Reward: -37.000, Step: 37
+2022-11-28 14:45:22 - r - INFO: - Current episode 40 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 41/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 42/300, Reward: -43.000, Step: 43
+2022-11-28 14:45:22 - r - INFO: - Episode: 43/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 44/300, Reward: -56.000, Step: 56
+2022-11-28 14:45:22 - r - INFO: - Episode: 45/300, Reward: -70.000, Step: 70
+2022-11-28 14:45:22 - r - INFO: - Current episode 45 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 46/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 47/300, Reward: -47.000, Step: 47
+2022-11-28 14:45:22 - r - INFO: - Episode: 48/300, Reward: -85.000, Step: 85
+2022-11-28 14:45:22 - r - INFO: - Episode: 49/300, Reward: -82.000, Step: 82
+2022-11-28 14:45:22 - r - INFO: - Episode: 50/300, Reward: -51.000, Step: 51
+2022-11-28 14:45:22 - r - INFO: - Current episode 50 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 51/300, Reward: -50.000, Step: 50
+2022-11-28 14:45:22 - r - INFO: - Episode: 52/300, Reward: -86.000, Step: 86
+2022-11-28 14:45:22 - r - INFO: - Episode: 53/300, Reward: -100.000, Step: 100
+2022-11-28 14:45:22 - r - INFO: - Episode: 54/300, Reward: -40.000, Step: 40
+2022-11-28 14:45:22 - r - INFO: - Episode: 55/300, Reward: -87.000, Step: 87
+2022-11-28 14:45:22 - r - INFO: - Current episode 55 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 56/300, Reward: -59.000, Step: 59
+2022-11-28 14:45:22 - r - INFO: - Episode: 57/300, Reward: -51.000, Step: 51
+2022-11-28 14:45:22 - r - INFO: - Episode: 58/300, Reward: -98.000, Step: 98
+2022-11-28 14:45:22 - r - INFO: - Episode: 59/300, Reward: -67.000, Step: 67
+2022-11-28 14:45:22 - r - INFO: - Episode: 60/300, Reward: -60.000, Step: 60
+2022-11-28 14:45:22 - r - INFO: - Current episode 60 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 61/300, Reward: -38.000, Step: 38
+2022-11-28 14:45:22 - r - INFO: - Episode: 62/300, Reward: -76.000, Step: 76
+2022-11-28 14:45:22 - r - INFO: - Episode: 63/300, Reward: -70.000, Step: 70
+2022-11-28 14:45:22 - r - INFO: - Episode: 64/300, Reward: -60.000, Step: 60
+2022-11-28 14:45:22 - r - INFO: - Episode: 65/300, Reward: -68.000, Step: 68
+2022-11-28 14:45:22 - r - INFO: - Current episode 65 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 66/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:22 - r - INFO: - Episode: 67/300, Reward: -69.000, Step: 69
+2022-11-28 14:45:22 - r - INFO: - Episode: 68/300, Reward: -183.000, Step: 84
+2022-11-28 14:45:22 - r - INFO: - Episode: 69/300, Reward: -62.000, Step: 62
+2022-11-28 14:45:22 - r - INFO: - Episode: 70/300, Reward: -44.000, Step: 44
+2022-11-28 14:45:22 - r - INFO: - Current episode 70 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 71/300, Reward: -71.000, Step: 71
+2022-11-28 14:45:22 - r - INFO: - Episode: 72/300, Reward: -55.000, Step: 55
+2022-11-28 14:45:22 - r - INFO: - Episode: 73/300, Reward: -65.000, Step: 65
+2022-11-28 14:45:22 - r - INFO: - Episode: 74/300, Reward: -61.000, Step: 61
+2022-11-28 14:45:22 - r - INFO: - Episode: 75/300, Reward: -36.000, Step: 36
+2022-11-28 14:45:22 - r - INFO: - Current episode 75 has the best eval reward: -100.000
+2022-11-28 14:45:22 - r - INFO: - Episode: 76/300, Reward: -47.000, Step: 47
+2022-11-28 14:45:22 - r - INFO: - Episode: 77/300, Reward: -63.000, Step: 63
+2022-11-28 14:45:22 - r - INFO: - Episode: 78/300, Reward: -45.000, Step: 45
+2022-11-28 14:45:22 - r - INFO: - Episode: 79/300, Reward: -59.000, Step: 59
+2022-11-28 14:45:22 - r - INFO: - Episode: 80/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Current episode 80 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 81/300, Reward: -62.000, Step: 62
+2022-11-28 14:45:23 - r - INFO: - Episode: 82/300, Reward: -38.000, Step: 38
+2022-11-28 14:45:23 - r - INFO: - Episode: 83/300, Reward: -64.000, Step: 64
+2022-11-28 14:45:23 - r - INFO: - Episode: 84/300, Reward: -40.000, Step: 40
+2022-11-28 14:45:23 - r - INFO: - Episode: 85/300, Reward: -59.000, Step: 59
+2022-11-28 14:45:23 - r - INFO: - Current episode 85 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 86/300, Reward: -48.000, Step: 48
+2022-11-28 14:45:23 - r - INFO: - Episode: 87/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Episode: 88/300, Reward: -70.000, Step: 70
+2022-11-28 14:45:23 - r - INFO: - Episode: 89/300, Reward: -34.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Episode: 90/300, Reward: -40.000, Step: 40
+2022-11-28 14:45:23 - r - INFO: - Current episode 90 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 91/300, Reward: -27.000, Step: 27
+2022-11-28 14:45:23 - r - INFO: - Episode: 92/300, Reward: -65.000, Step: 65
+2022-11-28 14:45:23 - r - INFO: - Episode: 93/300, Reward: -79.000, Step: 79
+2022-11-28 14:45:23 - r - INFO: - Episode: 94/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 95/300, Reward: -38.000, Step: 38
+2022-11-28 14:45:23 - r - INFO: - Current episode 95 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 96/300, Reward: -23.000, Step: 23
+2022-11-28 14:45:23 - r - INFO: - Episode: 97/300, Reward: -60.000, Step: 60
+2022-11-28 14:45:23 - r - INFO: - Episode: 98/300, Reward: -41.000, Step: 41
+2022-11-28 14:45:23 - r - INFO: - Episode: 99/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Episode: 100/300, Reward: -42.000, Step: 42
+2022-11-28 14:45:23 - r - INFO: - Current episode 100 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 101/300, Reward: -41.000, Step: 41
+2022-11-28 14:45:23 - r - INFO: - Episode: 102/300, Reward: -59.000, Step: 59
+2022-11-28 14:45:23 - r - INFO: - Episode: 103/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:23 - r - INFO: - Episode: 104/300, Reward: -43.000, Step: 43
+2022-11-28 14:45:23 - r - INFO: - Episode: 105/300, Reward: -70.000, Step: 70
+2022-11-28 14:45:23 - r - INFO: - Current episode 105 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 106/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 107/300, Reward: -161.000, Step: 62
+2022-11-28 14:45:23 - r - INFO: - Episode: 108/300, Reward: -38.000, Step: 38
+2022-11-28 14:45:23 - r - INFO: - Episode: 109/300, Reward: -45.000, Step: 45
+2022-11-28 14:45:23 - r - INFO: - Episode: 110/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Current episode 110 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 111/300, Reward: -47.000, Step: 47
+2022-11-28 14:45:23 - r - INFO: - Episode: 112/300, Reward: -23.000, Step: 23
+2022-11-28 14:45:23 - r - INFO: - Episode: 113/300, Reward: -62.000, Step: 62
+2022-11-28 14:45:23 - r - INFO: - Episode: 114/300, Reward: -34.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Episode: 115/300, Reward: -46.000, Step: 46
+2022-11-28 14:45:23 - r - INFO: - Current episode 115 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 116/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 117/300, Reward: -46.000, Step: 46
+2022-11-28 14:45:23 - r - INFO: - Episode: 118/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 119/300, Reward: -24.000, Step: 24
+2022-11-28 14:45:23 - r - INFO: - Episode: 120/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Current episode 120 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 121/300, Reward: -42.000, Step: 42
+2022-11-28 14:45:23 - r - INFO: - Episode: 122/300, Reward: -62.000, Step: 62
+2022-11-28 14:45:23 - r - INFO: - Episode: 123/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 124/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:23 - r - INFO: - Episode: 125/300, Reward: -37.000, Step: 37
+2022-11-28 14:45:23 - r - INFO: - Current episode 125 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 126/300, Reward: -51.000, Step: 51
+2022-11-28 14:45:23 - r - INFO: - Episode: 127/300, Reward: -32.000, Step: 32
+2022-11-28 14:45:23 - r - INFO: - Episode: 128/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:23 - r - INFO: - Episode: 129/300, Reward: -34.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Episode: 130/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:23 - r - INFO: - Current episode 130 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 131/300, Reward: -53.000, Step: 53
+2022-11-28 14:45:23 - r - INFO: - Episode: 132/300, Reward: -28.000, Step: 28
+2022-11-28 14:45:23 - r - INFO: - Episode: 133/300, Reward: -33.000, Step: 33
+2022-11-28 14:45:23 - r - INFO: - Episode: 134/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Episode: 135/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Current episode 135 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 136/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:23 - r - INFO: - Episode: 137/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 138/300, Reward: -42.000, Step: 42
+2022-11-28 14:45:23 - r - INFO: - Episode: 139/300, Reward: -154.000, Step: 55
+2022-11-28 14:45:23 - r - INFO: - Episode: 140/300, Reward: -34.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Current episode 140 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 141/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 142/300, Reward: -21.000, Step: 21
+2022-11-28 14:45:23 - r - INFO: - Episode: 143/300, Reward: -38.000, Step: 38
+2022-11-28 14:45:23 - r - INFO: - Episode: 144/300, Reward: -21.000, Step: 21
+2022-11-28 14:45:23 - r - INFO: - Episode: 145/300, Reward: -46.000, Step: 46
+2022-11-28 14:45:23 - r - INFO: - Current episode 145 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 146/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:23 - r - INFO: - Episode: 147/300, Reward: -37.000, Step: 37
+2022-11-28 14:45:23 - r - INFO: - Episode: 148/300, Reward: -27.000, Step: 27
+2022-11-28 14:45:23 - r - INFO: - Episode: 149/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Episode: 150/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:23 - r - INFO: - Current episode 150 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 151/300, Reward: -34.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Episode: 152/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:23 - r - INFO: - Episode: 153/300, Reward: -32.000, Step: 32
+2022-11-28 14:45:23 - r - INFO: - Episode: 154/300, Reward: -40.000, Step: 40
+2022-11-28 14:45:23 - r - INFO: - Episode: 155/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Current episode 155 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 156/300, Reward: -36.000, Step: 36
+2022-11-28 14:45:23 - r - INFO: - Episode: 157/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 158/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 159/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 160/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:23 - r - INFO: - Current episode 160 has the best eval reward: -100.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 161/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:23 - r - INFO: - Episode: 162/300, Reward: -46.000, Step: 46
+2022-11-28 14:45:23 - r - INFO: - Episode: 163/300, Reward: -27.000, Step: 27
+2022-11-28 14:45:23 - r - INFO: - Episode: 164/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:23 - r - INFO: - Episode: 165/300, Reward: -34.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Current episode 165 has the best eval reward: -15.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 166/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:23 - r - INFO: - Episode: 167/300, Reward: -24.000, Step: 24
+2022-11-28 14:45:23 - r - INFO: - Episode: 168/300, Reward: -45.000, Step: 45
+2022-11-28 14:45:23 - r - INFO: - Episode: 169/300, Reward: -36.000, Step: 36
+2022-11-28 14:45:23 - r - INFO: - Episode: 170/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:23 - r - INFO: - Episode: 171/300, Reward: -26.000, Step: 26
+2022-11-28 14:45:23 - r - INFO: - Episode: 172/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 173/300, Reward: -32.000, Step: 32
+2022-11-28 14:45:23 - r - INFO: - Episode: 174/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:23 - r - INFO: - Episode: 175/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:23 - r - INFO: - Current episode 175 has the best eval reward: -15.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 176/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:23 - r - INFO: - Episode: 177/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:23 - r - INFO: - Episode: 178/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 179/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 180/300, Reward: -21.000, Step: 21
+2022-11-28 14:45:23 - r - INFO: - Episode: 181/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:23 - r - INFO: - Episode: 182/300, Reward: -21.000, Step: 21
+2022-11-28 14:45:23 - r - INFO: - Episode: 183/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:23 - r - INFO: - Episode: 184/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 185/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:23 - r - INFO: - Episode: 186/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:23 - r - INFO: - Episode: 187/300, Reward: -27.000, Step: 27
+2022-11-28 14:45:23 - r - INFO: - Episode: 188/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:23 - r - INFO: - Episode: 189/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:23 - r - INFO: - Episode: 190/300, Reward: -24.000, Step: 24
+2022-11-28 14:45:23 - r - INFO: - Episode: 191/300, Reward: -28.000, Step: 28
+2022-11-28 14:45:23 - r - INFO: - Episode: 192/300, Reward: -36.000, Step: 36
+2022-11-28 14:45:23 - r - INFO: - Episode: 193/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:23 - r - INFO: - Episode: 194/300, Reward: -40.000, Step: 40
+2022-11-28 14:45:23 - r - INFO: - Episode: 195/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:23 - r - INFO: - Episode: 196/300, Reward: -23.000, Step: 23
+2022-11-28 14:45:23 - r - INFO: - Episode: 197/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:23 - r - INFO: - Episode: 198/300, Reward: -28.000, Step: 28
+2022-11-28 14:45:23 - r - INFO: - Episode: 199/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:23 - r - INFO: - Episode: 200/300, Reward: -27.000, Step: 27
+2022-11-28 14:45:23 - r - INFO: - Episode: 201/300, Reward: -14.000, Step: 14
+2022-11-28 14:45:23 - r - INFO: - Episode: 202/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:23 - r - INFO: - Episode: 203/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:23 - r - INFO: - Episode: 204/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:23 - r - INFO: - Episode: 205/300, Reward: -36.000, Step: 36
+2022-11-28 14:45:23 - r - INFO: - Episode: 206/300, Reward: -29.000, Step: 29
+2022-11-28 14:45:23 - r - INFO: - Episode: 207/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:23 - r - INFO: - Episode: 208/300, Reward: -23.000, Step: 23
+2022-11-28 14:45:23 - r - INFO: - Episode: 209/300, Reward: -14.000, Step: 14
+2022-11-28 14:45:23 - r - INFO: - Episode: 210/300, Reward: -28.000, Step: 28
+2022-11-28 14:45:23 - r - INFO: - Episode: 211/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:23 - r - INFO: - Episode: 212/300, Reward: -26.000, Step: 26
+2022-11-28 14:45:23 - r - INFO: - Episode: 213/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:23 - r - INFO: - Episode: 214/300, Reward: -26.000, Step: 26
+2022-11-28 14:45:23 - r - INFO: - Episode: 215/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:23 - r - INFO: - Episode: 216/300, Reward: -23.000, Step: 23
+2022-11-28 14:45:23 - r - INFO: - Episode: 217/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:23 - r - INFO: - Episode: 218/300, Reward: -48.000, Step: 48
+2022-11-28 14:45:23 - r - INFO: - Episode: 219/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:23 - r - INFO: - Episode: 220/300, Reward: -133.000, Step: 34
+2022-11-28 14:45:23 - r - INFO: - Episode: 221/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:23 - r - INFO: - Episode: 222/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:23 - r - INFO: - Episode: 223/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:23 - r - INFO: - Episode: 224/300, Reward: -35.000, Step: 35
+2022-11-28 14:45:23 - r - INFO: - Episode: 225/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:23 - r - INFO: - Current episode 225 has the best eval reward: -13.000
+2022-11-28 14:45:23 - r - INFO: - Episode: 226/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:23 - r - INFO: - Episode: 227/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:23 - r - INFO: - Episode: 228/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:23 - r - INFO: - Episode: 229/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:23 - r - INFO: - Episode: 230/300, Reward: -26.000, Step: 26
+2022-11-28 14:45:24 - r - INFO: - Episode: 231/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:24 - r - INFO: - Episode: 232/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:24 - r - INFO: - Episode: 233/300, Reward: -27.000, Step: 27
+2022-11-28 14:45:24 - r - INFO: - Episode: 234/300, Reward: -30.000, Step: 30
+2022-11-28 14:45:24 - r - INFO: - Episode: 235/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:24 - r - INFO: - Episode: 236/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:24 - r - INFO: - Episode: 237/300, Reward: -122.000, Step: 23
+2022-11-28 14:45:24 - r - INFO: - Episode: 238/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:24 - r - INFO: - Episode: 239/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:24 - r - INFO: - Episode: 240/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 241/300, Reward: -39.000, Step: 39
+2022-11-28 14:45:24 - r - INFO: - Episode: 242/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:24 - r - INFO: - Episode: 243/300, Reward: -14.000, Step: 14
+2022-11-28 14:45:24 - r - INFO: - Episode: 244/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 245/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:24 - r - INFO: - Episode: 246/300, Reward: -31.000, Step: 31
+2022-11-28 14:45:24 - r - INFO: - Episode: 247/300, Reward: -20.000, Step: 20
+2022-11-28 14:45:24 - r - INFO: - Episode: 248/300, Reward: -28.000, Step: 28
+2022-11-28 14:45:24 - r - INFO: - Episode: 249/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 250/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:24 - r - INFO: - Episode: 251/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 252/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 253/300, Reward: -21.000, Step: 21
+2022-11-28 14:45:24 - r - INFO: - Episode: 254/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Episode: 255/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:24 - r - INFO: - Episode: 256/300, Reward: -18.000, Step: 18
+2022-11-28 14:45:24 - r - INFO: - Episode: 257/300, Reward: -23.000, Step: 23
+2022-11-28 14:45:24 - r - INFO: - Episode: 258/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Episode: 259/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:24 - r - INFO: - Episode: 260/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Current episode 260 has the best eval reward: -13.000
+2022-11-28 14:45:24 - r - INFO: - Episode: 261/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 262/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:24 - r - INFO: - Episode: 263/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:24 - r - INFO: - Episode: 264/300, Reward: -32.000, Step: 32
+2022-11-28 14:45:24 - r - INFO: - Episode: 265/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Episode: 266/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 267/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:24 - r - INFO: - Episode: 268/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 269/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 270/300, Reward: -28.000, Step: 28
+2022-11-28 14:45:24 - r - INFO: - Episode: 271/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 272/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 273/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Episode: 274/300, Reward: -128.000, Step: 29
+2022-11-28 14:45:24 - r - INFO: - Episode: 275/300, Reward: -32.000, Step: 32
+2022-11-28 14:45:24 - r - INFO: - Episode: 276/300, Reward: -24.000, Step: 24
+2022-11-28 14:45:24 - r - INFO: - Episode: 277/300, Reward: -26.000, Step: 26
+2022-11-28 14:45:24 - r - INFO: - Episode: 278/300, Reward: -14.000, Step: 14
+2022-11-28 14:45:24 - r - INFO: - Episode: 279/300, Reward: -25.000, Step: 25
+2022-11-28 14:45:24 - r - INFO: - Episode: 280/300, Reward: -22.000, Step: 22
+2022-11-28 14:45:24 - r - INFO: - Current episode 280 has the best eval reward: -13.000
+2022-11-28 14:45:24 - r - INFO: - Episode: 281/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 282/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 283/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 284/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 285/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 286/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Episode: 287/300, Reward: -21.000, Step: 21
+2022-11-28 14:45:24 - r - INFO: - Episode: 288/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:24 - r - INFO: - Episode: 289/300, Reward: -26.000, Step: 26
+2022-11-28 14:45:24 - r - INFO: - Episode: 290/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Current episode 290 has the best eval reward: -13.000
+2022-11-28 14:45:24 - r - INFO: - Episode: 291/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 292/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 293/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 294/300, Reward: -15.000, Step: 15
+2022-11-28 14:45:24 - r - INFO: - Episode: 295/300, Reward: -13.000, Step: 13
+2022-11-28 14:45:24 - r - INFO: - Episode: 296/300, Reward: -24.000, Step: 24
+2022-11-28 14:45:24 - r - INFO: - Episode: 297/300, Reward: -19.000, Step: 19
+2022-11-28 14:45:24 - r - INFO: - Episode: 298/300, Reward: -14.000, Step: 14
+2022-11-28 14:45:24 - r - INFO: - Episode: 299/300, Reward: -16.000, Step: 16
+2022-11-28 14:45:24 - r - INFO: - Episode: 300/300, Reward: -17.000, Step: 17
+2022-11-28 14:45:24 - r - INFO: - Finish training!

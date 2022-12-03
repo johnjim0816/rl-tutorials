@@ -1,0 +1,14 @@
+2022-11-28 15:05:39 - r - INFO: - n_states: 48, n_actions: 4
+2022-11-28 15:05:39 - r - INFO: - Start testing!
+2022-11-28 15:05:39 - r - INFO: - Env: CliffWalking-v0, Algorithm: QLearning, Device: cpu
+2022-11-28 15:05:44 - r - INFO: - Episode: 1/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:45 - r - INFO: - Episode: 2/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:45 - r - INFO: - Episode: 3/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:46 - r - INFO: - Episode: 4/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:46 - r - INFO: - Episode: 5/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:46 - r - INFO: - Episode: 6/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:47 - r - INFO: - Episode: 7/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:47 - r - INFO: - Episode: 8/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:48 - r - INFO: - Episode: 9/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:48 - r - INFO: - Episode: 10/10, Reward: -13.000, Step: 13
+2022-11-28 15:05:48 - r - INFO: - Finish testing!

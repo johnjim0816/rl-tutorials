@@ -1,7 +1,8 @@
 import gym
+import turtle
 class CliffWalkingWapper(gym.Wrapper):
-    def __init__(self, env):
-        gym.Wrapper.__init__(self, env)
+    def __init__(self, env, new_step_api=True):
+        gym.Wrapper.__init__(self, env, new_step_api=True)
         self.t = None
         self.unit = 50
         self.max_x = 12

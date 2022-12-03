@@ -1,0 +1,41 @@
+2022-11-28 15:46:29 - r - INFO: - Hyperparameters:
+2022-11-28 15:46:29 - r - INFO: - ================================================================================
+2022-11-28 15:46:29 - r - INFO: -         Name        	       Value        	        Type        
+2022-11-28 15:46:29 - r - INFO: -       env_name      	FrozenLakeNoSlippery-v1	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-11-28 15:46:29 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -        render       	         1          	   <class 'bool'>   
+2022-11-28 15:46:29 - r - INFO: -      algo_name      	     QLearning      	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -         mode        	        test        	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -         seed        	         10         	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -        device       	        cpu         	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -      train_eps      	        800         	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -   load_checkpoint   	         1          	   <class 'bool'>   
+2022-11-28 15:46:29 - r - INFO: -      load_path      	Train_FrozenLakeNoSlippery-v1_QLearning_20221128-152949	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-11-28 15:46:29 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-11-28 15:46:29 - r - INFO: -     render_mode     	       human        	   <class 'str'>    
+2022-11-28 15:46:29 - r - INFO: -    epsilon_start    	        0.7         	  <class 'float'>   
+2022-11-28 15:46:29 - r - INFO: -     epsilon_end     	        0.1         	  <class 'float'>   
+2022-11-28 15:46:29 - r - INFO: -    epsilon_decay    	        2000        	   <class 'int'>    
+2022-11-28 15:46:29 - r - INFO: -        gamma        	        0.95        	  <class 'float'>   
+2022-11-28 15:46:29 - r - INFO: -          lr         	        0.9         	  <class 'float'>   
+2022-11-28 15:46:29 - r - INFO: - ================================================================================
+2022-11-28 15:46:30 - r - INFO: - n_states: 16, n_actions: 4
+2022-11-28 15:46:30 - r - INFO: - Start testing!
+2022-11-28 15:46:30 - r - INFO: - Env: FrozenLakeNoSlippery-v1, Algorithm: QLearning, Device: cpu
+2022-11-28 15:46:33 - r - INFO: - Episode: 1/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:35 - r - INFO: - Episode: 2/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:37 - r - INFO: - Episode: 3/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:39 - r - INFO: - Episode: 4/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:40 - r - INFO: - Episode: 5/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:42 - r - INFO: - Episode: 6/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:44 - r - INFO: - Episode: 7/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:46 - r - INFO: - Episode: 8/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:47 - r - INFO: - Episode: 9/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:49 - r - INFO: - Episode: 10/10, Reward: 1.000, Step: 6
+2022-11-28 15:46:49 - r - INFO: - Finish testing!
