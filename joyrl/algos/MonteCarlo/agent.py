@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:14:34
 LastEditor: John
-LastEditTime: 2022-11-06 01:04:57
+LastEditTime: 2022-12-03 18:12:50
 Discription: 
 Environment: 
 '''
@@ -14,7 +14,7 @@ from collections import defaultdict
 import torch
 import dill
 
-class FisrtVisitMC:
+class Agent:
     ''' On-Policy First-Visit MC Control
     '''
     def __init__(self,cfg):
