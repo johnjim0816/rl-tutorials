@@ -68,3 +68,4 @@ class GeneralConfig(DefaultConfig):
 ## 算法说明
 * [Q-learning](Q-learning.md)：参考DQN说明
 * [DQN](./DQN.md)
+* [PPO](./PPO.md)
