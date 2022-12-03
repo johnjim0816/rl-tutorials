@@ -53,7 +53,9 @@ python main.py --yaml config/custom_config_Train.yaml
 |    算法名称     |                           参考文献                           |                     作者                      | 备注 |
 | :-------------: | :----------------------------------------------------------: | :-------------------------------------------: | :--: |
 | Value Iteration | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) |   [guoshicheng](https://github.com/gsc579)    |      |
-|       DQN       | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)  | [johnjim0816](https://github.com/johnjim0816) |      |
-| PER_DQN | [PER_DQN Paper](https://arxiv.org/pdf/1511.05952) | [wangzhongren](https://github.com/wangzhongren-code) |       |
-| NoisyDQN | [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf) | [wangzhongren](https://github.com/wangzhongren-code) |       |
-| DDPG | [DDPG Paper](https://arxiv.org/abs/1509.02971) | [johnjim0816](https://github.com/johnjim0816) |       |
+| [REINFORCE](./algos/REINFORCE/) | [REINFORCE Paper](http://www.cs.toronto.edu/~tingwuwang/REINFORCE.pdf) | [johnjim0816](https://github.com/johnjim0816) |       |
+|  [DQN](./algos/DQN/)   | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)  | [johnjim0816](https://github.com/johnjim0816) |      |
+| [PER_DQN](./algos/PER_DQN/) | [PER_DQN Paper](https://arxiv.org/pdf/1511.05952) | [wangzhongren](https://github.com/wangzhongren-code) |       |
+| [NoisyDQN](./algos/NoisyDQN/) | [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf) | [wangzhongren](https://github.com/wangzhongren-code) |       |
+| [PPO](./algos/PPO/) | [PPO Paper](https://arxiv.org/abs/1707.06347) | [johnjim0816](https://github.com/johnjim0816) |       |
+| [DDPG](./algos/DDPG/) | [DDPG Paper](https://arxiv.org/abs/1509.02971) | [johnjim0816](https://github.com/johnjim0816) |       |

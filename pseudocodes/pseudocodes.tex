@@ -204,7 +204,6 @@
 	\end{algorithmic}
 \end{algorithm}
 \footnotetext[1]{这里结合TD error的特性按照从$t+1$到$1$计算法Advantage更方便}
-
 \clearpage
 
 \section{PPO-Clip算法}
@@ -215,29 +214,61 @@
 	\begin{algorithmic}[1] % [1]显示步数
 		\STATE 初始化策略网络(Actor)参数$\theta$和价值网络(Critic)参数$\phi$
 		\STATE 初始化Clip参数$\epsilon$
-		\STATE 初始化epoch数量$K$
+		\STATE 初始化epoch数$K$
 		\STATE 初始化经验回放$D$
-		\STATE 初始化总时步数$c=0$
 		\FOR {回合数 = $1,2,\cdots,M$}
-			\STATE 重置环境，获得初始状态$s_0$
-			\FOR {时步 $t = 1,2,\cdots,T$}
-				\STATE 计数总时步$c \leftarrow c+1$
-				\STATE 根据策略$\pi_{\theta}$选择$a_t$
-				\STATE 环境根据$a_t$反馈奖励$r_t$和下一个状态$s_{t+1}$
-				\STATE 存储$(s_t,a_t,r_t,s_{t+1})$到经验回放$D$中
-				\IF{$c$被$C$整除\footnotemark[3]}
-					\FOR {$k= 1,2,\cdots,K$}
-						\STATE 测试
-					\ENDFOR
-					\STATE 清空经验回放$D$
-				\ENDIF
+			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = {s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots}$到经验回放$D$中
+			\FOR {epoch数 $ k = 1,2,\cdots,K$}
+				\STATE 计算折扣奖励$\hat{R_t}$
+				\STATE 计算优势函数，即$A^{\pi_{\theta_{k}}}=V_{\phi_k}-\hat{R_t}$
+				\STATE 结合重要性采样计算Actor损失，如下：
+				\STATE $L^{CLIP}(\theta)= \frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{k}}(a_t|s_t)} A^{\pi_{\theta_{k}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{k}}}(s_t,a_t)))$\footnotemark[3]
+				\STATE 梯度下降更新Actor参数：$\theta_{k+1} \leftarrow \theta_{k} + \alpha_{\theta} L^{CLIP}(\theta)$
+				\STATE 更新Critic参数:
+				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
 			\ENDFOR
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}
 \footnotetext[1]{Proximal Policy Optimization Algorithms}
 \footnotetext[2]{https://spinningup.openai.com/en/latest/algorithms/ppo.html}
-\footnotetext[3]{\bfseries 即每$C$个时步更新策略}
+\footnotetext[3]{$L^{CLIP}(\theta)=\hat{E_t}[min(r_t(\theta)\hat{A_t}, clip(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A_t})]$}
+\clearpage
+
+\section{PPO-KL散度算法}
+\begin{algorithm}[H] % [H]固定位置
+    \floatname{algorithm}{{PPO-KL散度算法}\footnotemark[1]\footnotemark[2]} 
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\begin{algorithmic}[1] % [1]显示步数
+		\STATE 初始化策略网络(Actor)参数$\theta$和价值网络(Critic)参数$\phi$
+		\STATE 初始化KL散度参数$\lambda$
+		\STATE 初始化回合数量$M$
+		\STATE 初始化epoch数量$K$
+		\STATE 初始化经验回放$D$
+		\FOR {回合数 = $1,2,\cdots,M$}
+			\STATE 根据策略$\pi_{\theta_m}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_m=\{\tau_i\}$中
+			\FOR {epoch数 = $1,2,\cdots,K$}
+				\STATE 计算折扣奖励$\hat{R_t}$
+				\STATE 根据值函数$V_{\Phi_m}$,用某种优势估计方法计算优势函数$\hat{A_t}$
+				\STATE 通过最大化目标函数$J_{PPO}(\theta)$更新参数$\theta$：
+				\STATE $J_{PPO}(\theta)=\sum_{t=1}^{T}\frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}\hat{A_t}-\lambda KL[\pi_{old}|\pi_\theta]$
+				\STATE 典型方法是Adam随机梯度上升
+				\STATE 根据均方误差回归拟合值函数，更新Critic参数:
+				\STATE $\Phi_{m+1} \leftarrow \frac{1}{|D_m|T}\sum_{\tau \in D_m}\sum_{t=0}^{T} (V_{\Phi_{m}}(s_t)-\hat{R_t})^2$
+				\STATE 运用某些梯度下降算法
+				\IF{$KL[\pi_{old}|\pi_\theta]>\beta_{high}KL_{target}$}
+					\STATE $\lambda \leftarrow \alpha\lambda$
+				\ELSIF{$KL[\pi_{old}|\pi_\theta]<\beta_{low}KL_{target}$}
+					\STATE $\lambda \leftarrow \frac{\lambda}{\alpha}$
+				\ENDIF
+			\ENDFOR
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+\footnotetext[1]{Proximal Policy Optimization Algorithms}
+\footnotetext[2]{Emergence of Locomotion Behaviours in Rich Environments}
+
 \clearpage
 \section{DDPG算法}
 \begin{algorithm}[H] % [H]固定位置
