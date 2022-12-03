@@ -218,7 +218,7 @@
 		\STATE 初始化经验回放$D$
 		\FOR {回合数 = $1,2,\cdots,M$}
 			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = {s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots}$到经验回放$D$中
-			\FOR {epoch数 = $1,2,\cdots,K$}
+			\FOR {epoch数 $ k = 1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
 				\STATE 计算优势函数，即$A^{\pi_{\theta_{k}}}=V_{\phi_k}-\hat{R_t}$
 				\STATE 结合重要性采样计算Actor损失，如下：
