@@ -214,19 +214,19 @@
 	\begin{algorithmic}[1] % [1]显示步数
 		\STATE 初始化策略网络(Actor)参数$\theta$和价值网络(Critic)参数$\phi$
 		\STATE 初始化Clip参数$\epsilon$
-		\STATE 初始化迭代数量$K$
-		\STATE 初始化epoch数量$E$
+		\STATE 初始化回合数量$M$
+		\STATE 初始化epoch数量$K$
 		\STATE 初始化经验回放$D$
-		\FOR {迭代数 = $1,2,\cdots,K$}
-			\STATE 根据策略$\pi_{\theta_k}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_k=\{\tau_i\}$中
-			\FOR {epoch数 = $1,2,\cdots,E$}
+		\FOR {回合数 = $1,2,\cdots,M$}
+			\STATE 根据策略$\pi_{\theta_m}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_m=\{\tau_i\}$中
+			\FOR {epoch数 = $1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
-				\STATE 根据值函数$V_{\Phi_k}$,用某种优势估计方法计算优势函数$\hat{A_t}$
-				\STATE 通过最大化目标函数$L^{CLIP}(\theta)$更新Actor参数，$\theta_{k+1} \leftarrow \theta_{k}$：
-				\STATE $L^{CLIP}(\theta)= \frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{k}}(a_t|s_t)} A^{\pi_{\theta_{k}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{k}}}(s_t,a_t)))$\footnotemark[3]
+				\STATE 根据值函数$V_{\Phi_m}$,用某种优势估计方法计算优势函数$\hat{A_t}$
+				\STATE 通过最大化目标函数$L^{CLIP}(\theta)$更新Actor参数，$\theta_{m+1} \leftarrow \theta_{m}$：
+				\STATE $L^{CLIP}(\theta)= \frac{1}{|D_m|T}\sum_{\tau \in D_m}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{m}}(a_t|s_t)} A^{\pi_{\theta_{m}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{m}}}(s_t,a_t)))$\footnotemark[3]
 				\STATE 典型方法是Adam随机梯度上升
 				\STATE 根据均方误差回归拟合值函数，更新Critic参数:
-				\STATE $\Phi_{k+1} \leftarrow \frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} (V_{\Phi_{k}}(s_t)-\hat{R_t})^2$
+				\STATE $\Phi_{m+1} \leftarrow \frac{1}{|D_m|T}\sum_{\tau \in D_m}\sum_{t=0}^{T} (V_{\Phi_{m}}(s_t)-\hat{R_t})^2$
 				\STATE 运用某些梯度下降算法
 			\ENDFOR
 		\ENDFOR
@@ -239,25 +239,25 @@
 
 \section{PPO-KL散度算法}
 \begin{algorithm}[H] % [H]固定位置
-    \floatname{algorithm}{{PPO-Clip算法}\footnotemark[1]\footnotemark[2]} 
+    \floatname{algorithm}{{PPO-KL散度算法}\footnotemark[1]\footnotemark[2]} 
 	\renewcommand{\thealgorithm}{} % 去掉算法标号
 	\caption{} 
 	\begin{algorithmic}[1] % [1]显示步数
 		\STATE 初始化策略网络(Actor)参数$\theta$和价值网络(Critic)参数$\phi$
-		\STATE 初始化Clip参数$\epsilon$
-		\STATE 初始化迭代数量$K$
-		\STATE 初始化epoch数量$E$
+		\STATE 初始化KL散度参数$\lambda$
+		\STATE 初始化回合数量$M$
+		\STATE 初始化epoch数量$K$
 		\STATE 初始化经验回放$D$
-		\FOR {迭代数 = $1,2,\cdots,K$}
-			\STATE 根据策略$\pi_{\theta_k}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_k=\{\tau_i\}$中
-			\FOR {epoch数 = $1,2,\cdots,E$}
+		\FOR {回合数 = $1,2,\cdots,M$}
+			\STATE 根据策略$\pi_{\theta_m}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_m=\{\tau_i\}$中
+			\FOR {epoch数 = $1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
-				\STATE 根据值函数$V_{\Phi_k}$,用某种优势估计方法计算优势函数$\hat{A_t}$
+				\STATE 根据值函数$V_{\Phi_m}$,用某种优势估计方法计算优势函数$\hat{A_t}$
 				\STATE 通过最大化目标函数$J_{PPO}(\theta)$更新参数$\theta$：
 				\STATE $J_{PPO}(\theta)=\sum_{t=1}^{T}\frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}\hat{A_t}-\lambda KL[\pi_{old}|\pi_\theta]$
 				\STATE 典型方法是Adam随机梯度上升
 				\STATE 根据均方误差回归拟合值函数，更新Critic参数:
-				\STATE $\Phi \leftarrow \sum_{t=0}^{T} (V_{\Phi_{old}}(s_t)-\hat{R_t})^2$
+				\STATE $\Phi_{m+1} \leftarrow \frac{1}{|D_m|T}\sum_{\tau \in D_m}\sum_{t=0}^{T} (V_{\Phi_{m}}(s_t)-\hat{R_t})^2$
 				\STATE 运用某些梯度下降算法
 				\IF{$KL[\pi_{old}|\pi_\theta]>\beta_{high}KL_{target}$}
 					\STATE $\lambda \leftarrow \alpha\lambda$
