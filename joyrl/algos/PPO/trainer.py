@@ -49,6 +49,31 @@ class Trainer:
             if terminated:
                 break
         return agent,ep_reward,ep_step
+    def collect_one_episode(self, env, agent, cfg):
+        # dict of arrays
+        collected = False
+        ep_memory = {'state': [], 'action': [], 'reward': [], 'terminated': []}
+        while not collected:
+            trajectories = 0
+            state = env.reset()
+            ep_memory = {'state': [], 'action': [], 'reward': [], 'terminated': []}
+            ep_reward = 0
+            while trajectories < cfg.max_steps:
+                action = agent.sample_action(state)
+                new_state, reward, terminated, truncated, info = env.step(
+                    action)
+                ep_reward += reward
+                ep_memory['state'].append(state)
+                ep_memory['action'].append(action)
+                ep_memory['reward'].append(reward)
+                ep_memory['terminated'].append(terminated)
+                state = new_state
+                trajectories += 1
+                if terminated:
+                    if ep_reward >= cfg.min_reward:
+                        collected = True
+                    break
+        return ep_reward, ep_memory['state'], ep_memory['action'], ep_memory['reward'], ep_memory['terminated']
    
 
         
