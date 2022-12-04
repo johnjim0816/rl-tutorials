@@ -127,6 +127,53 @@
 \footnotetext[4]{此处也可像原论文中放到小循环中改成每$C$步，但没有每$C$个回合稳定}
 \clearpage
 
+\section{DRQN算法}
+\begin{algorithm}[H] % [H]固定位置
+	\floatname{algorithm}{{DRQN算法}\footnotemark[1]}  
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\renewcommand{\algorithmicrequire}{\textbf{输入:}}  
+	\renewcommand{\algorithmicensure}{\textbf{输出:}} 
+	\begin{algorithmic}[1]
+		% \REQUIRE $n \geq 0 \vee x \neq 0$ % 输入
+		% \ENSURE $y = x^n$ % 输出
+		\STATE 初始化策略网络参数$\theta$ % 初始化
+		\STATE 复制参数到目标网络$\hat{Q} \leftarrow Q$
+		\STATE 初始化经验回放$D$
+		\FOR {回合数 = $1,M$}
+		\STATE 重置环境,获得初始状态的观测$o_t$
+		\STATE $h_{0} \leftarrow 0$
+		\FOR {时步 = $1,t$}
+		\STATE 根据$\varepsilon-greedy$策略采样动作$a_t$
+		\STATE 环境根据$a_t$反馈奖励$r_t$和下一个状态，生成下一状态的观测$o_{t+1}$
+		\STATE 存储transition即$(o_t,a_t,r_t,o_{t+1})$到经验回放$D$中
+		\STATE 更新环境状态对应的观测$o_{t+1} \leftarrow o_t $
+		\STATE {\bfseries 更新策略：}
+		% \IF{回合数 \% freeze internal == 0} 
+		% \STATE 更新参数$\hat{Q} \leftarrow Q$
+		% \ENDIF
+		\STATE 从$D$中采样一个batch的transition, 即 
+		\\ $B = \left\{(s_{j}, a_{j}, r_{j}, s_{j}^{'}) \dots (s_{j+\tau}, a_{j+\tau}, r_{j+\tau}, s_{j+\tau}^{'})\right\}_{j=1}^{\text {batch size }} \subseteq D$
+	
+		\FOR{这个batch中的每个transition}
+		\STATE $h_{j-1} \leftarrow 0$
+		\FOR{$k = j \text { to } k = j + \tau $}
+		\STATE 更新LSTM网络的隐藏状态 $h_{k} = Q(s_{k}, h_{k-1} | \theta_{i})$
+		\ENDFOR
+		\STATE 计算实际的$Q$值，即$y_{j}$\footnotemark[2]
+		\STATE 计算损失 $L(\theta)=\left(y_{i}-Q\left(s_{j+\tau}, a_{j+\tau}, h_{j+\tau-1} ; \theta\right)\right)^{2}$
+		\ENDFOR
+		\STATE 关于参数$\theta$做随机梯度下降\footnotemark[3]
+		\STATE 每$C$个回合复制参数$\hat{Q}\leftarrow Q$\footnotemark[4]]
+		\ENDFOR
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+\footnotetext[1]{Deep Recurrent Q-Learning for Partially Observable MDPs}
+\footnotetext[2]{$y_{j}= \begin{cases}r_{j} & \text {对于终止状态} s_{i+1} \\ r_{j}+\gamma \max _{a^{\prime}} Q\left(s_{j+\tau}, a_{j+\tau}, h_{j+\tau-1} ; \theta\right) & \text {对于非终止状态} s_{i+1}\end{cases}$}
+\footnotetext[3]{$\theta_i \leftarrow \theta_i - \lambda \nabla_{\theta_{i}} L_{i}\left(\theta_{i}\right)$}
+\clearpage
+
 
 \section{PER-DQN算法}
 \begin{algorithm}[H] % [H]固定位置
@@ -163,45 +210,6 @@
 \footnotetext[2]{$y_{i}= \begin{cases}r_{i} & \text {对于终止状态} s_{i+1} \\ r_{i}+\gamma \max _{a^{\prime}} Q\left(s_{i+1}, a^{\prime} ; \theta\right) & \text {对于非终止状态} s_{i+1}\end{cases}$}
 \footnotetext[3]{$\theta_i \leftarrow \theta_i - \lambda \nabla_{\theta_{i}} L_{i}\left(\theta_{i}\right)$}
 \footnotetext[4]{此处也可像原论文中放到小循环中改成每$C$步，但没有每$C$个回合稳定}
-\clearpage
-
-
-
-\section{NoisyDQN算法}
-\begin{algorithm}[H] % [H]固定位置
-    \floatname{algorithm}{{NoisyDQN算法}\footnotemark[1]}  
-    \renewcommand{\thealgorithm}{} % 去掉算法标号
-	\caption{} 
-    \renewcommand{\algorithmicrequire}{\textbf{输入:}}  
-    \renewcommand{\algorithmicensure}{\textbf{输出:}} 
-	\begin{algorithmic}[1]
-		% \REQUIRE $n \geq 0 \vee x \neq 0$ % 输入
-		% \ENSURE $y = x^n$ % 输出
-		\STATE 初始化策略网络每个参数（权重和偏置）对应的噪声变量$\mu$和$\sigma$ % 初始化
-		\STATE 复制参数到目标网络$\hat{Q} \leftarrow Q$
-		\STATE 初始化经验回放$D$
-		\FOR {回合数 = $1,M$}
-			\STATE 重置环境，获得初始状态$s_t$
-			\FOR {时步 = $1,t$}
-				\STATE 根据$\varepsilon-greedy$策略采样动作$a_t$
-				\STATE 环境根据$a_t$反馈奖励$r_t$和下一个状态$s_{t+1}$
-				\STATE 存储transition即$(s_t,a_t,r_t,s_{t+1})$到经验回放$D$中
-				\STATE 更新环境状态$s_{t+1} \leftarrow s_t$
-				\STATE {\bfseries 更新策略：}
-				\STATE 从$D$中采样一个batch的transition
-				\STATE 计算实际的$Q$值，即$y_{j}$\footnotemark[2]
-				\STATE 对损失 $L(\mu, \sigma)=\left(y_{i}-Q\left(s_{i}, a_{i} ; \mu, \sigma\right)\right)^{2}$关于
-				参数$\mu, \sigma$做随机梯度下降
-				\STATE 对目标网络和策略网络中的噪声项$\epsilon$进行重置
-			\ENDFOR
-			\STATE 每$C$个回合复制参数$\hat{Q}\leftarrow Q$\footnotemark[3]
-		\ENDFOR
-	\end{algorithmic}
-\end{algorithm}
-\footnotetext[1]{Playing Atari with Deep Reinforcement Learning}
-\footnotetext[2]{$y_{i}= \begin{cases}r_{i} & \text {对于终止状态} s_{i+1} \\ r_{i}+\gamma \max _{a^{\prime}} Q\left(s_{i+1}, a^{\prime} ; \theta\right) & \text {对于非终止状态} s_{i+1}\end{cases}$}
-% \footnotetext[3]{$\theta_i \leftarrow \theta_i - \lambda \nabla_{\theta_{i}} L_{i}\left(\theta_{i}\right)$}
-\footnotetext[3]{此处也可像原论文中放到小循环中改成每$C$步，但没有每$C$个回合稳定}
 \clearpage
 
 
@@ -256,17 +264,16 @@
 		\STATE 初始化epoch数$K$
 		\STATE 初始化经验回放$D$
 		\FOR {回合数 = $1,2,\cdots,M$}
-			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = \{s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots\}$到经验回放$D$中
+			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = {s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots}$到经验回放$D$中
 			\FOR {epoch数 $ k = 1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
 				\STATE 计算优势函数，即$A^{\pi_{\theta_{k}}}=V_{\phi_k}-\hat{R_t}$
 				\STATE 结合重要性采样计算Actor损失，如下：
-				\STATE $L^{CLIP}(\theta)= \frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{k}}(a_t|s_t)} A^{\pi_{\theta_{k}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{k}}}(s_t,a_t)))$\footnotemark[3]
+				\STATE $L^{CLIP}(\theta)= \frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{k}}(a_t|s_t)} A^{\pi_{\theta_{k}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{k}}}(s_t,a_t)))$\footnotemark[3]
 				\STATE 梯度下降更新Actor参数：$\theta_{k+1} \leftarrow \theta_{k} + \alpha_{\theta} L^{CLIP}(\theta)$
 				\STATE 更新Critic参数:
-				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
+				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
 			\ENDFOR
-			\STATE 清空经验回放$D$
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}
@@ -287,22 +294,22 @@
 		\STATE 初始化epoch数量$K$
 		\STATE 初始化经验回放$D$
 		\FOR {回合数 = $1,2,\cdots,M$}
-			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = \{s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots\}$到经验回放$D$中
-			\FOR {epoch数 $k = 1,2,\cdots,K$}
+			\STATE 根据策略$\pi_{\theta_m}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_m=\{\tau_i\}$中
+			\FOR {epoch数 = $1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
-				\STATE 计算优势函数，即$A^{\pi_{\theta_{k}}}=V_{\phi_k}-\hat{R_t}$
-				\STATE 结合重要性采样计算Actor损失，如下：
-				\STATE $J_{PPO}(\theta)=\frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=1}^{T}\frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}\hat{A_t}-\lambda KL[\pi_{old}|\pi_\theta]$
-				\STATE 梯度下降更新Actor参数：$\theta_{k+1} \leftarrow \theta_{k} + \alpha_{\theta} J^{PPO}(\theta)$
-				\STATE 更新Critic参数:
-				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
+				\STATE 根据值函数$V_{\Phi_m}$,用某种优势估计方法计算优势函数$\hat{A_t}$
+				\STATE 通过最大化目标函数$J_{PPO}(\theta)$更新参数$\theta$：
+				\STATE $J_{PPO}(\theta)=\sum_{t=1}^{T}\frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}\hat{A_t}-\lambda KL[\pi_{old}|\pi_\theta]$
+				\STATE 典型方法是Adam随机梯度上升
+				\STATE 根据均方误差回归拟合值函数，更新Critic参数:
+				\STATE $\Phi_{m+1} \leftarrow \frac{1}{|D_m|T}\sum_{\tau \in D_m}\sum_{t=0}^{T} (V_{\Phi_{m}}(s_t)-\hat{R_t})^2$
+				\STATE 运用某些梯度下降算法
 				\IF{$KL[\pi_{old}|\pi_\theta]>\beta_{high}KL_{target}$}
 					\STATE $\lambda \leftarrow \alpha\lambda$
 				\ELSIF{$KL[\pi_{old}|\pi_\theta]<\beta_{low}KL_{target}$}
 					\STATE $\lambda \leftarrow \frac{\lambda}{\alpha}$
 				\ENDIF
 			\ENDFOR
-			\STATE 清空经验回放$D$
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}
