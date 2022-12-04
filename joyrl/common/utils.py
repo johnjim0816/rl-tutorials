@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-11-28 15:34:30
+LastEditTime: 2022-12-04 01:08:02
 Discription: 
 Environment: 
 '''
@@ -170,7 +170,7 @@ def timing(func):
         print(f"func: {func.__name__}, took: {te-ts:2.4f} seconds")
         return result
     return wrap
-def all_seed(env,seed = 1):
+def all_seed(seed = 1):
     ''' omnipotent seed for RL, attention the position of seed function, you'd better put it just following the env create function
     Args:
         env (_type_): 
