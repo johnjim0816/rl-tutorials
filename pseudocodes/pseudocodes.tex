@@ -256,16 +256,17 @@
 		\STATE 初始化epoch数$K$
 		\STATE 初始化经验回放$D$
 		\FOR {回合数 = $1,2,\cdots,M$}
-			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = {s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots}$到经验回放$D$中
+			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = \{s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots\}$到经验回放$D$中
 			\FOR {epoch数 $ k = 1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
 				\STATE 计算优势函数，即$A^{\pi_{\theta_{k}}}=V_{\phi_k}-\hat{R_t}$
 				\STATE 结合重要性采样计算Actor损失，如下：
-				\STATE $L^{CLIP}(\theta)= \frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{k}}(a_t|s_t)} A^{\pi_{\theta_{k}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{k}}}(s_t,a_t)))$\footnotemark[3]
+				\STATE $L^{CLIP}(\theta)= \frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=0}^{T} min(\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{k}}(a_t|s_t)} A^{\pi_{\theta_{k}}}(s_t,a_t), g(\epsilon,A^{\pi_{\theta_{k}}}(s_t,a_t)))$\footnotemark[3]
 				\STATE 梯度下降更新Actor参数：$\theta_{k+1} \leftarrow \theta_{k} + \alpha_{\theta} L^{CLIP}(\theta)$
 				\STATE 更新Critic参数:
-				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D_k|T}\sum_{\tau \in D_k}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
+				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
 			\ENDFOR
+			\STATE 清空经验回放$D$
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}
@@ -286,22 +287,22 @@
 		\STATE 初始化epoch数量$K$
 		\STATE 初始化经验回放$D$
 		\FOR {回合数 = $1,2,\cdots,M$}
-			\STATE 根据策略$\pi_{\theta_m}$采样一个或几个回合数据,收集($s_t,a_t,r_t$)到经验回放$D_m=\{\tau_i\}$中
-			\FOR {epoch数 = $1,2,\cdots,K$}
+			\STATE 根据策略$\pi_{\theta}$采样$C$个时步数据,收集轨迹$\tau = \{s_0,a_0,r_1,...,s_t,a_t,r_{t+1},\cdots\}$到经验回放$D$中
+			\FOR {epoch数 $k = 1,2,\cdots,K$}
 				\STATE 计算折扣奖励$\hat{R_t}$
-				\STATE 根据值函数$V_{\Phi_m}$,用某种优势估计方法计算优势函数$\hat{A_t}$
-				\STATE 通过最大化目标函数$J_{PPO}(\theta)$更新参数$\theta$：
-				\STATE $J_{PPO}(\theta)=\sum_{t=1}^{T}\frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}\hat{A_t}-\lambda KL[\pi_{old}|\pi_\theta]$
-				\STATE 典型方法是Adam随机梯度上升
-				\STATE 根据均方误差回归拟合值函数，更新Critic参数:
-				\STATE $\Phi_{m+1} \leftarrow \frac{1}{|D_m|T}\sum_{\tau \in D_m}\sum_{t=0}^{T} (V_{\Phi_{m}}(s_t)-\hat{R_t})^2$
-				\STATE 运用某些梯度下降算法
+				\STATE 计算优势函数，即$A^{\pi_{\theta_{k}}}=V_{\phi_k}-\hat{R_t}$
+				\STATE 结合重要性采样计算Actor损失，如下：
+				\STATE $J_{PPO}(\theta)=\frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=1}^{T}\frac{\pi_\theta(a_t|s_t)}{\pi_{old}(a_t|s_t)}\hat{A_t}-\lambda KL[\pi_{old}|\pi_\theta]$
+				\STATE 梯度下降更新Actor参数：$\theta_{k+1} \leftarrow \theta_{k} + \alpha_{\theta} J^{PPO}(\theta)$
+				\STATE 更新Critic参数:
+				\STATE $\phi_{k+1} \leftarrow \phi_{k}+ \alpha_{\phi}\frac{1}{|D|T}\sum_{\tau \in D}\sum_{t=0}^{T} (V_{\phi_{k}}(s_t)-\hat{R_t})^2$
 				\IF{$KL[\pi_{old}|\pi_\theta]>\beta_{high}KL_{target}$}
 					\STATE $\lambda \leftarrow \alpha\lambda$
 				\ELSIF{$KL[\pi_{old}|\pi_\theta]<\beta_{low}KL_{target}$}
 					\STATE $\lambda \leftarrow \frac{\lambda}{\alpha}$
 				\ENDIF
 			\ENDFOR
+			\STATE 清空经验回放$D$
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}

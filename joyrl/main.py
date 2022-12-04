@@ -75,7 +75,7 @@ class Main(object):
             wrapper_class_name  = cfg.wrapper.split('.')[-1]
             env_wapper = __import__('.'.join(wrapper_class_path), fromlist=[wrapper_class_name])
             env = getattr(env_wapper,wrapper_class_name)(env,new_step_api=cfg.new_step_api)
-        all_seed(env,seed = cfg.seed) # set seed == 0 means no seed
+        all_seed(seed = cfg.seed) # set seed == 0 means no seed
         try: # state dimension
             n_states = env.observation_space.n # print(hasattr(env.observation_space, 'n'))
         except AttributeError:
