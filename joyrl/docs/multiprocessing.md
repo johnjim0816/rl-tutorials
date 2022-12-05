@@ -19,3 +19,9 @@ fork模式下，除了必要的启动资源，子进程中的其他变量、包�
 
 spawn模式下，子进程是从头开始创建的，变量、包和数据等等都是从父进程拷贝而来，因此启动较慢，但是安全系数高。
 
+```python
+import multiprocessing as mp
+print(mp.get_all_start_methods()) # 查看所有启动子进程的方法
+print(mp.get_start_method()) # 查看当前系统启动子进程的默认方法
+```
+
