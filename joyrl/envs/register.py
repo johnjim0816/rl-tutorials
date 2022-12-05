@@ -21,6 +21,12 @@ def register_env(env_name):
             entry_point='envs.simple_grid:DrunkenWalkEnv',
             kwargs={'map_name':"theAlley",'is_slippery':False},
         )
+    elif env_name == 'Mario':
+        register(
+            id='Mario',
+            entry_point='envs.mario.smb_env:SuperMarioBrosEnv',
+            kwargs={},
+        )
     else:
         print("The env name must be wrong or the environment donot need to register!")
 
