@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-12-03 19:40:32
 LastEditor: JiangJi
-LastEditTime: 2022-12-04 14:22:06
+LastEditTime: 2022-12-05 17:54:31
 Discription: 
 '''
 import sys,os
@@ -22,14 +22,15 @@ from common.utils import all_seed
 from common.models import ActorSoftmax, Critic
 
 class Worker(mp.Process):
-    def __init__(self,cfg,env,agent,worker_id,global_ep,global_ep_r,res_queue):
+    def __init__(self,cfg,share_agent,worker_id,global_ep,global_ep_r,res_queue):
         super(Worker,self).__init__()
         self.worker_id = worker_id
         self.global_ep = global_ep
         self.global_ep_r = global_ep_r
         self.res_queue = res_queue
-        self.env = env
-        self.agent = agent
+        self.env = gym.make(cfg.env_name,new_step_api=True)
+        self.share_agent = share_agent
+        self.agent = Agent(cfg)
         self.seed = cfg.seed + worker_id
         self.train_eps = cfg.train_eps
         self.max_steps = cfg.max_steps
@@ -45,16 +46,19 @@ class Worker(mp.Process):
                 action = self.agent.sample_action(state)
                 next_state, reward, terminated, truncated, info = self.env.step(action)
                 self.agent.memory.push((state, action, reward, terminated))
-                self.agent.update(next_state)
+                self.agent.update(next_state,terminated,share_agent=self.share_agent)
                 state = next_state
                 ep_r += reward
                 if terminated:
                     print("worker {} finished episode {} with reward {}".format(self.worker_id,self.global_ep.value,ep_r))
-                    with self.global_ep_r.get_lock():
-                        self.global_ep_r.value = ep_r
                     with self.global_ep.get_lock():
                         self.global_ep.value += 1
-                    self.res_queue.put(ep_r)
+                    with global_ep_r.get_lock():
+                        if global_ep_r.value == 0.:
+                            global_ep_r.value = ep_r
+                        else:
+                            global_ep_r.value = global_ep_r.value * 0.99 + ep_r * 0.01
+                    self.res_queue.put(global_ep_r.value)
                     break
 if __name__ == "__main__":
     
@@ -79,9 +83,10 @@ if __name__ == "__main__":
     global_ep = mp.Value('i', 0)
     global_ep_r = mp.Value('d', 0.)
     res_queue = mp.Queue()
-    share_agent = Agent(cfg, share_agent = None)
-    agent = Agent(cfg, share_agent = share_agent)
-    workers = [Worker(cfg,env,agent,worker_id,global_ep,global_ep_r,res_queue) for worker_id in range(cfg.n_workers)]
+    share_agent = Agent(cfg, is_share_agent = False)
+    if cfg.n_workers == 1:
+        share_agent = None
+    workers = [Worker(cfg,share_agent,worker_id,global_ep,global_ep_r,res_queue) for worker_id in range(cfg.n_workers)]
     for worker in workers:
         worker.start()
     

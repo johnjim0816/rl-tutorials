@@ -88,14 +88,15 @@ class SharedAdam(torch.optim.Adam):
                 p.data.addcdiv_(exp_avg, denom,value = -step_size)
         return loss
 class Agent:
-    def __init__(self, cfg,share_agent=None):
+    def __init__(self, cfg,is_share_agent=False):
         self.gamma = cfg.gamma
         self.entropy_coef = cfg.entropy_coef
         self.device = torch.device(cfg.device) 
         self.actor = ActorSoftmax(cfg.n_states,cfg.n_actions, hidden_dim = cfg.actor_hidden_dim).to(self.device)
         self.critic = Critic(cfg.n_states,1,hidden_dim=cfg.critic_hidden_dim).to(self.device)
-        
-        if share_agent is None: # the agent has no share agent, which means this agent itself is share agent
+        self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
+        self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=cfg.critic_lr)
+        if is_share_agent: # the agent has no share agent, which means this agent itself is share agent
             self.agent_name = 'share' # share or local
             self.actor.share_memory()
             self.critic.share_memory()
@@ -105,12 +106,6 @@ class Agent:
             self.critic_optimizer = SharedAdam(self.critic.parameters(), lr=cfg.critic_lr)
             self.actor_optimizer.share_memory()
             self.critic_optimizer.share_memory()
-        else:
-            self.agent_name = 'local'
-            self.share_actor = share_agent.actor
-            self.share_critic = share_agent.critic
-            self.share_actor_optimizer = share_agent.actor_optimizer
-            self.share_critic_optimizer = share_agent.critic_optimizer
         self.memory = PGReplay()
         self.sample_count = 0
         self.update_freq = cfg.update_freq
@@ -128,7 +123,7 @@ class Agent:
         dist = Categorical(probs)
         action = dist.sample()
         return action.detach().cpu().numpy().item()
-    def update(self,next_state):
+    def update(self,next_state,terminated,share_agent=None):
         # update policy every n steps
         if self.sample_count % self.update_freq != 0:
             return
@@ -140,8 +135,12 @@ class Agent:
         rewards = torch.tensor(np.array(rewards), device=self.device, dtype=torch.float32)
         dones = torch.tensor(np.array(dones), device=self.device, dtype=torch.float32)
         # compute returns
-        next_state = torch.tensor(next_state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
-        next_value = self.critic(next_state).detach().cpu().numpy().squeeze(0)[0]
+        # compute returns
+        if not terminated:
+            next_state = torch.tensor(next_state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            next_value = self.critic(next_state).detach()
+        else:
+            next_value = torch.tensor(0.0, device=self.device, dtype=torch.float32)
         returns = self.compute_returns(next_value,rewards,dones)
         values = self.critic(states)
         advantages = returns - values.detach()
@@ -155,20 +154,23 @@ class Agent:
         # tot_loss.backward()
         # self.actor_optimizer.step()
         # self.critic_optimizer.step()
-        if self.agent_name == 'local':
-            self.share_actor_optimizer.zero_grad()
-            self.share_critic_optimizer.zero_grad()
+        if share_agent is not None:
+            share_agent.actor_optimizer.zero_grad()
+            share_agent.critic_optimizer.zero_grad()
             actor_loss.backward()
             critic_loss.backward()
-            for local_param, share_param in zip(self.actor.parameters(), self.share_actor.parameters()):
-                share_param._grad = local_param.grad
-            for local_param, share_param in zip(self.critic.parameters(), self.share_critic.parameters()):
-                share_param._grad = local_param.grad
-            self.share_actor_optimizer.step()
-            self.share_critic_optimizer.step()
-            # copy weights from share agent to local agent
-            self.actor.load_state_dict(self.share_actor.state_dict())
-            self.critic.load_state_dict(self.share_critic.state_dict())
+            for param, share_param in zip(self.actor.parameters(), share_agent.actor.parameters()):
+                # if share_param.grad is None:
+                #     share_param._grad = param.grad
+                share_param._grad = param.grad
+            for param, share_param in zip(self.critic.parameters(), share_agent.critic.parameters()):
+                # if share_param.grad is None:
+                #     share_param._grad = param.grad
+                share_param._grad = param.grad
+            share_agent.actor_optimizer.step()
+            share_agent.critic_optimizer.step()
+            self.actor.load_state_dict(share_agent.actor.state_dict())
+            self.critic.load_state_dict(share_agent.critic.state_dict())
         else:
             self.actor_optimizer.zero_grad()
             self.critic_optimizer.zero_grad()
@@ -183,6 +185,7 @@ class Agent:
         returns = torch.zeros_like(rewards)
         R = next_value
         for t in reversed(range(len(rewards))):
+
             R = rewards[t] + self.gamma * R * (1 - dones[t])
             returns[t] = R
         # Normalizing the rewards:
