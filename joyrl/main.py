@@ -124,7 +124,7 @@ class Main(object):
         self.print_cfgs(cfg, logger)  # print the configuration
         env = self.env_config(cfg, logger)  # configure environment
         agent_mod = __import__(f"algos.{cfg.algo_name}.agent", fromlist=['Agent'])
-        agent = agent_mod.Agent(cfg, env)  # create agent
+        agent = agent_mod.Agent(cfg)  # create agent
         trainer_mod = __import__(f"algos.{cfg.algo_name}.trainer", fromlist=['Trainer'])
         trainer = trainer_mod.Trainer()  # create trainer
         if cfg.load_checkpoint:
