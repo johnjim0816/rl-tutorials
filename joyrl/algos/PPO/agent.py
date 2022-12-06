@@ -109,14 +109,14 @@ class Agent:
             surr1 = ratio * advantage
             surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
             # compute actor loss
-            actor_loss = -torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean()
+            actor_loss = - (torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean())
             # compute critic loss
-            critic_loss = (returns - values).pow(2).mean()
+            critic_loss = (values - returns).pow(2).mean()
+            tot_loss = actor_loss + 0.5 * critic_loss
             # take gradient step
             self.actor_optimizer.zero_grad()
             self.critic_optimizer.zero_grad()
-            actor_loss.backward()
-            critic_loss.backward()
+            tot_loss.backward()
             self.actor_optimizer.step()
             self.critic_optimizer.step()
         self.memory.clear()
