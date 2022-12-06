@@ -1,0 +1,144 @@
+2022-12-06 23:29:14 - r - INFO: - Hyperparameters:
+2022-12-06 23:29:14 - r - INFO: - ================================================================================
+2022-12-06 23:29:14 - r - INFO: -         Name        	       Value        	        Type        
+2022-12-06 23:29:14 - r - INFO: -       env_name      	    Pendulum-v1     	   <class 'str'>    
+2022-12-06 23:29:14 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-12-06 23:29:14 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2022-12-06 23:29:14 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2022-12-06 23:29:14 - r - INFO: -      algo_name      	        TD3         	   <class 'str'>    
+2022-12-06 23:29:14 - r - INFO: -         mode        	       train        	   <class 'str'>    
+2022-12-06 23:29:14 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -        device       	        cuda        	   <class 'str'>    
+2022-12-06 23:29:14 - r - INFO: -      train_eps      	        100         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -       eval_eps      	         5          	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -   eval_per_episode  	         10         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -   load_checkpoint   	         0          	   <class 'bool'>   
+2022-12-06 23:29:14 - r - INFO: -      load_path      	Train_CartPole-v1_DQN_20221026-054757	   <class 'str'>    
+2022-12-06 23:29:14 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-12-06 23:29:14 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-12-06 23:29:14 - r - INFO: -    explore_steps    	        1000        	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -     policy_freq     	         2          	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -       actor_lr      	       0.001        	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -      critic_lr      	       0.001        	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -   actor_hidden_dim  	        256         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -  critic_hidden_dim  	        256         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -         tau         	       0.005        	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -     policy_noise    	        0.2         	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -      expl_noise     	        0.1         	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -      noise_clip     	        0.5         	  <class 'float'>   
+2022-12-06 23:29:14 - r - INFO: -      batch_size     	        100         	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: -     buffer_size     	      1000000       	   <class 'int'>    
+2022-12-06 23:29:14 - r - INFO: - ================================================================================
+2022-12-06 23:29:15 - r - INFO: - action_bound: 2.0
+2022-12-06 23:29:15 - r - INFO: - n_states: 3, n_actions: 1
+2022-12-06 23:29:16 - r - INFO: - Start training!
+2022-12-06 23:29:16 - r - INFO: - Env: Pendulum-v1, Algorithm: TD3, Device: cuda
+2022-12-06 23:29:16 - r - INFO: - Episode: 1/100, Reward: -1006.555, Step: 200
+2022-12-06 23:29:16 - r - INFO: - Episode: 2/100, Reward: -1080.682, Step: 200
+2022-12-06 23:29:16 - r - INFO: - Episode: 3/100, Reward: -904.589, Step: 200
+2022-12-06 23:29:16 - r - INFO: - Episode: 4/100, Reward: -1074.935, Step: 200
+2022-12-06 23:29:17 - r - INFO: - Episode: 5/100, Reward: -1752.010, Step: 200
+2022-12-06 23:29:18 - r - INFO: - Episode: 6/100, Reward: -1091.518, Step: 200
+2022-12-06 23:29:19 - r - INFO: - Episode: 7/100, Reward: -1691.685, Step: 200
+2022-12-06 23:29:20 - r - INFO: - Episode: 8/100, Reward: -1487.075, Step: 200
+2022-12-06 23:29:21 - r - INFO: - Episode: 9/100, Reward: -1783.661, Step: 200
+2022-12-06 23:29:23 - r - INFO: - Episode: 10/100, Reward: -1617.445, Step: 200
+2022-12-06 23:29:23 - r - INFO: - Current episode 10 has the best eval reward: -1446.161
+2022-12-06 23:29:24 - r - INFO: - Episode: 11/100, Reward: -1517.544, Step: 200
+2022-12-06 23:29:26 - r - INFO: - Episode: 12/100, Reward: -1530.689, Step: 200
+2022-12-06 23:29:27 - r - INFO: - Episode: 13/100, Reward: -1535.509, Step: 200
+2022-12-06 23:29:28 - r - INFO: - Episode: 14/100, Reward: -1340.257, Step: 200
+2022-12-06 23:29:29 - r - INFO: - Episode: 15/100, Reward: -1518.146, Step: 200
+2022-12-06 23:29:31 - r - INFO: - Episode: 16/100, Reward: -1138.441, Step: 200
+2022-12-06 23:29:32 - r - INFO: - Episode: 17/100, Reward: -3.920, Step: 200
+2022-12-06 23:29:33 - r - INFO: - Episode: 18/100, Reward: -1518.639, Step: 200
+2022-12-06 23:29:34 - r - INFO: - Episode: 19/100, Reward: -995.832, Step: 200
+2022-12-06 23:29:35 - r - INFO: - Episode: 20/100, Reward: -1081.896, Step: 200
+2022-12-06 23:29:36 - r - INFO: - Current episode 20 has the best eval reward: -899.754
+2022-12-06 23:29:37 - r - INFO: - Episode: 21/100, Reward: -1391.688, Step: 200
+2022-12-06 23:29:38 - r - INFO: - Episode: 22/100, Reward: -5.017, Step: 200
+2022-12-06 23:29:39 - r - INFO: - Episode: 23/100, Reward: -399.640, Step: 200
+2022-12-06 23:29:40 - r - INFO: - Episode: 24/100, Reward: -537.959, Step: 200
+2022-12-06 23:29:42 - r - INFO: - Episode: 25/100, Reward: -136.534, Step: 200
+2022-12-06 23:29:43 - r - INFO: - Episode: 26/100, Reward: -2.239, Step: 200
+2022-12-06 23:29:44 - r - INFO: - Episode: 27/100, Reward: -262.246, Step: 200
+2022-12-06 23:29:45 - r - INFO: - Episode: 28/100, Reward: -268.392, Step: 200
+2022-12-06 23:29:46 - r - INFO: - Episode: 29/100, Reward: -0.696, Step: 200
+2022-12-06 23:29:47 - r - INFO: - Episode: 30/100, Reward: -133.903, Step: 200
+2022-12-06 23:29:48 - r - INFO: - Current episode 30 has the best eval reward: -223.311
+2022-12-06 23:29:49 - r - INFO: - Episode: 31/100, Reward: -268.037, Step: 200
+2022-12-06 23:29:50 - r - INFO: - Episode: 32/100, Reward: -254.221, Step: 200
+2022-12-06 23:29:51 - r - INFO: - Episode: 33/100, Reward: -1513.416, Step: 200
+2022-12-06 23:29:53 - r - INFO: - Episode: 34/100, Reward: -128.073, Step: 200
+2022-12-06 23:29:54 - r - INFO: - Episode: 35/100, Reward: -125.288, Step: 200
+2022-12-06 23:29:55 - r - INFO: - Episode: 36/100, Reward: -128.002, Step: 200
+2022-12-06 23:29:56 - r - INFO: - Episode: 37/100, Reward: -296.423, Step: 200
+2022-12-06 23:29:57 - r - INFO: - Episode: 38/100, Reward: -1.217, Step: 200
+2022-12-06 23:29:59 - r - INFO: - Episode: 39/100, Reward: -242.725, Step: 200
+2022-12-06 23:30:00 - r - INFO: - Episode: 40/100, Reward: -125.739, Step: 200
+2022-12-06 23:30:00 - r - INFO: - Current episode 40 has the best eval reward: -122.432
+2022-12-06 23:30:01 - r - INFO: - Episode: 41/100, Reward: -130.694, Step: 200
+2022-12-06 23:30:03 - r - INFO: - Episode: 42/100, Reward: -126.450, Step: 200
+2022-12-06 23:30:04 - r - INFO: - Episode: 43/100, Reward: -369.437, Step: 200
+2022-12-06 23:30:05 - r - INFO: - Episode: 44/100, Reward: -125.723, Step: 200
+2022-12-06 23:30:06 - r - INFO: - Episode: 45/100, Reward: -240.777, Step: 200
+2022-12-06 23:30:07 - r - INFO: - Episode: 46/100, Reward: -117.776, Step: 200
+2022-12-06 23:30:09 - r - INFO: - Episode: 47/100, Reward: -333.262, Step: 200
+2022-12-06 23:30:10 - r - INFO: - Episode: 48/100, Reward: -238.938, Step: 200
+2022-12-06 23:30:11 - r - INFO: - Episode: 49/100, Reward: -126.032, Step: 200
+2022-12-06 23:30:12 - r - INFO: - Episode: 50/100, Reward: -125.970, Step: 200
+2022-12-06 23:30:14 - r - INFO: - Episode: 51/100, Reward: -810.302, Step: 200
+2022-12-06 23:30:15 - r - INFO: - Episode: 52/100, Reward: -129.619, Step: 200
+2022-12-06 23:30:16 - r - INFO: - Episode: 53/100, Reward: -1.812, Step: 200
+2022-12-06 23:30:17 - r - INFO: - Episode: 54/100, Reward: -124.159, Step: 200
+2022-12-06 23:30:18 - r - INFO: - Episode: 55/100, Reward: -123.784, Step: 200
+2022-12-06 23:30:20 - r - INFO: - Episode: 56/100, Reward: -239.792, Step: 200
+2022-12-06 23:30:21 - r - INFO: - Episode: 57/100, Reward: -120.017, Step: 200
+2022-12-06 23:30:22 - r - INFO: - Episode: 58/100, Reward: -126.463, Step: 200
+2022-12-06 23:30:23 - r - INFO: - Episode: 59/100, Reward: -250.102, Step: 200
+2022-12-06 23:30:24 - r - INFO: - Episode: 60/100, Reward: -127.287, Step: 200
+2022-12-06 23:30:26 - r - INFO: - Episode: 61/100, Reward: -2.130, Step: 200
+2022-12-06 23:30:27 - r - INFO: - Episode: 62/100, Reward: -2.072, Step: 200
+2022-12-06 23:30:28 - r - INFO: - Episode: 63/100, Reward: -251.173, Step: 200
+2022-12-06 23:30:30 - r - INFO: - Episode: 64/100, Reward: -123.283, Step: 200
+2022-12-06 23:30:31 - r - INFO: - Episode: 65/100, Reward: -1.033, Step: 200
+2022-12-06 23:30:32 - r - INFO: - Episode: 66/100, Reward: -125.487, Step: 200
+2022-12-06 23:30:33 - r - INFO: - Episode: 67/100, Reward: -259.831, Step: 200
+2022-12-06 23:30:34 - r - INFO: - Episode: 68/100, Reward: -361.920, Step: 200
+2022-12-06 23:30:35 - r - INFO: - Episode: 69/100, Reward: -124.430, Step: 200
+2022-12-06 23:30:37 - r - INFO: - Episode: 70/100, Reward: -261.406, Step: 200
+2022-12-06 23:30:37 - r - INFO: - Current episode 70 has the best eval reward: -98.257
+2022-12-06 23:30:38 - r - INFO: - Episode: 71/100, Reward: -123.116, Step: 200
+2022-12-06 23:30:39 - r - INFO: - Episode: 72/100, Reward: -134.285, Step: 200
+2022-12-06 23:30:41 - r - INFO: - Episode: 73/100, Reward: -1.738, Step: 200
+2022-12-06 23:30:42 - r - INFO: - Episode: 74/100, Reward: -357.523, Step: 200
+2022-12-06 23:30:43 - r - INFO: - Episode: 75/100, Reward: -125.117, Step: 200
+2022-12-06 23:30:44 - r - INFO: - Episode: 76/100, Reward: -239.204, Step: 200
+2022-12-06 23:30:45 - r - INFO: - Episode: 77/100, Reward: -125.667, Step: 200
+2022-12-06 23:30:47 - r - INFO: - Episode: 78/100, Reward: -123.374, Step: 200
+2022-12-06 23:30:48 - r - INFO: - Episode: 79/100, Reward: -318.951, Step: 200
+2022-12-06 23:30:49 - r - INFO: - Episode: 80/100, Reward: -354.747, Step: 200
+2022-12-06 23:30:50 - r - INFO: - Episode: 81/100, Reward: -260.196, Step: 200
+2022-12-06 23:30:52 - r - INFO: - Episode: 82/100, Reward: -1.108, Step: 200
+2022-12-06 23:30:53 - r - INFO: - Episode: 83/100, Reward: -115.268, Step: 200
+2022-12-06 23:30:54 - r - INFO: - Episode: 84/100, Reward: -126.678, Step: 200
+2022-12-06 23:30:55 - r - INFO: - Episode: 85/100, Reward: -127.588, Step: 200
+2022-12-06 23:30:57 - r - INFO: - Episode: 86/100, Reward: -114.537, Step: 200
+2022-12-06 23:30:58 - r - INFO: - Episode: 87/100, Reward: -122.421, Step: 200
+2022-12-06 23:30:59 - r - INFO: - Episode: 88/100, Reward: -1.730, Step: 200
+2022-12-06 23:31:00 - r - INFO: - Episode: 89/100, Reward: -115.831, Step: 200
+2022-12-06 23:31:01 - r - INFO: - Episode: 90/100, Reward: -117.090, Step: 200
+2022-12-06 23:31:03 - r - INFO: - Episode: 91/100, Reward: -2.461, Step: 200
+2022-12-06 23:31:04 - r - INFO: - Episode: 92/100, Reward: -115.417, Step: 200
+2022-12-06 23:31:05 - r - INFO: - Episode: 93/100, Reward: -121.398, Step: 200
+2022-12-06 23:31:07 - r - INFO: - Episode: 94/100, Reward: -238.991, Step: 200
+2022-12-06 23:31:08 - r - INFO: - Episode: 95/100, Reward: -2.563, Step: 200
+2022-12-06 23:31:09 - r - INFO: - Episode: 96/100, Reward: -120.696, Step: 200
+2022-12-06 23:31:11 - r - INFO: - Episode: 97/100, Reward: -121.528, Step: 200
+2022-12-06 23:31:12 - r - INFO: - Episode: 98/100, Reward: -123.437, Step: 200
+2022-12-06 23:31:13 - r - INFO: - Episode: 99/100, Reward: -317.987, Step: 200
+2022-12-06 23:31:14 - r - INFO: - Episode: 100/100, Reward: -233.450, Step: 200
+2022-12-06 23:31:15 - r - INFO: - Finish training!

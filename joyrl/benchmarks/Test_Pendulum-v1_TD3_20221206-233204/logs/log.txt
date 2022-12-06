@@ -1,0 +1,49 @@
+2022-12-06 23:32:04 - r - INFO: - Hyperparameters:
+2022-12-06 23:32:04 - r - INFO: - ================================================================================
+2022-12-06 23:32:04 - r - INFO: -         Name        	       Value        	        Type        
+2022-12-06 23:32:04 - r - INFO: -       env_name      	    Pendulum-v1     	   <class 'str'>    
+2022-12-06 23:32:04 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-12-06 23:32:04 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2022-12-06 23:32:04 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2022-12-06 23:32:04 - r - INFO: -      algo_name      	        TD3         	   <class 'str'>    
+2022-12-06 23:32:04 - r - INFO: -         mode        	        test        	   <class 'str'>    
+2022-12-06 23:32:04 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -        device       	        cuda        	   <class 'str'>    
+2022-12-06 23:32:04 - r - INFO: -      train_eps      	        100         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -       eval_eps      	         5          	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -   eval_per_episode  	         10         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -   load_checkpoint   	         1          	   <class 'bool'>   
+2022-12-06 23:32:04 - r - INFO: -      load_path      	Train_Pendulum-v1_TD3_20221206-232914	   <class 'str'>    
+2022-12-06 23:32:04 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-12-06 23:32:04 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-12-06 23:32:04 - r - INFO: -    explore_steps    	        1000        	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -     policy_freq     	         2          	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -       actor_lr      	       0.001        	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -      critic_lr      	       0.001        	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -   actor_hidden_dim  	        256         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -  critic_hidden_dim  	        256         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -         tau         	       0.005        	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -     policy_noise    	        0.2         	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -      expl_noise     	        0.1         	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -      noise_clip     	        0.5         	  <class 'float'>   
+2022-12-06 23:32:04 - r - INFO: -      batch_size     	        100         	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: -     buffer_size     	      1000000       	   <class 'int'>    
+2022-12-06 23:32:04 - r - INFO: - ================================================================================
+2022-12-06 23:32:04 - r - INFO: - action_bound: 2.0
+2022-12-06 23:32:04 - r - INFO: - n_states: 3, n_actions: 1
+2022-12-06 23:32:05 - r - INFO: - Start testing!
+2022-12-06 23:32:05 - r - INFO: - Env: Pendulum-v1, Algorithm: TD3, Device: cuda
+2022-12-06 23:32:06 - r - INFO: - Episode: 1/10, Reward: -127.067, Step: 200
+2022-12-06 23:32:06 - r - INFO: - Episode: 2/10, Reward: -119.878, Step: 200
+2022-12-06 23:32:06 - r - INFO: - Episode: 3/10, Reward: -2.365, Step: 200
+2022-12-06 23:32:06 - r - INFO: - Episode: 4/10, Reward: -292.235, Step: 200
+2022-12-06 23:32:06 - r - INFO: - Episode: 5/10, Reward: -2.182, Step: 200
+2022-12-06 23:32:06 - r - INFO: - Episode: 6/10, Reward: -323.294, Step: 200
+2022-12-06 23:32:06 - r - INFO: - Episode: 7/10, Reward: -374.008, Step: 200
+2022-12-06 23:32:07 - r - INFO: - Episode: 8/10, Reward: -234.951, Step: 200
+2022-12-06 23:32:07 - r - INFO: - Episode: 9/10, Reward: -1.971, Step: 200
+2022-12-06 23:32:07 - r - INFO: - Episode: 10/10, Reward: -132.003, Step: 200
+2022-12-06 23:32:07 - r - INFO: - Finish testing!

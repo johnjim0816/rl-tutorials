@@ -4,10 +4,10 @@ general_cfg:
   env_name: Pendulum-v1
   eval_eps: 5
   eval_per_episode: 10
-  load_checkpoint: false
-  load_path: Train_CartPole-v1_DQN_20221026-054757
+  load_checkpoint: true
+  load_path: Train_Pendulum-v1_TD3_20221206-232914
   max_steps: 200
-  mode: train
+  mode: test
   new_step_api: true
   render: false
   save_fig: true
@@ -30,4 +30,3 @@ algo_cfg:
   policy_freq: 2
   policy_noise: 0.2
   tau: 0.005
-

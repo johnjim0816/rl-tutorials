@@ -30,4 +30,3 @@ algo_cfg:
   policy_freq: 2
   policy_noise: 0.2
   tau: 0.005
-
