@@ -1,6 +1,7 @@
 import os
 
 import torch
+import torch.nn as nn
 from torch.distributions import Categorical,Normal
 import numpy as np
 from common.models import ActorSoftmax, ActorNormal, Critic
@@ -111,7 +112,7 @@ class Agent:
             # compute actor loss
             actor_loss = - (torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean())
             # compute critic loss
-            critic_loss = (values - returns).pow(2).mean()
+            critic_loss = nn.MSELoss()(values, returns.unsqueeze(dim=1))
             tot_loss = actor_loss + 0.5 * critic_loss
             # take gradient step
             self.actor_optimizer.zero_grad()
