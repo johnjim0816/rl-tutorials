@@ -1,17 +1,24 @@
 import os
 
 import torch
-from torch.distributions import Categorical
+from torch.distributions import Categorical,Normal
 import numpy as np
-from common.models import ActorSoftmax, Critic
+from common.models import ActorSoftmax, ActorNormal, Critic
 from common.memories import PGReplay
 
 class Agent:
     def __init__(self,cfg) -> None:
         
         self.gamma = cfg.gamma
-        self.device = torch.device(cfg.device) 
-        self.actor = ActorSoftmax(cfg.n_states,cfg.n_actions, hidden_dim = cfg.actor_hidden_dim).to(self.device)
+        self.device = torch.device(cfg.device)
+        self.continuous = cfg.continuous # continuous action space
+        self.action_space = cfg.action_space
+        self.action_scale = torch.tensor((self.action_space.high - self.action_space.low)/2, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+        self.action_bias = torch.tensor((self.action_space.high + self.action_space.low)/2, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+        if self.continuous:
+            self.actor = ActorNormal(cfg.n_states,cfg.n_actions, hidden_dim = cfg.actor_hidden_dim).to(self.device)
+        else:
+            self.actor = ActorSoftmax(cfg.n_states,cfg.n_actions, hidden_dim = cfg.actor_hidden_dim).to(self.device)
         self.critic = Critic(cfg.n_states,1,hidden_dim=cfg.critic_hidden_dim).to(self.device)
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=cfg.actor_lr)
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=cfg.critic_lr)
@@ -24,19 +31,41 @@ class Agent:
 
     def sample_action(self,state):
         self.sample_count += 1
-        state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
-        probs = self.actor(state)
-        dist = Categorical(probs)
-        action = dist.sample()
-        self.log_probs = dist.log_prob(action).detach()
-        return action.detach().cpu().numpy().item()
+        if self.continuous:
+            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            mu, sigma = self.actor(state)
+            mean = mu * self.action_scale + self.action_bias
+            std = sigma
+            dist = Normal(mean, std)
+            action = dist.sample()
+            action = torch.clamp(action, torch.tensor(self.action_space.low, device=self.device, dtype=torch.float32), torch.tensor(self.action_space.high, device=self.device, dtype=torch.float32))
+            self.log_probs = dist.log_prob(action).detach()
+            return action.detach().cpu().numpy()[0]
+        else: 
+            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            probs = self.actor(state)
+            dist = Categorical(probs)
+            action = dist.sample()
+            self.log_probs = dist.log_prob(action).detach()
+            return action.detach().cpu().numpy().item()
     @torch.no_grad()
     def predict_action(self,state):
-        state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
-        probs = self.actor(state)
-        dist = Categorical(probs)
-        action = dist.sample()
-        return action.detach().cpu().numpy().item()
+        if self.continuous:
+            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            mu, sigma = self.actor(state)
+            mean = mu * self.action_scale + self.action_bias
+            std = sigma
+            dist = Normal(mean, std)
+            action = dist.sample()
+            self.log_probs = dist.log_prob(action).detach()
+            return action.detach().cpu().numpy()[0]
+        else: 
+            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            probs = self.actor(state)
+            dist = Categorical(probs)
+            action = dist.sample()
+            self.log_probs = dist.log_prob(action).detach()
+            return action.detach().cpu().numpy().item()
     def update(self):
         # update policy every n steps
         if self.sample_count % self.update_freq != 0:
@@ -63,12 +92,19 @@ class Agent:
             values = self.critic(old_states) # detach to avoid backprop through the critic
             advantage = returns - values.detach()
             # get action probabilities
-            probs = self.actor(old_states)
-            dist = Categorical(probs)
-            # get new action probabilities
-            new_probs = dist.log_prob(old_actions)
+            if self.continuous:
+                mu, sigma = self.actor(old_states)
+                mean = mu * self.action_scale + self.action_bias
+                std = sigma
+                dist = Normal(mean, std)
+                new_log_probs = dist.log_prob(old_actions)
+            else:
+                probs = self.actor(old_states)
+                dist = Categorical(probs)
+                # get new action probabilities
+                new_log_probs = dist.log_prob(old_actions)
             # compute ratio (pi_theta / pi_theta__old):
-            ratio = torch.exp(new_probs - old_log_probs) # old_log_probs must be detached
+            ratio = torch.exp(new_log_probs - old_log_probs) # old_log_probs must be detached
             # compute surrogate loss
             surr1 = ratio * advantage
             surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage

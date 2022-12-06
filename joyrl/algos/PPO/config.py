@@ -1,5 +1,6 @@
 class AlgoConfig:
     def __init__(self):
+        self.continuous = False # continuous action space
         self.gamma = 0.99 # discount factor
         self.k_epochs = 4 # update policy for K epochs
         self.actor_lr = 0.0003 # learning rate for actor
