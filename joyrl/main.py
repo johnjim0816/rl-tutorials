@@ -11,11 +11,13 @@ import yaml
 from pathlib import Path
 import datetime
 import gym
-from config.config import GeneralConfig, MergedConfig
+from config.config import GeneralConfig
 from common.utils import get_logger, save_results, save_cfgs, plot_rewards, merge_class_attrs, all_seed
 from envs.register import register_env
 
-
+class MergedConfig:
+    def __init__(self) -> None:
+        pass
 class Main(object):
     def __init__(self) -> None:
         pass
@@ -69,7 +71,7 @@ class Main(object):
         curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # obtain current time
         self.task_dir = f"{curr_path}/tasks/{cfg.mode.capitalize()}_{cfg.env_name}_{cfg.algo_name}_{curr_time}"
         Path(self.task_dir).mkdir(parents=True, exist_ok=True)
-        self.model_dir = f"{self.task_dir}/models/"
+        self.model_dir = f"{self.task_dir}/models"
         self.res_dir = f"{self.task_dir}/results/"
         self.log_dir = f"{self.task_dir}/logs/"
         self.traj_dir = f"{self.task_dir}/traj/"
@@ -128,7 +130,7 @@ class Main(object):
         trainer_mod = __import__(f"algos.{cfg.algo_name}.trainer", fromlist=['Trainer'])
         trainer = trainer_mod.Trainer()  # create trainer
         if cfg.load_checkpoint:
-            agent.load_model(f"tasks/{cfg.load_path}/models/")
+            agent.load_model(f"tasks/{cfg.load_path}/models")
         logger.info(f"Start {cfg.mode}ing!")
         logger.info(f"Env: {cfg.env_name}, Algorithm: {cfg.algo_name}, Device: {cfg.device}")
         rewards = []  # record rewards for all episodes
