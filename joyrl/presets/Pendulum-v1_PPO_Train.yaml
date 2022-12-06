@@ -25,5 +25,5 @@ algo_cfg:
   entropy_coef: 0.02
   eps_clip: 0.2
   gamma: 0.99
-  k_epochs: 20
+  k_epochs: 10
   update_freq: 200

@@ -35,7 +35,7 @@ class Agent:
             state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
             mu, sigma = self.actor(state)
             mean = mu * self.action_scale + self.action_bias
-            std = sigma * self.action_scale
+            std = sigma
             dist = Normal(mean, std)
             action = dist.sample()
             action = torch.clamp(action, torch.tensor(self.action_space.low, device=self.device, dtype=torch.float32), torch.tensor(self.action_space.high, device=self.device, dtype=torch.float32))
@@ -95,11 +95,9 @@ class Agent:
             if self.continuous:
                 mu, sigma = self.actor(old_states)
                 mean = mu * self.action_scale + self.action_bias
-                std = sigma * self.action_scale
+                std = sigma
                 dist = Normal(mean, std)
-                action = dist.sample()
-                action = torch.clamp(action, torch.tensor(self.action_space.low, device=self.device, dtype=torch.float32), torch.tensor(self.action_space.high, device=self.device, dtype=torch.float32))
-                new_log_probs = dist.log_prob(action)
+                new_log_probs = dist.log_prob(old_actions)
             else:
                 probs = self.actor(old_states)
                 dist = Categorical(probs)
