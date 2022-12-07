@@ -7,13 +7,15 @@ from common.models import ActorSoftmax, Critic
 from common.memories import PGReplay
 import pickle
 import os
-from torch import optim
-from .dataset import TrajDataset
-from .gail_models import GAILDiscriminator
+from torch import optim, autograd
+from torch.utils.data import DataLoader
+from torch.nn import functional as F
+from joyrl.algos.GAIL.dataset import TrajDataset
+from joyrl.algos.GAIL.gail_models import GAILDiscriminator
 
 
 class Agent:
-    def __init__(self, cfg, env) -> None:
+    def __init__(self, cfg) -> None:
 
         self.gamma = cfg.gamma
         self.device = torch.device(cfg.device)
@@ -27,13 +29,14 @@ class Agent:
         self.entropy_coef = cfg.entropy_coef  # entropy coefficient
         self.sample_count = 0
         self.update_freq = cfg.update_freq
-        pkl_path = os.path.join('algos/GAIL/traj', 'traj.pkl')
-        with open(pkl_path, 'rb') as handle:
-            self.expert_trajectories = TrajDataset(pickle.load(handle))
-        self.discriminator = GAILDiscriminator(env.observation_space.shape[0],
-                                               env.action_space.n, cfg.hidden_dim)
-        self.discriminator_optimiser = optim.RMSprop(self.discriminator.parameters(), lr=cfg.lr)
-        self.policy_trajectory_replay_buffer = deque(maxlen=cfg.imitation_replay_size)
+        if cfg.mode == 'train':
+            pkl_path = os.path.join(f"tasks/{cfg.load_path}/traj/", 'traj.pkl')
+            with open(pkl_path, 'rb') as handle:
+                self.expert_trajectories = TrajDataset(pickle.load(handle))
+            self.discriminator = GAILDiscriminator(cfg.n_states,
+                                                   cfg.n_actions, cfg.hidden_dim)
+            self.discriminator_optimiser = optim.RMSprop(self.discriminator.parameters(), lr=cfg.lr)
+            self.policy_trajectory_replay_buffer = deque(maxlen=cfg.imitation_replay_size)
 
     def sample_action(self, state):
         self.sample_count += 1
@@ -52,11 +55,14 @@ class Agent:
         action = dist.sample()
         return action.detach().cpu().numpy().item()
 
-    def update(self, states, actions):
+    def update(self, cfg):
+        # states = policy_trajectory_replays['states']
+        # actions = policy_trajectory_replays['actions']
         # update policy every n steps
-        # if self.sample_count % self.update_freq != 0:
-        #     return
-        # print("update policy")
+        if self.sample_count % self.update_freq != 0:
+            return
+        print("update policy...")
+        states, actions, _, _, _ = self.memory.sample()
         old_states, old_actions, old_log_probs, old_rewards, old_dones = self.memory.sample()
         with torch.no_grad():
             old_rewards = self.discriminator.predict_reward(states, actions)
@@ -102,12 +108,56 @@ class Agent:
             self.critic_optimizer.step()
         self.memory.clear()
 
+    def adversarial_update(self, cfg):
+        if self.sample_count % self.update_freq != 0:
+            return
+        print("update adversarial network...")
+        old_states, old_actions, old_log_probs, old_rewards, old_dones = self.memory.sample()
+        policy_trajectory_replays = {'states': old_states, 'actions': old_actions, 'rewards': old_rewards,
+                                     'terminals': old_dones}
+        policy_trajectory = TrajDataset(policy_trajectory_replays)
+        for _ in range(cfg.adversarial_epochs):
+            expert_dataloader = DataLoader(self.expert_trajectories, batch_size=cfg.adversarial_batch_size,
+                                           shuffle=True,
+                                           drop_last=True,
+                                           num_workers=cfg.num_workers)
+            policy_dataloader = DataLoader(policy_trajectory, batch_size=cfg.adversarial_batch_size, shuffle=True,
+                                           drop_last=True,
+                                           num_workers=cfg.num_workers)
+
+            # Iterate over expert and policy data
+            for expert_transition, policy_transition in zip(expert_dataloader, policy_dataloader):
+                expert_state, expert_action, expert_next_state, expert_terminal = expert_transition['states'], \
+                                                                                  expert_transition['actions'], \
+                                                                                  expert_transition['next_states'], \
+                                                                                  expert_transition['terminals']
+                policy_state, policy_action, policy_next_state, policy_terminal = policy_transition['states'], \
+                                                                                  policy_transition['actions'], \
+                                                                                  policy_transition['next_states'], \
+                                                                                  policy_transition['terminals']
+
+                d_expert = self.discriminator(expert_state, expert_action)
+                d_policy = self.discriminator(policy_state, policy_action)
+
+                # Binary logistic regression
+                self.discriminator_optimiser.zero_grad()
+                expert_loss = F.binary_cross_entropy(d_expert,
+                                                     torch.ones_like(d_expert))  # Loss on "real" (expert) data
+                autograd.backward(expert_loss, create_graph=True)
+                r1_reg = 0
+                for param in self.discriminator.parameters():
+                    r1_reg += param.grad.norm()  # R1 gradient penalty
+                policy_loss = F.binary_cross_entropy(d_policy,
+                                                     torch.zeros_like(d_policy))  # Loss on "fake" (policy) data
+                (policy_loss + cfg.r1_reg_coeff * r1_reg).backward()
+                self.discriminator_optimiser.step()
+
     def save_model(self, fpath):
         from pathlib import Path
         # create path
         Path(fpath).mkdir(parents=True, exist_ok=True)
-        torch.save(self.actor.state_dict(), fpath + 'actor.pth')
-        torch.save(self.critic.state_dict(), fpath + 'critic.pth')
+        torch.save(self.actor.state_dict(), fpath + '/actor.pth')
+        torch.save(self.critic.state_dict(), fpath + '/critic.pth')
 
     def load_model(self, fpath):
         actor_ckpt = torch.load(f"{fpath}/actor.pth", map_location=self.device)
