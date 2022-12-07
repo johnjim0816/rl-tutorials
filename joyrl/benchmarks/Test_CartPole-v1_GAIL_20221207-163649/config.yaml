@@ -6,19 +6,19 @@ general_cfg:
   env_name: CartPole-v1
   eval_eps: 10
   eval_per_episode: 5
+  hidden_dim: 32
+  imitation_batch_size: 128
+  imitation_epochs: 5
+  imitation_replay_size: 4
   load_checkpoint: true
   load_path: Train_CartPole-v1_GAIL_20221207-160945
+  lr: 0.001
   max_steps: 200
   mode: test
-  hidden_dim: 32
-  lr: 0.001
-  imitation_replay_size: 4
-  imitation_epochs: 5
-  imitation_batch_size: 128
   new_step_api: true
   ppo_epochs: 5
-  render: false
   r1_reg_coeff: 1
+  render: false
   save_fig: true
   seed: 1
   show_fig: false
@@ -26,4 +26,13 @@ general_cfg:
   train_eps: 400
   wrapper: null
 algo_cfg:
-
+  actor_hidden_dim: 256
+  actor_lr: 0.0003
+  batch_size: 2048
+  critic_hidden_dim: 256
+  critic_lr: 0.0003
+  entropy_coef: 0.01
+  eps_clip: 0.2
+  gamma: 0.99
+  k_epochs: 4
+  update_freq: 2048

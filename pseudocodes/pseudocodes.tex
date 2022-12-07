@@ -434,4 +434,28 @@
 \footnotetext[4]{$\hat{\nabla}_{\phi} J_{\pi}(\phi)=\nabla_{\phi} \alpha \log \left(\pi_{\phi}\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)\right)+\left(\nabla_{\mathbf{a}_{t}} \alpha \log \left(\pi_{\phi}\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)\right)-\nabla_{\mathbf{a}_{t}} Q\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)\right) \nabla_{\phi} f_{\phi}\left(\epsilon_{t} ; \mathbf{s}_{t}\right)$,$\mathbf{a}_{t}=f_{\phi}\left(\epsilon_{t} ; \mathbf{s}_{t}\right)$}
 \footnotetext[5]{$J(\alpha)=\mathbb{E}_{\mathbf{a}_{t} \sim \pi_{t}}\left[-\alpha \log \pi_{t}\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)-\alpha \overline{\mathcal{H}}\right]$}
 \clearpage
+\clearpage
+
+\section{GAIL算法}
+\begin{algorithm}[H] % [H]固定位置
+    \floatname{algorithm}{{GAIL算法}\footnotemark[1]} 
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\begin{algorithmic}[1] % [1]显示步数
+		\STATE 采样专家轨迹$\tau _{E} \sim \pi _{E}$，初始化网络模型参数$\theta _{0}$和判别器$D$参数$\omega _{0}$
+		\FOR {回合数 $i = 1,2,\cdots $}
+			\STATE 采样策略轨迹$\tau_{i} \sim \pi _{\theta _{i}}$
+			\STATE 使用梯度下降更新判别器$D$的参数$\omega _{i}$，梯度为：
+			\begin{center}
+				\begin{equation}
+				\hat{\mathbb{E}}_{\tau_{i}}\left[\nabla_{w} \log \left(D_{w}(s, a)\right)\right]+\hat{\mathbb{E}}_{\tau_{E}}\left[\nabla_{w} \log \left(1-D_{w}(s, a)\right)\right]
+				\end{equation}
+			\end{center}
+			\STATE 使用判别器$D$对策略轨迹$\tau_{i}$的输出作为奖励更新策略$\pi _{\theta _{i}}$\footnotemark[2]
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+\footnotetext[1]{Generative Adversarial Imitation Learning}
+\footnotetext[2]{策略更新方式与策略模型$\pi _{\theta}$有关，如PP0-Clip等.}
+\clearpage
 \end{document}

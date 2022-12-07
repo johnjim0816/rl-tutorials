@@ -49,7 +49,7 @@ class Main(object):
         ''' load yaml config
         '''
         parser = argparse.ArgumentParser(description="hyperparameters")
-        parser.add_argument('--yaml', default='presets/CartPole-v1_GAIL_Train.yaml', type=str,
+        parser.add_argument('--yaml', default='presets/CartPole-v1_GAIL_Test.yaml', type=str,
                             help='the path of config file')
         args = parser.parse_args()
         if args.yaml is not None:
