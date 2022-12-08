@@ -5,7 +5,7 @@ Author: GuoShiCheng
 Email: guoshichenng@gmail.com
 Date: 2022-12-05 16:51:42
 LastEditor: GuoShiCheng
-LastEditTime: 2022-12-05 16:51:42
+LastEditTime: 2022-12-07 22:06:18
 Discription: Mario
 Environment: python 3.7.7
 '''
@@ -29,32 +29,29 @@ import numpy as np
 from common.layers import ValueNetwork
 from common.memories import ReplayBuffer
 
-import torch.nn as nn
-import torch.nn.functional as F
 
-class DQN_CNN(nn.Module):
+class QNetwork(nn.Module):
     def __init__(self, input_dim, output_dim):
         super().__init__()
-        self.value_layer = nn.Sequential(
-        nn.Conv2d(in_channels=1, out_channels=32, kernel_size=8, stride=4),
-        nn.ReLU(),
-        nn.Conv2d(in_channels=32, out_channels=64, kernel_size=4, stride=2),
-        nn.ReLU(),
-        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, stride=1),
-        nn.ReLU(),
-        nn.Flatten(),
-        nn.Linear(3136, 512),
-        nn.ReLU(),
-        nn.Linear(512, output_dim),
+        self.network = nn.Sequential(
+            nn.Conv2d(4, 32, 8, stride=4),
+            nn.ReLU(),
+            nn.Conv2d(32, 64, 4, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(64, 64, 3, stride=1),
+            nn.ReLU(),
+            nn.Flatten(),
+            nn.Linear(3136, 512),
+            nn.ReLU(),
+            nn.Linear(512, output_dim),
         )
 
-    def forward(self, input):
-        return self.value_layer(input)
+    def forward(self, x):
+        return self.network(x / 255.0)
 
 
 class Agent:
     def __init__(self,cfg):
-
         self.n_actions = cfg.n_actions
         self.n_states = cfg.n_states
         self.device = torch.device(cfg.device) 
@@ -66,8 +63,8 @@ class Agent:
         self.epsilon_decay = cfg.epsilon_decay
         self.batch_size = cfg.batch_size
         self.target_update = cfg.target_update
-        self.policy_net = DQN_CNN(self.n_states, self.n_actions).to(self.device)
-        self.target_net = DQN_CNN(self.n_states, self.n_actions).to(self.device)
+        self.policy_net = QNetwork(self.n_states, self.n_actions).to(self.device)
+        self.target_net = QNetwork(self.n_states, self.n_actions).to(self.device)
         ## copy parameters from policy net to target net
         for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): 
             target_param.data.copy_(param.data)
@@ -85,7 +82,7 @@ class Agent:
             math.exp(-1. * self.sample_count / self.epsilon_decay) 
         if random.random() > self.epsilon:
             with torch.no_grad():
-                state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+                state = torch.tensor(np.array(state), device=self.device, dtype=torch.float32).unsqueeze(dim=0)
                 q_values = self.policy_net(state)
                 action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
         else:
@@ -110,7 +107,7 @@ class Agent:
         ''' predict action
         '''
         with torch.no_grad():
-            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            state = torch.tensor(np.array(state), device=self.device, dtype=torch.float32).unsqueeze(dim=0)
             q_values = self.policy_net(state)
             action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
         return action

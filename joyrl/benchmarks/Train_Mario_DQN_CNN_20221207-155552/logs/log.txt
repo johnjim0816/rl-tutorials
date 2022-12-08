@@ -1,0 +1,238 @@
+2022-12-07 15:55:52 - r - INFO: - Hyperparameters:
+2022-12-07 15:55:52 - r - INFO: - ================================================================================
+2022-12-07 15:55:52 - r - INFO: -         Name        	       Value        	        Type        
+2022-12-07 15:55:52 - r - INFO: -       env_name      	       Mario        	   <class 'str'>    
+2022-12-07 15:55:52 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-12-07 15:55:52 - r - INFO: -       wrapper       	envs.wrappers.MarioWrappers	   <class 'str'>    
+2022-12-07 15:55:52 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2022-12-07 15:55:52 - r - INFO: -      algo_name      	      DQN_CNN       	   <class 'str'>    
+2022-12-07 15:55:52 - r - INFO: -         mode        	       train        	   <class 'str'>    
+2022-12-07 15:55:52 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -        device       	        cuda        	   <class 'str'>    
+2022-12-07 15:55:52 - r - INFO: -      train_eps      	        200         	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -      max_steps      	        1000        	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -   load_checkpoint   	         0          	   <class 'bool'>   
+2022-12-07 15:55:52 - r - INFO: -      load_path      	Train_Mario_DQN_CNN_20221205-205203	   <class 'str'>    
+2022-12-07 15:55:52 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-12-07 15:55:52 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-12-07 15:55:52 - r - INFO: -    epsilon_start    	        0.95        	  <class 'float'>   
+2022-12-07 15:55:52 - r - INFO: -     epsilon_end     	        0.01        	  <class 'float'>   
+2022-12-07 15:55:52 - r - INFO: -    epsilon_decay    	        500         	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2022-12-07 15:55:52 - r - INFO: -          lr         	       0.0001       	  <class 'float'>   
+2022-12-07 15:55:52 - r - INFO: -     buffer_size     	       100000       	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -      batch_size     	         64         	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: -    target_update    	         4          	   <class 'int'>    
+2022-12-07 15:55:52 - r - INFO: - ================================================================================
+2022-12-07 15:55:53 - r - INFO: - n_states: 4, n_actions: 256
+2022-12-07 15:55:56 - r - INFO: - Start training!
+2022-12-07 15:55:56 - r - INFO: - Env: Mario, Algorithm: DQN_CNN, Device: cuda
+2022-12-07 15:56:31 - r - INFO: - Episode: 1/200, Reward: 697.000, Step: 1000
+2022-12-07 15:57:10 - r - INFO: - Episode: 2/200, Reward: 330.000, Step: 1000
+2022-12-07 15:57:48 - r - INFO: - Episode: 3/200, Reward: 164.000, Step: 1000
+2022-12-07 15:58:26 - r - INFO: - Episode: 4/200, Reward: 939.000, Step: 1000
+2022-12-07 15:59:05 - r - INFO: - Episode: 5/200, Reward: 757.000, Step: 1000
+2022-12-07 16:00:35 - r - INFO: - Current episode 5 has the best eval reward: -240.000
+2022-12-07 16:01:13 - r - INFO: - Episode: 6/200, Reward: 347.000, Step: 1000
+2022-12-07 16:01:52 - r - INFO: - Episode: 7/200, Reward: 727.000, Step: 1000
+2022-12-07 16:02:17 - r - INFO: - Episode: 8/200, Reward: 430.000, Step: 626
+2022-12-07 16:02:55 - r - INFO: - Episode: 9/200, Reward: 911.000, Step: 1000
+2022-12-07 16:03:26 - r - INFO: - Episode: 10/200, Reward: 350.000, Step: 796
+2022-12-07 16:04:56 - r - INFO: - Current episode 10 has the best eval reward: -200.000
+2022-12-07 16:05:34 - r - INFO: - Episode: 11/200, Reward: 273.000, Step: 1000
+2022-12-07 16:06:13 - r - INFO: - Episode: 12/200, Reward: 531.000, Step: 1000
+2022-12-07 16:06:52 - r - INFO: - Episode: 13/200, Reward: 131.000, Step: 1000
+2022-12-07 16:07:31 - r - INFO: - Episode: 14/200, Reward: 650.000, Step: 1000
+2022-12-07 16:08:10 - r - INFO: - Episode: 15/200, Reward: 670.000, Step: 1000
+2022-12-07 16:08:22 - r - INFO: - Current episode 15 has the best eval reward: 680.000
+2022-12-07 16:09:01 - r - INFO: - Episode: 16/200, Reward: 277.000, Step: 1000
+2022-12-07 16:09:39 - r - INFO: - Episode: 17/200, Reward: 555.000, Step: 1000
+2022-12-07 16:10:13 - r - INFO: - Episode: 18/200, Reward: 610.000, Step: 879
+2022-12-07 16:10:52 - r - INFO: - Episode: 19/200, Reward: 161.000, Step: 1000
+2022-12-07 16:11:31 - r - INFO: - Episode: 20/200, Reward: 442.000, Step: 1000
+2022-12-07 16:13:29 - r - INFO: - Episode: 21/200, Reward: 326.000, Step: 742
+2022-12-07 16:14:07 - r - INFO: - Episode: 22/200, Reward: 431.000, Step: 1000
+2022-12-07 16:14:46 - r - INFO: - Episode: 23/200, Reward: 1110.000, Step: 1000
+2022-12-07 16:15:25 - r - INFO: - Episode: 24/200, Reward: 339.000, Step: 1000
+2022-12-07 16:16:04 - r - INFO: - Episode: 25/200, Reward: 316.000, Step: 1000
+2022-12-07 16:17:34 - r - INFO: - Episode: 26/200, Reward: 493.000, Step: 575
+2022-12-07 16:18:13 - r - INFO: - Episode: 27/200, Reward: 755.000, Step: 1000
+2022-12-07 16:18:53 - r - INFO: - Episode: 28/200, Reward: 589.000, Step: 1000
+2022-12-07 16:19:26 - r - INFO: - Episode: 29/200, Reward: 518.000, Step: 840
+2022-12-07 16:20:01 - r - INFO: - Episode: 30/200, Reward: 372.000, Step: 910
+2022-12-07 16:22:04 - r - INFO: - Episode: 31/200, Reward: 398.000, Step: 659
+2022-12-07 16:22:42 - r - INFO: - Episode: 32/200, Reward: 207.000, Step: 1000
+2022-12-07 16:23:15 - r - INFO: - Episode: 33/200, Reward: 594.000, Step: 822
+2022-12-07 16:23:36 - r - INFO: - Episode: 34/200, Reward: 587.000, Step: 555
+2022-12-07 16:23:47 - r - INFO: - Episode: 35/200, Reward: 646.000, Step: 264
+2022-12-07 16:25:56 - r - INFO: - Episode: 36/200, Reward: 579.000, Step: 1000
+2022-12-07 16:26:35 - r - INFO: - Episode: 37/200, Reward: 116.000, Step: 1000
+2022-12-07 16:27:14 - r - INFO: - Episode: 38/200, Reward: 416.000, Step: 1000
+2022-12-07 16:27:54 - r - INFO: - Episode: 39/200, Reward: 636.000, Step: 1000
+2022-12-07 16:28:33 - r - INFO: - Episode: 40/200, Reward: 235.000, Step: 1000
+2022-12-07 16:30:41 - r - INFO: - Episode: 41/200, Reward: 381.000, Step: 1000
+2022-12-07 16:31:20 - r - INFO: - Episode: 42/200, Reward: 655.000, Step: 1000
+2022-12-07 16:31:47 - r - INFO: - Episode: 43/200, Reward: 319.000, Step: 684
+2022-12-07 16:32:14 - r - INFO: - Episode: 44/200, Reward: 487.000, Step: 716
+2022-12-07 16:32:43 - r - INFO: - Episode: 45/200, Reward: 568.000, Step: 741
+2022-12-07 16:34:52 - r - INFO: - Episode: 46/200, Reward: 1336.000, Step: 1000
+2022-12-07 16:35:31 - r - INFO: - Episode: 47/200, Reward: 416.000, Step: 1000
+2022-12-07 16:35:50 - r - INFO: - Episode: 48/200, Reward: 497.000, Step: 506
+2022-12-07 16:36:29 - r - INFO: - Episode: 49/200, Reward: 730.000, Step: 1000
+2022-12-07 16:37:08 - r - INFO: - Episode: 50/200, Reward: 508.000, Step: 1000
+2022-12-07 16:39:17 - r - INFO: - Episode: 51/200, Reward: 310.000, Step: 1000
+2022-12-07 16:39:56 - r - INFO: - Episode: 52/200, Reward: 438.000, Step: 1000
+2022-12-07 16:40:34 - r - INFO: - Episode: 53/200, Reward: 346.000, Step: 1000
+2022-12-07 16:41:13 - r - INFO: - Episode: 54/200, Reward: 386.000, Step: 1000
+2022-12-07 16:41:49 - r - INFO: - Episode: 55/200, Reward: 474.000, Step: 913
+2022-12-07 16:43:57 - r - INFO: - Episode: 56/200, Reward: 718.000, Step: 1000
+2022-12-07 16:44:36 - r - INFO: - Episode: 57/200, Reward: 592.000, Step: 1000
+2022-12-07 16:44:55 - r - INFO: - Episode: 58/200, Reward: 463.000, Step: 493
+2022-12-07 16:45:35 - r - INFO: - Episode: 59/200, Reward: 871.000, Step: 1000
+2022-12-07 16:46:14 - r - INFO: - Episode: 60/200, Reward: 815.000, Step: 1000
+2022-12-07 16:48:24 - r - INFO: - Episode: 61/200, Reward: 532.000, Step: 860
+2022-12-07 16:48:51 - r - INFO: - Episode: 62/200, Reward: 318.000, Step: 705
+2022-12-07 16:49:31 - r - INFO: - Episode: 63/200, Reward: 177.000, Step: 1000
+2022-12-07 16:50:09 - r - INFO: - Episode: 64/200, Reward: 352.000, Step: 1000
+2022-12-07 16:50:48 - r - INFO: - Episode: 65/200, Reward: 632.000, Step: 1000
+2022-12-07 16:52:58 - r - INFO: - Episode: 66/200, Reward: 435.000, Step: 1000
+2022-12-07 16:53:37 - r - INFO: - Episode: 67/200, Reward: 829.000, Step: 1000
+2022-12-07 16:54:16 - r - INFO: - Episode: 68/200, Reward: 389.000, Step: 1000
+2022-12-07 16:54:55 - r - INFO: - Episode: 69/200, Reward: 410.000, Step: 1000
+2022-12-07 16:55:34 - r - INFO: - Episode: 70/200, Reward: 439.000, Step: 1000
+2022-12-07 16:57:30 - r - INFO: - Episode: 71/200, Reward: 501.000, Step: 726
+2022-12-07 16:57:59 - r - INFO: - Episode: 72/200, Reward: 373.000, Step: 737
+2022-12-07 16:58:32 - r - INFO: - Episode: 73/200, Reward: 408.000, Step: 857
+2022-12-07 16:59:11 - r - INFO: - Episode: 74/200, Reward: 731.000, Step: 1000
+2022-12-07 16:59:34 - r - INFO: - Episode: 75/200, Reward: 548.000, Step: 579
+2022-12-07 17:01:42 - r - INFO: - Episode: 76/200, Reward: 794.000, Step: 1000
+2022-12-07 17:02:22 - r - INFO: - Episode: 77/200, Reward: 571.000, Step: 1000
+2022-12-07 17:02:47 - r - INFO: - Episode: 78/200, Reward: 532.000, Step: 648
+2022-12-07 17:03:26 - r - INFO: - Episode: 79/200, Reward: 613.000, Step: 1000
+2022-12-07 17:03:49 - r - INFO: - Episode: 80/200, Reward: 528.000, Step: 625
+2022-12-07 17:05:55 - r - INFO: - Episode: 81/200, Reward: 394.000, Step: 1000
+2022-12-07 17:06:34 - r - INFO: - Episode: 82/200, Reward: 11.000, Step: 1000
+2022-12-07 17:07:14 - r - INFO: - Episode: 83/200, Reward: 480.000, Step: 1000
+2022-12-07 17:07:52 - r - INFO: - Episode: 84/200, Reward: 829.000, Step: 1000
+2022-12-07 17:08:32 - r - INFO: - Episode: 85/200, Reward: 557.000, Step: 1000
+2022-12-07 17:10:39 - r - INFO: - Episode: 86/200, Reward: 642.000, Step: 1000
+2022-12-07 17:11:17 - r - INFO: - Episode: 87/200, Reward: 810.000, Step: 1000
+2022-12-07 17:11:36 - r - INFO: - Episode: 88/200, Reward: 633.000, Step: 473
+2022-12-07 17:12:15 - r - INFO: - Episode: 89/200, Reward: 862.000, Step: 1000
+2022-12-07 17:12:54 - r - INFO: - Episode: 90/200, Reward: 639.000, Step: 1000
+2022-12-07 17:15:01 - r - INFO: - Episode: 91/200, Reward: 582.000, Step: 1000
+2022-12-07 17:15:40 - r - INFO: - Episode: 92/200, Reward: 455.000, Step: 1000
+2022-12-07 17:16:19 - r - INFO: - Episode: 93/200, Reward: 859.000, Step: 1000
+2022-12-07 17:16:58 - r - INFO: - Episode: 94/200, Reward: 481.000, Step: 1000
+2022-12-07 17:17:37 - r - INFO: - Episode: 95/200, Reward: 267.000, Step: 1000
+2022-12-07 17:19:44 - r - INFO: - Episode: 96/200, Reward: 776.000, Step: 1000
+2022-12-07 17:20:14 - r - INFO: - Episode: 97/200, Reward: 513.000, Step: 783
+2022-12-07 17:20:47 - r - INFO: - Episode: 98/200, Reward: 194.000, Step: 856
+2022-12-07 17:21:26 - r - INFO: - Episode: 99/200, Reward: 656.000, Step: 1000
+2022-12-07 17:22:03 - r - INFO: - Episode: 100/200, Reward: 937.000, Step: 941
+2022-12-07 17:24:11 - r - INFO: - Episode: 101/200, Reward: 897.000, Step: 1000
+2022-12-07 17:24:28 - r - INFO: - Episode: 102/200, Reward: 599.000, Step: 437
+2022-12-07 17:24:54 - r - INFO: - Episode: 103/200, Reward: 1188.000, Step: 669
+2022-12-07 17:25:18 - r - INFO: - Episode: 104/200, Reward: 1011.000, Step: 620
+2022-12-07 17:25:57 - r - INFO: - Episode: 105/200, Reward: 570.000, Step: 1000
+2022-12-07 17:28:02 - r - INFO: - Episode: 106/200, Reward: 1064.000, Step: 922
+2022-12-07 17:28:40 - r - INFO: - Episode: 107/200, Reward: 466.000, Step: 1000
+2022-12-07 17:29:19 - r - INFO: - Episode: 108/200, Reward: 34.000, Step: 1000
+2022-12-07 17:29:47 - r - INFO: - Episode: 109/200, Reward: 543.000, Step: 732
+2022-12-07 17:30:05 - r - INFO: - Episode: 110/200, Reward: 480.000, Step: 477
+2022-12-07 17:32:14 - r - INFO: - Episode: 111/200, Reward: 832.000, Step: 1000
+2022-12-07 17:32:53 - r - INFO: - Episode: 112/200, Reward: 911.000, Step: 1000
+2022-12-07 17:33:02 - r - INFO: - Episode: 113/200, Reward: 712.000, Step: 241
+2022-12-07 17:33:09 - r - INFO: - Episode: 114/200, Reward: 609.000, Step: 198
+2022-12-07 17:33:33 - r - INFO: - Episode: 115/200, Reward: 1059.000, Step: 610
+2022-12-07 17:35:36 - r - INFO: - Episode: 116/200, Reward: 1422.000, Step: 870
+2022-12-07 17:36:15 - r - INFO: - Episode: 117/200, Reward: 1119.000, Step: 1000
+2022-12-07 17:36:32 - r - INFO: - Episode: 118/200, Reward: 1040.000, Step: 452
+2022-12-07 17:37:05 - r - INFO: - Episode: 119/200, Reward: 1486.000, Step: 833
+2022-12-07 17:37:28 - r - INFO: - Episode: 120/200, Reward: 1047.000, Step: 601
+2022-12-07 17:39:40 - r - INFO: - Episode: 121/200, Reward: 1867.000, Step: 1000
+2022-12-07 17:39:48 - r - INFO: - Episode: 122/200, Reward: 656.000, Step: 209
+2022-12-07 17:40:11 - r - INFO: - Episode: 123/200, Reward: 1407.000, Step: 572
+2022-12-07 17:40:24 - r - INFO: - Episode: 124/200, Reward: 627.000, Step: 334
+2022-12-07 17:40:44 - r - INFO: - Episode: 125/200, Reward: 980.000, Step: 521
+2022-12-07 17:42:53 - r - INFO: - Episode: 126/200, Reward: 1444.000, Step: 1000
+2022-12-07 17:43:19 - r - INFO: - Episode: 127/200, Reward: 1411.000, Step: 672
+2022-12-07 17:43:58 - r - INFO: - Episode: 128/200, Reward: 1343.000, Step: 1000
+2022-12-07 17:44:33 - r - INFO: - Episode: 129/200, Reward: 1552.000, Step: 891
+2022-12-07 17:44:53 - r - INFO: - Episode: 130/200, Reward: 582.000, Step: 531
+2022-12-07 17:46:59 - r - INFO: - Episode: 131/200, Reward: 1768.000, Step: 1000
+2022-12-07 17:47:39 - r - INFO: - Episode: 132/200, Reward: 1337.000, Step: 1000
+2022-12-07 17:47:59 - r - INFO: - Episode: 133/200, Reward: 1090.000, Step: 520
+2022-12-07 17:48:06 - r - INFO: - Episode: 134/200, Reward: 709.000, Step: 186
+2022-12-07 17:48:32 - r - INFO: - Episode: 135/200, Reward: 1481.000, Step: 650
+2022-12-07 17:50:10 - r - INFO: - Episode: 136/200, Reward: 1453.000, Step: 776
+2022-12-07 17:50:18 - r - INFO: - Episode: 137/200, Reward: 655.000, Step: 191
+2022-12-07 17:50:35 - r - INFO: - Episode: 138/200, Reward: 1454.000, Step: 437
+2022-12-07 17:51:09 - r - INFO: - Episode: 139/200, Reward: 1342.000, Step: 858
+2022-12-07 17:51:34 - r - INFO: - Episode: 140/200, Reward: 1036.000, Step: 638
+2022-12-07 17:51:45 - r - INFO: - Current episode 140 has the best eval reward: 680.000
+2022-12-07 17:52:24 - r - INFO: - Episode: 141/200, Reward: 1744.000, Step: 1000
+2022-12-07 17:52:42 - r - INFO: - Episode: 142/200, Reward: 1072.000, Step: 445
+2022-12-07 17:53:21 - r - INFO: - Episode: 143/200, Reward: 1863.000, Step: 1000
+2022-12-07 17:53:43 - r - INFO: - Episode: 144/200, Reward: 986.000, Step: 555
+2022-12-07 17:53:57 - r - INFO: - Episode: 145/200, Reward: 681.000, Step: 363
+2022-12-07 17:54:06 - r - INFO: - Current episode 145 has the best eval reward: 737.000
+2022-12-07 17:54:42 - r - INFO: - Episode: 146/200, Reward: 1168.000, Step: 940
+2022-12-07 17:55:15 - r - INFO: - Episode: 147/200, Reward: 1033.000, Step: 840
+2022-12-07 17:55:31 - r - INFO: - Episode: 148/200, Reward: 500.000, Step: 387
+2022-12-07 17:56:10 - r - INFO: - Episode: 149/200, Reward: 1030.000, Step: 1000
+2022-12-07 17:56:45 - r - INFO: - Episode: 150/200, Reward: 1420.000, Step: 898
+2022-12-07 17:58:53 - r - INFO: - Episode: 151/200, Reward: 670.000, Step: 1000
+2022-12-07 17:59:25 - r - INFO: - Episode: 152/200, Reward: 939.000, Step: 824
+2022-12-07 17:59:41 - r - INFO: - Episode: 153/200, Reward: 1095.000, Step: 427
+2022-12-07 17:59:49 - r - INFO: - Episode: 154/200, Reward: 633.000, Step: 208
+2022-12-07 18:00:29 - r - INFO: - Episode: 155/200, Reward: 1058.000, Step: 1000
+2022-12-07 18:02:21 - r - INFO: - Episode: 156/200, Reward: 1055.000, Step: 629
+2022-12-07 18:02:47 - r - INFO: - Episode: 157/200, Reward: 1022.000, Step: 664
+2022-12-07 18:02:57 - r - INFO: - Episode: 158/200, Reward: 648.000, Step: 258
+2022-12-07 18:03:15 - r - INFO: - Episode: 159/200, Reward: 512.000, Step: 465
+2022-12-07 18:03:54 - r - INFO: - Episode: 160/200, Reward: 728.000, Step: 1000
+2022-12-07 18:05:48 - r - INFO: - Episode: 161/200, Reward: 1141.000, Step: 654
+2022-12-07 18:06:21 - r - INFO: - Episode: 162/200, Reward: 1192.000, Step: 832
+2022-12-07 18:06:29 - r - INFO: - Episode: 163/200, Reward: 653.000, Step: 232
+2022-12-07 18:07:10 - r - INFO: - Episode: 164/200, Reward: 1021.000, Step: 1000
+2022-12-07 18:07:51 - r - INFO: - Episode: 165/200, Reward: 1202.000, Step: 1000
+2022-12-07 18:10:00 - r - INFO: - Episode: 166/200, Reward: 1169.000, Step: 1000
+2022-12-07 18:10:17 - r - INFO: - Episode: 167/200, Reward: 512.000, Step: 413
+2022-12-07 18:10:38 - r - INFO: - Episode: 168/200, Reward: 445.000, Step: 529
+2022-12-07 18:11:18 - r - INFO: - Episode: 169/200, Reward: 656.000, Step: 1000
+2022-12-07 18:11:58 - r - INFO: - Episode: 170/200, Reward: 637.000, Step: 1000
+2022-12-07 18:14:06 - r - INFO: - Episode: 171/200, Reward: 596.000, Step: 1000
+2022-12-07 18:14:47 - r - INFO: - Episode: 172/200, Reward: 578.000, Step: 1000
+2022-12-07 18:15:27 - r - INFO: - Episode: 173/200, Reward: 662.000, Step: 1000
+2022-12-07 18:16:08 - r - INFO: - Episode: 174/200, Reward: 822.000, Step: 1000
+2022-12-07 18:16:25 - r - INFO: - Episode: 175/200, Reward: 513.000, Step: 416
+2022-12-07 18:18:35 - r - INFO: - Episode: 176/200, Reward: 978.000, Step: 1000
+2022-12-07 18:19:16 - r - INFO: - Episode: 177/200, Reward: 758.000, Step: 1000
+2022-12-07 18:19:56 - r - INFO: - Episode: 178/200, Reward: 815.000, Step: 1000
+2022-12-07 18:20:37 - r - INFO: - Episode: 179/200, Reward: 1084.000, Step: 1000
+2022-12-07 18:21:18 - r - INFO: - Episode: 180/200, Reward: 997.000, Step: 1000
+2022-12-07 18:23:27 - r - INFO: - Episode: 181/200, Reward: 669.000, Step: 1000
+2022-12-07 18:24:08 - r - INFO: - Episode: 182/200, Reward: 782.000, Step: 1000
+2022-12-07 18:24:48 - r - INFO: - Episode: 183/200, Reward: 753.000, Step: 1000
+2022-12-07 18:25:30 - r - INFO: - Episode: 184/200, Reward: 848.000, Step: 1000
+2022-12-07 18:25:59 - r - INFO: - Episode: 185/200, Reward: 558.000, Step: 727
+2022-12-07 18:28:10 - r - INFO: - Episode: 186/200, Reward: 836.000, Step: 1000
+2022-12-07 18:28:51 - r - INFO: - Episode: 187/200, Reward: 820.000, Step: 1000
+2022-12-07 18:29:08 - r - INFO: - Episode: 188/200, Reward: 580.000, Step: 427
+2022-12-07 18:29:28 - r - INFO: - Episode: 189/200, Reward: 1089.000, Step: 480
+2022-12-07 18:30:08 - r - INFO: - Episode: 190/200, Reward: 1092.000, Step: 1000
+2022-12-07 18:32:02 - r - INFO: - Episode: 191/200, Reward: 675.000, Step: 635
+2022-12-07 18:32:27 - r - INFO: - Episode: 192/200, Reward: 986.000, Step: 642
+2022-12-07 18:33:06 - r - INFO: - Episode: 193/200, Reward: 993.000, Step: 986
+2022-12-07 18:33:31 - r - INFO: - Episode: 194/200, Reward: 894.000, Step: 666
+2022-12-07 18:33:48 - r - INFO: - Episode: 195/200, Reward: 635.000, Step: 428
+2022-12-07 18:35:55 - r - INFO: - Episode: 196/200, Reward: 953.000, Step: 1000
+2022-12-07 18:36:27 - r - INFO: - Episode: 197/200, Reward: 1583.000, Step: 818
+2022-12-07 18:37:06 - r - INFO: - Episode: 198/200, Reward: 501.000, Step: 1000
+2022-12-07 18:37:46 - r - INFO: - Episode: 199/200, Reward: 1045.000, Step: 1000
+2022-12-07 18:38:24 - r - INFO: - Episode: 200/200, Reward: 749.000, Step: 969
+2022-12-07 18:39:54 - r - INFO: - Finish training!

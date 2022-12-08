@@ -52,7 +52,7 @@ class Agent(object):
         else:
             action = np.random.choice(self.n_actions) # choose action randomly
         return action
-    def _epsilon_greedy_sample_action(self,state):
+    def _epsilon_greedy_predict_action(self,state):
         action = np.argmax(self.Q_table[str(state)])
         return action
     def update(self, state, action, reward, next_state, done):

@@ -53,7 +53,7 @@ class Agent:
             math.exp(-1. * self.sample_count / self.epsilon_decay) 
         if random.random() > self.epsilon:
             with torch.no_grad():
-                state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+                state = torch.tensor(np.array(state), device=self.device, dtype=torch.float32).unsqueeze(dim=0)
                 q_values = self.policy_net(state)
                 action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
         else:
@@ -78,7 +78,7 @@ class Agent:
         ''' predict action
         '''
         with torch.no_grad():
-            state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            state = torch.tensor(np.array(state), device=self.device, dtype=torch.float32).unsqueeze(dim=0)
             q_values = self.policy_net(state)
             action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
         return action
