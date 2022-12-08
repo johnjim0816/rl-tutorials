@@ -56,7 +56,7 @@ python main.py --yaml config/custom_config_Train.yaml
 | [Value Iteration](./algos/VI/) | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) | [guoshicheng](https://github.com/gsc579) |  |
 | [Q-learning](./algos/QLearning/) | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) | [johnjim0816](https://github.com/johnjim0816) |       |
 | [Sarsa](./algos/Sarsa/) | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) | [johnjim0816](https://github.com/johnjim0816) |       |
-| [DQN](./algos/DQN/) | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [johnjim0816](https://github.com/johnjim0816) |       |
+| [DQN](./algos/DQN/) | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [johnjim0816](https://github.com/johnjim0816), [guoshicheng](https://github.com/gsc579) [(CNN)](./algos/DQN/) |       |
 | [DoubleDQN](./algos/DoubleDQN/) | [DoubleDQN Paper](https://arxiv.org/abs/1509.06461) | [johnjim0816](https://github.com/johnjim0816) |       |
 | [PER_DQN](./algos/PER_DQN/) | [PER_DQN Paper](https://arxiv.org/pdf/1511.05952) | [wangzhongren](https://github.com/wangzhongren-code) |       |
 | [NoisyDQN](./algos/NoisyDQN/) | [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf) | [wangzhongren](https://github.com/wangzhongren-code) |       |
