@@ -394,4 +394,28 @@
 \footnotetext[4]{$\hat{\nabla}_{\phi} J_{\pi}(\phi)=\nabla_{\phi} \alpha \log \left(\pi_{\phi}\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)\right)+\left(\nabla_{\mathbf{a}_{t}} \alpha \log \left(\pi_{\phi}\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)\right)-\nabla_{\mathbf{a}_{t}} Q\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)\right) \nabla_{\phi} f_{\phi}\left(\epsilon_{t} ; \mathbf{s}_{t}\right)$,$\mathbf{a}_{t}=f_{\phi}\left(\epsilon_{t} ; \mathbf{s}_{t}\right)$}
 \footnotetext[5]{$J(\alpha)=\mathbb{E}_{\mathbf{a}_{t} \sim \pi_{t}}\left[-\alpha \log \pi_{t}\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right)-\alpha \overline{\mathcal{H}}\right]$}
 \clearpage
+\clearpage
+
+\section{GAIL Algorithm}
+\begin{algorithm}[H] % [H]固定位置
+    \floatname{algorithm}{{GAIL Algorithm}\footnotemark[1]} 
+	\renewcommand{\thealgorithm}{} % 去掉算法标号
+	\caption{} 
+	\begin{algorithmic}[1] % [1]显示步数
+		\STATE Sample expert trajectories $\tau _{E} \sim \pi _{E}$，initial policy $\theta _{0}$ and and discriminator $D$ parameters$\omega _{0}$
+		\FOR {epoch $i = 1,2,\cdots $}
+			\STATE Sample policy trajectories$\tau_{i} \sim \pi _{\theta _{i}}$
+			\STATE Update the parameters $\omega _{i}$ of discriminator $D$ using the gradient:
+			\begin{center}
+				\begin{equation}
+				\hat{\mathbb{E}}_{\tau_{i}}\left[\nabla_{w} \log \left(D_{w}(s, a)\right)\right]+\hat{\mathbb{E}}_{\tau_{E}}\left[\nabla_{w} \log \left(1-D_{w}(s, a)\right)\right]
+				\end{equation}
+			\end{center}
+			\STATE Update policy $\pi _{\theta _{i}}$ using the output of discriminator $D$ as rewards for policy trajectories $\tau_{i}$\footnotemark[2]
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+\footnotetext[1]{Generative Adversarial Imitation Learning}
+\footnotetext[2]{The updating method of policy is closely related to the policy algorithm $\pi _{\theta}$, such as PP0-Clip.}
+\clearpage
 \end{document}

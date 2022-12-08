@@ -1,0 +1,31 @@
+general_cfg:
+  algo_name: PPO
+  collect_eps: 100
+  device: cuda
+  env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: true
+  load_path: Train_CartPole-v1_PPO_20221206-171046
+  max_steps: 200
+  min_reward: 195
+  mode: collect
+  new_step_api: true
+  render: false
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 200
+  wrapper: null
+algo_cfg:
+  actor_hidden_dim: 256
+  actor_lr: 0.0003
+  continuous: false
+  critic_hidden_dim: 256
+  critic_lr: 0.0003
+  entropy_coef: 0.01
+  eps_clip: 0.2
+  gamma: 0.99
+  k_epochs: 4
+  update_freq: 100

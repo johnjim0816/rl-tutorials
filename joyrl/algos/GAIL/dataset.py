@@ -2,11 +2,9 @@
 Author:      Yi Zhang, Master Student @ idrugLab, School of Biology and Biological Engineering, South China Universty of Technology
 Created on:  2022/11/17
 """
-import os.path
-import pickle
 
 import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 
 
 class TrajDataset(Dataset):

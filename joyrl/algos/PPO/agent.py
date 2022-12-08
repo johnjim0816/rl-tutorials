@@ -1,6 +1,7 @@
 import os
 
 import torch
+import torch.nn as nn
 from torch.distributions import Categorical,Normal
 import numpy as np
 from common.models import ActorSoftmax, ActorNormal, Critic
@@ -13,9 +14,9 @@ class Agent:
         self.device = torch.device(cfg.device)
         self.continuous = cfg.continuous # continuous action space
         self.action_space = cfg.action_space
-        self.action_scale = torch.tensor((self.action_space.high - self.action_space.low)/2, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
-        self.action_bias = torch.tensor((self.action_space.high + self.action_space.low)/2, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
         if self.continuous:
+            self.action_scale = torch.tensor((self.action_space.high - self.action_space.low)/2, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            self.action_bias = torch.tensor((self.action_space.high + self.action_space.low)/2, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
             self.actor = ActorNormal(cfg.n_states,cfg.n_actions, hidden_dim = cfg.actor_hidden_dim).to(self.device)
         else:
             self.actor = ActorSoftmax(cfg.n_states,cfg.n_actions, hidden_dim = cfg.actor_hidden_dim).to(self.device)
@@ -109,14 +110,14 @@ class Agent:
             surr1 = ratio * advantage
             surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
             # compute actor loss
-            actor_loss = -torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean()
+            actor_loss = - (torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean())
             # compute critic loss
-            critic_loss = (returns - values).pow(2).mean()
+            critic_loss = nn.MSELoss()(values, returns.unsqueeze(dim=1))
+            tot_loss = actor_loss + 0.5 * critic_loss
             # take gradient step
             self.actor_optimizer.zero_grad()
             self.critic_optimizer.zero_grad()
-            actor_loss.backward()
-            critic_loss.backward()
+            tot_loss.backward()
             self.actor_optimizer.step()
             self.critic_optimizer.step()
         self.memory.clear()

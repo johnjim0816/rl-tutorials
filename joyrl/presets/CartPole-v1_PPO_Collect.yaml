@@ -5,10 +5,10 @@ general_cfg:
   eval_eps: 10
   eval_per_episode: 5
   load_checkpoint: true
-  load_path: Train_CartPole-v1_PPO_20221205-013926
+  load_path: Train_CartPole-v1_PPO_20221206-171046
   max_steps: 200
-  collect_eps: 50
-  min_reward: 100
+  collect_eps: 100
+  min_reward: 195
   mode: collect
   new_step_api: true
   render: false
