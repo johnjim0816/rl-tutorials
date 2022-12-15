@@ -13,6 +13,9 @@ class AlgoConfig(DefaultConfig):
         self.buffer_size = 100000 # size of replay buffer
         self.batch_size = 64 # batch size
         self.target_update = 4 # target network update frequency
+
+        self.n_step = 1 #the n_step for N-step DQN
+
         self.value_layers = [
             {'layer_type': 'linear', 'layer_dim': ['n_states', 256],
              'activation': 'relu'},

@@ -105,6 +105,8 @@ class Agent:
         self.batch_size = cfg.batch_size
         self.target_update = cfg.target_update
 
+        self.n_step = cfg.n_step ## used for N-step DQN 
+
         self.device = torch.device(cfg.device) 
 
         self.policy_net = RainbowModel(cfg.n_states,cfg.n_actions,hidden_dim=cfg.hidden_dim).to(self.device)
@@ -113,6 +115,7 @@ class Agent:
         for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): 
             target_param.data.copy_(param.data)
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr)
+
         self.memory = ReplayTree(cfg.buffer_size) # replay SumTree 
 
         self.update_flag = False
@@ -150,9 +153,10 @@ class Agent:
             self.batch_size)
         state_batch = torch.tensor(np.array(state_batch), device=self.device, dtype=torch.float) # shape(batchsize,n_states)
         action_batch = torch.tensor(action_batch, device=self.device).unsqueeze(1) # shape(batchsize,1)
-        reward_batch = torch.tensor(reward_batch, device=self.device, dtype=torch.float).unsqueeze(1) # shape(batchsize,1)
+        
         next_state_batch = torch.tensor(np.array(next_state_batch), device=self.device, dtype=torch.float) # shape(batchsize,n_states)
         done_batch = torch.tensor(np.float32(done_batch), device=self.device).unsqueeze(1) # shape(batchsize,1)
+        reward_batch = torch.tensor(reward_batch, device=self.device, dtype=torch.float).unsqueeze(1) # shape(batchsize,1)
 
         # weights_batch = torch.tensor(weights_batch, device=self.device, dtype=torch.float)
 
@@ -162,7 +166,7 @@ class Agent:
         next_target_value_batch = self.target_net(next_state_batch) ## the double DQN 
         next_target_q_value_batch = next_target_value_batch.gather(1, torch.max(next_q_value_batch, 1)[1].unsqueeze(1)) # shape(batchsize,1)
         # next_max_q_value_batch = self.target_net(next_state_batch).max(1)[0].detach().unsqueeze(1) 
-        expected_q_value_batch = reward_batch + self.gamma * next_target_q_value_batch* (1-done_batch)
+        expected_q_value_batch = reward_batch + (self.gamma ** self.n_step) * next_target_q_value_batch* (1-done_batch) ## N-step DQN
 
         loss = nn.MSELoss()(q_value_batch, expected_q_value_batch)  # shape same to  
 
