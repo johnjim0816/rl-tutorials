@@ -10,7 +10,7 @@ class AlgoConfig:
         self.gamma = 0.99 # discount factor
         self.k_epochs = 4 # update policy for K epochs
         self.actor_lr = 0.0003 # learning rate for actor
-        self.critic_lr = 0.0003 # learning rate for critic
+        self.critic_lr = 0.001 # learning rate for critic
         self.eps_clip = 0.2 # clip parameter for PPO
         self.entropy_coef = 0.01 # entropy coefficient
         self.train_batch_size = 100 # ppo train batch size
