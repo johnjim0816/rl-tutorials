@@ -105,7 +105,7 @@ class Agent:
                 # get new action probabilities
                 new_log_probs = dist.log_prob(old_actions)
             # compute ratio (pi_theta / pi_theta__old):
-            ratio = torch.exp(new_log_probs - old_log_probs) # old_log_probs must be detached
+            ratio = torch.exp(new_log_probs - old_log_probs) # old_log_probs must be detached, use exp to avoid negative values
             # compute surrogate loss
             surr1 = ratio * advantage
             surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
@@ -114,6 +114,7 @@ class Agent:
             # compute critic loss
             critic_loss = nn.MSELoss()(values, returns.unsqueeze(dim=1))
             tot_loss = actor_loss + 0.5 * critic_loss
+            print(f"actor loss: {actor_loss.item():.3f}, critic loss: {critic_loss.item():.3f}")
             # take gradient step
             self.actor_optimizer.zero_grad()
             self.critic_optimizer.zero_grad()

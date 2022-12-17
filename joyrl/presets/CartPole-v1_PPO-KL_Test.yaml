@@ -4,10 +4,10 @@ general_cfg:
   env_name: CartPole-v1
   eval_eps: 10
   eval_per_episode: 5
-  load_checkpoint: false
-  load_path: Train_CartPole-v1_PPO-KL_20221206-054757
+  load_checkpoint: true
+  load_path: Train_CartPole-v1_PPO-KL_20221217-175150
   max_steps: 200
-  mode: train
+  mode: test
   new_step_api: true
   render: false
   save_fig: true

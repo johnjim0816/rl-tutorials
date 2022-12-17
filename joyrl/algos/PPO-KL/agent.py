@@ -18,11 +18,10 @@ class Agent:
         self.k_epochs = cfg.k_epochs # update policy for K epochs
         self.action_space = cfg.action_space
 
-        self.KL_target = cfg.KL_target #  parameter for PPO-KL target
-        self.KL_lambda = cfg.KL_lambda # parameter for PPO-KL
-        self.KL_beta_high = cfg.KL_beta_high
-        self.KL_beta_low = cfg.KL_beta_low
-        self.KL_alpha = cfg.KL_alpha
+        self.kl_target = cfg.kl_target #  parameter for PPO-KL target
+        self.kl_lambda = cfg.kl_lambda # parameter for PPO-KL
+        self.kl_beta = cfg.kl_beta
+        self.kl_alpha = cfg.kl_alpha
 
         self.entropy_coef = cfg.entropy_coef # entropy coefficient
         self.sample_count = 0
@@ -34,6 +33,7 @@ class Agent:
         probs = self.actor(state)
         dist = Categorical(probs)
         action = dist.sample()
+        self.probs = probs.detach()
         self.log_probs = dist.log_prob(action).detach()
         return action.detach().cpu().numpy().item()
     @torch.no_grad()
@@ -48,10 +48,11 @@ class Agent:
         if self.sample_count % self.update_freq != 0:
             return
         # print("update policy")
-        old_states, old_actions, old_log_probs, old_rewards, old_dones = self.memory.sample()
+        old_states, old_actions, old_rewards, old_dones,old_probs,old_log_probs = self.memory.sample()
         # convert to tensor
         old_states = torch.tensor(np.array(old_states), device=self.device, dtype=torch.float32)
         old_actions = torch.tensor(np.array(old_actions), device=self.device, dtype=torch.float32)
+        old_probs = torch.cat(old_probs).to(self.device)
         old_log_probs = torch.tensor(old_log_probs, device=self.device, dtype=torch.float32)
         # monte carlo estimate of state rewards
         returns = []
@@ -62,29 +63,27 @@ class Agent:
             discounted_sum = reward + (self.gamma * discounted_sum)
             returns.insert(0, discounted_sum)
         # Normalizing the rewards:
-        returns = torch.tensor(returns, device=self.device, dtype=torch.float32)
+        returns = torch.tensor(returns, device=self.device, dtype=torch.float32).unsqueeze(dim=1)
         returns = (returns - returns.mean()) / (returns.std() + 1e-5) # 1e-5 to avoid division by zero
-
-        # compute old pi
-        pi_old = self.actor(old_states).view(-1, self.action_space.n)
         for _ in range(self.k_epochs):
             # compute advantage
             values = self.critic(old_states) # detach to avoid backprop through the critic
             advantage = returns - values.detach()
             # get action probabilities
-            probs = self.actor(old_states)
-            dist = Categorical(probs)
+            new_probs = self.actor(old_states)
+            dist = Categorical(new_probs)
             # get new action probabilities
-            new_probs = dist.log_prob(old_actions)
+            new_log_probs = dist.log_prob(old_actions)
             # compute ratio (pi_theta / pi_theta__old):
-            ratio = torch.exp(new_probs - old_log_probs) # old_log_probs must be detached
+            ratio = torch.exp(new_log_probs - old_log_probs).unsqueeze(dim=1) # old_log_probs must be detached, shape: [train_batch_size, 1]
             # compute surrogate loss
             surr1 = ratio * advantage
-
-            surr2 = self.KL_lambda * F.kl_div(old_log_probs, new_probs, reduction='batchmean')
+            kl_mean = F.kl_div(torch.log(new_probs.detach()), old_probs.unsqueeze(1),reduction='mean') # KL(old|new),new_probs.shape: [train_batch_size, n_actions]
+            # kl_div = torch.mean(new_probs * (torch.log(new_probs)-old_probs),dim=1)
+            surr2 = self.kl_lambda * kl_mean
             # surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
             # compute actor loss
-            actor_loss = torch.tensor(-surr1-surr2).mean() + self.entropy_coef * dist.entropy().mean()
+            actor_loss = - (surr1.mean() + surr2 + self.entropy_coef * dist.entropy().mean())
             # compute critic loss
             critic_loss = (returns - values).pow(2).mean()
             # take gradient step
@@ -94,20 +93,18 @@ class Agent:
             critic_loss.backward()
             self.actor_optimizer.step()
             self.critic_optimizer.step()
-
-        kl = F.kl_div(input=probs.view(-1, self.action_space.n), target=pi_old.view(-1, self.action_space.n), reduction='batchmean')
-        if kl > self.KL_beta_high * self.KL_target:
-            self.KL_lambda *= self.KL_alpha
-        elif kl < self.KL_beta_low * self.KL_target:
-            self.KL_lambda /= self.KL_alpha
+            if kl_mean > self.kl_beta * self.kl_target:
+                self.kl_lambda *= self.kl_alpha
+            elif kl_mean < 1/self.kl_beta * self.kl_target:
+                self.kl_lambda /= self.kl_alpha
 
         self.memory.clear()
     def save_model(self, fpath):
         from pathlib import Path
         # create path
         Path(fpath).mkdir(parents=True, exist_ok=True)
-        torch.save(self.actor.state_dict(), fpath + 'actor.pth')
-        torch.save(self.critic.state_dict(), fpath + 'critic.pth')
+        torch.save(self.actor.state_dict(), f"{fpath}/actor.pth")
+        torch.save(self.critic.state_dict(), f"{fpath}/critic.pth")
     def load_model(self, fpath):
         actor_ckpt = torch.load(f"{fpath}/actor.pth", map_location=self.device)
         critic_ckpt = torch.load(f"{fpath}/critic.pth", map_location=self.device)
