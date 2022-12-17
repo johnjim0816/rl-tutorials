@@ -56,7 +56,7 @@ Please click [envs](./envs/README.md) to read environments instruments.
 |   [NoisyDQN](./algos/NoisyDQN/)    |                      [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf)                      | [wangzhongren](https://github.com/wangzhongren-code) |       |
 |  [REINFORCE](./algos/REINFORCE/)   |              [REINFORCE Paper](http://www.cs.toronto.edu/~tingwuwang/REINFORCE.pdf)              |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |        [A2C](./algos/A2C/)         |    [A2C blog](https://towardsdatascience.com/understanding-actor-critic-methods-931b97b6df3f)    |    [johnjim0816](https://github.com/johnjim0816)     |       |
-|        [PPO](./algos/PPO/)         |                          [PPO Paper](https://arxiv.org/abs/1707.06347)                           |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|        [PPO](./algos/PPO/)         |                          [PPO Paper](https://arxiv.org/abs/1707.06347)                           |    [johnjim0816](https://github.com/johnjim0816), [Wen Qiu](https://github.com/clorisqiu1)     |  PPO-clip, PPO-kl     |
 |       [DDPG](./algos/DDPG/)        |                          [DDPG Paper](https://arxiv.org/abs/1509.02971)                          |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |        [TD3](./algos/TD3/)         |                          [TD3 Paper](https://arxiv.org/pdf/1802.09477)                           |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |      [SoftQ](./algos/SoftQ/)       |                         [SoftQ Paper](https://arxiv.org/abs/1702.08165)                          |    [johnjim0816](https://github.com/johnjim0816)     |       |

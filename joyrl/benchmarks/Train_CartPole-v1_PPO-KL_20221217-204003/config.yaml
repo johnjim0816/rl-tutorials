@@ -1,5 +1,5 @@
 general_cfg:
-  algo_name: PPO-KL
+  algo_name: PPO
   device: cuda
   env_name: CartPole-v1
   eval_eps: 10
@@ -19,14 +19,17 @@ general_cfg:
 algo_cfg:
   actor_hidden_dim: 256
   actor_lr: 0.0003
-  algo_cfg: null
+  continuous: false
   critic_hidden_dim: 256
-  critic_lr: 0.0003
+  critic_lr: 0.001
   entropy_coef: 0.01
+  eps_clip: 0.2
   gamma: 0.99
   k_epochs: 4
   kl_alpha: 2
   kl_beta: 1.5
   kl_lambda: 0.5
   kl_target: 0.01
-  update_freq: 100
+  ppo_type: kl
+  sgd_batch_size: 64
+  train_batch_size: 100

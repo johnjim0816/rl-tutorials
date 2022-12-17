@@ -25,7 +25,7 @@ class Agent:
 
         self.entropy_coef = cfg.entropy_coef # entropy coefficient
         self.sample_count = 0
-        self.update_freq = cfg.update_freq
+        self.train_batch_size = cfg.train_batch_size
 
     def sample_action(self,state):
         self.sample_count += 1
@@ -45,12 +45,12 @@ class Agent:
         return action.detach().cpu().numpy().item()
     def update(self):
         # update policy every n steps
-        if self.sample_count % self.update_freq != 0:
+        if self.sample_count % self.train_batch_size != 0:
             return
         # print("update policy")
         old_states, old_actions, old_rewards, old_dones,old_probs,old_log_probs = self.memory.sample()
         # convert to tensor
-        old_states = torch.tensor(np.array(old_states), device=self.device, dtype=torch.float32)
+        old_states = torch.tensor(np.array(old_states), device=self.device, dtype=torch.float32) # shape: [train_batch_size,n_states]
         old_actions = torch.tensor(np.array(old_actions), device=self.device, dtype=torch.float32)
         old_probs = torch.cat(old_probs).to(self.device)
         old_log_probs = torch.tensor(old_log_probs, device=self.device, dtype=torch.float32)
@@ -77,9 +77,9 @@ class Agent:
             # compute ratio (pi_theta / pi_theta__old):
             ratio = torch.exp(new_log_probs - old_log_probs).unsqueeze(dim=1) # old_log_probs must be detached, shape: [train_batch_size, 1]
             # compute surrogate loss
-            surr1 = ratio * advantage
-            kl_mean = F.kl_div(torch.log(new_probs.detach()), old_probs.unsqueeze(1),reduction='mean') # KL(old|new),new_probs.shape: [train_batch_size, n_actions]
-            # kl_div = torch.mean(new_probs * (torch.log(new_probs)-old_probs),dim=1)
+            surr1 = ratio * advantage # [train_batch_size,1]
+            kl_mean = F.kl_div(torch.log(new_probs.detach()), old_probs.unsqueeze(1),reduction='mean') # KL(input|target),new_probs.shape: [train_batch_size, n_actions]
+            # kl_div = torch.mean(new_probs * (torch.log(new_probs) - torch.log(old_probs)), dim=1) # KL(new|old),new_probs.shape: [train_batch_size, n_actions]
             surr2 = self.kl_lambda * kl_mean
             # surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
             # compute actor loss
