@@ -1,0 +1,53 @@
+2022-12-07 16:36:50 - r - INFO: - Hyperparameters:
+2022-12-07 16:36:50 - r - INFO: - ================================================================================
+2022-12-07 16:36:50 - r - INFO: -         Name        	       Value        	        Type        
+2022-12-07 16:36:50 - r - INFO: -       env_name      	    CartPole-v1     	   <class 'str'>    
+2022-12-07 16:36:50 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-12-07 16:36:50 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2022-12-07 16:36:50 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2022-12-07 16:36:50 - r - INFO: -      algo_name      	        GAIL        	   <class 'str'>    
+2022-12-07 16:36:50 - r - INFO: -         mode        	        test        	   <class 'str'>    
+2022-12-07 16:36:50 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -        device       	        cuda        	   <class 'str'>    
+2022-12-07 16:36:50 - r - INFO: -      train_eps      	        400         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -   load_checkpoint   	         1          	   <class 'bool'>   
+2022-12-07 16:36:50 - r - INFO: -      load_path      	Train_CartPole-v1_GAIL_20221207-160945	   <class 'str'>    
+2022-12-07 16:36:50 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-12-07 16:36:50 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-12-07 16:36:50 - r - INFO: -      batch_size     	        2048        	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -       discount      	        0.99        	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: -      hidden_dim     	         32         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -          lr         	       0.001        	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: - imitation_replay_size	         4          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -   imitation_epochs  	         5          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: - imitation_batch_size	        128         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -      ppo_epochs     	         5          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -     r1_reg_coeff    	         1          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: -       k_epochs      	         4          	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -       actor_lr      	       0.0003       	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: -      critic_lr      	       0.0003       	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: -       eps_clip      	        0.2         	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: -     entropy_coef    	        0.01        	  <class 'float'>   
+2022-12-07 16:36:50 - r - INFO: -     update_freq     	        2048        	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -   actor_hidden_dim  	        256         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: -  critic_hidden_dim  	        256         	   <class 'int'>    
+2022-12-07 16:36:50 - r - INFO: - ================================================================================
+2022-12-07 16:36:51 - r - INFO: - n_states: 4, n_actions: 2
+2022-12-07 16:36:52 - r - INFO: - Start testing!
+2022-12-07 16:36:52 - r - INFO: - Env: CartPole-v1, Algorithm: GAIL, Device: cuda
+2022-12-07 16:36:53 - r - INFO: - Episode: 1/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:54 - r - INFO: - Episode: 2/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:54 - r - INFO: - Episode: 3/10, Reward: 148.000, Step: 148
+2022-12-07 16:36:54 - r - INFO: - Episode: 4/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:55 - r - INFO: - Episode: 5/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:55 - r - INFO: - Episode: 6/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:55 - r - INFO: - Episode: 7/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:55 - r - INFO: - Episode: 8/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:56 - r - INFO: - Episode: 9/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:56 - r - INFO: - Episode: 10/10, Reward: 200.000, Step: 200
+2022-12-07 16:36:56 - r - INFO: - Finish testing!

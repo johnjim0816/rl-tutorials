@@ -4,17 +4,11 @@
 Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
-LastEditor: John
+LastEditor: Yi Zhang
 LastEditTime: 2022-12-03 16:25:37
 Discription: 
 Environment: 
 '''
-import torch
-
-from joyrl.algos.GAIL.dataset import TrajDataset
-from tqdm import tqdm
-from joyrl.algos.GAIL.utils import adversarial_imitation_update
-
 
 class Trainer:
     def __init__(self) -> None:
@@ -34,32 +28,12 @@ class Trainer:
                 next_state, reward, terminated, info = env.step(
                     action)  # update env and return transitions under old_step_api of OpenAI Gym
             agent.memory.push((state, action, agent.log_probs, reward, terminated))  # store transitions
-
+            agent.adversarial_update(cfg)
+            agent.update(cfg)
             state = next_state  # update next state for env
             ep_reward += reward  #
             if terminated:
-                state = env.reset(seed=cfg.seed)
-                if len(agent.memory) >= cfg.batch_size:
-                    # train Discriminator
-                    old_states, old_actions, old_log_probs, old_rewards, old_dones = agent.memory.sample()
-                    # 根据agent来传入训练
-                    policy_trajectory_replays = {'states': old_states, 'actions': old_actions, 'rewards': old_rewards,
-                                                 'terminals': old_dones}
-                    policy_trajectory = TrajDataset(policy_trajectory_replays)
-                    for _ in tqdm(range(cfg.imitation_epochs), leave=False):
-                        adversarial_imitation_update(agent.discriminator, agent.expert_trajectories,
-                                                     policy_trajectory,
-                                                     agent.discriminator_optimiser, cfg)
-                    # predict reward using Discriminator
-                    states = policy_trajectory_replays['states']
-                    actions = policy_trajectory_replays['actions']
-                    # next_states = torch.cat([policy_trajectories['states'][1:], next_state])
-                    # terminals = policy_trajectories['terminals']
-                    # with torch.no_grad():
-                    #     policy_trajectory_replays['rewards'] = agent.discriminator.predict_reward(states, actions)
-                    # update agent
-                    # for _ in tqdm(range(cfg.ppo_epochs)):
-                    agent.update(states, actions)
+                break
         return agent, ep_reward, ep_step
 
     def test_one_episode(self, env, agent, cfg):
