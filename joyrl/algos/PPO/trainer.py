@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2020-09-11 23:03:00
 LastEditor: John
-LastEditTime: 2022-12-06 00:45:14
+LastEditTime: 2022-12-17 19:56:24
 Discription: 
 Environment: 
 '''
@@ -24,7 +24,7 @@ class Trainer:
                 next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions under new_step_api of OpenAI Gym
             else:
                 next_state, reward, terminated, info = env.step(action)  # update env and return transitions under old_step_api of OpenAI Gym
-            agent.memory.push((state, action,agent.log_probs,reward,terminated))  # store transitions
+            agent.memory.push((state, action, reward, terminated, agent.probs, agent.log_probs))  # store transitions
             agent.update()  # update agent
             state = next_state  # update next state for env
             ep_reward += reward  #
