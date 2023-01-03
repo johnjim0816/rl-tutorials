@@ -17,12 +17,14 @@ general_cfg:
   train_eps: 200
   wrapper: null
 algo_cfg:
+  ppo_type: clip
   actor_hidden_dim: 256
   actor_lr: 0.0003
   critic_hidden_dim: 256
-  critic_lr: 0.0003
+  critic_lr: 0.001
   entropy_coef: 0.01
   eps_clip: 0.2
   gamma: 0.99
   k_epochs: 4
-  update_freq: 100
+  train_batch_size: 100
+  

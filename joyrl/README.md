@@ -54,9 +54,11 @@ Please click [envs](./envs/README.md) to read environments instruments.
 |  [DoubleDQN](./algos/DoubleDQN/)   |                       [DoubleDQN Paper](https://arxiv.org/abs/1509.06461)                        |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |    [PER_DQN](./algos/PER_DQN/)     |                        [PER_DQN Paper](https://arxiv.org/pdf/1511.05952)                         | [wangzhongren](https://github.com/wangzhongren-code) |       |
 |   [NoisyDQN](./algos/NoisyDQN/)    |                      [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf)                      | [wangzhongren](https://github.com/wangzhongren-code) |       |
+|  [DRQN](./algos/DRQN/)   |                       [DRQN Paper](https://arxiv.org/abs/1507.06527)                        |    [johnjim0816](https://github.com/johnjim0816)     |  [understand LSTM](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)     |
+| C51 | [C51 Paper](https://arxiv.org/abs/1707.06887) |  | also called Categorical DQN |
 |  [REINFORCE](./algos/REINFORCE/)   |              [REINFORCE Paper](http://www.cs.toronto.edu/~tingwuwang/REINFORCE.pdf)              |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |        [A2C](./algos/A2C/)         |    [A2C blog](https://towardsdatascience.com/understanding-actor-critic-methods-931b97b6df3f)    |    [johnjim0816](https://github.com/johnjim0816)     |       |
-|        [PPO](./algos/PPO/)         |                          [PPO Paper](https://arxiv.org/abs/1707.06347)                           |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|        [PPO](./algos/PPO/)         |                          [PPO Paper](https://arxiv.org/abs/1707.06347)                           |    [johnjim0816](https://github.com/johnjim0816), [Wen Qiu](https://github.com/clorisqiu1)     |  PPO-clip, PPO-kl     |
 |       [DDPG](./algos/DDPG/)        |                          [DDPG Paper](https://arxiv.org/abs/1509.02971)                          |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |        [TD3](./algos/TD3/)         |                          [TD3 Paper](https://arxiv.org/pdf/1802.09477)                           |    [johnjim0816](https://github.com/johnjim0816)     |       |
 |      [SoftQ](./algos/SoftQ/)       |                         [SoftQ Paper](https://arxiv.org/abs/1702.08165)                          |    [johnjim0816](https://github.com/johnjim0816)     |       |
