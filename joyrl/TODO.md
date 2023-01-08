@@ -5,7 +5,7 @@
 |          |  实现多头输入  |         关键在于自注意力机制以及寻找有价值的实现环境         |
 |          |   实现多线程   | 目前在A3C上用multiprocessing实现，需要迁移到其他所有算法(要更改主框架) |
 |          |  TF1 backend   |                 基于tensorflow1实现相关算法                  |
-| 算法实现 |    基础算法    |                             TRPO                             |
+| 算法实现 |    基础算法    | TRPO、蒙特卡洛算法优化(目前运行特别慢，包含了太多for循环，，，) |
 |          |  多智能体算法  | QMIX算法、VDN算法、MAPPO算法，场景：MPE、gfootball([简单3v3](https://github.com/johnjim0816/gfootball)) |
 |          |   离线RL算法   |                                                              |
 |          |    ICM算法     |                                                              |
