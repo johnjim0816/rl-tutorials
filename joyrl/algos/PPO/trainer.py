@@ -13,10 +13,13 @@ Environment:
 class Trainer:
     def __init__(self) -> None:
         pass
+    
     def train_one_episode(self, env, agent, cfg): 
         ep_reward = 0  # reward per episode
         ep_step = 0
         state = env.reset(seed = cfg.seed)  # reset and obtain initial state
+        if cfg.new_step_api:
+            state, _ = env.reset(seed = cfg.seed)
         for _ in range(cfg.max_steps):
             ep_step += 1
             action = agent.sample_action(state)  # sample action
@@ -24,18 +27,23 @@ class Trainer:
                 next_state, reward, terminated, truncated , info = env.step(action)  # update env and return transitions under new_step_api of OpenAI Gym
             else:
                 next_state, reward, terminated, info = env.step(action)  # update env and return transitions under old_step_api of OpenAI Gym
-            agent.memory.push((state, action, reward, terminated, agent.probs, agent.log_probs))  # store transitions
-            agent.update()  # update agent
+            # agent.memory.push((state, action, reward, terminated, agent.probs, agent.log_probs))  # store transitions
+            agent.memory.push((state, action, reward, next_state, terminated))  # store transitions
             state = next_state  # update next state for env
             ep_reward += reward  #
             if terminated:
                 break
-        return agent,ep_reward,ep_step
+
+        agent.update()  # update agent
+        return agent, ep_reward, ep_step
+    
     def test_one_episode(self, env, agent, cfg):
         ep_reward = 0  # reward per episode
         ep_step = 0
         state = env.reset(seed = cfg.seed)  # reset and obtain initial state
-        for _ in range(cfg.max_steps):
+        if cfg.new_step_api:
+            state, _ = env.reset(seed = cfg.seed)
+        for _ in range(cfg.max_steps * 2):
             if cfg.render:
                 env.render()
             ep_step += 1
@@ -48,7 +56,9 @@ class Trainer:
             ep_reward += reward  #
             if terminated:
                 break
-        return agent,ep_reward,ep_step
+        print(f'During {ep_step} steps, Get {ep_reward:.2f} Rewards')
+        return agent, ep_reward, ep_step
+
     def collect_one_episode(self, env, agent, cfg):
         # dict of arrays
         collected = False
