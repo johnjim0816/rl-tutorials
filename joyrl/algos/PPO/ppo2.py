@@ -47,7 +47,8 @@ class PPO:
             self.action_bound = cfg.action_bound
         self.policy_clip = cfg.policy_clip
         self.k_epochs = cfg.k_epochs 
-        self.batch_size = cfg.sgd_batch_size
+        self.train_batch_size = cfg.train_batch_size
+        self.sgd_batch_size = cfg.sgd_batch_size
         self.gae_lambda = cfg.gae_lambda
         self.device = torch.device(cfg.device) 
         self.actor = models['Actor'].to(self.device)
@@ -127,8 +128,8 @@ class PPO:
         self.update_count += 1
         if self.update_count % self.actor_nums:
             return
-        
-        states, actions, rewards, next_states, dones = self.memory.sample()
+    
+        states, actions, rewards, next_states, dones = self.memory.sample(self.train_batch_size)
         # to tensor
         states = torch.FloatTensor(states)
         actions = torch.FloatTensor(actions)
@@ -146,11 +147,11 @@ class PPO:
         action_dist = Normal(self.action_bound * mu.detach(), std.detach())
         old_log_probs = action_dist.log_prob(actions)
         
-        # datdLoader
+        # dataLoader
         d_set = memDataset(states, actions, old_log_probs, advantage, td_target)
         train_loader = DataLoader(
             d_set,
-            batch_size=min(self.batch_size, self.max_steps * self.actor_nums),
+            batch_size=min(self.sgd_batch_size, self.max_steps * self.actor_nums),
             shuffle=True,
             drop_last=True
         )
