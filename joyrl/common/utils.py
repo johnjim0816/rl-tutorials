@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2023-01-11 13:05:56
+LastEditTime: 2023-01-11 13:53:23
 Discription: 
 Environment: 
 '''
@@ -107,7 +107,7 @@ def get_logger(fpath):
         '%(asctime)s - %(name)s - %(levelname)s: - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S')
     # output to file by using FileHandler
-    fh = logging.FileHandler(fpath+"log.txt")
+    fh = logging.FileHandler(f"{fpath}/log.txt")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     # output to screen by using StreamHandler
