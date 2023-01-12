@@ -1,0 +1,42 @@
+2022-12-10 09:59:44 - r - INFO: - Hyperparameters:
+2022-12-10 09:59:44 - r - INFO: - ================================================================================
+2022-12-10 09:59:44 - r - INFO: -         Name        	       Value        	        Type        
+2022-12-10 09:59:44 - r - INFO: -       env_name      	  CliffWalking-v0   	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-12-10 09:59:44 - r - INFO: -       wrapper       	envs.wrappers.CliffWalkingWapper	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2022-12-10 09:59:44 - r - INFO: -      algo_name      	       DynaQ        	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: -         mode        	        test        	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -        device       	        cpu         	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: -      train_eps      	        100         	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -      max_steps      	        100         	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -   load_checkpoint   	         1          	   <class 'bool'>   
+2022-12-10 09:59:44 - r - INFO: -      load_path      	Train_CliffWalking-v0_DynaQ_20221210-095808	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-12-10 09:59:44 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-12-10 09:59:44 - r - INFO: -    epsilon_start    	        0.95        	  <class 'float'>   
+2022-12-10 09:59:44 - r - INFO: -     epsilon_end     	        0.01        	  <class 'float'>   
+2022-12-10 09:59:44 - r - INFO: -    epsilon_decay    	        300         	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2022-12-10 09:59:44 - r - INFO: -          lr         	        0.1         	  <class 'float'>   
+2022-12-10 09:59:44 - r - INFO: -      n_planning     	         10         	   <class 'int'>    
+2022-12-10 09:59:44 - r - INFO: -   exploration_type  	      e-greedy      	   <class 'str'>    
+2022-12-10 09:59:44 - r - INFO: - ================================================================================
+2022-12-10 09:59:44 - r - INFO: - n_states: 48, n_actions: 4
+2022-12-10 09:59:44 - r - INFO: - Start testing!
+2022-12-10 09:59:44 - r - INFO: - Env: CliffWalking-v0, Algorithm: DynaQ, Device: cpu
+2022-12-10 09:59:44 - r - INFO: - Episode: 1/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 2/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 3/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 4/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 5/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 6/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 7/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 8/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 9/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Episode: 10/10, Reward: -13.000, Step: 13
+2022-12-10 09:59:44 - r - INFO: - Finish testing!

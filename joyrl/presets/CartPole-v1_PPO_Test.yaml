@@ -5,7 +5,7 @@ general_cfg:
   eval_eps: 10
   eval_per_episode: 5
   load_checkpoint: true
-  load_path: Train_CartPole-v1_PPO_20221203-164240
+  load_path: Train_CartPole-v1_PPO_20221217-203315
   max_steps: 200
   mode: test
   new_step_api: true
@@ -17,4 +17,13 @@ general_cfg:
   train_eps: 200
   wrapper: null
 algo_cfg:
-
+  ppo_type: clip
+  actor_hidden_dim: 256
+  actor_lr: 0.0003
+  critic_hidden_dim: 256
+  critic_lr: 0.001
+  entropy_coef: 0.01
+  eps_clip: 0.2
+  gamma: 0.99
+  k_epochs: 4
+  train_batch_size: 100

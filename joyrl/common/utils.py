@@ -5,7 +5,7 @@ Author: John
 Email: johnjim0816@gmail.com
 Date: 2021-03-12 16:02:24
 LastEditor: John
-LastEditTime: 2022-11-28 15:34:30
+LastEditTime: 2023-01-11 13:53:23
 Discription: 
 Environment: 
 '''
@@ -20,7 +20,7 @@ from functools import wraps
 from time import time
 import logging
 from pathlib import Path
-
+import torch.multiprocessing as mp
 
 from matplotlib.font_manager import FontProperties  # 导入字体模块
 
@@ -107,7 +107,7 @@ def get_logger(fpath):
         '%(asctime)s - %(name)s - %(levelname)s: - %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S')
     # output to file by using FileHandler
-    fh = logging.FileHandler(fpath+"log.txt")
+    fh = logging.FileHandler(f"{fpath}/log.txt")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     # output to screen by using StreamHandler
@@ -170,7 +170,7 @@ def timing(func):
         print(f"func: {func.__name__}, took: {te-ts:2.4f} seconds")
         return result
     return wrap
-def all_seed(env,seed = 1):
+def all_seed(seed = 1):
     ''' omnipotent seed for RL, attention the position of seed function, you'd better put it just following the env create function
     Args:
         env (_type_): 
@@ -193,3 +193,13 @@ def all_seed(env,seed = 1):
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.enabled = False
     
+def check_n_workers(cfg):
+
+    if cfg.__dict__.get('n_workers',None) is None: # set n_workers to 1 if not set
+        setattr(cfg, 'n_workers', 1)
+    if not isinstance(cfg.n_workers,int) or cfg.n_workers<=0: # n_workers must >0
+        raise ValueError("n_workers must >0!")
+    if cfg.n_workers > mp.cpu_count():
+        raise ValueError("n_workers must less than total numbers of cpus on your machine!")
+    if cfg.n_workers > 1 and cfg.device != 'cpu':
+        raise ValueError("multi process can only support cpu!")

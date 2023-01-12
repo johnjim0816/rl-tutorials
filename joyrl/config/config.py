@@ -1,13 +1,9 @@
-
 class DefaultConfig:
     def __init__(self) -> None:
         pass
     def print_cfg(self):
         print(self.__dict__)
-class MergedConfig:
-    def __init__(self) -> None:
-        pass
-class GeneralConfig(DefaultConfig):
+class GeneralConfig():
     def __init__(self) -> None:
         self.env_name = "CartPole-v1" # name of environment
         self.new_step_api = True # whether to use new step api of gym

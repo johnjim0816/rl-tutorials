@@ -44,13 +44,23 @@ please click [docs](./docs/README.md)
 Please click [envs](./envs/README.md) to read environments instruments.
 
 ## Algorithms
-
-|       Name       |                          Reference                           |                    Author                     | Notes |
-| :--------------: | :----------------------------------------------------------: | :-------------------------------------------: | :---: |
-| [Value Iteration](./algos/VI/) | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) | [guoshicheng](https://github.com/gsc579) |  |
-| [REINFORCE](./algos/REINFORCE/) | [REINFORCE Paper](http://www.cs.toronto.edu/~tingwuwang/REINFORCE.pdf) | [johnjim0816](https://github.com/johnjim0816) |       |
-| [DQN](./algos/DQN/) | [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf) | [johnjim0816](https://github.com/johnjim0816) |       |
-| [PER_DQN](./algos/PER_DQN/) | [PER_DQN Paper](https://arxiv.org/pdf/1511.05952) | [wangzhongren](https://github.com/wangzhongren-code) |       |
-| [NoisyDQN](./algos/NoisyDQN/) | [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf) | [wangzhongren](https://github.com/wangzhongren-code) |       |
-| [PPO](./algos/PPO/) | [PPO Paper](https://arxiv.org/abs/1707.06347) | [johnjim0816](https://github.com/johnjim0816) |       |
-| [DDPG](./algos/DDPG/) | [DDPG Paper](https://arxiv.org/abs/1509.02971) | [johnjim0816](https://github.com/johnjim0816) |       |
+|                Name                |                                            Policy                                            |                                            Reference                                             |                        Author                        | Notes |
+|:----------------------------------:|:------------------------------------------------------------------------------------------------:|:----------------------------------------------------:| :---: | :---: |
+| [Monte Carlo](./algos/MonteCarlo/) |  | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) |    [johnjim0816](https://github.com/johnjim0816)     |  |
+|   [Value Iteration](./algos/VI/)   |  | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) |       [guoshicheng](https://github.com/gsc579)       |  |
+|  [Q-learning](./algos/QLearning/)  |  | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|      [Sarsa](./algos/Sarsa/)       |  | [RL introduction](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|        [DQN](./algos/DQN/)         |                                       |                   [DQN Paper](https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf)                    |    [johnjim0816](https://github.com/johnjim0816), [guoshicheng](https://github.com/gsc579) [(CNN)](./algos/DQN/)     |       |
+|  [DoubleDQN](./algos/DoubleDQN/)   |                                               |                       [DoubleDQN Paper](https://arxiv.org/abs/1509.06461)                        |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|    [PER_DQN](./algos/PER_DQN/)     |                                                 |                        [PER_DQN Paper](https://arxiv.org/pdf/1511.05952)                         | [wangzhongren](https://github.com/wangzhongren-code) |       |
+|   [NoisyDQN](./algos/NoisyDQN/)    |                                            |                      [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf)                      | [wangzhongren](https://github.com/wangzhongren-code) |       |
+|  [DRQN](./algos/DRQN/)   |                                               |                       [DRQN Paper](https://arxiv.org/abs/1507.06527)                        |    [johnjim0816](https://github.com/johnjim0816)     |  [understand LSTM](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)     |
+| C51 |  | [C51 Paper](https://arxiv.org/abs/1707.06887) |  | also called Categorical DQN |
+|  [REINFORCE](./algos/REINFORCE/)   |                            |              [REINFORCE Paper](http://www.cs.toronto.edu/~tingwuwang/REINFORCE.pdf)              |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|        [A2C](./algos/A2C/)         |        |    [A2C blog](https://towardsdatascience.com/understanding-actor-critic-methods-931b97b6df3f)    |    [johnjim0816](https://github.com/johnjim0816)     |       |
+| [A3C](./algos/A3C/) | On | [A3C paper](https://arxiv.org/pdf/1602.01783) | [johnjim0816](https://github.com/johnjim0816), [Ariel Chen](https://github.com/cr-bh) | |
+|        [PPO](./algos/PPO/)         |                                                     |                          [PPO Paper](https://arxiv.org/abs/1707.06347)                           |    [johnjim0816](https://github.com/johnjim0816), [Wen Qiu](https://github.com/clorisqiu1)     |  PPO-clip, PPO-kl     |
+|       [DDPG](./algos/DDPG/)        |                                                    |                          [DDPG Paper](https://arxiv.org/abs/1509.02971)                          |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|        [TD3](./algos/TD3/)         |                                                     |                          [TD3 Paper](https://arxiv.org/pdf/1802.09477)                           |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|      [SoftQ](./algos/SoftQ/)       |                                                   |                         [SoftQ Paper](https://arxiv.org/abs/1702.08165)                          |    [johnjim0816](https://github.com/johnjim0816)     |       |
+|       [GAIL](./algos/GAIL/)        |                                                    |                          [GAIL Paper](https://arxiv.org/abs/1606.03476)                          |      [Yi Zhang](https://github.com/ai4drug)      |       |

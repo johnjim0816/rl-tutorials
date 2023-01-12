@@ -1,0 +1,26 @@
+general_cfg:
+  algo_name: DynaQ
+  device: cpu
+  env_name: CliffWalking-v0
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: true
+  load_path: Train_CliffWalking-v0_DynaQ_20221210-095808
+  max_steps: 100
+  mode: test
+  new_step_api: true
+  render: false
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 100
+  wrapper: envs.wrappers.CliffWalkingWapper
+algo_cfg:
+  epsilon_decay: 300
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  exploration_type: e-greedy
+  gamma: 0.99
+  lr: 0.1
+  n_planning: 10

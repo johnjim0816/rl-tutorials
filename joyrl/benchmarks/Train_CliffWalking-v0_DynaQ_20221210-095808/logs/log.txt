@@ -1,0 +1,141 @@
+2022-12-10 09:58:08 - r - INFO: - Hyperparameters:
+2022-12-10 09:58:08 - r - INFO: - ================================================================================
+2022-12-10 09:58:08 - r - INFO: -         Name        	       Value        	        Type        
+2022-12-10 09:58:08 - r - INFO: -       env_name      	  CliffWalking-v0   	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2022-12-10 09:58:08 - r - INFO: -       wrapper       	envs.wrappers.CliffWalkingWapper	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2022-12-10 09:58:08 - r - INFO: -      algo_name      	       DynaQ        	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: -         mode        	       train        	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -        device       	        cpu         	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: -      train_eps      	        100         	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -      max_steps      	        100         	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -   load_checkpoint   	         0          	   <class 'bool'>   
+2022-12-10 09:58:08 - r - INFO: -      load_path      	Train_CliffWalking-v0_DynaQ_20221210-095208	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2022-12-10 09:58:08 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2022-12-10 09:58:08 - r - INFO: -    epsilon_start    	        0.95        	  <class 'float'>   
+2022-12-10 09:58:08 - r - INFO: -     epsilon_end     	        0.01        	  <class 'float'>   
+2022-12-10 09:58:08 - r - INFO: -    epsilon_decay    	        300         	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2022-12-10 09:58:08 - r - INFO: -          lr         	        0.1         	  <class 'float'>   
+2022-12-10 09:58:08 - r - INFO: -      n_planning     	         10         	   <class 'int'>    
+2022-12-10 09:58:08 - r - INFO: -   exploration_type  	      e-greedy      	   <class 'str'>    
+2022-12-10 09:58:08 - r - INFO: - ================================================================================
+2022-12-10 09:58:09 - r - INFO: - n_states: 48, n_actions: 4
+2022-12-10 09:58:09 - r - INFO: - Start training!
+2022-12-10 09:58:09 - r - INFO: - Env: CliffWalking-v0, Algorithm: DynaQ, Device: cpu
+2022-12-10 09:58:09 - r - INFO: - Episode: 1/100, Reward: -397.000, Step: 100
+2022-12-10 09:58:09 - r - INFO: - Episode: 2/100, Reward: -78.000, Step: 78
+2022-12-10 09:58:09 - r - INFO: - Episode: 3/100, Reward: -496.000, Step: 100
+2022-12-10 09:58:09 - r - INFO: - Episode: 4/100, Reward: -496.000, Step: 100
+2022-12-10 09:58:09 - r - INFO: - Episode: 5/100, Reward: -694.000, Step: 100
+2022-12-10 09:58:09 - r - INFO: - Current episode 5 has the best eval reward: -694.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 6/100, Reward: -595.000, Step: 100
+2022-12-10 09:58:09 - r - INFO: - Episode: 7/100, Reward: -298.000, Step: 100
+2022-12-10 09:58:09 - r - INFO: - Episode: 8/100, Reward: -96.000, Step: 96
+2022-12-10 09:58:09 - r - INFO: - Episode: 9/100, Reward: -27.000, Step: 27
+2022-12-10 09:58:09 - r - INFO: - Episode: 10/100, Reward: -134.000, Step: 35
+2022-12-10 09:58:09 - r - INFO: - Current episode 10 has the best eval reward: -100.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 11/100, Reward: -31.000, Step: 31
+2022-12-10 09:58:09 - r - INFO: - Episode: 12/100, Reward: -46.000, Step: 46
+2022-12-10 09:58:09 - r - INFO: - Episode: 13/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 14/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 15/100, Reward: -29.000, Step: 29
+2022-12-10 09:58:09 - r - INFO: - Current episode 15 has the best eval reward: -100.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 16/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 17/100, Reward: -29.000, Step: 29
+2022-12-10 09:58:09 - r - INFO: - Episode: 18/100, Reward: -31.000, Step: 31
+2022-12-10 09:58:09 - r - INFO: - Episode: 19/100, Reward: -25.000, Step: 25
+2022-12-10 09:58:09 - r - INFO: - Episode: 20/100, Reward: -32.000, Step: 32
+2022-12-10 09:58:09 - r - INFO: - Current episode 20 has the best eval reward: -100.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 21/100, Reward: -22.000, Step: 22
+2022-12-10 09:58:09 - r - INFO: - Episode: 22/100, Reward: -29.000, Step: 29
+2022-12-10 09:58:09 - r - INFO: - Episode: 23/100, Reward: -32.000, Step: 32
+2022-12-10 09:58:09 - r - INFO: - Episode: 24/100, Reward: -134.000, Step: 35
+2022-12-10 09:58:09 - r - INFO: - Episode: 25/100, Reward: -130.000, Step: 31
+2022-12-10 09:58:09 - r - INFO: - Current episode 25 has the best eval reward: -15.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 26/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 27/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 28/100, Reward: -21.000, Step: 21
+2022-12-10 09:58:09 - r - INFO: - Episode: 29/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 30/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 31/100, Reward: -48.000, Step: 48
+2022-12-10 09:58:09 - r - INFO: - Episode: 32/100, Reward: -25.000, Step: 25
+2022-12-10 09:58:09 - r - INFO: - Episode: 33/100, Reward: -27.000, Step: 27
+2022-12-10 09:58:09 - r - INFO: - Episode: 34/100, Reward: -27.000, Step: 27
+2022-12-10 09:58:09 - r - INFO: - Episode: 35/100, Reward: -22.000, Step: 22
+2022-12-10 09:58:09 - r - INFO: - Episode: 36/100, Reward: -33.000, Step: 33
+2022-12-10 09:58:09 - r - INFO: - Episode: 37/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 38/100, Reward: -32.000, Step: 32
+2022-12-10 09:58:09 - r - INFO: - Episode: 39/100, Reward: -22.000, Step: 22
+2022-12-10 09:58:09 - r - INFO: - Episode: 40/100, Reward: -29.000, Step: 29
+2022-12-10 09:58:09 - r - INFO: - Episode: 41/100, Reward: -35.000, Step: 35
+2022-12-10 09:58:09 - r - INFO: - Episode: 42/100, Reward: -39.000, Step: 39
+2022-12-10 09:58:09 - r - INFO: - Episode: 43/100, Reward: -55.000, Step: 55
+2022-12-10 09:58:09 - r - INFO: - Episode: 44/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 45/100, Reward: -56.000, Step: 56
+2022-12-10 09:58:09 - r - INFO: - Episode: 46/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 47/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 48/100, Reward: -23.000, Step: 23
+2022-12-10 09:58:09 - r - INFO: - Episode: 49/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 50/100, Reward: -31.000, Step: 31
+2022-12-10 09:58:09 - r - INFO: - Episode: 51/100, Reward: -52.000, Step: 52
+2022-12-10 09:58:09 - r - INFO: - Episode: 52/100, Reward: -14.000, Step: 14
+2022-12-10 09:58:09 - r - INFO: - Episode: 53/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 54/100, Reward: -31.000, Step: 31
+2022-12-10 09:58:09 - r - INFO: - Episode: 55/100, Reward: -25.000, Step: 25
+2022-12-10 09:58:09 - r - INFO: - Episode: 56/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 57/100, Reward: -27.000, Step: 27
+2022-12-10 09:58:09 - r - INFO: - Episode: 58/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 59/100, Reward: -30.000, Step: 30
+2022-12-10 09:58:09 - r - INFO: - Episode: 60/100, Reward: -27.000, Step: 27
+2022-12-10 09:58:09 - r - INFO: - Episode: 61/100, Reward: -29.000, Step: 29
+2022-12-10 09:58:09 - r - INFO: - Episode: 62/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 63/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 64/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 65/100, Reward: -14.000, Step: 14
+2022-12-10 09:58:09 - r - INFO: - Current episode 65 has the best eval reward: -13.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 66/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 67/100, Reward: -21.000, Step: 21
+2022-12-10 09:58:09 - r - INFO: - Episode: 68/100, Reward: -25.000, Step: 25
+2022-12-10 09:58:09 - r - INFO: - Episode: 69/100, Reward: -20.000, Step: 20
+2022-12-10 09:58:09 - r - INFO: - Episode: 70/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 71/100, Reward: -15.000, Step: 15
+2022-12-10 09:58:09 - r - INFO: - Episode: 72/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 73/100, Reward: -27.000, Step: 27
+2022-12-10 09:58:09 - r - INFO: - Episode: 74/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 75/100, Reward: -14.000, Step: 14
+2022-12-10 09:58:09 - r - INFO: - Current episode 75 has the best eval reward: -13.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 76/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 77/100, Reward: -16.000, Step: 16
+2022-12-10 09:58:09 - r - INFO: - Episode: 78/100, Reward: -28.000, Step: 28
+2022-12-10 09:58:09 - r - INFO: - Episode: 79/100, Reward: -15.000, Step: 15
+2022-12-10 09:58:09 - r - INFO: - Episode: 80/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Current episode 80 has the best eval reward: -13.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 81/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 82/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 83/100, Reward: -117.000, Step: 18
+2022-12-10 09:58:09 - r - INFO: - Episode: 84/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 85/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 86/100, Reward: -15.000, Step: 15
+2022-12-10 09:58:09 - r - INFO: - Episode: 87/100, Reward: -21.000, Step: 21
+2022-12-10 09:58:09 - r - INFO: - Episode: 88/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 89/100, Reward: -15.000, Step: 15
+2022-12-10 09:58:09 - r - INFO: - Episode: 90/100, Reward: -15.000, Step: 15
+2022-12-10 09:58:09 - r - INFO: - Current episode 90 has the best eval reward: -13.000
+2022-12-10 09:58:09 - r - INFO: - Episode: 91/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 92/100, Reward: -19.000, Step: 19
+2022-12-10 09:58:09 - r - INFO: - Episode: 93/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 94/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 95/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 96/100, Reward: -23.000, Step: 23
+2022-12-10 09:58:09 - r - INFO: - Episode: 97/100, Reward: -13.000, Step: 13
+2022-12-10 09:58:09 - r - INFO: - Episode: 98/100, Reward: -17.000, Step: 17
+2022-12-10 09:58:09 - r - INFO: - Episode: 99/100, Reward: -21.000, Step: 21
+2022-12-10 09:58:09 - r - INFO: - Episode: 100/100, Reward: -15.000, Step: 15
+2022-12-10 09:58:09 - r - INFO: - Finish training!

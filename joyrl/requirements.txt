@@ -10,3 +10,5 @@ setuptools==65.2.0
 gym==0.25.2
 PythonTurtle==0.3.2
 pygame==2.1.2
+glfw==2.5.5
+imageio==2.22.4

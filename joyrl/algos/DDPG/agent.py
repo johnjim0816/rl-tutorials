@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-09 20:25:52
 @LastEditor: John
-LastEditTime: 2022-12-01 11:48:00
+LastEditTime: 2022-12-06 22:50:45
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -117,8 +117,13 @@ class Agent:
         ''' predict action
         '''
         state = torch.tensor(state, device=self.device, dtype=torch.float32).unsqueeze(dim=0)
-        action = self.actor(state)
-        return action.cpu().numpy()[0]
+        action_tanh = self.actor(state) # action_tanh is in [-1, 1]
+        # convert action_tanh to action in the original action space
+        action_scale = torch.FloatTensor((self.action_space.high - self.action_space.low) / 2.).to(self.device)
+        action_bias = torch.FloatTensor((self.action_space.high + self.action_space.low) / 2.).to(self.device)
+        action = action_scale * action_tanh + action_bias
+        action = action.cpu().detach().numpy()[0]
+        return action
 
     def update(self):
         if len(self.memory) < self.batch_size: # when memory size is less than batch size, return
