@@ -1,0 +1,57 @@
+general_cfg:
+  Vmax: 200
+  Vmin: 0
+  algo_name: RainbowDQN
+  device: cuda
+  env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: true
+  load_path: Train_CartPole-v1_RainbowDQN_20230114-222012
+  max_steps: 200
+  mode: test
+  n_atoms: 51
+  new_step_api: true
+  render: false
+  save_fig: true
+  seed: 0
+  show_fig: false
+  test_eps: 10
+  train_eps: 100
+  wrapper: null
+algo_cfg:
+  Vmax: 200.0
+  Vmin: 0.0
+  batch_size: 64
+  buffer_size: 100000
+  delta_z: 4.0
+  epsilon_decay: 500
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  gamma: 0.95
+  hidden_dim: 256
+  lr: 0.0001
+  memory_capacity: 10000
+  n_step: 1
+  num_atoms: 51
+  support: !!python/object/apply:torch._utils._rebuild_tensor_v2
+  - !!python/object/apply:torch.storage._load_from_bytes
+    - !!binary |
+      gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+      AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+      aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+      Z2UKcQFYCQAAADExNzgyODk2MHECWAMAAABjcHVxA0szTnRxBFEugAJdcQBYCQAAADExNzgyODk2
+      MHEBYS4zAAAAAAAAAAAAAAAAAIBAAAAAQQAAQEEAAIBBAACgQQAAwEEAAOBBAAAAQgAAEEIAACBC
+      AAAwQgAAQEIAAFBCAABgQgAAcEIAAIBCAACIQgAAkEIAAJhCAACgQgAAqEIAALBCAAC4QgAAwEIA
+      AMhCAADQQgAA2EIAAOBCAADoQgAA8EIAAPhCAAAAQwAABEMAAAhDAAAMQwAAEEMAABRDAAAYQwAA
+      HEMAACBDAAAkQwAAKEMAACxDAAAwQwAANEMAADhDAAA8QwAAQEMAAERDAABIQw==
+  - 0
+  - !!python/tuple
+    - 51
+  - !!python/tuple
+    - 1
+  - false
+  - !!python/object/apply:collections.OrderedDict
+    - []
+  target_update: 4
+  tau: 1.0
