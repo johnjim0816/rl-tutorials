@@ -1,0 +1,34 @@
+general_cfg:
+  algo_name: A3C
+  device: cpu
+  env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: false
+  load_path: Train_CartPole-v1_DQN_20221026-054757
+  max_steps: 200
+  mode: train
+  n_workers: 10
+  new_step_api: true
+  render: false
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 400
+  wrapper: null
+algo_cfg:
+  actor_hidden_dim: 256
+  actor_lr: 0.0003
+  continuous: false
+  critic_hidden_dim: 256
+  critic_lr: 0.001
+  device: cpu
+  entropy_coef: 0.001
+  env_name: CartPole-v1
+  gamma: 0.99
+  max_steps: 200
+  n_workers: 10
+  seed: 1
+  train_eps: 1000
+  update_freq: 20
