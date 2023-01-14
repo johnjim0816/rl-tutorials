@@ -1,5 +1,10 @@
 # 蘑菇书附书代码
 
+
+## 算法列表
+
+
+
 ## 安装说明
 
 目前支持Python 3.7和Gym 0.25.2版本。
@@ -21,3 +26,4 @@ conda install pytorch==1.10.0 torchvision==0.11.0 torchaudio==0.10.0 cudatoolkit
 # GPU镜像安装
 pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 --extra-index-url https://download.pytorch.org/whl/cu113
 ```
+
