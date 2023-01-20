@@ -1,0 +1,58 @@
+2023-01-14 22:24:46 - r - INFO: - Hyperparameters:
+2023-01-14 22:24:46 - r - INFO: - ================================================================================
+2023-01-14 22:24:46 - r - INFO: -         Name        	       Value        	        Type        
+2023-01-14 22:24:46 - r - INFO: -       env_name      	    CartPole-v1     	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2023-01-14 22:24:46 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2023-01-14 22:24:46 - r - INFO: -      algo_name      	     RainbowDQN     	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -         mode        	        test        	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -         seed        	         0          	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -        device       	        cuda        	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -      train_eps      	        100         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -   load_checkpoint   	         1          	   <class 'bool'>   
+2023-01-14 22:24:46 - r - INFO: -      load_path      	Train_CartPole-v1_RainbowDQN_20230114-222012	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2023-01-14 22:24:46 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2023-01-14 22:24:46 - r - INFO: -         Vmin        	        0.0         	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -         Vmax        	       200.0        	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -       n_atoms       	         51         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -        gamma        	        0.95        	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -         tau         	        1.0         	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -      hidden_dim     	        256         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -      num_atoms      	         51         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -       support       	     tensor(0.)     	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -       delta_z       	        4.0         	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -        n_step       	         1          	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -      batch_size     	         64         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -          lr         	       0.0001       	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -    target_update    	         4          	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -   memory_capacity   	       10000        	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -    epsilon_start    	        0.95        	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -     epsilon_end     	        0.01        	  <class 'float'>   
+2023-01-14 22:24:46 - r - INFO: -    epsilon_decay    	        500         	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -     buffer_size     	       100000       	   <class 'int'>    
+2023-01-14 22:24:46 - r - INFO: -       task_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Test_CartPole-v1_RainbowDQN_20230114-222446	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -      model_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Test_CartPole-v1_RainbowDQN_20230114-222446/models	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -       res_dir       	/home/dingli/rl-tutorials/joyrl/tasks/Test_CartPole-v1_RainbowDQN_20230114-222446/results	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -       log_dir       	/home/dingli/rl-tutorials/joyrl/tasks/Test_CartPole-v1_RainbowDQN_20230114-222446/logs	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: -       traj_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Test_CartPole-v1_RainbowDQN_20230114-222446/traj	   <class 'str'>    
+2023-01-14 22:24:46 - r - INFO: - ================================================================================
+2023-01-14 22:24:46 - r - INFO: - n_states: 4, n_actions: 2
+2023-01-14 22:24:48 - r - INFO: - Start testing!
+2023-01-14 22:24:48 - r - INFO: - Env: CartPole-v1, Algorithm: RainbowDQN, Device: cuda
+2023-01-14 22:24:48 - r - INFO: - Episode: 1/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 2/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 3/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 4/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 5/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 6/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 7/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:49 - r - INFO: - Episode: 8/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:50 - r - INFO: - Episode: 9/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:50 - r - INFO: - Episode: 10/10, Reward: 200.000, Step: 200
+2023-01-14 22:24:50 - r - INFO: - Finish testing!

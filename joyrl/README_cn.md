@@ -62,7 +62,7 @@ python main.py --yaml config/custom_config_Train.yaml
 |  | [PER_DQN](./algos/PER_DQN/) | Off | [PER_DQN Paper](https://arxiv.org/pdf/1511.05952) | [wangzhongren](https://github.com/wangzhongren-code) |       |
 |  | [NoisyDQN](./algos/NoisyDQN/) | Off | [NoisyDQN Paper](https://arxiv.org/pdf/1706.10295.pdf) | [wangzhongren](https://github.com/wangzhongren-code) |       |
 |  | C51 | Off | [C51 Paper](https://arxiv.org/abs/1707.06887) | also called Categorical DQN | |
-|  | Rainbow DQN |  |  |  | |
+|  | Rainbow DQN | off | [Rainbow Paper](https://arxiv.org/abs/1710.02298) | [wangzhongren](https://github.com/wangzhongren-code) | |
 |  | QRDQN |  | [QRDQN Paper](https://arxiv.org/pdf/1710.10044.pdf) |  | |
 |  | CQL |  | [CQL Paper](https://arxiv.org/pdf/2006.04779.pdf) |  | |
 | Policy-based | [REINFORCE](./algos/REINFORCE/) | On | [REINFORCE Paper](http://www.cs.toronto.edu/~tingwuwang/REINFORCE.pdf) | [johnjim0816](https://github.com/johnjim0816) | 最基础的PG算法 |

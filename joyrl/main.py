@@ -39,10 +39,13 @@ class Main(object):
         tplt = "{:^20}\t{:^20}\t{:^20}"
         self.logger.info(tplt.format("Name", "Value", "Type"))
         for k, v in cfg_dict.items():
+            print (k, v)
             if v.__class__.__name__ == 'list':
                 v = str(v)
             if v is None:
                 v = 'None'
+            if "support" in k:
+                v = str(v[0])
             self.logger.info(tplt.format(k, v, str(type(v))))
         self.logger.info(''.join(['='] * 80))
 
