@@ -8,8 +8,10 @@ LastEditor: JiangJi
 LastEditTime: 2022-12-24 20:53:52
 Discription: 
 '''
+from config.config import DefaultConfig
+
 import torch
-class AlgoConfig:
+class AlgoConfig(DefaultConfig):
     def __init__(self):
         self.gamma = 0.99 # discount factor
         self.tau = 1.0 # 1.0 means hard update
