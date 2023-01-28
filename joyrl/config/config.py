@@ -9,7 +9,7 @@ class GeneralConfig():
         self.new_step_api = True # whether to use new step api of gym
         self.wrapper = None # wrapper of environment
         self.render = False # whether to render environment
-        self.algo_name = "PER_DQN" # name of algorithm
+        self.algo_name = "RainbowDQN" # name of algorithm
         self.mode = "train" # train or test
         self.seed = 0 # random seed
         self.device = "cpu" # device to use

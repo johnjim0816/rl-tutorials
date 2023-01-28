@@ -5,7 +5,7 @@
 @Email: johnjim0816@gmail.com
 @Date: 2020-06-12 00:50:49
 @LastEditor: John
-LastEditTime: 2022-11-19 17:20:02
+LastEditTime: 2023-01-12 00:21:07
 @Discription: 
 @Environment: python 3.7.7
 '''
@@ -20,8 +20,9 @@ import math
 import numpy as np
 from common.layers import ValueNetwork
 from common.memories import ReplayBuffer
+from common.optms import SharedAdam
 class Agent:
-    def __init__(self,cfg):
+    def __init__(self,cfg, is_share_agent = False):
 
         self.n_actions = cfg.n_actions  
         self.device = torch.device(cfg.device) 
@@ -37,10 +38,15 @@ class Agent:
         # summary(self.policy_net, (1,4))
         self.target_net = ValueNetwork(cfg).to(self.device)
         ## copy parameters from policy net to target net
-        for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): 
-            target_param.data.copy_(param.data)
-        # self.target_net.load_state_dict(self.policy_net.state_dict()) # or use this to copy parameters
+        # for target_param, param in zip(self.target_net.parameters(),self.policy_net.parameters()): 
+        #     target_param.data.copy_(param.data)
+        self.target_net.load_state_dict(self.policy_net.state_dict()) # or use this to copy parameters
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=cfg.lr) 
+        if is_share_agent:
+            self.policy_net.share_memory()
+            self.target_net.share_memory()
+            self.optimizer = SharedAdam(self.policy_net.parameters(), lr=cfg.lr)
+            self.optimizer.share_memory()
         self.memory = ReplayBuffer(cfg.buffer_size)
         self.update_flag = False 
         
@@ -82,12 +88,12 @@ class Agent:
             q_values = self.policy_net(state)
             action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
         return action
-    def update(self):
+    def update(self, share_agent=None):
         if len(self.memory) < self.batch_size: # when transitions in memory donot meet a batch, not update
             return
         else:
             if not self.update_flag:
-                print("Begin to update!")
+                # print("Begin to update!")
                 self.update_flag = True
         # sample a batch of transitions from replay buffer
         state_batch, action_batch, reward_batch, next_state_batch, done_batch = self.memory.sample(
@@ -109,14 +115,32 @@ class Agent:
         # print(expected_q_value_batch.shape,expected_q_value_batch.requires_grad)
         loss = nn.MSELoss()(q_value_batch, expected_q_value_batch)  # shape same to  
         # backpropagation
-        self.optimizer.zero_grad()  
-        loss.backward()
-        # clip to avoid gradient explosion
-        for param in self.policy_net.parameters():  
-            param.grad.data.clamp_(-1, 1)
-        self.optimizer.step() 
-        if self.sample_count % self.target_update == 0: # target net update, target_update means "C" in pseucodes
-            self.target_net.load_state_dict(self.policy_net.state_dict())   
+        if share_agent is not None:
+            share_agent.optimizer.zero_grad()
+            loss.backward()
+            # clip to avoid gradient explosion
+            for param in self.policy_net.parameters():  
+                param.grad.data.clamp_(-1, 1)
+            for param in self.target_net.parameters():
+                param.grad.data.clamp_(-1, 1)
+            for param, share_param in zip(self.policy_net.parameters(), share_agent.policy_net.parameters()):
+                share_param._grad = param.grad
+            for param, share_param in zip(self.target_net.parameters(), share_agent.target_net.parameters()):
+                share_param._grad = param.grad
+            share_agent.optimizer.step()
+            if self.sample_count % self.target_update == 0: # target net update, target_update means "C" in pseucodes
+                share_agent.target_net.load_state_dict(share_agent.policy_net.state_dict())
+            self.policy_net.load_state_dict(share_agent.policy_net.state_dict())
+            self.target_net.load_state_dict(share_agent.target_net.state_dict())
+        else:
+            self.optimizer.zero_grad()  
+            loss.backward()
+            # clip to avoid gradient explosion
+            for param in self.policy_net.parameters():  
+                param.grad.data.clamp_(-1, 1)
+            self.optimizer.step() 
+            if self.sample_count % self.target_update == 0: # target net update, target_update means "C" in pseucodes
+                self.target_net.load_state_dict(self.policy_net.state_dict())   
 
     def save_model(self, fpath):
         from pathlib import Path
