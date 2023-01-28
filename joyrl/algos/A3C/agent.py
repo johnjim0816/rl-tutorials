@@ -88,7 +88,7 @@ class SharedAdam(torch.optim.Adam):
                 p.data.addcdiv_(exp_avg, denom,value = -step_size)
         return loss
 class Agent:
-    def __init__(self, cfg,is_share_agent=False):
+    def __init__(self, cfg, is_share_agent = False):
         self.gamma = cfg.gamma
         self.entropy_coef = cfg.entropy_coef
         self.device = torch.device(cfg.device) 

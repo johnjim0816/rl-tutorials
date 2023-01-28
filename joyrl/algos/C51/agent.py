@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math, random
 import numpy as np
-from common.memories import ReplayBufferQue
+from common.memories import ReplayBufferQue, ReplayBuffer
 class DistributionalNetwork(nn.Module):
     def __init__(self, n_states, n_actions,n_atoms, Vmin, Vmax):
         super(DistributionalNetwork, self).__init__()
@@ -15,17 +15,24 @@ class DistributionalNetwork(nn.Module):
         self.Vmin = Vmin # minimum value of support
         self.Vmax = Vmax # maximum value of support
         self.delta_z = (Vmax - Vmin) / (n_atoms - 1)
+        self.n_actions = n_actions
+
         self.fc1 = nn.Linear(n_states, 128)
         self.fc2 = nn.Linear(128, 128)
         self.fc3 = nn.Linear(128, n_actions * n_atoms)
         self.register_buffer('supports', torch.arange(Vmin, Vmax + self.delta_z, self.delta_z))
-        self.reset_parameters()
-    def forward(self, x):
+        # self.reset_parameters()
+    def dist(self, x):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
         x = self.fc3(x)
         x = x.view(-1, self.n_actions, self.n_atoms)
         x = torch.softmax(x, dim=-1)
+        return x
+
+    def forward(self, x):
+        x = self.dist(x)
+        x = torch.sum(x * self.supports, dim=2)
         return x
 class Agent:
     def __init__(self,cfg) -> None:
@@ -34,12 +41,24 @@ class Agent:
         self.Vmin = cfg.Vmin
         self.Vmax = cfg.Vmax
         self.gamma = cfg.gamma
-        self.policy_net = DistributionalNetwork(cfg.n_states, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax)
-        self.target_net= DistributionalNetwork(cfg.n_states, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax)
+
+        self.tau = cfg.tau
+        self.device = torch.device(cfg.device)
+
+        self.policy_net = DistributionalNetwork(cfg.n_states, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax).to(self.device)
+        self.target_net= DistributionalNetwork(cfg.n_states, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax).to(self.device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.optimizer = torch.optim.Adam(self.policy_net.parameters(), lr=cfg.lr)
-        self.memory = ReplayBufferQue(cfg.capacity)
+        self.memory = ReplayBuffer(cfg.buffer_size) # ReplayBufferQue(cfg.capacity)
         self.sample_count = 0
+
+        self.epsilon = cfg.epsilon_start
+        self.epsilon_start = cfg.epsilon_start
+        self.epsilon_end = cfg.epsilon_end
+        self.epsilon_decay = cfg.epsilon_decay
+        self.batch_size = cfg.batch_size
+        self.target_update = cfg.target_update
+
     def sample_action(self, state):
         self.sample_count += 1
         # epsilon must decay(linear,exponential and etc.) for balancing exploration and exploitation
@@ -54,8 +73,11 @@ class Agent:
     def predict_action(self, state):
         with torch.no_grad():
             state = torch.tensor(np.array(state), device=self.device, dtype=torch.float32).unsqueeze(dim=0)
+            # print ("state", state)
             q_values = self.policy_net(state)
-            action = q_values.max(1)[1].item() # choose action corresponding to the maximum q value
+            action  = q_values.max(1)[1].item()
+            # action = q_values.argmax() // self.n_atoms
+            # action = action.item()  # choose action corresponding to the maximum q value
         return action
 
     def update(self):
@@ -68,21 +90,25 @@ class Agent:
         next_states = torch.tensor(next_states, device=self.device, dtype=torch.float32)
         dones = torch.tensor(dones, device=self.device, dtype=torch.float32).unsqueeze(dim=1)
         # calculate the distribution of the next state
-        next_dist = self.target_net(next_states).detach()
-        next_action = self.policy_net(next_states).detach().max(1)[1].unsqueeze(dim=1).unsqueeze(dim=1).expand(self.batch_size, 1, self.n_atoms)
-        next_dist = next_dist.gather(1, next_action).squeeze(dim=1)
-        # calculate the distribution of the current state
-        Tz = rewards + (1 - dones) * self.gamma * self.target_net.supports
-        Tz = Tz.clamp(min=self.Vmin, max=self.Vmax)
-        b = (Tz - self.Vmin) / self.policy_net.delta_z
-        l = b.floor().long()
-        u = b.ceil().long()
-        offset = torch.linspace(0, (self.batch_size - 1) * self.n_atoms, self.batch_size).unsqueeze(dim=1).expand(self.batch_size, self.n_atoms).to(self.device)
-        proj_dist = torch.zeros(next_dist.size(), device=self.device)
-        proj_dist.view(-1).index_add_(0, (l + offset).view(-1), (next_dist * (u.float() - b)).view(-1))
-        proj_dist.view(-1).index_add_(0, (u + offset).view(-1), (next_dist * (b - l.float())).view(-1))
+        
+        with torch.no_grad():
+            next_action = self.policy_net(next_states).detach().max(1)[1].unsqueeze(dim=1).unsqueeze(dim=1).expand(self.batch_size, 1, self.n_atoms)
+            next_dist = self.target_net.dist(next_states).detach()
+            next_dist = next_dist.gather(1, next_action).squeeze(dim=1)
+
+            # calculate the distribution of the current state
+            Tz = rewards + (1 - dones) * self.gamma * self.target_net.supports
+            Tz = Tz.clamp(min=self.Vmin, max=self.Vmax)
+            b = (Tz - self.Vmin) / self.policy_net.delta_z
+            l = b.floor().long()
+            u = b.ceil().long()
+            offset = torch.linspace(0, (self.batch_size - 1) * self.n_atoms, self.batch_size).unsqueeze(dim=1).expand(self.batch_size, self.n_atoms).to(self.device)
+            proj_dist = torch.zeros(next_dist.size(), device=self.device)
+            proj_dist.view(-1).index_add_(0, torch.tensor(l + offset,dtype=torch.int).view(-1), (next_dist * (u.float() - b)).view(-1))
+            proj_dist.view(-1).index_add_(0, torch.tensor(u + offset,dtype=torch.int).view(-1), (next_dist * (b - l.float())).view(-1))
         # calculate the loss
-        dist = self.policy_net(states)
+        dist = self.policy_net.dist(states)
+        actions = actions.unsqueeze(dim=1).expand(self.batch_size, 1, self.n_atoms)
         dist = dist.gather(1, actions).squeeze(dim=1)
         loss = -(proj_dist * dist.log()).sum(1).mean()
         # update the network
