@@ -66,7 +66,7 @@ class ActorNormal(nn.Module):
         x = F.relu(self.fc2(x))
         mu = torch.tanh(self.fc3(x)) # mean of normal distribution
         sigma = F.softplus(self.fc4(x)) + 0.001 # std of normal distribution, add a small value to avoid 0
-        sigma = torch.clamp(sigma, min=-0.25, max=0.25) # clamp the std between 0.001 and 1
+        #sigma = torch.clamp(sigma, min=-0.25, max=0.25) # clamp the std between 0.001 and 1
         return mu,sigma
 # class ActorSoftmax(nn.Module):
 #     def __init__(self,input_dim, output_dim,
