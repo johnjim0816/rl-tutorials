@@ -5,7 +5,7 @@ Author: JiangJi
 Email: johnjim0816@gmail.com
 Date: 2022-11-22 23:19:20
 LastEditor: JiangJi
-LastEditTime: 2023-01-12 00:02:22
+LastEditTime: 2023-01-20 08:40:21
 Discription: 
 '''
 import torch.multiprocessing as mp
@@ -16,7 +16,7 @@ class Trainer:
     def train_one_episode(self, env, agent, cfg): 
         ep_reward = 0  # reward per episode
         ep_step = 0
-        state = env.reset()  # reset and obtain initial state
+        state = env.reset(seed = cfg.seed)  # reset and obtain initial state
         for _ in range(cfg.max_steps):
             ep_step += 1
             action = agent.sample_action(state)  # sample action
@@ -32,7 +32,7 @@ class Trainer:
     def test_one_episode(self, env, agent, cfg):
         ep_reward = 0  # reward per episode
         ep_step = 0
-        state = env.reset()  # reset and obtain initial state
+        state = env.reset(seed = cfg.seed)  # reset and obtain initial state
         for _ in range(cfg.max_steps):
             ep_step += 1
             action = agent.predict_action(state)  # sample action
