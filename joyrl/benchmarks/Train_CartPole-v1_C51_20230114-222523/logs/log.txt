@@ -1,0 +1,161 @@
+2023-01-14 22:25:23 - r - INFO: - Hyperparameters:
+2023-01-14 22:25:23 - r - INFO: - ================================================================================
+2023-01-14 22:25:23 - r - INFO: -         Name        	       Value        	        Type        
+2023-01-14 22:25:23 - r - INFO: -       env_name      	    CartPole-v1     	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2023-01-14 22:25:23 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2023-01-14 22:25:23 - r - INFO: -      algo_name      	        C51         	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -         mode        	       train        	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -         seed        	         1          	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -        device       	        cuda        	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -      train_eps      	        100         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -   load_checkpoint   	         0          	   <class 'bool'>   
+2023-01-14 22:25:23 - r - INFO: -      load_path      	Train_CartPole-v1_C51_20221026-054757	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2023-01-14 22:25:23 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2023-01-14 22:25:23 - r - INFO: -         Vmin        	        0.0         	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -         Vmax        	       200.0        	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -       n_atoms       	         51         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -        gamma        	        0.95        	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -         tau         	        1.0         	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -      num_atoms      	         51         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -       support       	     tensor(0.)     	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -       delta_z       	        4.0         	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -      batch_size     	         64         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -          lr         	       0.0001       	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -    target_update    	         4          	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -   memory_capacity   	       10000        	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -    epsilon_start    	        0.95        	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -     epsilon_end     	        0.01        	  <class 'float'>   
+2023-01-14 22:25:23 - r - INFO: -    epsilon_decay    	        500         	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -     value_layers    	[{'layer_type': 'linear', 'layer_dim': ['n_states', 256], 'activation': 'relu'}, {'layer_type': 'linear', 'layer_dim': [256, 256], 'activation': 'relu'}, {'layer_type': 'linear', 'layer_dim': [256, 'n_actions'], 'activation': 'none'}]	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -     buffer_size     	       100000       	   <class 'int'>    
+2023-01-14 22:25:23 - r - INFO: -       task_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Train_CartPole-v1_C51_20230114-222523	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -      model_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Train_CartPole-v1_C51_20230114-222523/models	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -       res_dir       	/home/dingli/rl-tutorials/joyrl/tasks/Train_CartPole-v1_C51_20230114-222523/results	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -       log_dir       	/home/dingli/rl-tutorials/joyrl/tasks/Train_CartPole-v1_C51_20230114-222523/logs	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: -       traj_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Train_CartPole-v1_C51_20230114-222523/traj	   <class 'str'>    
+2023-01-14 22:25:23 - r - INFO: - ================================================================================
+2023-01-14 22:25:23 - r - INFO: - n_states: 4, n_actions: 2
+2023-01-14 22:25:25 - r - INFO: - Start training!
+2023-01-14 22:25:25 - r - INFO: - Env: CartPole-v1, Algorithm: C51, Device: cuda
+2023-01-14 22:25:25 - r - INFO: - Episode: 1/100, Reward: 18.000, Step: 18
+2023-01-14 22:25:25 - r - INFO: - Episode: 2/100, Reward: 35.000, Step: 35
+2023-01-14 22:25:25 - r - INFO: - Episode: 3/100, Reward: 12.000, Step: 12
+2023-01-14 22:25:25 - r - INFO: - Episode: 4/100, Reward: 13.000, Step: 13
+2023-01-14 22:25:25 - r - INFO: - Episode: 5/100, Reward: 26.000, Step: 26
+2023-01-14 22:25:25 - r - INFO: - Current episode 5 has the best eval reward: 8.800
+2023-01-14 22:25:25 - r - INFO: - Episode: 6/100, Reward: 10.000, Step: 10
+2023-01-14 22:25:25 - r - INFO: - Episode: 7/100, Reward: 9.000, Step: 9
+2023-01-14 22:25:25 - r - INFO: - Episode: 8/100, Reward: 10.000, Step: 10
+2023-01-14 22:25:25 - r - INFO: - Episode: 9/100, Reward: 23.000, Step: 23
+2023-01-14 22:25:26 - r - INFO: - Episode: 10/100, Reward: 36.000, Step: 36
+2023-01-14 22:25:26 - r - INFO: - Current episode 10 has the best eval reward: 10.400
+2023-01-14 22:25:26 - r - INFO: - Episode: 11/100, Reward: 16.000, Step: 16
+2023-01-14 22:25:26 - r - INFO: - Episode: 12/100, Reward: 14.000, Step: 14
+2023-01-14 22:25:26 - r - INFO: - Episode: 13/100, Reward: 14.000, Step: 14
+2023-01-14 22:25:26 - r - INFO: - Episode: 14/100, Reward: 13.000, Step: 13
+2023-01-14 22:25:26 - r - INFO: - Episode: 15/100, Reward: 21.000, Step: 21
+2023-01-14 22:25:26 - r - INFO: - Episode: 16/100, Reward: 14.000, Step: 14
+2023-01-14 22:25:26 - r - INFO: - Episode: 17/100, Reward: 8.000, Step: 8
+2023-01-14 22:25:26 - r - INFO: - Episode: 18/100, Reward: 29.000, Step: 29
+2023-01-14 22:25:26 - r - INFO: - Episode: 19/100, Reward: 22.000, Step: 22
+2023-01-14 22:25:26 - r - INFO: - Episode: 20/100, Reward: 22.000, Step: 22
+2023-01-14 22:25:27 - r - INFO: - Current episode 20 has the best eval reward: 30.700
+2023-01-14 22:25:27 - r - INFO: - Episode: 21/100, Reward: 22.000, Step: 22
+2023-01-14 22:25:27 - r - INFO: - Episode: 22/100, Reward: 42.000, Step: 42
+2023-01-14 22:25:27 - r - INFO: - Episode: 23/100, Reward: 64.000, Step: 64
+2023-01-14 22:25:27 - r - INFO: - Episode: 24/100, Reward: 53.000, Step: 53
+2023-01-14 22:25:28 - r - INFO: - Episode: 25/100, Reward: 55.000, Step: 55
+2023-01-14 22:25:28 - r - INFO: - Current episode 25 has the best eval reward: 110.200
+2023-01-14 22:25:28 - r - INFO: - Episode: 26/100, Reward: 61.000, Step: 61
+2023-01-14 22:25:29 - r - INFO: - Episode: 27/100, Reward: 96.000, Step: 96
+2023-01-14 22:25:29 - r - INFO: - Episode: 28/100, Reward: 55.000, Step: 55
+2023-01-14 22:25:29 - r - INFO: - Episode: 29/100, Reward: 49.000, Step: 49
+2023-01-14 22:25:29 - r - INFO: - Episode: 30/100, Reward: 83.000, Step: 83
+2023-01-14 22:25:30 - r - INFO: - Episode: 31/100, Reward: 67.000, Step: 67
+2023-01-14 22:25:31 - r - INFO: - Episode: 32/100, Reward: 140.000, Step: 140
+2023-01-14 22:25:31 - r - INFO: - Episode: 33/100, Reward: 65.000, Step: 65
+2023-01-14 22:25:31 - r - INFO: - Episode: 34/100, Reward: 55.000, Step: 55
+2023-01-14 22:25:31 - r - INFO: - Episode: 35/100, Reward: 63.000, Step: 63
+2023-01-14 22:25:32 - r - INFO: - Episode: 36/100, Reward: 70.000, Step: 70
+2023-01-14 22:25:32 - r - INFO: - Episode: 37/100, Reward: 65.000, Step: 65
+2023-01-14 22:25:32 - r - INFO: - Episode: 38/100, Reward: 44.000, Step: 44
+2023-01-14 22:25:33 - r - INFO: - Episode: 39/100, Reward: 99.000, Step: 99
+2023-01-14 22:25:33 - r - INFO: - Episode: 40/100, Reward: 106.000, Step: 106
+2023-01-14 22:25:34 - r - INFO: - Current episode 40 has the best eval reward: 130.100
+2023-01-14 22:25:34 - r - INFO: - Episode: 41/100, Reward: 158.000, Step: 158
+2023-01-14 22:25:35 - r - INFO: - Episode: 42/100, Reward: 44.000, Step: 44
+2023-01-14 22:25:35 - r - INFO: - Episode: 43/100, Reward: 66.000, Step: 66
+2023-01-14 22:25:35 - r - INFO: - Episode: 44/100, Reward: 43.000, Step: 43
+2023-01-14 22:25:36 - r - INFO: - Episode: 45/100, Reward: 86.000, Step: 86
+2023-01-14 22:25:36 - r - INFO: - Episode: 46/100, Reward: 71.000, Step: 71
+2023-01-14 22:25:37 - r - INFO: - Episode: 47/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:38 - r - INFO: - Episode: 48/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:39 - r - INFO: - Episode: 49/100, Reward: 190.000, Step: 190
+2023-01-14 22:25:39 - r - INFO: - Episode: 50/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:40 - r - INFO: - Current episode 50 has the best eval reward: 200.000
+2023-01-14 22:25:41 - r - INFO: - Episode: 51/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:42 - r - INFO: - Episode: 52/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:43 - r - INFO: - Episode: 53/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:44 - r - INFO: - Episode: 54/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:45 - r - INFO: - Episode: 55/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:45 - r - INFO: - Current episode 55 has the best eval reward: 200.000
+2023-01-14 22:25:46 - r - INFO: - Episode: 56/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:47 - r - INFO: - Episode: 57/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:48 - r - INFO: - Episode: 58/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:49 - r - INFO: - Episode: 59/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:50 - r - INFO: - Episode: 60/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:50 - r - INFO: - Current episode 60 has the best eval reward: 200.000
+2023-01-14 22:25:51 - r - INFO: - Episode: 61/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:52 - r - INFO: - Episode: 62/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:53 - r - INFO: - Episode: 63/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:54 - r - INFO: - Episode: 64/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:55 - r - INFO: - Episode: 65/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:56 - r - INFO: - Current episode 65 has the best eval reward: 200.000
+2023-01-14 22:25:56 - r - INFO: - Episode: 66/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:57 - r - INFO: - Episode: 67/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:58 - r - INFO: - Episode: 68/100, Reward: 200.000, Step: 200
+2023-01-14 22:25:59 - r - INFO: - Episode: 69/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:00 - r - INFO: - Episode: 70/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:02 - r - INFO: - Episode: 71/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:02 - r - INFO: - Episode: 72/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:03 - r - INFO: - Episode: 73/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:04 - r - INFO: - Episode: 74/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:05 - r - INFO: - Episode: 75/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:07 - r - INFO: - Episode: 76/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:08 - r - INFO: - Episode: 77/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:08 - r - INFO: - Episode: 78/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:09 - r - INFO: - Episode: 79/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:10 - r - INFO: - Episode: 80/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:11 - r - INFO: - Current episode 80 has the best eval reward: 200.000
+2023-01-14 22:26:12 - r - INFO: - Episode: 81/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:13 - r - INFO: - Episode: 82/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:14 - r - INFO: - Episode: 83/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:15 - r - INFO: - Episode: 84/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:15 - r - INFO: - Episode: 85/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:16 - r - INFO: - Current episode 85 has the best eval reward: 200.000
+2023-01-14 22:26:17 - r - INFO: - Episode: 86/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:18 - r - INFO: - Episode: 87/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:19 - r - INFO: - Episode: 88/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:20 - r - INFO: - Episode: 89/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:21 - r - INFO: - Episode: 90/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:22 - r - INFO: - Current episode 90 has the best eval reward: 200.000
+2023-01-14 22:26:22 - r - INFO: - Episode: 91/100, Reward: 198.000, Step: 198
+2023-01-14 22:26:23 - r - INFO: - Episode: 92/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:24 - r - INFO: - Episode: 93/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:25 - r - INFO: - Episode: 94/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:26 - r - INFO: - Episode: 95/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:27 - r - INFO: - Current episode 95 has the best eval reward: 200.000
+2023-01-14 22:26:28 - r - INFO: - Episode: 96/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:28 - r - INFO: - Episode: 97/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:29 - r - INFO: - Episode: 98/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:30 - r - INFO: - Episode: 99/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:31 - r - INFO: - Episode: 100/100, Reward: 200.000, Step: 200
+2023-01-14 22:26:32 - r - INFO: - Current episode 100 has the best eval reward: 200.000
+2023-01-14 22:26:32 - r - INFO: - Finish training!

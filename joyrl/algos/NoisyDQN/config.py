@@ -5,6 +5,7 @@ class AlgoConfig(DefaultConfig):
     def __init__(self) -> None:
         # set epsilon_start=epsilon_end can obtain fixed epsilon=epsilon_end
         self.epsilon_start = 0.95 # epsilon start value
+        self.tau = 1.0 # 1.0 means hard update
         self.epsilon_end = 0.01 # epsilon end value
         self.epsilon_decay = 500 # epsilon decay rate
         self.hidden_dim = 256 # hidden_dim for MLP

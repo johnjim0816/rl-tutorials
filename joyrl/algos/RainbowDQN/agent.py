@@ -3,9 +3,65 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math, random
 import numpy as np
-from common.memories import ReplayBufferQue, ReplayBuffer
+from common.memories import ReplayBufferQue, ReplayBuffer, ReplayTree
+
+'''
+This NoisyLinear is modified from the original code from 
+https://github.com/higgsfield/RL-Adventure/blob/master/5.noisy%20dqn.ipynb
+''' 
+
+class NoisyLinear(nn.Module):
+    def __init__(self, input_dim, output_dim, std_init=0.4):
+        super(NoisyLinear, self).__init__()
+        
+        self.input_dim  = input_dim
+        self.output_dim = output_dim
+        self.std_init     = std_init
+        
+        self.weight_mu    = nn.Parameter(torch.FloatTensor(output_dim, input_dim))
+        self.weight_sigma = nn.Parameter(torch.FloatTensor(output_dim, input_dim))
+        self.register_buffer('weight_epsilon', torch.FloatTensor(output_dim, input_dim))
+        
+        self.bias_mu    = nn.Parameter(torch.FloatTensor(output_dim))
+        self.bias_sigma = nn.Parameter(torch.FloatTensor(output_dim))
+        self.register_buffer('bias_epsilon', torch.FloatTensor(output_dim))
+        
+        self.reset_parameters()
+        self.reset_noise()
+    
+    def forward(self, x):
+        if self.training: 
+            weight = self.weight_mu + self.weight_sigma.mul(torch.tensor(self.weight_epsilon))
+            bias   = self.bias_mu   + self.bias_sigma.mul(torch.tensor(self.bias_epsilon))
+        else:
+            weight = self.weight_mu
+            bias   = self.bias_mu
+        
+        return F.linear(x, weight, bias)
+    
+    def reset_parameters(self):
+        mu_range = 1 / math.sqrt(self.weight_mu.size(1))
+        
+        self.weight_mu.data.uniform_(-mu_range, mu_range)
+        self.weight_sigma.data.fill_(self.std_init / math.sqrt(self.weight_sigma.size(1)))
+        
+        self.bias_mu.data.uniform_(-mu_range, mu_range)
+        self.bias_sigma.data.fill_(self.std_init / math.sqrt(self.bias_sigma.size(0)))
+    
+    def reset_noise(self):
+        epsilon_in  = self._scale_noise(self.input_dim)
+        epsilon_out = self._scale_noise(self.output_dim)
+        
+        self.weight_epsilon.copy_(epsilon_out.ger(epsilon_in))
+        self.bias_epsilon.copy_(self._scale_noise(self.output_dim))
+    
+    def _scale_noise(self, size):
+        x = torch.randn(size)
+        x = x.sign().mul(x.abs().sqrt())
+        return x
+
 class DistributionalNetwork(nn.Module):
-    def __init__(self, n_states, n_actions,n_atoms, Vmin, Vmax):
+    def __init__(self, n_states, hidden_dim, n_actions,n_atoms, Vmin, Vmax):
         super(DistributionalNetwork, self).__init__()
         self.n_atoms = n_atoms  # number of atoms
         '''Vmin,Vmax: Range of the support of rewards. Ideally, it should be [min, max], '
@@ -17,15 +73,25 @@ class DistributionalNetwork(nn.Module):
         self.delta_z = (Vmax - Vmin) / (n_atoms - 1)
         self.n_actions = n_actions
 
-        self.fc1 = nn.Linear(n_states, 128)
-        self.fc2 = nn.Linear(128, 128)
-        self.fc3 = nn.Linear(128, n_actions * n_atoms)
+        self.fc1 =  nn.Linear(n_states, hidden_dim)
+        self.noisy_value2 = NoisyLinear(hidden_dim, hidden_dim)
+        self.noisy_value3 = NoisyLinear(hidden_dim, n_atoms)
+
+        self.noisy_advantage2 = NoisyLinear(hidden_dim, hidden_dim) # NoisyDQN + Dueling DQN
+        self.noisy_advantage3 = NoisyLinear(hidden_dim, n_actions * n_atoms)
+
         self.register_buffer('supports', torch.arange(Vmin, Vmax + self.delta_z, self.delta_z))
         # self.reset_parameters()
     def dist(self, x):
         x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        x = self.fc3(x)
+
+        value = F.relu(self.noisy_value2(x))
+        value = self.noisy_value3(value).view(-1, 1, self.n_atoms)
+
+        advantage = F.relu(self.noisy_advantage2(x))
+        advantage = self.noisy_advantage3(advantage).view(-1, self.n_actions, self.n_atoms)
+
+        x = value + advantage - advantage.mean(dim=1, keepdim=True)
         x = x.view(-1, self.n_actions, self.n_atoms)
         x = torch.softmax(x, dim=-1)
         return x
@@ -34,6 +100,14 @@ class DistributionalNetwork(nn.Module):
         x = self.dist(x)
         x = torch.sum(x * self.supports, dim=2)
         return x
+
+    def reset_noise(self):
+        self.noisy_value2.reset_noise()
+        self.noisy_value3.reset_noise()
+
+        self.noisy_advantage2.reset_noise()
+        self.noisy_advantage3.reset_noise()  
+
 class Agent:
     def __init__(self,cfg) -> None:
         self.n_actions = cfg.n_actions
@@ -41,16 +115,18 @@ class Agent:
         self.Vmin = cfg.Vmin
         self.Vmax = cfg.Vmax
         self.gamma = cfg.gamma
-
         self.tau = cfg.tau
         self.device = torch.device(cfg.device)
 
-        self.policy_net = DistributionalNetwork(cfg.n_states, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax).to(self.device)
-        self.target_net= DistributionalNetwork(cfg.n_states, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax).to(self.device)
+        self.policy_net = DistributionalNetwork(cfg.n_states, cfg.hidden_dim, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax).to(self.device)
+        self.target_net= DistributionalNetwork(cfg.n_states, cfg.hidden_dim, cfg.n_actions, cfg.n_atoms, cfg.Vmin, cfg.Vmax).to(self.device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
         self.optimizer = torch.optim.Adam(self.policy_net.parameters(), lr=cfg.lr)
-        self.memory = ReplayBuffer(cfg.buffer_size) # ReplayBufferQue(cfg.capacity)
+        # self.memory = ReplayBuffer(cfg.buffer_size) # ReplayBufferQue(cfg.capacity)
+        self.memory = ReplayTree(cfg.buffer_size)
         self.sample_count = 0
+
+        self.n_step = cfg.n_step ## used for N-step DQN 
 
         self.epsilon = cfg.epsilon_start
         self.epsilon_start = cfg.epsilon_start
@@ -83,7 +159,10 @@ class Agent:
     def update(self):
         if len(self.memory) < self.batch_size:
             return
-        states, actions, rewards, next_states, dones = self.memory.sample(self.batch_size)
+        # states, actions, rewards, next_states, dones = self.memory.sample(self.batch_size)
+        (states, actions, rewards, next_states, dones), idxs_batch, is_weights_batch = self.memory.sample(
+            self.batch_size)
+
         states = torch.tensor(states, device=self.device, dtype=torch.float32)
         actions = torch.tensor(actions, device=self.device, dtype=torch.int64).unsqueeze(dim=1)
         rewards = torch.tensor(rewards, device=self.device, dtype=torch.float32).unsqueeze(dim=1)
@@ -92,6 +171,7 @@ class Agent:
         # calculate the distribution of the next state
         
         with torch.no_grad():
+            # next_action = self.policy_net --> DDQN  self.target_net --> DQN
             next_action = self.policy_net(next_states).detach().max(1)[1].unsqueeze(dim=1).unsqueeze(dim=1).expand(self.batch_size, 1, self.n_atoms)
             next_dist = self.target_net.dist(next_states).detach()
             next_dist = next_dist.gather(1, next_action).squeeze(dim=1)
@@ -111,6 +191,13 @@ class Agent:
         actions = actions.unsqueeze(dim=1).expand(self.batch_size, 1, self.n_atoms)
         dist = dist.gather(1, actions).squeeze(dim=1)
         loss = -(proj_dist * dist.log()).sum(1).mean()
+        
+        ## update the weight in the PER DQN 
+        q_value_batch = torch.sum(proj_dist * self.target_net.supports, dim=1).unsqueeze(dim=1)
+        expected_q_value_batch = torch.sum(dist * self.target_net.supports, dim=1) .unsqueeze(dim=1)
+        abs_errors = np.sum(np.abs(q_value_batch.cpu().detach().numpy() - expected_q_value_batch.cpu().detach().numpy()), axis=1)
+        self.memory.batch_update(idxs_batch, abs_errors) 
+
         # update the network
         self.optimizer.zero_grad()
         loss.backward()
@@ -124,7 +211,10 @@ class Agent:
             else:
                 for target_param, param in zip(self.target_net.parameters(), self.policy_net.parameters()):
                     target_param.data.copy_(target_param.data * (1.0 - self.tau) + param.data * self.tau)
-            
+
+        self.policy_net.reset_noise()
+        self.target_net.reset_noise()
+
     def save_model(self, fpath):
         from pathlib import Path
         # create path
