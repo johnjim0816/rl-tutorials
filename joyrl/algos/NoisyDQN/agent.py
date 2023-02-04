@@ -144,11 +144,10 @@ class Agent:
         next_state_batch = torch.tensor(np.array(next_state_batch), device=self.device, dtype=torch.float) # shape(batchsize,n_states)
         done_batch = torch.tensor(done_batch, device=self.device, dtype=torch.float).unsqueeze(1)
         # weights_batch = torch.tensor(weights_batch, device=self.device, dtype=torch.float)
-
         q_value_batch = self.policy_net(state_batch).gather(dim=1, index=action_batch) # shape(batchsize,1),requires_grad=True
         next_max_q_value_batch = self.target_net(next_state_batch).max(1)[0].detach().unsqueeze(1) 
         expected_q_value_batch = reward_batch + self.gamma * next_max_q_value_batch* (1-done_batch)
-
+        
         loss = nn.MSELoss()(q_value_batch, expected_q_value_batch)  # shape same to  
         # backpropagation
         self.optimizer.zero_grad()  

@@ -1,0 +1,48 @@
+general_cfg:
+  algo_name: DRQN
+  device: cuda
+  env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: false
+  load_path: Train_CartPole-v1_
+  max_steps: 200
+  mode: train
+  new_step_api: true
+  render: false
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 200
+  wrapper: null
+algo_cfg:
+  batch_size: 8
+  buffer_size: 100000
+  epsilon_decay: 0.995
+  epsilon_end: 0.001
+  epsilon_start: 0.1
+  gamma: 0.99
+  hidden_dim: 64
+  lookup_step: 10
+  lr: 0.001
+  max_epi_len: 100
+  max_epi_num: 100
+  min_epi_num: 16
+  target_update: 4
+  value_layers:
+  - activation: relu
+    layer_dim:
+    - n_states
+    - 64
+    layer_type: linear
+  - activation: relu
+    layer_dim:
+    - 64
+    - 64
+    layer_type: linear
+  - activation: none
+    layer_dim:
+    - 64
+    - n_actions
+    layer_type: linear
