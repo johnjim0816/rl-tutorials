@@ -27,4 +27,5 @@ algo_cfg:
   gamma: 0.99
   k_epochs: 4
   train_batch_size: 100
+  sgd_batch_size: 100
   

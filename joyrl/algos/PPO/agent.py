@@ -3,7 +3,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Categorical,Normal
+import torch.utils.data as Data
 import numpy as np
+
 from common.models import ActorSoftmax, ActorNormal, Critic
 from common.memories import PGReplay
 
@@ -34,6 +36,7 @@ class Agent:
         self.entropy_coef = cfg.entropy_coef # entropy coefficient
         self.sample_count = 0
         self.train_batch_size = cfg.train_batch_size
+        self.sgd_batch_size = cfg.sgd_batch_size
 
     def sample_action(self,state):
         self.sample_count += 1
@@ -79,16 +82,76 @@ class Agent:
         if self.sample_count % self.train_batch_size != 0:
             return
         # print("update policy")
-        old_states, old_actions, old_rewards, old_dones, old_probs, old_log_probs = self.memory.sample()
+        states, actions, rewards, dones, probs, log_probs = self.memory.sample()
         # convert to tensor
-        old_states = torch.tensor(np.array(old_states), device=self.device, dtype=torch.float32)
-        old_actions = torch.tensor(np.array(old_actions), device=self.device, dtype=torch.float32)
-        old_probs = torch.cat(old_probs).to(self.device) # shape:[train_batch_size,n_actions]
-        old_log_probs = torch.tensor(old_log_probs, device=self.device, dtype=torch.float32)
+        states = torch.tensor(np.array(states), device=self.device, dtype=torch.float32) # shape:[train_batch_size,n_states]
+        actions = torch.tensor(np.array(actions), device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]
+        rewards = torch.tensor(np.array(rewards), device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]
+        dones = torch.tensor(np.array(dones), device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]
+        probs = torch.cat(probs).to(self.device) # shape:[train_batch_size,n_actions]
+        log_probs = torch.tensor(log_probs, device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]        
+
+        torch_dataset = Data.TensorDataset(states, actions, rewards, dones, probs, log_probs)
+        train_loader = Data.DataLoader(dataset=torch_dataset, batch_size=self.sgd_batch_size, shuffle=False)
+        for _ in range(self.k_epochs):
+            for batch_idx, (old_states, old_actions, old_rewards, old_dones, old_probs, old_log_probs) in enumerate(train_loader):
+
+                returns = self._compute_returns(old_rewards, old_dones) # shape:[train_batch_size,1]
+                # compute advantages
+                values = self.critic(old_states) # detach to avoid backprop through the critic
+                advantages = returns - values.detach() # shape:[train_batch_size,1]
+                # get action probabilities
+                if self.continuous:
+                    mu, sigma = self.actor(old_states)
+                    mean = mu * self.action_scale + self.action_bias
+                    std = sigma
+                    dist = Normal(mean, std)
+                    new_log_probs = dist.log_prob(old_actions)
+                else:
+                    new_probs = self.actor(old_states) # shape:[train_batch_size,n_actions]
+                    dist = Categorical(new_probs)
+                    # get new action probabilities
+                    new_log_probs = dist.log_prob(old_actions.squeeze(dim=1)) # shape:[train_batch_size]
+                # compute ratio (pi_theta / pi_theta__old):
+                ratio = torch.exp(new_log_probs.unsqueeze(dim=1) - old_log_probs) # shape: [train_batch_size, 1]
+                # compute surrogate loss
+                surr1 = ratio * advantages # shape: [train_batch_size, 1]
+
+                if self.ppo_type == 'clip':
+                    surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantages
+                    # compute actor loss
+                    actor_loss = - (torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean())
+                elif self.ppo_type == 'kl':
+                    kl_mean = F.kl_div(torch.log(new_probs.detach()), old_probs.unsqueeze(1),reduction='mean') # KL(input|target),new_probs.shape: [train_batch_size, n_actions]
+                    # kl_div = torch.mean(new_probs * (torch.log(new_probs) - torch.log(old_probs)), dim=1) # KL(new|old),new_probs.shape: [train_batch_size, n_actions]
+                    surr2 = self.kl_lambda * kl_mean
+                    # surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantages
+                    # compute actor loss
+                    actor_loss = - (surr1.mean() + surr2 + self.entropy_coef * dist.entropy().mean())
+                    if kl_mean > self.kl_beta * self.kl_target:
+                        self.kl_lambda *= self.kl_alpha
+                    elif kl_mean < 1/self.kl_beta * self.kl_target:
+                        self.kl_lambda /= self.kl_alpha
+                else:
+                    raise NameError
+                # compute critic loss
+                critic_loss = nn.MSELoss()(returns, values) # shape: [train_batch_size, 1]
+                # tot_loss = actor_loss + 0.5 * critic_loss
+                # print(f"actor loss: {actor_loss.item():.3f}, critic loss: {critic_loss.item():.3f}")
+                # take gradient step
+                self.actor_optimizer.zero_grad()
+                self.critic_optimizer.zero_grad()
+                actor_loss.backward()
+                critic_loss.backward()
+                # tot_loss.backward()
+                self.actor_optimizer.step()
+                self.critic_optimizer.step()
+        self.memory.clear()
+    def _compute_returns(self, rewards, dones):
         # monte carlo estimate of state rewards
         returns = []
         discounted_sum = 0
-        for reward, done in zip(reversed(old_rewards), reversed(old_dones)):
+        for reward, done in zip(reversed(rewards), reversed(dones)):
             if done:
                 discounted_sum = 0
             discounted_sum = reward + (self.gamma * discounted_sum)
@@ -96,56 +159,7 @@ class Agent:
         # Normalizing the rewards:
         returns = torch.tensor(returns, device=self.device, dtype=torch.float32).unsqueeze(dim=1)
         returns = (returns - returns.mean()) / (returns.std() + 1e-5) # 1e-5 to avoid division by zero
-        for _ in range(self.k_epochs):
-            # compute advantage
-            values = self.critic(old_states) # detach to avoid backprop through the critic
-            advantage = returns - values.detach()
-            # get action probabilities
-            if self.continuous:
-                mu, sigma = self.actor(old_states)
-                mean = mu * self.action_scale + self.action_bias
-                std = sigma
-                dist = Normal(mean, std)
-                new_log_probs = dist.log_prob(old_actions)
-            else:
-                new_probs = self.actor(old_states) # 
-                dist = Categorical(new_probs)
-                # get new action probabilities
-                new_log_probs = dist.log_prob(old_actions)
-            # compute ratio (pi_theta / pi_theta__old):
-            ratio = torch.exp(new_log_probs - old_log_probs).unsqueeze(dim=1) # old_log_probs must be detached, shape: [train_batch_size, 1]
-            # compute surrogate loss
-            surr1 = ratio * advantage
-            if self.ppo_type == 'clip':
-                surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
-                # compute actor loss
-                actor_loss = - (torch.min(surr1, surr2).mean() + self.entropy_coef * dist.entropy().mean())
-            elif self.ppo_type == 'kl':
-                kl_mean = F.kl_div(torch.log(new_probs.detach()), old_probs.unsqueeze(1),reduction='mean') # KL(input|target),new_probs.shape: [train_batch_size, n_actions]
-                # kl_div = torch.mean(new_probs * (torch.log(new_probs) - torch.log(old_probs)), dim=1) # KL(new|old),new_probs.shape: [train_batch_size, n_actions]
-                surr2 = self.kl_lambda * kl_mean
-                # surr2 = torch.clamp(ratio, 1 - self.eps_clip, 1 + self.eps_clip) * advantage
-                # compute actor loss
-                actor_loss = - (surr1.mean() + surr2 + self.entropy_coef * dist.entropy().mean())
-                if kl_mean > self.kl_beta * self.kl_target:
-                    self.kl_lambda *= self.kl_alpha
-                elif kl_mean < 1/self.kl_beta * self.kl_target:
-                    self.kl_lambda /= self.kl_alpha
-            else:
-                raise NameError
-            # compute critic loss
-            critic_loss = nn.MSELoss()(returns, values) # shape: [train_batch_size, 1]
-            # tot_loss = actor_loss + 0.5 * critic_loss
-            # print(f"actor loss: {actor_loss.item():.3f}, critic loss: {critic_loss.item():.3f}")
-            # take gradient step
-            self.actor_optimizer.zero_grad()
-            self.critic_optimizer.zero_grad()
-            actor_loss.backward()
-            critic_loss.backward()
-            # tot_loss.backward()
-            self.actor_optimizer.step()
-            self.critic_optimizer.step()
-        self.memory.clear()
+        return returns
     def save_model(self, fpath):
         from pathlib import Path
         # create path
