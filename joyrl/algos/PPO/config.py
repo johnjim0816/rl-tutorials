@@ -13,7 +13,7 @@ class AlgoConfig:
         self.critic_lr = 0.001 # learning rate for critic
         self.eps_clip = 0.2 # clip parameter for PPO
         self.entropy_coef = 0.01 # entropy coefficient
-        self.train_batch_size = 100 # ppo train batch size
-        self.sgd_batch_size = 64 # sgd batch size
+        self.train_batch_size = 256 # ppo train batch size
+        self.sgd_batch_size = 32 # sgd batch size
         self.actor_hidden_dim = 256 # hidden dimension for actor
         self.critic_hidden_dim = 256 # hidden dimension for critic

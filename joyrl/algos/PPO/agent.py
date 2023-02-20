@@ -89,14 +89,14 @@ class Agent:
         rewards = torch.tensor(np.array(rewards), device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]
         dones = torch.tensor(np.array(dones), device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]
         probs = torch.cat(probs).to(self.device) # shape:[train_batch_size,n_actions]
-        log_probs = torch.tensor(log_probs, device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]        
-
-        torch_dataset = Data.TensorDataset(states, actions, rewards, dones, probs, log_probs)
-        train_loader = Data.DataLoader(dataset=torch_dataset, batch_size=self.sgd_batch_size, shuffle=False)
+        log_probs = torch.tensor(log_probs, device=self.device, dtype=torch.float32).unsqueeze(dim=1) # shape:[train_batch_size,1]    
+        returns = self._compute_returns(rewards, dones) # shape:[train_batch_size,1]    
+        torch_dataset = Data.TensorDataset(states, actions, probs, log_probs,returns)
+        train_loader = Data.DataLoader(dataset=torch_dataset, batch_size=self.sgd_batch_size, shuffle=True,drop_last=False)
         for _ in range(self.k_epochs):
-            for batch_idx, (old_states, old_actions, old_rewards, old_dones, old_probs, old_log_probs) in enumerate(train_loader):
+            for batch_idx, (old_states, old_actions, old_probs, old_log_probs, returns) in enumerate(train_loader):
 
-                returns = self._compute_returns(old_rewards, old_dones) # shape:[train_batch_size,1]
+                
                 # compute advantages
                 values = self.critic(old_states) # detach to avoid backprop through the critic
                 advantages = returns - values.detach() # shape:[train_batch_size,1]
