@@ -10,7 +10,7 @@
 
 本项目内容主要包含以下几个子项目：
 * [Jupyter Notebook](./notebooks/)：使用Notebook写的算法，有比较详细的实战引导，推荐新手食用
-* [JoyRL离线版](./joyrl/)：JoyRL离线版项目，更接近实际项目的代码框架，推荐进阶食用
+* [JoyRL离线版](./joyrl/)：JoyRL离线版项目，更接近实际项目的代码框架，推荐进阶食用；**目前仓库已转移至**[https://github.com/johnjim0816/joyrl-offline](https://github.com/johnjim0816/joyrl-offline)，**本项目下将不再更新！！！**
 * [PARL Tutorials](./parl_tutorials)：PARL实现强化学习代码
 * [伪代码](./pseudocodes/pseudocodes.pdf)：目前包含强化学习算法的伪代码
 
