@@ -1,6 +1,6 @@
 general_cfg:
   algo_name: SAC
-  device: cuda
+  device: cpu
   env_name: Pendulum-v1
   new_step_api: True
   wrapper: null

@@ -1,0 +1,448 @@
+2023-02-23 17:57:27 - r - INFO: - Hyperparameters:
+2023-02-23 17:57:27 - r - INFO: - ================================================================================
+2023-02-23 17:57:27 - r - INFO: -         Name        	       Value        	        Type        
+2023-02-23 17:57:27 - r - INFO: -       env_name      	    Pendulum-v1     	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -     new_step_api    	         1          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -       wrapper       	        None        	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -        render       	         0          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -      algo_name      	        SAC         	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -         mode        	       train        	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -         seed        	         10         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -        device       	        cpu         	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -      train_eps      	        400         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -       test_eps      	         10         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -       eval_eps      	         10         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -   eval_per_episode  	         5          	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -      max_steps      	        200         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -   load_checkpoint   	         0          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -      load_path      	Train_CartPole-v1_DQN_20221026-054757	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -       show_fig      	         0          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -       save_fig      	         1          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -     policy_type     	      Gaussian      	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -          lr         	       0.001        	  <class 'float'>   
+2023-02-23 17:57:27 - r - INFO: -        gamma        	        0.99        	  <class 'float'>   
+2023-02-23 17:57:27 - r - INFO: -         tau         	       0.005        	  <class 'float'>   
+2023-02-23 17:57:27 - r - INFO: -        alpha        	        0.2         	  <class 'float'>   
+2023-02-23 17:57:27 - r - INFO: - automatic_entropy_tuning	         0          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -      batch_size     	         64         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -      hidden_dim     	         64         	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -       n_epochs      	         1          	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -     start_steps     	       10000        	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -  target_update_fre  	         1          	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -     buffer_size     	      1000000       	   <class 'int'>    
+2023-02-23 17:57:27 - r - INFO: -      continous      	         0          	   <class 'bool'>   
+2023-02-23 17:57:27 - r - INFO: -       task_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Train_Pendulum-v1_SAC_20230223-175727	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -      model_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Train_Pendulum-v1_SAC_20230223-175727/models	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -       res_dir       	/home/dingli/rl-tutorials/joyrl/tasks/Train_Pendulum-v1_SAC_20230223-175727/results	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -       log_dir       	/home/dingli/rl-tutorials/joyrl/tasks/Train_Pendulum-v1_SAC_20230223-175727/logs	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: -       traj_dir      	/home/dingli/rl-tutorials/joyrl/tasks/Train_Pendulum-v1_SAC_20230223-175727/traj	   <class 'str'>    
+2023-02-23 17:57:27 - r - INFO: - ================================================================================
+2023-02-23 17:57:27 - r - INFO: - action_bound: 2.0
+2023-02-23 17:57:27 - r - INFO: - n_states: 3, n_actions: 1
+2023-02-23 17:57:27 - r - INFO: - Start training!
+2023-02-23 17:57:27 - r - INFO: - Env: Pendulum-v1, Algorithm: SAC, Device: cpu
+2023-02-23 17:57:31 - r - INFO: - Episode: 1/400, Reward: -1277.216, Step: 200
+2023-02-23 17:57:36 - r - INFO: - Episode: 2/400, Reward: -919.794, Step: 200
+2023-02-23 17:57:41 - r - INFO: - Episode: 3/400, Reward: -1327.623, Step: 200
+2023-02-23 17:57:45 - r - INFO: - Episode: 4/400, Reward: -1071.776, Step: 200
+2023-02-23 17:57:50 - r - INFO: - Episode: 5/400, Reward: -1730.883, Step: 200
+2023-02-23 17:57:51 - r - INFO: - Current episode 5 has the best eval reward: -1658.065
+2023-02-23 17:57:54 - r - INFO: - Episode: 6/400, Reward: -798.514, Step: 200
+2023-02-23 17:57:58 - r - INFO: - Episode: 7/400, Reward: -1153.813, Step: 200
+2023-02-23 17:58:02 - r - INFO: - Episode: 8/400, Reward: -1300.390, Step: 200
+2023-02-23 17:58:07 - r - INFO: - Episode: 9/400, Reward: -1616.517, Step: 200
+2023-02-23 17:58:10 - r - INFO: - Episode: 10/400, Reward: -988.301, Step: 200
+2023-02-23 17:58:11 - r - INFO: - Current episode 10 has the best eval reward: -938.243
+2023-02-23 17:58:15 - r - INFO: - Episode: 11/400, Reward: -873.625, Step: 200
+2023-02-23 17:58:19 - r - INFO: - Episode: 12/400, Reward: -969.271, Step: 200
+2023-02-23 17:58:24 - r - INFO: - Episode: 13/400, Reward: -1067.889, Step: 200
+2023-02-23 17:58:27 - r - INFO: - Episode: 14/400, Reward: -1726.466, Step: 200
+2023-02-23 17:58:32 - r - INFO: - Episode: 15/400, Reward: -1277.521, Step: 200
+2023-02-23 17:58:33 - r - INFO: - Current episode 15 has the best eval reward: -127.969
+2023-02-23 17:58:37 - r - INFO: - Episode: 16/400, Reward: -1237.172, Step: 200
+2023-02-23 17:58:42 - r - INFO: - Episode: 17/400, Reward: -857.345, Step: 200
+2023-02-23 17:58:46 - r - INFO: - Episode: 18/400, Reward: -1670.113, Step: 200
+2023-02-23 17:58:49 - r - INFO: - Episode: 19/400, Reward: -1451.402, Step: 200
+2023-02-23 17:58:53 - r - INFO: - Episode: 20/400, Reward: -1289.607, Step: 200
+2023-02-23 17:58:58 - r - INFO: - Episode: 21/400, Reward: -1490.241, Step: 200
+2023-02-23 17:59:01 - r - INFO: - Episode: 22/400, Reward: -1679.699, Step: 200
+2023-02-23 17:59:06 - r - INFO: - Episode: 23/400, Reward: -1070.238, Step: 200
+2023-02-23 17:59:11 - r - INFO: - Episode: 24/400, Reward: -1507.422, Step: 200
+2023-02-23 17:59:15 - r - INFO: - Episode: 25/400, Reward: -1815.035, Step: 200
+2023-02-23 17:59:21 - r - INFO: - Episode: 26/400, Reward: -875.410, Step: 200
+2023-02-23 17:59:26 - r - INFO: - Episode: 27/400, Reward: -1070.627, Step: 200
+2023-02-23 17:59:30 - r - INFO: - Episode: 28/400, Reward: -1500.266, Step: 200
+2023-02-23 17:59:32 - r - INFO: - Episode: 29/400, Reward: -1147.623, Step: 200
+2023-02-23 17:59:37 - r - INFO: - Episode: 30/400, Reward: -1169.251, Step: 200
+2023-02-23 17:59:42 - r - INFO: - Episode: 31/400, Reward: -989.438, Step: 200
+2023-02-23 17:59:45 - r - INFO: - Episode: 32/400, Reward: -1379.639, Step: 200
+2023-02-23 17:59:50 - r - INFO: - Episode: 33/400, Reward: -1246.896, Step: 200
+2023-02-23 17:59:55 - r - INFO: - Episode: 34/400, Reward: -864.805, Step: 200
+2023-02-23 18:00:00 - r - INFO: - Episode: 35/400, Reward: -1160.079, Step: 200
+2023-02-23 18:00:05 - r - INFO: - Episode: 36/400, Reward: -1643.487, Step: 200
+2023-02-23 18:00:09 - r - INFO: - Episode: 37/400, Reward: -1174.275, Step: 200
+2023-02-23 18:00:13 - r - INFO: - Episode: 38/400, Reward: -851.454, Step: 200
+2023-02-23 18:00:16 - r - INFO: - Episode: 39/400, Reward: -732.450, Step: 200
+2023-02-23 18:00:21 - r - INFO: - Episode: 40/400, Reward: -1191.985, Step: 200
+2023-02-23 18:00:27 - r - INFO: - Episode: 41/400, Reward: -1265.305, Step: 200
+2023-02-23 18:00:30 - r - INFO: - Episode: 42/400, Reward: -965.722, Step: 200
+2023-02-23 18:00:34 - r - INFO: - Episode: 43/400, Reward: -1256.934, Step: 200
+2023-02-23 18:00:38 - r - INFO: - Episode: 44/400, Reward: -1527.041, Step: 200
+2023-02-23 18:00:42 - r - INFO: - Episode: 45/400, Reward: -1627.675, Step: 200
+2023-02-23 18:00:43 - r - INFO: - Current episode 45 has the best eval reward: -84.110
+2023-02-23 18:00:48 - r - INFO: - Episode: 46/400, Reward: -977.533, Step: 200
+2023-02-23 18:00:52 - r - INFO: - Episode: 47/400, Reward: -990.754, Step: 200
+2023-02-23 18:00:56 - r - INFO: - Episode: 48/400, Reward: -1160.889, Step: 200
+2023-02-23 18:01:01 - r - INFO: - Episode: 49/400, Reward: -969.817, Step: 200
+2023-02-23 18:01:03 - r - INFO: - Episode: 50/400, Reward: -885.858, Step: 200
+2023-02-23 18:01:09 - r - INFO: - Episode: 51/400, Reward: -117.426, Step: 200
+2023-02-23 18:01:14 - r - INFO: - Episode: 52/400, Reward: -120.719, Step: 200
+2023-02-23 18:01:18 - r - INFO: - Episode: 53/400, Reward: -1370.978, Step: 200
+2023-02-23 18:01:23 - r - INFO: - Episode: 54/400, Reward: -226.238, Step: 200
+2023-02-23 18:01:28 - r - INFO: - Episode: 55/400, Reward: -114.981, Step: 200
+2023-02-23 18:01:34 - r - INFO: - Episode: 56/400, Reward: -118.284, Step: 200
+2023-02-23 18:01:40 - r - INFO: - Episode: 57/400, Reward: -124.166, Step: 200
+2023-02-23 18:01:44 - r - INFO: - Episode: 58/400, Reward: -1.008, Step: 200
+2023-02-23 18:01:48 - r - INFO: - Episode: 59/400, Reward: -116.575, Step: 200
+2023-02-23 18:01:53 - r - INFO: - Episode: 60/400, Reward: -120.690, Step: 200
+2023-02-23 18:01:59 - r - INFO: - Episode: 61/400, Reward: -2.564, Step: 200
+2023-02-23 18:02:03 - r - INFO: - Episode: 62/400, Reward: -228.519, Step: 200
+2023-02-23 18:02:08 - r - INFO: - Episode: 63/400, Reward: -233.380, Step: 200
+2023-02-23 18:02:11 - r - INFO: - Episode: 64/400, Reward: -233.605, Step: 200
+2023-02-23 18:02:15 - r - INFO: - Episode: 65/400, Reward: -114.283, Step: 200
+2023-02-23 18:02:19 - r - INFO: - Episode: 66/400, Reward: -303.221, Step: 200
+2023-02-23 18:02:24 - r - INFO: - Episode: 67/400, Reward: -123.543, Step: 200
+2023-02-23 18:02:27 - r - INFO: - Episode: 68/400, Reward: -119.202, Step: 200
+2023-02-23 18:02:30 - r - INFO: - Episode: 69/400, Reward: -123.513, Step: 200
+2023-02-23 18:02:34 - r - INFO: - Episode: 70/400, Reward: -121.393, Step: 200
+2023-02-23 18:02:40 - r - INFO: - Episode: 71/400, Reward: -0.906, Step: 200
+2023-02-23 18:02:43 - r - INFO: - Episode: 72/400, Reward: -114.346, Step: 200
+2023-02-23 18:02:48 - r - INFO: - Episode: 73/400, Reward: -0.458, Step: 200
+2023-02-23 18:02:52 - r - INFO: - Episode: 74/400, Reward: -118.703, Step: 200
+2023-02-23 18:02:57 - r - INFO: - Episode: 75/400, Reward: -116.569, Step: 200
+2023-02-23 18:03:00 - r - INFO: - Episode: 76/400, Reward: -1.248, Step: 200
+2023-02-23 18:03:02 - r - INFO: - Episode: 77/400, Reward: -1.609, Step: 200
+2023-02-23 18:03:03 - r - INFO: - Episode: 78/400, Reward: -234.304, Step: 200
+2023-02-23 18:03:04 - r - INFO: - Episode: 79/400, Reward: -115.065, Step: 200
+2023-02-23 18:03:05 - r - INFO: - Episode: 80/400, Reward: -228.434, Step: 200
+2023-02-23 18:03:06 - r - INFO: - Episode: 81/400, Reward: -2.101, Step: 200
+2023-02-23 18:03:07 - r - INFO: - Episode: 82/400, Reward: -237.795, Step: 200
+2023-02-23 18:03:08 - r - INFO: - Episode: 83/400, Reward: -253.691, Step: 200
+2023-02-23 18:03:09 - r - INFO: - Episode: 84/400, Reward: -115.752, Step: 200
+2023-02-23 18:03:10 - r - INFO: - Episode: 85/400, Reward: -123.629, Step: 200
+2023-02-23 18:03:12 - r - INFO: - Episode: 86/400, Reward: -237.640, Step: 200
+2023-02-23 18:03:13 - r - INFO: - Episode: 87/400, Reward: -120.178, Step: 200
+2023-02-23 18:03:14 - r - INFO: - Episode: 88/400, Reward: -1.343, Step: 200
+2023-02-23 18:03:15 - r - INFO: - Episode: 89/400, Reward: -124.640, Step: 200
+2023-02-23 18:03:16 - r - INFO: - Episode: 90/400, Reward: -234.831, Step: 200
+2023-02-23 18:03:17 - r - INFO: - Episode: 91/400, Reward: -124.601, Step: 200
+2023-02-23 18:03:18 - r - INFO: - Episode: 92/400, Reward: -122.634, Step: 200
+2023-02-23 18:03:19 - r - INFO: - Episode: 93/400, Reward: -123.870, Step: 200
+2023-02-23 18:03:20 - r - INFO: - Episode: 94/400, Reward: -357.039, Step: 200
+2023-02-23 18:03:21 - r - INFO: - Episode: 95/400, Reward: -128.522, Step: 200
+2023-02-23 18:03:23 - r - INFO: - Episode: 96/400, Reward: -357.399, Step: 200
+2023-02-23 18:03:24 - r - INFO: - Episode: 97/400, Reward: -124.879, Step: 200
+2023-02-23 18:03:25 - r - INFO: - Episode: 98/400, Reward: -121.206, Step: 200
+2023-02-23 18:03:26 - r - INFO: - Episode: 99/400, Reward: -129.602, Step: 200
+2023-02-23 18:03:27 - r - INFO: - Episode: 100/400, Reward: -124.818, Step: 200
+2023-02-23 18:03:29 - r - INFO: - Episode: 101/400, Reward: -337.873, Step: 200
+2023-02-23 18:03:30 - r - INFO: - Episode: 102/400, Reward: -129.382, Step: 200
+2023-02-23 18:03:31 - r - INFO: - Episode: 103/400, Reward: -123.645, Step: 200
+2023-02-23 18:03:32 - r - INFO: - Episode: 104/400, Reward: -227.259, Step: 200
+2023-02-23 18:03:33 - r - INFO: - Episode: 105/400, Reward: -235.175, Step: 200
+2023-02-23 18:03:35 - r - INFO: - Episode: 106/400, Reward: -261.137, Step: 200
+2023-02-23 18:03:36 - r - INFO: - Episode: 107/400, Reward: -118.805, Step: 200
+2023-02-23 18:03:37 - r - INFO: - Episode: 108/400, Reward: -116.917, Step: 200
+2023-02-23 18:03:38 - r - INFO: - Episode: 109/400, Reward: -1.661, Step: 200
+2023-02-23 18:03:39 - r - INFO: - Episode: 110/400, Reward: -126.901, Step: 200
+2023-02-23 18:03:41 - r - INFO: - Episode: 111/400, Reward: -245.841, Step: 200
+2023-02-23 18:03:42 - r - INFO: - Episode: 112/400, Reward: -1.304, Step: 200
+2023-02-23 18:03:43 - r - INFO: - Episode: 113/400, Reward: -121.070, Step: 200
+2023-02-23 18:03:43 - r - INFO: - Episode: 114/400, Reward: -115.699, Step: 200
+2023-02-23 18:03:44 - r - INFO: - Episode: 115/400, Reward: -236.537, Step: 200
+2023-02-23 18:03:46 - r - INFO: - Episode: 116/400, Reward: -120.605, Step: 200
+2023-02-23 18:03:47 - r - INFO: - Episode: 117/400, Reward: -120.558, Step: 200
+2023-02-23 18:03:49 - r - INFO: - Episode: 118/400, Reward: -123.835, Step: 200
+2023-02-23 18:03:50 - r - INFO: - Episode: 119/400, Reward: -127.089, Step: 200
+2023-02-23 18:03:51 - r - INFO: - Episode: 120/400, Reward: -121.673, Step: 200
+2023-02-23 18:03:52 - r - INFO: - Episode: 121/400, Reward: -117.981, Step: 200
+2023-02-23 18:03:54 - r - INFO: - Episode: 122/400, Reward: -231.593, Step: 200
+2023-02-23 18:03:54 - r - INFO: - Episode: 123/400, Reward: -235.246, Step: 200
+2023-02-23 18:03:55 - r - INFO: - Episode: 124/400, Reward: -118.501, Step: 200
+2023-02-23 18:03:56 - r - INFO: - Episode: 125/400, Reward: -226.557, Step: 200
+2023-02-23 18:03:58 - r - INFO: - Episode: 126/400, Reward: -123.985, Step: 200
+2023-02-23 18:03:59 - r - INFO: - Episode: 127/400, Reward: -119.453, Step: 200
+2023-02-23 18:04:00 - r - INFO: - Episode: 128/400, Reward: -230.235, Step: 200
+2023-02-23 18:04:01 - r - INFO: - Episode: 129/400, Reward: -123.089, Step: 200
+2023-02-23 18:04:02 - r - INFO: - Episode: 130/400, Reward: -250.778, Step: 200
+2023-02-23 18:04:04 - r - INFO: - Episode: 131/400, Reward: -119.136, Step: 200
+2023-02-23 18:04:05 - r - INFO: - Episode: 132/400, Reward: -224.023, Step: 200
+2023-02-23 18:04:06 - r - INFO: - Episode: 133/400, Reward: -128.073, Step: 200
+2023-02-23 18:04:07 - r - INFO: - Episode: 134/400, Reward: -125.194, Step: 200
+2023-02-23 18:04:08 - r - INFO: - Episode: 135/400, Reward: -117.942, Step: 200
+2023-02-23 18:04:10 - r - INFO: - Episode: 136/400, Reward: -293.175, Step: 200
+2023-02-23 18:04:11 - r - INFO: - Episode: 137/400, Reward: -233.901, Step: 200
+2023-02-23 18:04:12 - r - INFO: - Episode: 138/400, Reward: -127.536, Step: 200
+2023-02-23 18:04:13 - r - INFO: - Episode: 139/400, Reward: -125.852, Step: 200
+2023-02-23 18:04:14 - r - INFO: - Episode: 140/400, Reward: -4.626, Step: 200
+2023-02-23 18:04:15 - r - INFO: - Episode: 141/400, Reward: -121.477, Step: 200
+2023-02-23 18:04:16 - r - INFO: - Episode: 142/400, Reward: -128.645, Step: 200
+2023-02-23 18:04:17 - r - INFO: - Episode: 143/400, Reward: -124.142, Step: 200
+2023-02-23 18:04:18 - r - INFO: - Episode: 144/400, Reward: -126.138, Step: 200
+2023-02-23 18:04:19 - r - INFO: - Episode: 145/400, Reward: -239.834, Step: 200
+2023-02-23 18:04:21 - r - INFO: - Episode: 146/400, Reward: -126.860, Step: 200
+2023-02-23 18:04:22 - r - INFO: - Episode: 147/400, Reward: -243.917, Step: 200
+2023-02-23 18:04:23 - r - INFO: - Episode: 148/400, Reward: -125.254, Step: 200
+2023-02-23 18:04:24 - r - INFO: - Episode: 149/400, Reward: -120.843, Step: 200
+2023-02-23 18:04:25 - r - INFO: - Episode: 150/400, Reward: -124.994, Step: 200
+2023-02-23 18:04:27 - r - INFO: - Episode: 151/400, Reward: -232.281, Step: 200
+2023-02-23 18:04:28 - r - INFO: - Episode: 152/400, Reward: -234.166, Step: 200
+2023-02-23 18:04:29 - r - INFO: - Episode: 153/400, Reward: -128.775, Step: 200
+2023-02-23 18:04:30 - r - INFO: - Episode: 154/400, Reward: -119.237, Step: 200
+2023-02-23 18:04:31 - r - INFO: - Episode: 155/400, Reward: -238.381, Step: 200
+2023-02-23 18:04:32 - r - INFO: - Episode: 156/400, Reward: -3.757, Step: 200
+2023-02-23 18:04:34 - r - INFO: - Episode: 157/400, Reward: -3.541, Step: 200
+2023-02-23 18:04:35 - r - INFO: - Episode: 158/400, Reward: -3.609, Step: 200
+2023-02-23 18:04:36 - r - INFO: - Episode: 159/400, Reward: -244.705, Step: 200
+2023-02-23 18:04:36 - r - INFO: - Episode: 160/400, Reward: -237.873, Step: 200
+2023-02-23 18:04:38 - r - INFO: - Episode: 161/400, Reward: -124.496, Step: 200
+2023-02-23 18:04:39 - r - INFO: - Episode: 162/400, Reward: -125.729, Step: 200
+2023-02-23 18:04:40 - r - INFO: - Episode: 163/400, Reward: -242.331, Step: 200
+2023-02-23 18:04:41 - r - INFO: - Episode: 164/400, Reward: -337.622, Step: 200
+2023-02-23 18:04:42 - r - INFO: - Episode: 165/400, Reward: -125.713, Step: 200
+2023-02-23 18:04:44 - r - INFO: - Episode: 166/400, Reward: -123.387, Step: 200
+2023-02-23 18:04:45 - r - INFO: - Episode: 167/400, Reward: -118.735, Step: 200
+2023-02-23 18:04:46 - r - INFO: - Episode: 168/400, Reward: -251.639, Step: 200
+2023-02-23 18:04:47 - r - INFO: - Episode: 169/400, Reward: -125.514, Step: 200
+2023-02-23 18:04:48 - r - INFO: - Episode: 170/400, Reward: -119.435, Step: 200
+2023-02-23 18:04:50 - r - INFO: - Episode: 171/400, Reward: -227.563, Step: 200
+2023-02-23 18:04:51 - r - INFO: - Episode: 172/400, Reward: -229.818, Step: 200
+2023-02-23 18:04:52 - r - INFO: - Episode: 173/400, Reward: -121.292, Step: 200
+2023-02-23 18:04:53 - r - INFO: - Episode: 174/400, Reward: -120.299, Step: 200
+2023-02-23 18:04:54 - r - INFO: - Episode: 175/400, Reward: -122.705, Step: 200
+2023-02-23 18:04:55 - r - INFO: - Episode: 176/400, Reward: -124.976, Step: 200
+2023-02-23 18:04:56 - r - INFO: - Episode: 177/400, Reward: -120.587, Step: 200
+2023-02-23 18:04:58 - r - INFO: - Episode: 178/400, Reward: -229.365, Step: 200
+2023-02-23 18:04:58 - r - INFO: - Episode: 179/400, Reward: -128.139, Step: 200
+2023-02-23 18:04:59 - r - INFO: - Episode: 180/400, Reward: -242.512, Step: 200
+2023-02-23 18:05:01 - r - INFO: - Episode: 181/400, Reward: -2.780, Step: 200
+2023-02-23 18:05:02 - r - INFO: - Episode: 182/400, Reward: -131.842, Step: 200
+2023-02-23 18:05:03 - r - INFO: - Episode: 183/400, Reward: -119.414, Step: 200
+2023-02-23 18:05:04 - r - INFO: - Episode: 184/400, Reward: -122.954, Step: 200
+2023-02-23 18:05:05 - r - INFO: - Episode: 185/400, Reward: -116.153, Step: 200
+2023-02-23 18:05:07 - r - INFO: - Episode: 186/400, Reward: -127.490, Step: 200
+2023-02-23 18:05:08 - r - INFO: - Episode: 187/400, Reward: -2.520, Step: 200
+2023-02-23 18:05:09 - r - INFO: - Episode: 188/400, Reward: -230.481, Step: 200
+2023-02-23 18:05:10 - r - INFO: - Episode: 189/400, Reward: -238.267, Step: 200
+2023-02-23 18:05:11 - r - INFO: - Episode: 190/400, Reward: -2.604, Step: 200
+2023-02-23 18:05:13 - r - INFO: - Episode: 191/400, Reward: -3.679, Step: 200
+2023-02-23 18:05:14 - r - INFO: - Episode: 192/400, Reward: -119.951, Step: 200
+2023-02-23 18:05:15 - r - INFO: - Episode: 193/400, Reward: -127.197, Step: 200
+2023-02-23 18:05:16 - r - INFO: - Episode: 194/400, Reward: -122.921, Step: 200
+2023-02-23 18:05:17 - r - INFO: - Episode: 195/400, Reward: -232.357, Step: 200
+2023-02-23 18:05:19 - r - INFO: - Episode: 196/400, Reward: -229.004, Step: 200
+2023-02-23 18:05:20 - r - INFO: - Episode: 197/400, Reward: -127.442, Step: 200
+2023-02-23 18:05:21 - r - INFO: - Episode: 198/400, Reward: -128.069, Step: 200
+2023-02-23 18:05:22 - r - INFO: - Episode: 199/400, Reward: -128.410, Step: 200
+2023-02-23 18:05:23 - r - INFO: - Episode: 200/400, Reward: -4.333, Step: 200
+2023-02-23 18:05:24 - r - INFO: - Episode: 201/400, Reward: -334.068, Step: 200
+2023-02-23 18:05:25 - r - INFO: - Episode: 202/400, Reward: -345.768, Step: 200
+2023-02-23 18:05:26 - r - INFO: - Episode: 203/400, Reward: -124.905, Step: 200
+2023-02-23 18:05:27 - r - INFO: - Episode: 204/400, Reward: -5.030, Step: 200
+2023-02-23 18:05:28 - r - INFO: - Episode: 205/400, Reward: -317.938, Step: 200
+2023-02-23 18:05:30 - r - INFO: - Episode: 206/400, Reward: -114.654, Step: 200
+2023-02-23 18:05:31 - r - INFO: - Episode: 207/400, Reward: -114.685, Step: 200
+2023-02-23 18:05:32 - r - INFO: - Episode: 208/400, Reward: -124.014, Step: 200
+2023-02-23 18:05:33 - r - INFO: - Episode: 209/400, Reward: -1.515, Step: 200
+2023-02-23 18:05:34 - r - INFO: - Episode: 210/400, Reward: -2.156, Step: 200
+2023-02-23 18:05:35 - r - INFO: - Episode: 211/400, Reward: -121.759, Step: 200
+2023-02-23 18:05:36 - r - INFO: - Episode: 212/400, Reward: -122.409, Step: 200
+2023-02-23 18:05:37 - r - INFO: - Episode: 213/400, Reward: -246.275, Step: 200
+2023-02-23 18:05:38 - r - INFO: - Episode: 214/400, Reward: -248.994, Step: 200
+2023-02-23 18:05:39 - r - INFO: - Episode: 215/400, Reward: -120.145, Step: 200
+2023-02-23 18:05:41 - r - INFO: - Episode: 216/400, Reward: -117.457, Step: 200
+2023-02-23 18:05:42 - r - INFO: - Episode: 217/400, Reward: -123.658, Step: 200
+2023-02-23 18:05:43 - r - INFO: - Episode: 218/400, Reward: -124.004, Step: 200
+2023-02-23 18:05:44 - r - INFO: - Episode: 219/400, Reward: -3.136, Step: 200
+2023-02-23 18:05:45 - r - INFO: - Episode: 220/400, Reward: -123.119, Step: 200
+2023-02-23 18:05:47 - r - INFO: - Episode: 221/400, Reward: -247.126, Step: 200
+2023-02-23 18:05:48 - r - INFO: - Episode: 222/400, Reward: -223.845, Step: 200
+2023-02-23 18:05:49 - r - INFO: - Episode: 223/400, Reward: -6.159, Step: 200
+2023-02-23 18:05:50 - r - INFO: - Episode: 224/400, Reward: -116.789, Step: 200
+2023-02-23 18:05:51 - r - INFO: - Episode: 225/400, Reward: -127.785, Step: 200
+2023-02-23 18:05:52 - r - INFO: - Episode: 226/400, Reward: -2.806, Step: 200
+2023-02-23 18:05:53 - r - INFO: - Episode: 227/400, Reward: -117.938, Step: 200
+2023-02-23 18:05:54 - r - INFO: - Episode: 228/400, Reward: -116.786, Step: 200
+2023-02-23 18:05:55 - r - INFO: - Episode: 229/400, Reward: -229.099, Step: 200
+2023-02-23 18:05:56 - r - INFO: - Episode: 230/400, Reward: -237.441, Step: 200
+2023-02-23 18:05:58 - r - INFO: - Episode: 231/400, Reward: -128.706, Step: 200
+2023-02-23 18:05:59 - r - INFO: - Episode: 232/400, Reward: -4.242, Step: 200
+2023-02-23 18:06:00 - r - INFO: - Episode: 233/400, Reward: -228.298, Step: 200
+2023-02-23 18:06:00 - r - INFO: - Episode: 234/400, Reward: -126.216, Step: 200
+2023-02-23 18:06:01 - r - INFO: - Episode: 235/400, Reward: -125.393, Step: 200
+2023-02-23 18:06:03 - r - INFO: - Episode: 236/400, Reward: -349.810, Step: 200
+2023-02-23 18:06:04 - r - INFO: - Episode: 237/400, Reward: -126.923, Step: 200
+2023-02-23 18:06:05 - r - INFO: - Episode: 238/400, Reward: -226.350, Step: 200
+2023-02-23 18:06:06 - r - INFO: - Episode: 239/400, Reward: -6.655, Step: 200
+2023-02-23 18:06:07 - r - INFO: - Episode: 240/400, Reward: -237.138, Step: 200
+2023-02-23 18:06:09 - r - INFO: - Episode: 241/400, Reward: -126.106, Step: 200
+2023-02-23 18:06:10 - r - INFO: - Episode: 242/400, Reward: -121.713, Step: 200
+2023-02-23 18:06:11 - r - INFO: - Episode: 243/400, Reward: -237.439, Step: 200
+2023-02-23 18:06:12 - r - INFO: - Episode: 244/400, Reward: -124.061, Step: 200
+2023-02-23 18:06:13 - r - INFO: - Episode: 245/400, Reward: -117.127, Step: 200
+2023-02-23 18:06:15 - r - INFO: - Episode: 246/400, Reward: -121.850, Step: 200
+2023-02-23 18:06:16 - r - INFO: - Episode: 247/400, Reward: -119.954, Step: 200
+2023-02-23 18:06:17 - r - INFO: - Episode: 248/400, Reward: -4.865, Step: 200
+2023-02-23 18:06:18 - r - INFO: - Episode: 249/400, Reward: -129.402, Step: 200
+2023-02-23 18:06:19 - r - INFO: - Episode: 250/400, Reward: -124.066, Step: 200
+2023-02-23 18:06:21 - r - INFO: - Episode: 251/400, Reward: -122.129, Step: 200
+2023-02-23 18:06:22 - r - INFO: - Episode: 252/400, Reward: -127.661, Step: 200
+2023-02-23 18:06:23 - r - INFO: - Episode: 253/400, Reward: -119.543, Step: 200
+2023-02-23 18:06:24 - r - INFO: - Episode: 254/400, Reward: -120.942, Step: 200
+2023-02-23 18:06:25 - r - INFO: - Episode: 255/400, Reward: -129.517, Step: 200
+2023-02-23 18:06:26 - r - INFO: - Episode: 256/400, Reward: -123.719, Step: 200
+2023-02-23 18:06:27 - r - INFO: - Episode: 257/400, Reward: -117.218, Step: 200
+2023-02-23 18:06:28 - r - INFO: - Episode: 258/400, Reward: -228.477, Step: 200
+2023-02-23 18:06:29 - r - INFO: - Episode: 259/400, Reward: -124.058, Step: 200
+2023-02-23 18:06:30 - r - INFO: - Episode: 260/400, Reward: -221.263, Step: 200
+2023-02-23 18:06:32 - r - INFO: - Episode: 261/400, Reward: -3.460, Step: 200
+2023-02-23 18:06:33 - r - INFO: - Episode: 262/400, Reward: -119.923, Step: 200
+2023-02-23 18:06:34 - r - INFO: - Episode: 263/400, Reward: -1.781, Step: 200
+2023-02-23 18:06:35 - r - INFO: - Episode: 264/400, Reward: -2.084, Step: 200
+2023-02-23 18:06:36 - r - INFO: - Episode: 265/400, Reward: -128.649, Step: 200
+2023-02-23 18:06:38 - r - INFO: - Episode: 266/400, Reward: -248.378, Step: 200
+2023-02-23 18:06:39 - r - INFO: - Episode: 267/400, Reward: -235.889, Step: 200
+2023-02-23 18:06:39 - r - INFO: - Episode: 268/400, Reward: -243.804, Step: 200
+2023-02-23 18:06:40 - r - INFO: - Episode: 269/400, Reward: -126.839, Step: 200
+2023-02-23 18:06:41 - r - INFO: - Episode: 270/400, Reward: -328.343, Step: 200
+2023-02-23 18:06:42 - r - INFO: - Episode: 271/400, Reward: -127.395, Step: 200
+2023-02-23 18:06:43 - r - INFO: - Episode: 272/400, Reward: -117.342, Step: 200
+2023-02-23 18:06:44 - r - INFO: - Episode: 273/400, Reward: -237.520, Step: 200
+2023-02-23 18:06:46 - r - INFO: - Episode: 274/400, Reward: -3.849, Step: 200
+2023-02-23 18:06:47 - r - INFO: - Episode: 275/400, Reward: -239.562, Step: 200
+2023-02-23 18:06:49 - r - INFO: - Episode: 276/400, Reward: -337.735, Step: 200
+2023-02-23 18:06:50 - r - INFO: - Episode: 277/400, Reward: -122.551, Step: 200
+2023-02-23 18:06:51 - r - INFO: - Episode: 278/400, Reward: -121.440, Step: 200
+2023-02-23 18:06:52 - r - INFO: - Episode: 279/400, Reward: -233.806, Step: 200
+2023-02-23 18:06:53 - r - INFO: - Episode: 280/400, Reward: -116.855, Step: 200
+2023-02-23 18:06:56 - r - INFO: - Episode: 281/400, Reward: -241.428, Step: 200
+2023-02-23 18:06:57 - r - INFO: - Episode: 282/400, Reward: -1.053, Step: 200
+2023-02-23 18:06:58 - r - INFO: - Episode: 283/400, Reward: -117.119, Step: 200
+2023-02-23 18:06:59 - r - INFO: - Episode: 284/400, Reward: -230.184, Step: 200
+2023-02-23 18:07:00 - r - INFO: - Episode: 285/400, Reward: -236.261, Step: 200
+2023-02-23 18:07:02 - r - INFO: - Episode: 286/400, Reward: -235.835, Step: 200
+2023-02-23 18:07:03 - r - INFO: - Episode: 287/400, Reward: -119.655, Step: 200
+2023-02-23 18:07:05 - r - INFO: - Episode: 288/400, Reward: -123.262, Step: 200
+2023-02-23 18:07:06 - r - INFO: - Episode: 289/400, Reward: -125.274, Step: 200
+2023-02-23 18:07:07 - r - INFO: - Episode: 290/400, Reward: -125.173, Step: 200
+2023-02-23 18:07:09 - r - INFO: - Episode: 291/400, Reward: -119.516, Step: 200
+2023-02-23 18:07:10 - r - INFO: - Episode: 292/400, Reward: -116.497, Step: 200
+2023-02-23 18:07:12 - r - INFO: - Episode: 293/400, Reward: -236.632, Step: 200
+2023-02-23 18:07:13 - r - INFO: - Episode: 294/400, Reward: -225.005, Step: 200
+2023-02-23 18:07:14 - r - INFO: - Episode: 295/400, Reward: -120.580, Step: 200
+2023-02-23 18:07:16 - r - INFO: - Episode: 296/400, Reward: -123.470, Step: 200
+2023-02-23 18:07:17 - r - INFO: - Episode: 297/400, Reward: -123.675, Step: 200
+2023-02-23 18:07:18 - r - INFO: - Episode: 298/400, Reward: -1.727, Step: 200
+2023-02-23 18:07:20 - r - INFO: - Episode: 299/400, Reward: -1.719, Step: 200
+2023-02-23 18:07:21 - r - INFO: - Episode: 300/400, Reward: -1.202, Step: 200
+2023-02-23 18:07:23 - r - INFO: - Episode: 301/400, Reward: -227.902, Step: 200
+2023-02-23 18:07:24 - r - INFO: - Episode: 302/400, Reward: -125.067, Step: 200
+2023-02-23 18:07:25 - r - INFO: - Episode: 303/400, Reward: -121.697, Step: 200
+2023-02-23 18:07:26 - r - INFO: - Episode: 304/400, Reward: -127.879, Step: 200
+2023-02-23 18:07:28 - r - INFO: - Episode: 305/400, Reward: -316.231, Step: 200
+2023-02-23 18:07:30 - r - INFO: - Episode: 306/400, Reward: -247.307, Step: 200
+2023-02-23 18:07:31 - r - INFO: - Episode: 307/400, Reward: -125.626, Step: 200
+2023-02-23 18:07:32 - r - INFO: - Episode: 308/400, Reward: -124.827, Step: 200
+2023-02-23 18:07:33 - r - INFO: - Episode: 309/400, Reward: -247.548, Step: 200
+2023-02-23 18:07:34 - r - INFO: - Episode: 310/400, Reward: -2.574, Step: 200
+2023-02-23 18:07:37 - r - INFO: - Episode: 311/400, Reward: -124.385, Step: 200
+2023-02-23 18:07:38 - r - INFO: - Episode: 312/400, Reward: -226.282, Step: 200
+2023-02-23 18:07:39 - r - INFO: - Episode: 313/400, Reward: -122.007, Step: 200
+2023-02-23 18:07:40 - r - INFO: - Episode: 314/400, Reward: -3.127, Step: 200
+2023-02-23 18:07:41 - r - INFO: - Episode: 315/400, Reward: -120.404, Step: 200
+2023-02-23 18:07:43 - r - INFO: - Episode: 316/400, Reward: -3.230, Step: 200
+2023-02-23 18:07:45 - r - INFO: - Episode: 317/400, Reward: -125.382, Step: 200
+2023-02-23 18:07:46 - r - INFO: - Episode: 318/400, Reward: -228.291, Step: 200
+2023-02-23 18:07:47 - r - INFO: - Episode: 319/400, Reward: -128.367, Step: 200
+2023-02-23 18:07:48 - r - INFO: - Episode: 320/400, Reward: -340.185, Step: 200
+2023-02-23 18:07:50 - r - INFO: - Episode: 321/400, Reward: -3.480, Step: 200
+2023-02-23 18:07:51 - r - INFO: - Episode: 322/400, Reward: -337.110, Step: 200
+2023-02-23 18:07:53 - r - INFO: - Episode: 323/400, Reward: -122.615, Step: 200
+2023-02-23 18:07:54 - r - INFO: - Episode: 324/400, Reward: -230.324, Step: 200
+2023-02-23 18:07:55 - r - INFO: - Episode: 325/400, Reward: -116.848, Step: 200
+2023-02-23 18:07:57 - r - INFO: - Episode: 326/400, Reward: -236.639, Step: 200
+2023-02-23 18:07:58 - r - INFO: - Episode: 327/400, Reward: -129.873, Step: 200
+2023-02-23 18:07:59 - r - INFO: - Episode: 328/400, Reward: -237.080, Step: 200
+2023-02-23 18:08:01 - r - INFO: - Episode: 329/400, Reward: -3.813, Step: 200
+2023-02-23 18:08:02 - r - INFO: - Episode: 330/400, Reward: -126.419, Step: 200
+2023-02-23 18:08:04 - r - INFO: - Episode: 331/400, Reward: -2.246, Step: 200
+2023-02-23 18:08:05 - r - INFO: - Episode: 332/400, Reward: -124.518, Step: 200
+2023-02-23 18:08:06 - r - INFO: - Episode: 333/400, Reward: -351.609, Step: 200
+2023-02-23 18:08:07 - r - INFO: - Episode: 334/400, Reward: -120.765, Step: 200
+2023-02-23 18:08:08 - r - INFO: - Episode: 335/400, Reward: -246.045, Step: 200
+2023-02-23 18:08:10 - r - INFO: - Episode: 336/400, Reward: -122.447, Step: 200
+2023-02-23 18:08:11 - r - INFO: - Episode: 337/400, Reward: -4.377, Step: 200
+2023-02-23 18:08:12 - r - INFO: - Episode: 338/400, Reward: -124.337, Step: 200
+2023-02-23 18:08:13 - r - INFO: - Episode: 339/400, Reward: -120.447, Step: 200
+2023-02-23 18:08:14 - r - INFO: - Episode: 340/400, Reward: -129.811, Step: 200
+2023-02-23 18:08:16 - r - INFO: - Episode: 341/400, Reward: -257.244, Step: 200
+2023-02-23 18:08:17 - r - INFO: - Episode: 342/400, Reward: -128.989, Step: 200
+2023-02-23 18:08:18 - r - INFO: - Episode: 343/400, Reward: -126.065, Step: 200
+2023-02-23 18:08:19 - r - INFO: - Episode: 344/400, Reward: -114.976, Step: 200
+2023-02-23 18:08:20 - r - INFO: - Episode: 345/400, Reward: -234.827, Step: 200
+2023-02-23 18:08:22 - r - INFO: - Episode: 346/400, Reward: -126.401, Step: 200
+2023-02-23 18:08:23 - r - INFO: - Episode: 347/400, Reward: -122.196, Step: 200
+2023-02-23 18:08:24 - r - INFO: - Episode: 348/400, Reward: -231.322, Step: 200
+2023-02-23 18:08:25 - r - INFO: - Episode: 349/400, Reward: -3.506, Step: 200
+2023-02-23 18:08:26 - r - INFO: - Episode: 350/400, Reward: -229.492, Step: 200
+2023-02-23 18:08:28 - r - INFO: - Episode: 351/400, Reward: -126.537, Step: 200
+2023-02-23 18:08:29 - r - INFO: - Episode: 352/400, Reward: -122.644, Step: 200
+2023-02-23 18:08:30 - r - INFO: - Episode: 353/400, Reward: -234.403, Step: 200
+2023-02-23 18:08:30 - r - INFO: - Episode: 354/400, Reward: -125.073, Step: 200
+2023-02-23 18:08:32 - r - INFO: - Episode: 355/400, Reward: -231.391, Step: 200
+2023-02-23 18:08:33 - r - INFO: - Episode: 356/400, Reward: -232.475, Step: 200
+2023-02-23 18:08:34 - r - INFO: - Episode: 357/400, Reward: -115.946, Step: 200
+2023-02-23 18:08:35 - r - INFO: - Episode: 358/400, Reward: -125.046, Step: 200
+2023-02-23 18:08:36 - r - INFO: - Episode: 359/400, Reward: -120.136, Step: 200
+2023-02-23 18:08:37 - r - INFO: - Episode: 360/400, Reward: -126.938, Step: 200
+2023-02-23 18:08:39 - r - INFO: - Episode: 361/400, Reward: -121.118, Step: 200
+2023-02-23 18:08:40 - r - INFO: - Episode: 362/400, Reward: -121.019, Step: 200
+2023-02-23 18:08:41 - r - INFO: - Episode: 363/400, Reward: -229.035, Step: 200
+2023-02-23 18:08:42 - r - INFO: - Episode: 364/400, Reward: -126.549, Step: 200
+2023-02-23 18:08:43 - r - INFO: - Episode: 365/400, Reward: -128.485, Step: 200
+2023-02-23 18:08:44 - r - INFO: - Episode: 366/400, Reward: -229.418, Step: 200
+2023-02-23 18:08:45 - r - INFO: - Episode: 367/400, Reward: -3.244, Step: 200
+2023-02-23 18:08:46 - r - INFO: - Episode: 368/400, Reward: -125.450, Step: 200
+2023-02-23 18:08:47 - r - INFO: - Episode: 369/400, Reward: -241.611, Step: 200
+2023-02-23 18:08:48 - r - INFO: - Episode: 370/400, Reward: -120.539, Step: 200
+2023-02-23 18:08:50 - r - INFO: - Episode: 371/400, Reward: -230.037, Step: 200
+2023-02-23 18:08:51 - r - INFO: - Episode: 372/400, Reward: -130.172, Step: 200
+2023-02-23 18:08:52 - r - INFO: - Episode: 373/400, Reward: -6.547, Step: 200
+2023-02-23 18:08:53 - r - INFO: - Episode: 374/400, Reward: -117.929, Step: 200
+2023-02-23 18:08:54 - r - INFO: - Episode: 375/400, Reward: -129.161, Step: 200
+2023-02-23 18:08:56 - r - INFO: - Episode: 376/400, Reward: -3.479, Step: 200
+2023-02-23 18:08:57 - r - INFO: - Episode: 377/400, Reward: -239.342, Step: 200
+2023-02-23 18:08:58 - r - INFO: - Episode: 378/400, Reward: -124.070, Step: 200
+2023-02-23 18:08:59 - r - INFO: - Episode: 379/400, Reward: -242.031, Step: 200
+2023-02-23 18:09:00 - r - INFO: - Episode: 380/400, Reward: -246.940, Step: 200
+2023-02-23 18:09:01 - r - INFO: - Episode: 381/400, Reward: -233.095, Step: 200
+2023-02-23 18:09:02 - r - INFO: - Episode: 382/400, Reward: -118.124, Step: 200
+2023-02-23 18:09:03 - r - INFO: - Episode: 383/400, Reward: -3.460, Step: 200
+2023-02-23 18:09:04 - r - INFO: - Episode: 384/400, Reward: -228.834, Step: 200
+2023-02-23 18:09:05 - r - INFO: - Episode: 385/400, Reward: -2.770, Step: 200
+2023-02-23 18:09:07 - r - INFO: - Episode: 386/400, Reward: -1.038, Step: 200
+2023-02-23 18:09:08 - r - INFO: - Episode: 387/400, Reward: -119.011, Step: 200
+2023-02-23 18:09:09 - r - INFO: - Episode: 388/400, Reward: -122.313, Step: 200
+2023-02-23 18:09:10 - r - INFO: - Episode: 389/400, Reward: -121.948, Step: 200
+2023-02-23 18:09:11 - r - INFO: - Episode: 390/400, Reward: -117.317, Step: 200
+2023-02-23 18:09:13 - r - INFO: - Episode: 391/400, Reward: -236.070, Step: 200
+2023-02-23 18:09:14 - r - INFO: - Episode: 392/400, Reward: -241.802, Step: 200
+2023-02-23 18:09:15 - r - INFO: - Episode: 393/400, Reward: -248.515, Step: 200
+2023-02-23 18:09:16 - r - INFO: - Episode: 394/400, Reward: -119.671, Step: 200
+2023-02-23 18:09:17 - r - INFO: - Episode: 395/400, Reward: -226.173, Step: 200
+2023-02-23 18:09:18 - r - INFO: - Episode: 396/400, Reward: -1.849, Step: 200
+2023-02-23 18:09:19 - r - INFO: - Episode: 397/400, Reward: -227.384, Step: 200
+2023-02-23 18:09:20 - r - INFO: - Episode: 398/400, Reward: -229.654, Step: 200
+2023-02-23 18:09:21 - r - INFO: - Episode: 399/400, Reward: -245.469, Step: 200
+2023-02-23 18:09:22 - r - INFO: - Episode: 400/400, Reward: -2.061, Step: 200
+2023-02-23 18:09:23 - r - INFO: - Finish training!
