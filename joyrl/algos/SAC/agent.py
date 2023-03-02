@@ -110,6 +110,7 @@ class GaussianPolicy(nn.Module):
         log_prob -= torch.log(self.action_scale * (1 - y_t.pow(2)) + epsilon)
         log_prob = log_prob.sum(1, keepdim=True)
         mean = torch.tanh(mean) * self.action_scale + self.action_bias
+        # print ("action = ", action)
         return action, log_prob, mean
 
     def to(self, device):
@@ -284,7 +285,7 @@ class Agent:
         
     
     def load_model(self, fpath):
-        checkpoint = torch.load(fpath, map_location=self.device)
+        checkpoint = torch.load(f"{fpath}/checkpoint.pt", map_location=self.device)
         self.policy.load_state_dict(checkpoint['policy_state_dict'])
         self.critic.load_state_dict(checkpoint['critic_state_dict'])
         self.critic_target.load_state_dict(checkpoint['critic_target_state_dict'])
