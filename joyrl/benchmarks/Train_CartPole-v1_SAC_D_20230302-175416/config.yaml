@@ -1,0 +1,32 @@
+general_cfg:
+  algo_name: SAC_D
+  device: cuda
+  env_name: CartPole-v1
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: false
+  load_path: Train_CartPole-v1_DQN_20221026-054757
+  max_steps: 200
+  mode: train
+  new_step_api: true
+  render: false
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 10
+  train_eps: 200
+  wrapper: null
+algo_cfg:
+  alpha: 0.2
+  automatic_entropy_tuning: false
+  batch_size: 64
+  buffer_size: 1000000
+  epsilon_decay: 500
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  gamma: 0.95
+  hidden_dim: 256
+  lr: 0.0001
+  n_epochs: 1
+  target_update: 1
+  tau: 0.005

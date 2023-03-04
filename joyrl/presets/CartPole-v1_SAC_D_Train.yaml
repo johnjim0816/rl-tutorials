@@ -1,7 +1,7 @@
 general_cfg:
-  algo_name: SAC
-  device: cpu
-  env_name: Pendulum-v1
+  algo_name: SAC_D
+  device: cuda
+  env_name: CartPole-v1
   new_step_api: True
   wrapper: null
   mode: train
@@ -9,11 +9,15 @@ general_cfg:
   load_path: Train_CartPole-v1_DQN_20221026-054757
   max_steps: 200
   save_fig: true
-  seed: 10
+  seed: 1
   show_fig: false
   test_eps: 10
-  train_eps: 400
+  train_eps: 200
 algo_cfg:
-  continous: false
   alpha: 0.2
-  
+  epsilon_decay: 500
+  epsilon_end: 0.01
+  epsilon_start: 0.95
+  gamma: 0.95
+  lr: 0.0001  
+  target_update: 1
