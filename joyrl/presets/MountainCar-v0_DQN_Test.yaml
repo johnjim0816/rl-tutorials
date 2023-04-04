@@ -1,0 +1,44 @@
+general_cfg:
+  algo_name: DQN
+  device: cpu
+  env_name: MountainCar-v0
+  eval_eps: 10
+  eval_per_episode: 5
+  load_checkpoint: true
+  load_path: Train_MountainCar-v0_DQN_20230404-130132
+  max_steps: 200
+  mode: test
+  new_step_api: true
+  render: true
+  save_fig: true
+  seed: 1
+  show_fig: false
+  test_eps: 20
+  train_eps: 300
+  wrapper: null
+  render_mode: human
+algo_cfg:
+  batch_size: 64
+  buffer_size: 50000
+  epsilon_decay: 1000
+  epsilon_end: 0.01
+  epsilon_start: 0.99
+  gamma: 0.99
+  lr: 0.01
+  target_update: 4
+  value_layers:
+  - activation: relu
+    layer_dim:
+    - n_states
+    - 256
+    layer_type: linear
+  - activation: relu
+    layer_dim:
+    - 256
+    - 256
+    layer_type: linear
+  - activation: none
+    layer_dim:
+    - 256
+    - n_actions
+    layer_type: linear
